@@ -44,10 +44,10 @@
             top: -90px;
             left: 0;
         }
-        
+
         #header { position: fixed; left: 0px; top: -40px; right: 0px; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: 0px; right: 0px; height: 50px; background-color: lightblue; }
-        
+
         /* .uper_box {
             top:50px;
         } */
@@ -58,6 +58,11 @@
             top: -90px;
             left: 0;
             left: 0;*/
+        }
+        .labels-line{
+            background-color: #e7be86;
+            border-color: #e7be86;
+            outline-color: #e7be86;
         }
 
     </style>
@@ -70,16 +75,25 @@
 
 
 </span>
-    <p style="text-align: center"> <img src="{{asset('img/bg_cover_sheet.jpg')}}" style="width: 600px; height: 800px;" > </p>
-    <br>
 
-    <p class="page_title" style="color: #28377B; font-size: 23px; margin-top: 20px;">Persönliches Angebot für<br>{{ $kunden->vorname }} {{ $kunden->nachname }}</p>
+    <p style="text-align: center;position:relative;height:780px:width:100%;background:white;">
+    <div style="background-color: white; z-index: 2;width: 400px; height: 100px;position:absolute;right:-80px;top:-80px;" ></div>
+    <img src="img/bg-newscreen.jpg" style="position:absolute;top: -60px;margin:0 auto;width:94%;" >
+    <div style="z-index: 2;width: 260px;position:absolute;left:55px;top:200px;font-size:14px;" >
+    <i>Heading Ipsum</i><br/>
+    <span>Lorem Ipsum</span>
+    <hr class="labels-line"/>
+    <i>Heading Ipsum</i><br/>
+    <span>Lorem Ipsum</span>
+    <hr class="labels-line"/>
+    <i>Heading Ipsum</i><br/>
+    <span>Lorem Ipsum</span>
+    <hr class="labels-line"/>
+    </div> </p>
+    <br/>
+    <br/>
 
-
- 
-
-
-
+    {{--<p class="page_title" style="color: #28377B; font-size: 23px; margin-top: 20px;">Persönliches Angebot für<br>{{ $kunden->vorname }} {{ $kunden->nachname }}</p>--}}
     <div id="header" style="margin-top: 20px;">
         <table style="width:100%;">
             <tr>
@@ -105,14 +119,16 @@
     </div> --}}
 
     <div id="app">
-        <div class="container" style="padding-top: 10px;"> 
+
+
+        <div class="container" style="padding-top: 10px; ">
             <!-- header -->
             <div style="box-shadow: 0 2px 5px rgba(0,0,0,.2);"></div>
    <!-- <span class="page_title" style="color: #28377B; font-size: 23px; margin-top: 20px;">Persönliches Angebot für<br>{{ $kunden->vorname }} {{ $kunden->nachname }}</span> -->
-            <!-- personal info 
+            <!-- personal info
             <h3 style="color:#c8c0b3; font-size: 1.2em; margin-top: 20px"><span style="background-color: #28367b; color: #fff; padding: 10px; float: left;">Ihr Finanzierungsberater</span></h3> -->
-            
-            <div style="text-align: left; margin: 10px 0; width: 100%; line-height: 1 !important; clear: both">
+
+            <div style="text-align: left; margin: 10px 0;width: 100%; line-height: 1 !important; clear: both">
                 <!-- <h3 style="color: #c8c0b3;  "><span style="background-color: #28367b ; padding: 10px 20px 10px 20px;">Ihre Daten&nbsp;<span></h3> -->
                 <table style="width: 100%; font-size: 12px;">
                     <tr>
@@ -171,7 +187,7 @@
 
                 </table>
             </div>
-            <!-- /personal info -->    
+            <!-- /personal info -->
 
 
 
@@ -184,7 +200,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
 
             <!-- personal info -->
             <h3 style="color:#c8c0b3; font-size: 1.1em; margin-top: 20px"><span style="background-color: #fff ; color: #28367b; padding: 0px; float: left;">Ihre Daten</span></h3>
-            
+
             <div style="text-align: left; margin: 10px 0; width: 100%; line-height: 1 !important; clear: both">
                 <table style="width: 100%; font-size: 12px;">
                     <tr>
@@ -211,10 +227,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     </tr>
                 </table>
             </div>
-            <!-- /personal info -->        
-            <br><br><br>
+            <!-- /personal info -->
             <h3 style="color:#28367b; font-size: 1.2em; margin-top: 20px; float: left; width: 100%;">Ihr Finanzierungsbedarf</h3>
-            <table style="width:100%;border: 2px solid #a2a5aa;border-collapse: collapse; font-size: 12px; clear: both">
+            <table style="width:100%;border: 2px solid #a2a5aa;border-collapse: collapse; font-size: 12px; clear: both;">
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Kaufpreis des Objekts</td>
                     <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->kaufpreis, 2, ',', '.')  }}&euro;</td>
@@ -250,10 +265,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format($kunden->finanzierungsbedarf, 2, ',', '.') }}</td>
                 </tr>
             </table>
-
-
         <div>
-            <br>
             <h3 style="color:#28367b; font-size: 1,2em; margin-top: 20px">Ihre Finanzierungsbausteine</h3>
             <table style="width:100%; max-height: 500px !important; border-collapse: collapse; font-size: 12px;">
                 <thead>
@@ -342,14 +354,14 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                                     <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->timeline->restschuld_ende }}&euro;</span></td>
                                                 </tr>
                                             </table>
-                                        </div>  
+                                        </div>
                                     </div>
 
                                     <br><br>
                                 </td>
                             </tr>
 
-                        @else 
+                        @else
                             <tr><td><strong></strong></td></tr>
                             <tr><td></td></tr>
                             <tr><td></td></tr>
@@ -378,13 +390,13 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         @endif
                         @php $i++; @endphp
                     @endforeach
-                </tbody>    
+                </tbody>
             </table>
 
 <br><br><br>
 
 
-        <div>     
+        <div>
             <h3 id="tilgungsplan" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Tilgungsplan</h3>
             <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                 <thead>
@@ -404,11 +416,11 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->darlehensrest}}</td>
                     </tr>
                     @endforeach
-                </tbody>    
+                </tbody>
             </table>
             <br>
         </div>
-        
+
 
 
 
