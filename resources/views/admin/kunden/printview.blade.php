@@ -286,6 +286,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <tbody>
                     @php $i = 1; @endphp
                     @foreach( $Calculations as $calculation )
+                    @if($calculation->enabled)
                         {{-- <tr>
                             <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->bank}}</td>
                             <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->annuities}}</td>
@@ -388,7 +389,8 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             </tr> --}}
 
                         @endif
-                        @php $i++; @endphp
+                        @php($i++)
+                    @endif
                     @endforeach
                 </tbody>
             </table>

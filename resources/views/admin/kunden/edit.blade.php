@@ -176,7 +176,8 @@
             var cardNo = target.find('.card').length;
             var Calc = `<div class="card card-`+cardNo+`">
                             <div class="card-header" id="heading-`+cardNo+`">
-                                <h2 class="mb-0">
+                                <h2 class="mb-0">                                
+                                    <input type="checkbox" checked name="Cal[`+cardNo+`][enabled]">
                                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-`+cardNo+`">
                                         Finanzbaustein #`+(cardNo+1)+`
                                     </button>
@@ -446,6 +447,7 @@
                             <div class="card card-{{$cIndex}}">
                                 <div class="card-header" id="heading-{{$cIndex}}">
                                     <h2 class="mb-0">
+                                        <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$cIndex}}">
                                             Finanzbaustein #{{$cIndex+1}}
                                         </button>
@@ -683,8 +685,11 @@
                         </div>
                     </div>
                     <label for="result" id="result"></label>
-
                     <hr />
+                    <br>
+                    <br>
+
+                   <!--  
                     <h4>Checkliste</h4>
                     <p>Folgende Unterlagen müssen eingereicht werden:</p>
                     <form>
@@ -704,7 +709,7 @@
 >
                         </div>
 
-                    </form>
+                    </form> -->
                 </div>
 
             </div>
@@ -769,6 +774,7 @@
     </div>
 
     {{csrf_field()}}
+    <script type="text/javascript" src="{{ asset('/js/sweetalert.min.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -942,6 +948,48 @@
 
         function round(value, decimals) {
             return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+
+        function enabled(checkBox) {
+            var calculation_id = $(checkBox).data('calculation_id');
+            // If the checkbox is checked, display the output text
+            $.ajax({
+                url: '{{ route("calculation.statusChange") }}',
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    calculation_id: calculation_id
+                },
+                success: function (response) {
+                    console.log(response.calculation);
+                    if(response.calculation.enabled == 1) {
+                        $(checkBox).prop('checked', true);
+                    } else {
+                        $(checkBox).prop('checked', false);     
+                    }                    
+                    swal({
+                        title: "Enabled!",
+                        text: "Your selected kalkulation is enabled for print.",
+                        type: "success",
+                        icon: 'success',
+                        timer: 2000
+                    });
+                },
+                error: function (error) {                                    
+                    if (checkBox.checked == false){
+                        $(checkBox).prop('checked', true);
+                    } else {
+                        $(checkBox).prop('checked', false);
+                    }                  
+                    swal({
+                        title: "Error!",
+                        text: "Something wrong. Try again.",
+                        type: "error",
+                        icon: 'error',
+                        timer: 2000
+                    });
+                }
+            });
         }
 
     </script>
