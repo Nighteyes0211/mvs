@@ -740,18 +740,20 @@
                           
 
                             <input type="checkbox" id="cbx" style="display: none;">
-                                <label for="cbx" class="check">
-                                  <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                    <polyline points="1 9 7 14 15 4"></polyline>
-                                  </svg>
-                                </label>
-
-                            <br
->
+<label for="cbx" class="check">TEST
+  <svg width="18px" height="18px" viewBox="0 0 18 18"> 
+    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+    <polyline points="1 9 7 14 15 4"></polyline>
+  </svg>
+</label>
+<br>
+<br>
+<br>
+<br>
+<br>
                         </div>
 
-                    </form> -->
+                    </form> 
                 </div>
 
             </div>
@@ -992,48 +994,7 @@
             return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
         }
 
-        function enabled(checkBox) {
-            var calculation_id = $(checkBox).data('calculation_id');
-            // If the checkbox is checked, display the output text
-            $.ajax({
-                url: '{{ route("calculation.statusChange") }}',
-                type: 'post',
-                data: {
-                    _token: $('[name="_token"]').val(),
-                    calculation_id: calculation_id
-                },
-                success: function (response) {
-                    console.log(response.calculation);
-                    if(response.calculation.enabled == 1) {
-                        $(checkBox).prop('checked', true);
-                    } else {
-                        $(checkBox).prop('checked', false);     
-                    }                    
-                    swal({
-                        title: "Enabled!",
-                        text: "Your selected kalkulation is enabled for print.",
-                        type: "success",
-                        icon: 'success',
-                        timer: 2000
-                    });
-                },
-                error: function (error) {                                    
-                    if (checkBox.checked == false){
-                        $(checkBox).prop('checked', true);
-                    } else {
-                        $(checkBox).prop('checked', false);
-                    }                  
-                    swal({
-                        title: "Error!",
-                        text: "Something wrong. Try again.",
-                        type: "error",
-                        icon: 'error',
-                        timer: 2000
-                    });
-                }
-            });
-        }
-
+       
         function kundenSpouse(th) {
             if($(th).data('status') == 1) {
                 $('input[name="ehepartner_enabled"]').val(0);
