@@ -153,7 +153,6 @@ class KundenController extends Controller
     {
         $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->get();
         $repayments = Repayment::where('kundens_id', $kunden->id)->get();
-        $item = explode(" ",$repayments[0]->repayment_date)[1];
 
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
         return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline]);
