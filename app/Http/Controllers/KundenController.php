@@ -207,12 +207,15 @@ class KundenController extends Controller
             // dd($request->angebotdate);
             $usedCardId = [];
             foreach ($calData as $value) {
+                if( array_key_exists('enabled', $value)) $enabled =1;
+                else  $enabled =0;
                 // 11 fields 
                 if(isset($value['id']) && $value['id'] != null && $value['id'] > 0){
                     $calCheck = DB::table('calculation')->where('id', $value['id'])->get()->first();
                     if($calCheck != null){
                         $insertData = [
                             'angebotdate' => $request->angebotdate,
+                            'enabled' => $enabled,
                             'bank' => $value['bank'],
                             'annuities' => $value['annuities'],
                             'to_interest' => $value['to_interest'],
@@ -235,6 +238,7 @@ class KundenController extends Controller
                 } else {
                     $insertData = [
                         'angebotdate' => $request->angebotdate,
+                        'enabled' => $enabled,
                         'bank' => $value['bank'],
                         'kunden_id' => $request->segment(3),
                         'annuities' => $value['annuities'],

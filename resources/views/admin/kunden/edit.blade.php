@@ -176,7 +176,8 @@
             var cardNo = target.find('.card').length;
             var Calc = `<div class="card card-`+cardNo+`">
                             <div class="card-header" id="heading-`+cardNo+`">
-                                <h2 class="mb-0">
+                                <h2 class="mb-0">                                
+                                    <input type="checkbox" checked name="Cal[`+cardNo+`][enabled]">
                                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-`+cardNo+`">
                                         Finanzbaustein #`+(cardNo+1)+`
                                     </button>
@@ -446,7 +447,7 @@
                             <div class="card card-{{$cIndex}}">
                                 <div class="card-header" id="heading-{{$cIndex}}">
                                     <h2 class="mb-0">
-                                        <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}">
+                                        <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$cIndex}}">
                                             Finanzbaustein #{{$cIndex+1}}
                                         </button>
@@ -964,7 +965,7 @@
                     if(response.calculation.enabled == 1) {
                         $(checkBox).prop('checked', true);
                     } else {
-                        $(checkBox).prop('checked', false);
+                        $(checkBox).prop('checked', false);     
                     }                    
                     swal({
                         title: "Enabled!",
