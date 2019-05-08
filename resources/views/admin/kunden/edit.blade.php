@@ -994,7 +994,48 @@
             return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
         }
 
-       
+        function enabled(checkBox) {
+            var calculation_id = $(checkBox).data('calculation_id');
+            // If the checkbox is checked, display the output text
+            $.ajax({
+                url: '{{ route("calculation.statusChange") }}',
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    calculation_id: calculation_id
+                },
+                success: function (response) {
+                    console.log(response.calculation);
+                    if(response.calculation.enabled == 1) {
+                        $(checkBox).prop('checked', true);
+                    } else {
+                        $(checkBox).prop('checked', false);     
+                    }                    
+                    swal({
+                        title: "Enabled!",
+                        text: "Die ausgewählte Kalkulation wird angezeigt",
+                        type: "success",
+                        icon: 'success',
+                        timer: 2000
+                    });
+                },
+                error: function (error) {                                    
+                    if (checkBox.checked == false){
+                        $(checkBox).prop('checked', true);
+                    } else {
+                        $(checkBox).prop('checked', false);
+                    }                  
+                    swal({
+                        title: "Error!",
+                        text: "Something wrong. Try again.",
+                        type: "error",
+                        icon: 'error',
+                        timer: 2000
+                    });
+                }
+            });
+        }
+
         function kundenSpouse(th) {
             if($(th).data('status') == 1) {
                 $('input[name="ehepartner_enabled"]').val(0);
