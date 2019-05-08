@@ -18,7 +18,8 @@ Route::get('/', function () {
 Route::get('/admin/kunden/pdf/{id}', 'DynamicPDFController@pdf');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('admin/kunden', 'KundenController');
-Route::post('/search', 'KundenController@search')->name('search');;
+Route::post('/search', 'KundenController@search')->name('search');
+Route::post('//admin/kunden/statusChange', 'KundenController@statusChange')->name('calculation.statusChange');
 Route::get('/admin/generate_offer/{id}', 'KundenController@printoffer');
 Route::get('/admin/download_pdf/{id}', 'KundenController@download_pdf');
 Route::post('/admin/kunden/{id}/save_repayment', 'KundenController@saveRepayment');
