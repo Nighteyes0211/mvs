@@ -971,7 +971,7 @@
                         text: "Your selected kalkulation is enabled for print.",
                         type: "success",
                         icon: 'success',
-                        timer: 3000
+                        timer: 2000
                     });
                 },
                 error: function (error) {                                    
@@ -985,7 +985,7 @@
                         text: "Something wrong. Try again.",
                         type: "error",
                         icon: 'error',
-                        timer: 3000
+                        timer: 2000
                     });
                 }
             });

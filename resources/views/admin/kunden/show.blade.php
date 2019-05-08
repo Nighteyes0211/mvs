@@ -44,7 +44,6 @@
                     <td>Notar/Gericht</td>
                     <td>{{ number_format( $kunden->kostennotar, 2, ',', '.') }}€</td>
                 </tr>
-
                 <tr>
                     <td>Grunderwerbssteuer</td>
                     <td>{{ number_format( $kunden->grunderwerbssteuer, 2, ',', '.') }}€</td>
@@ -70,10 +69,7 @@
 
             <hr>
             @foreach ($timeline as $timeline)
-
-
             <div id="wrapper">
-
                 <div class="uper_box">
                     <div class="container">
                         <div class="box">
@@ -107,69 +103,80 @@
                         </div>
                         <div class="clear"></div>
                     </div>
-                </div></div>
+                </div>
+            </div>
+
+            {{--  older codes
                 <form method="post" action="{{ $timeline->id }}">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                    <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm"> Löschen</button></li>
+                    <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm"> Löschen</button>
+                </form> 
+                <a href="{{ $kunden->id }}/edit"> <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm">Ändern</button></a> 
+            --}}
+
+
+
+            <div class="row" style="padding: 20px;">          
+                <a  href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('Löschen-submit').submit();" class="btn btn-danger">Löschen</a>
+                <form method="post" action="{{ $timeline->id }}" id="Löschen-submit">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+
                 </form>
+                <a href="{{ $kunden->id }}/edit" class="btn btn-danger" style="margin-left: 10px">Ändern</a>
+            </div>
+            @endforeach
+            <hr>
+            <br>
+            <h5><b>Tilgungsplan </b></h5>
+            <div style="max-height: 300px; overflow-y: scroll">
+                <table style="width:100%; max-height: 500px !important;">
+                    <thead>
+                        <tr>
+                            <th>Rückzahlungsdatum</th>
+                            <th>Zinsen</th>
+                            <th>Tilgung</th>
+                            <th>Darlehensrest</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($repayments as $repayment)
+                        <tr>
+                            <td>{{$repayment->repayment_date}}</td>
+                            <td>{{$repayment->zinsen}}</td>
+                            <td>{{$repayment->tilgung}}</td>
+                            <td>{{$repayment->darlehensrest}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <a  class="btn btn-danger" style="color: #fff" href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}"> Angebot erstellen </a>
 
-
-                <a href="{{ $kunden->id }}/edit"> <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm">Ändern</button></li></a>
-
-
+            <hr />
+            
+            {{-- older code
+            <h5><b>Angebote </b></h5>
+            <ul id="angebote">
+                @foreach($kunden['offer'] as $offer)
+                <li><i class="fa fa-file-pdf" style="font-size:25px;color:red; vertical-align: middle; padding-right: 5px;"></i>Auftragsnummer: <a href="{{asset('admin/download_pdf')}}{{ '/'.$offer->id }}" download="">{{$offer->id}}</a></li>
                 @endforeach
+            </ul>
+            --}}
 
-
-                <hr>
-
-                <br>
-                <h5><b>Tilgungsplan </b></h5>
-                <div style="max-height: 300px; overflow-y: scroll">
-                    <table style="width:100%; max-height: 500px !important;">
-                        <thead>
-                            <tr>
-                                <th>Rückzahlungsdatum</th>
-                                <th>Zinsen</th>
-                                <th>Tilgung</th>
-                                <th>Darlehensrest</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($repayments as $repayment)
-                            <tr>
-                                <td>{{$repayment->repayment_date}}</td>
-                                <td>{{$repayment->zinsen}}</td>
-                                <td>{{$repayment->tilgung}}</td>
-                                <td>{{$repayment->darlehensrest}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div class="col-12" style="margin: 20px 20px 40px 20px;">                    
+                    <h5><b>Angebote </b></h5>
+                    <ul style="width: 100%">
+                        @foreach($kunden['offer'] as $offer)
+                        <li style="padding: 10px; float: left"><i class="fa fa-file-pdf" style="font-size:25px;color:red; vertical-align: middle; padding-right: 5px;"></i>Auftragsnummer: <a href="{{asset('admin/download_pdf')}}{{ '/'.$offer->id }}" download="">{{$offer->id}}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-                <br>
-                <button class="btn btn-danger" style="color: #fff">
-                    <a style="color: #fff"
-                    href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}">Angebot
-                erstellen
-            </a>
-            </button>
-
-                <hr />
-                <h5><b>Angebote </b></h5>
-
-
-                <ul id="angebote">
-                    @foreach($kunden['offer'] as $offer)
-                    <li><i class="fa fa-file-pdf" style="font-size:25px;color:red; vertical-align: middle; padding-right: 5px;"></i>Auftragsnummer: <a href="{{asset('admin/download_pdf')}}{{ '/'.$offer->id }}" download="">{{$offer->id}}</a></li>
-                    @endforeach
-                </ul>
             </div>
         </div>
-
     </div>
-</div>
-</div>
-</div>
 </div>
 @endsection
