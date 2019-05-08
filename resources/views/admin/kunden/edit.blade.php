@@ -731,7 +731,7 @@
                     <br>
                     <br>
 
-                   <!--  
+                   
                     <h4>Checkliste</h4>
                     <p>Folgende Unterlagen müssen eingereicht werden:</p>
                     <form>
