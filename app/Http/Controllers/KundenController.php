@@ -312,7 +312,7 @@ class KundenController extends Controller
                     'wohnort' => 'required',
                     'mail' => 'required',
                     'telefon' => 'required',
-                    'geburtsdatum' => 'required'
+                    'geburtsdatum' => 'required',
                 ]
             );
 
@@ -324,6 +324,14 @@ class KundenController extends Controller
             $kunden->mail = request('mail');
             $kunden->telefon = request('telefon');
             $kunden->geburtsdatum = request('geburtsdatum');
+
+            $kunden->ehepartner_enabled = request('ehepartner_enabled');
+            $kunden->ehepartner_vorname = request('ehepartner_vorname');
+            $kunden->ehepartner_nachname = request('ehepartner_nachname');
+            $kunden->ehepartner_mail = request('ehepartner_mail');
+            $kunden->ehepartner_telefon = request('ehepartner_telefon');
+            $kunden->ehepartner_geburtsdatum = request('ehepartner_geburtsdatum');
+
             $kunden->user_id = request('kunden_user');
             $kunden->kaufpreis = request('kaufpreis');
             $kunden->kostenumbau = request('kostenumbau');

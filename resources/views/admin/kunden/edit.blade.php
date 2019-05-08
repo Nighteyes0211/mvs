@@ -441,6 +441,48 @@
 
                     <a onclick="addNewCalc()" href="Javascript:void(0)" class="btn btn-primary">Kalkulation hinzufügen</a>
 
+                    @if($kunden->ehepartner_enabled)
+                    @php($spouseDivShown = 'block')
+                    <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
+                    @else 
+                    @php($spouseDivShown = 'none')
+                    <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">Ehepartner hinzufügen</a>
+                    @endif
+                    <div id="spouseDiv"  style="display: {{$spouseDivShown}}">  
+                        <input type="hidden" name="ehepartner_enabled" value="{{$kunden->ehepartner_enabled}}">                       
+                        <hr>
+                        <h4>Ehepartner</h4>
+                        <div class="form-group">
+                            <label class="col-form-label" for="vorname">Vorname</label>
+                            <input type="text" class="form-control" name="ehepartner_vorname" id="ehepartner_vorname"
+                                   placeholder="{{ $kunden->ehepartner_vorname }}" value="{{ $kunden->ehepartner_vorname }}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="nachname">Nachname</label>
+                            <input type="text" class="form-control" name="ehepartner_nachname" id="ehepartner_nachname"
+                                   placeholder="{{ $kunden->ehepartner_nachname }}" value="{{ $kunden->ehepartner_nachname }}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="mail">Mail</label>
+                            <input type="mail" class="form-control" name="ehepartner_mail" id="ehepartner_mail" placeholder="{{ $kunden->ehepartner_mail }}"
+                                   value="{{ $kunden->ehepartner_mail }}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="telefon">Telefon</label>
+                            <input type="text" class="form-control" name="ehepartner_telefon" id="ehepartner_telefon"
+                                   placeholder="{{ $kunden->ehepartner_telefon }}" value="{{ $kunden->ehepartner_telefon }}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="geburtsdatum">Geburtsdatum</label>
+                            <input type="date" class="form-control" name="ehepartner_geburtsdatum" id="ehepartner_geburtsdatum"
+                                   placeholder="{{ $kunden->ehepartner_geburtsdatum }}" value="{{ $kunden->ehepartner_geburtsdatum }}">
+                        </div>
+                        <div class="text-right">                            
+                            <button type="submit" class="btn btn-primary">Ehepartner aktualisieren</button>
+                        </div>
+                        <hr>
+                    </div>
+
                     <div class="accordion mt-35" id="Calculation">
                         <?php $cIndex = 0 ?>
                         @foreach($Calculations as $cal)
@@ -990,6 +1032,22 @@
                     });
                 }
             });
+        }
+
+        function kundenSpouse(th) {
+            if($(th).data('status') == 1) {
+                $('input[name="ehepartner_enabled"]').val(0);
+                $('#spouseDiv').fadeOut();
+                $(th).data('status', 0);
+                $(th).html('Ehepartner hinzufügen');
+                $(th).removeClass('btn-danger').addClass('btn-primary');
+            } else {
+                $('input[name="ehepartner_enabled"]').val(1);
+                $('#spouseDiv').fadeIn();
+                $(th).data('status', 1);
+                $(th).html('Ehepartner entfernen');
+                $(th).removeClass('btn-primary').addClass('btn-danger');
+            }        
         }
 
     </script>
