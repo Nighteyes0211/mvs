@@ -414,14 +414,19 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @foreach($repayments as $repayment)
                     @php($year = explode(" ",$repayment->repayment_date)[1])
                     <?php
+
+                        $zinsen = (float)explode(" ",$repayment->zinsen)[0];
+                        $tilgung = (float)explode(" ",$repayment->tilgung)[0];
+                        $darlehensrest = (float)explode(" ",$repayment->darlehensrest)[0];
+
                         if(array_key_exists($year, $payments)){
-                            $payments [$year]['zinsen'] += $repayment->zinsen;
-                            $payments [$year]['tilgung'] += $repayment->tilgung;
-                            $payments [$year]['darlehensrest'] += $repayment->darlehensrest;
+                            $payments [$year]['zinsen'] += $zinsen;
+                            $payments [$year]['tilgung'] += $tilgung;
+                            $payments [$year]['darlehensrest'] += $darlehensrest;
                         } else {
-                            $payments [$year]['zinsen'] = $repayment->zinsen;
-                            $payments [$year]['tilgung'] = $repayment->tilgung;
-                            $payments [$year]['darlehensrest'] = $repayment->darlehensrest;
+                            $payments [$year]['zinsen'] = $zinsen;
+                            $payments [$year]['tilgung'] = $tilgung;
+                            $payments [$year]['darlehensrest'] = $darlehensrest;
                         }
                     ?>
                     @if($year == date('Y'))
@@ -437,9 +442,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @if($key > date('Y'))
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$key}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}} €</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}} €</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}} €</td>
                     </tr>
                     @endif
                     @endforeach
