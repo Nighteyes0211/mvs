@@ -69,7 +69,7 @@
 
             <hr>
 
-            <!-- 
+            <!--
             @foreach ($timeline as $timeline)
             <div id="wrapper">
                 <div class="uper_box">
@@ -113,13 +113,13 @@
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
                     <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm"> Löschen</button>
-                </form> 
-                <a href="{{ $kunden->id }}/edit"> <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm">Ändern</button></a> 
+                </form>
+                <a href="{{ $kunden->id }}/edit"> <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm">Ändern</button></a>
             --}}
 
 
 
-            <div class="row" style="padding: 20px;">          
+            <div class="row" style="padding: 20px;">
                 <a  href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('Löschen-submit').submit();" class="btn btn-danger">Löschen</a>
                 <form method="post" action="{{ $timeline->id }}" id="Löschen-submit">
                     {{ method_field('DELETE') }}
@@ -158,7 +158,7 @@
             <a  class="btn btn-danger" style="color: #fff" href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}"> Angebot erstellen </a>
 
             <hr />
-            
+
             {{-- older code
             <h5><b>Angebote </b></h5>
             <ul id="angebote">
@@ -168,8 +168,8 @@
             </ul>
             --}}
 
-            <div class="row">
-                <div class="col-12" style="margin: 20px 20px 40px 20px;">                    
+            <div class="row" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden">
+                <div class="col-12" style="margin: 20px 20px 40px 20px;">
                     <h5><b>Angebote </b></h5>
                     <ul style="width: 100%">
                         @foreach($kunden['offer'] as $offer)
