@@ -68,6 +68,8 @@
             </table>
 
             <hr>
+
+            <!-- 
             @foreach ($timeline as $timeline)
             <div id="wrapper">
                 <div class="uper_box">
@@ -126,7 +128,7 @@
                 </form>
                 <a href="{{ $kunden->id }}/edit" class="btn btn-danger" style="margin-left: 10px">Ändern</a>
             </div>
-            @endforeach
+            @endforeach -->
             <hr>
             <br>
             <h5><b>Tilgungsplan </b></h5>
