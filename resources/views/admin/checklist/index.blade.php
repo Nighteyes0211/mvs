@@ -37,7 +37,7 @@
                                     <strong>{{ $errors->first('body') }}</strong>
                                 </span>
                             @endif
-                            <p class="text-right p-10"><button class="btn btn-primary">Add new</button></p>
+                            <p class="text-right p-10"><button class="btn btn-primary">Neuen Punkt hinzufügen</button></p>
                           </form>
                           <ul>
                             @foreach($checklists as $checklist)
@@ -47,8 +47,8 @@
                                     <span>{{$checklist->body}}</span>
                                   </div>
                                   <div class="col-3 text-right">
-                                      <a href="javascript:void(0)" data-id="{{$checklist->id}}" data-body="{{$checklist->body}}" onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> edit</a> |
-                                      <a href="javascript:void(0)" data-id="{{$checklist->id}}" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> delete</a>
+                                      <a href="javascript:void(0)" data-id="{{$checklist->id}}" data-body="{{$checklist->body}}" onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> bearbeiten</a> |
+                                      <a href="javascript:void(0)" data-id="{{$checklist->id}}" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> löschen</a>
                                   </div>
                                 </div>
                             </li>
@@ -95,7 +95,7 @@
           </div>
           <div class="col-4 text-right">
               <a href="javascript:void(0)" onclick="updateFunction(this)"><i class="fas fa-list"></i> Update</a> |
-              <a href="javascript:void(0)" data-id="`+id+`" data-body="`+body+`" onclick="cancelFunction(this)"><i class="fas fa-times"></i> Cancel</a>
+              <a href="javascript:void(0)" data-id="`+id+`" data-body="`+body+`" onclick="cancelFunction(this)"><i class="fas fa-times"></i> abbrechen</a>
           </div>
           `;
           $(th).parents('.checklist-item').html(content);
@@ -111,8 +111,8 @@
             <span>`+body+`</span>
           </div>
           <div class="col-3 text-right">
-              <a href="javascript:void(0)" data-id="`+id+`" data-body="`+body+`" onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> edit</a> |
-              <a href="javascript:void(0)" data-id="`+id+`" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> delete</a>
+              <a href="javascript:void(0)" data-id="`+id+`" data-body="`+body+`" onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> bearbeiten</a> |
+              <a href="javascript:void(0)" data-id="`+id+`" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> löschen</a>
           </div>
           `;
           $(th).parents('.checklist-item').html(content);

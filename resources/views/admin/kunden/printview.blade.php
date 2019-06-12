@@ -452,12 +452,10 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
         </div>
         @if(count($kunden->checklists)>0)
         <div>
-            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Checkliste</h3>
+            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Folgende Unterlagen werden benötigt</h3>
             <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                 <thead>
                   <tr style="background: #a2a5aa;font-weight: bold;">
-                      <th>S/L</th>
-                      <th>List item</th>
                   </tr>
                 </thead>
 
