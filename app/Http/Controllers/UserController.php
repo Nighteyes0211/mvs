@@ -67,7 +67,8 @@ class UserController extends Controller
         $user->surname = $data['surname'];
 
         $user->phone = $data['phone'];
-        $user->mail_address = $data['mail_address'];
+        if($request->mail_address)
+            $user->mail_address = $data['mail_address'];
         if(isset($data['group'])) $user->group = $data['group'];
         $user->status =0;
         $user->password =Hash::make($data['password']);
@@ -124,7 +125,8 @@ class UserController extends Controller
       $user->name = $data['name'];
       $user->surname = $data['surname'];
       $user->phone = $data['phone'];
-      $user->mail_address = $data['mail_address'];
+      if($request->mail_address)
+        $user->mail_address = $data['mail_address'];
       $user->group = $data['group'];
       $user->status =0;
 

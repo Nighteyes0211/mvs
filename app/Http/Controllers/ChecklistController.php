@@ -6,21 +6,27 @@ use Illuminate\Http\Request;
 use MVS\Http\Controllers\Controller;
 use MVS\Checklist;
 use MVS\Kunden;
+use MVS\group;
+use MVS\user;
 
 class ChecklistController extends Controller
 {
     public function index()
     {
       $checklists = Checklist::latest()->get();
-      return view('admin.checklist.index')->with(compact('checklists'));
+      $groups = group::paginate(10);
+      $users = user::paginate(10);
+      return view('admin.checklist.index')->with(compact('checklists', 'groups', 'users'));
     }
     public function store(Request $request)
     {
       $this->validate($request, [
           'body' => 'required|max:190',
+          'category' => 'required',
       ]);
       Checklist::create([
         'body'=>$request->body,
+        'category'=>$request->category,
         'is_active'=>1,
       ]);
       return redirect()->route('checklist');
@@ -29,11 +35,13 @@ class ChecklistController extends Controller
     {
       $this->validate($request, [
           'body' => 'required|max:190',
+          'category' => 'required',
       ]);
       $checklist = Checklist::find($request->data_id);
       if($checklist) {
         $checklist->update([
           'body'=>$request->body,
+        'category'=>$request->category,
         ]);
       }
       return redirect()->route('checklist');

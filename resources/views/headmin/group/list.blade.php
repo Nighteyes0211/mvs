@@ -92,10 +92,10 @@
       </div>
       <div class="modal-footer">
         <form method="post" action="">
-        {{ method_field('DELETE') }}
-        {{ csrf_field() }}
-       <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm"> Löschen</button></li>
-    </form>
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+           <button  i style="padding: 5px !important;" type="submit" class="btn btn-danger btn-sm"> Löschen</button>
+        </form>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Abbrechen</button>
       </div>
     </div>

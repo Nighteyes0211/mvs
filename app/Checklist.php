@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Checklist extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['body', 'is_active'];
+    protected $fillable = ['body', 'category', 'is_active'];
 
     public function kundens()
     {
