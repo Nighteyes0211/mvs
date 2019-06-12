@@ -731,7 +731,6 @@
                     <br>
                     <h4>Checkliste</h4>
                     <p>Folgende Unterlagen müssen eingereicht werden:</p>
-                    <h5>Persönliche Unterlagen</h5>
                     <div class="row">
                       @php($i=0)
                       @foreach($checklists as $checklist)
