@@ -13,5 +13,9 @@ class Checklist extends Model
     public function kundens()
     {
       return $this->belongsToMany('MVS\Kunden', 'checklist_kunden', 'checklist_id', 'kunden_id');
+    }    
+    public function ehepartners()
+    {
+      return $this->belongsToMany('MVS\Kunden', 'checklist_ehepartner', 'checklist_id', 'kunden_id');
     }
 }

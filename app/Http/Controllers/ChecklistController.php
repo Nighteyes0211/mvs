@@ -55,10 +55,18 @@ class ChecklistController extends Controller
       $kunden = Kunden::find($request->kunden_id);
       if($checklist && $kunden) {
         if($request->action == 1) {
-          $kunden->checklists()->detach($checklist);
+          if($request->who == 'kunden') {
+            $kunden->checklists()->detach($checklist);
+          } else if($request->who == 'ehepartner') {            
+            $kunden->ehepartnerChecklists()->detach($checklist);
+          }
           return response()->json(['success'=>true]);
         } else {
-          $kunden->checklists()->attach($checklist);
+          if($request->who == 'kunden') {
+            $kunden->checklists()->attach($checklist);
+          } else if($request->who == 'ehepartner') {            
+            $kunden->ehepartnerChecklists()->attach($checklist);
+          }
           return response()->json(['success'=>true]);
         }
       }

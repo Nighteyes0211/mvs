@@ -115,6 +115,29 @@
                     </tbody>
                 </table>
             </div>
+            @endif
+            @if(count($kunden->ehepartnerChecklists)>0)
+            <br>
+            <h5><b>Checkliste (Ehepartner) </b></h5>
+            <div style="max-height: 300px; overflow-y: scroll">
+                <table style="width:100%; max-height: 500px !important;">
+                    <thead>
+                        <tr>
+                            <th>S/L</th>
+                            <th>List item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php($i=1)
+                        @foreach($kunden->ehepartnerChecklists as $checklist)
+                        <tr>
+                            <td>{{$i++}}</td>
+                            <td>{{$checklist->body}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <br>
             <hr/>
             @endif

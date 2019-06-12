@@ -729,25 +729,51 @@
                     <label for="result" id="result"></label>
                     <hr />
                     <br>
-                    <h4>Checkliste</h4>
-                    <p>Folgende Unterlagen müssen eingereicht werden:</p>
-                    <h5>Persönliche Unterlagen</h5>
                     <div class="row">
-                      @php($i=0)
-                      @foreach($checklists as $checklist)
-                      <div class="col-sm-12" style="padding: 10px 30px;">
-                          <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
-                              <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this)" data-id="{{$checklist->id}}">
-                                <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                  <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                  <polyline points="1 9 7 14 15 4"></polyline>
-                                </svg>
-                              </label>
-                              <label for="cbx{{$i}}" onclick="checkedFunction(this)" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
-                      </div>
-                      @php($i++)
-                      @endforeach
+                        <div class="col-6">
+                            <h4>Checkliste</h4>
+                            <p>Folgende Unterlagen müssen eingereicht werden:</p>
+                            <h5>Persönliche Unterlagen</h5>
+                            <div class="row">
+                              @php($i=0)
+                              @foreach($checklists as $checklist)
+                              <div class="col-sm-12" style="padding: 10px 30px;">
+                                  <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
+                                      <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
+                                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                          <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                          <polyline points="1 9 7 14 15 4"></polyline>
+                                        </svg>
+                                      </label>
+                                      <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                              </div>
+                              @php($i++)
+                              @endforeach
+                            </div>
+                        </div>
+                        @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
+                        <div class="col-6" id="ehepartnerChecklist" style="display: {{$checklistEnable}}">
+                            <h4>Checkliste</h4>
+                            <p>Folgende Unterlagen müssen eingereicht werden:</p>
+                            <h5>Persönliche Unterlagen</h5>
+                            <div class="row">
+                              @foreach($checklists as $checklist)
+                              <div class="col-sm-12" style="padding: 10px 30px;">
+                                  <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
+                                      <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
+                                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                          <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                          <polyline points="1 9 7 14 15 4"></polyline>
+                                        </svg>
+                                      </label>
+                                      <label for="cbx{{$i}}" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                              </div>
+                              @php($i++)
+                              @endforeach
+                            </div>
+                        </div>
                     </div>
+                    
                     <br>
                     <br>
                     <br>
@@ -1036,18 +1062,20 @@
             if($(th).data('status') == 1) {
                 $('input[name="ehepartner_enabled"]').val(0);
                 $('#spouseDiv').fadeOut();
+                $('#ehepartnerChecklist').fadeOut();
                 $(th).data('status', 0);
                 $(th).html('Ehepartner hinzufügen');
                 $(th).removeClass('btn-danger').addClass('btn-primary');
             } else {
                 $('input[name="ehepartner_enabled"]').val(1);
                 $('#spouseDiv').fadeIn();
+                $('#ehepartnerChecklist').fadeIn();
                 $(th).data('status', 1);
                 $(th).html('Ehepartner entfernen');
                 $(th).removeClass('btn-primary').addClass('btn-danger');
             }
         }
-        function checkedFunction(th) {
+        function checkedFunction(th, who) {
           $.ajax({
               url: "{{route('kundenChecklist')}}",
               type: 'post',
@@ -1055,6 +1083,7 @@
                   _token: $('[name="_token"]').val(),
                   data_id: $(th).data('id'),
                   kunden_id: '{{$kunden->id}}',
+                  who: who,
                   action: $(th).parent().find('input[type="checkbox"]').is(':checked') ? 1:0
               },
               success: function (res) {
