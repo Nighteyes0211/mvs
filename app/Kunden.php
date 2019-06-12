@@ -20,4 +20,8 @@ class Kunden extends Model
   {
     return $this->belongsToMany('MVS\Checklist', 'checklist_kunden', 'kunden_id', 'checklist_id');
   }
+  public function ehepartnerChecklists()
+  {
+    return $this->belongsToMany('MVS\Checklist', 'checklist_ehepartner', 'kunden_id', 'checklist_id');
+  }
 }
