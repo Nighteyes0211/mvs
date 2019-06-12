@@ -2,6 +2,12 @@
 
 @section('content')
 
+<style type="text/css">
+    #button_edit a {
+        color: #fff !important;
+    }
+
+</style>
 
 
 <div class="container" style="background-color: #fff; padding-top: 10px;">
@@ -19,6 +25,8 @@
         </div>
     </div>
     <hr/>
+
+
     <div class="row">
         <div class="col-md-12 col-md-offset-12">
             <h4>Übersicht</h4>
@@ -66,6 +74,13 @@
             </table>
             <hr>
             <br>
+
+
+        <div id="button_edit" style="position: fixed; right: 0px; margin-top: -270px; z-index: 111111; ">
+
+<li class="nav-item"><a href="{{route('kunden.edit',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden bearbeiten</a></li>
+
+</div>
             <h5><b>Tilgungsplan </b></h5>
             <div style="max-height: 300px; overflow-y: scroll">
                 <table style="width:100%; max-height: 500px !important;">
