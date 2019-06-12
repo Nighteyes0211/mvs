@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(Auth::user()->admin == '1' ? 'layouts/headmin' : 'layouts/app')
 
 @section('content')
 
