@@ -8,7 +8,7 @@
 
 
 <style type="text/css">
-    
+
 .check {
   cursor: pointer;
   position: relative;
@@ -23,8 +23,8 @@
   position: absolute;
   top: -15px;
   left: -15px;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(34,50,84,0.03);
   opacity: 0;
@@ -55,14 +55,14 @@
 .check:hover svg {
   stroke: #4285f4;
 }
-#cbx:checked + .check svg {
+.cbx:checked + .check svg {
   stroke: #4285f4;
 }
-#cbx:checked + .check svg path {
+.cbx:checked + .check svg path {
   stroke-dashoffset: 60;
   transition: all 0.3s linear;
 }
-#cbx:checked + .check svg polyline {
+.cbx:checked + .check svg polyline {
   stroke-dashoffset: 42;
   transition: all 0.2s linear;
   transition-delay: 0.15s;
@@ -106,7 +106,7 @@
                 $('.addTimeLiner-'+cardNo).text('Zeitstrahl entfernen');
                 $('.addTimeLiner-'+cardNo).removeClass('btn-primary');
                 $('.addTimeLiner-'+cardNo).addClass('btn-danger');
-                
+
                 var timeLiner = `<div class="row ten_fields-`+cardNo+` mt-35">
                                         <div class="col-sm-12">
                                             <h5>Zeitstrahl Phase 1</h5>
@@ -166,19 +166,19 @@
                 $('.addTimeLiner-'+cardNo).removeClass('btn-danger');
                 $('.addTimeLiner-'+cardNo).addClass('btn-primary');
                 $('.thisTimeline-'+cardNo).html('');
-            }            
+            }
         }
 
         function addNewCalc(){
             $('.new_form').show();
-            $('#timelineChecker').val(1); 
+            $('#timelineChecker').val(1);
             var target = $('#Calculation');
             var cardNo = target.find('.card').length;
             var Calc = `<div class="card card-`+cardNo+`">
                             <div class="card-header" id="heading-`+cardNo+`">
-                                <h2 class="mb-0">                                
-                                    <input type="checkbox" checked name="Cal[`+cardNo+`][enabled]">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-`+cardNo+`">
+                                <h2 class="mb-0">`+
+                                    // <input type="checkbox" checked name="Cal[`+cardNo+`][enabled]">
+                                    `<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-`+cardNo+`">
                                         Finanzbaustein #`+(cardNo+1)+`
                                     </button>
                                     <span class="removeCard float-right"><i class="fa fa-times" onclick="removeCard(`+cardNo+`)"></i></span>
@@ -202,7 +202,7 @@
                                                 <input type="text" id="annuities" class="form-control" name="Cal[`+cardNo+`][annuities]"/>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Sollzins</label>
@@ -286,7 +286,7 @@
 @section('content')
 
     <form id="kunden_edit_form" method="post" action="{{route('kunden.update',$kunden->id)}}">
-        
+
         <input type="hidden" id="new_form_controller" value="0">
 
         <div class="container" style="padding-top:10px; background-color: #fff;">
@@ -433,7 +433,7 @@
                         </select>
                     </div>
                     <br>
-                    
+
                     <input type="hidden" id="timelineChecker" name="timelineChecker" value="0" />
                     <button type="submit" class="btn btn-primary">Kunden aktualisieren</button>
 
@@ -444,12 +444,12 @@
                     @if($kunden->ehepartner_enabled)
                     @php($spouseDivShown = 'block')
                     <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
-                    @else 
+                    @else
                     @php($spouseDivShown = 'none')
                     <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">Ehepartner hinzufügen</a>
                     @endif
-                    <div id="spouseDiv"  style="display: {{$spouseDivShown}}">  
-                        <input type="hidden" name="ehepartner_enabled" value="{{$kunden->ehepartner_enabled}}">                       
+                    <div id="spouseDiv"  style="display: {{$spouseDivShown}}">
+                        <input type="hidden" name="ehepartner_enabled" value="{{$kunden->ehepartner_enabled}}">
                         <hr>
                         <h4>Ehepartner</h4>
                         <div class="form-group">
@@ -477,7 +477,7 @@
                             <input type="date" class="form-control" name="ehepartner_geburtsdatum" id="ehepartner_geburtsdatum"
                                    placeholder="{{ $kunden->ehepartner_geburtsdatum }}" value="{{ $kunden->ehepartner_geburtsdatum }}">
                         </div>
-                        <div class="text-right">                            
+                        <div class="text-right">
                             <button type="submit" class="btn btn-primary">Ehepartner aktualisieren</button>
                         </div>
                         <hr>
@@ -489,7 +489,7 @@
                             <div class="card card-{{$cIndex}}">
                                 <div class="card-header" id="heading-{{$cIndex}}">
                                     <h2 class="mb-0">
-                                        <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]">
+                                        <!-- <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]"> -->
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$cIndex}}">
                                             Finanzbaustein #{{$cIndex+1}}
                                         </button>
@@ -522,7 +522,7 @@
                                                     </select> --}}
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>Sollzins</label>
@@ -593,7 +593,7 @@
                                                     @if(isset($cal->timeline->id))
 
                                                     <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Zeitstrahl entfernen</a>
-                                                    @else 
+                                                    @else
                                                     <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Zeitstrahl hinzufügen</a>
                                                     @endif
                                                 </div>
@@ -632,7 +632,7 @@
                                                     <div class="col-sm-12">
                                                         <h5>Zeitstrahl Phase 2</h5>
                                                     </div>
-            
+
                                                     <div class="col-sm-3 form-group">
                                                         <label for="bank">Finanzierungsbedarf</label>
                                                         <input type="text" id="finanzierungsbedarf_phase_zwei" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_zwei]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_zwei}}" required>
@@ -656,11 +656,11 @@
                                                 </div>
                                             @endif
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
-                            
+
                         <?php $cIndex++; ?>
                         @endforeach
                     </div>
@@ -678,7 +678,7 @@
                                 <div class="col-sm-6">
                                     <button type="submit" value="calculation" name="calculation" class="btn btn-primary float-right">Berechnung speichern</button>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
 
@@ -729,38 +729,36 @@
                     <label for="result" id="result"></label>
                     <hr />
                     <br>
-                    <br>
-
-                   <!--  
                     <h4>Checkliste</h4>
                     <p>Folgende Unterlagen müssen eingereicht werden:</p>
-                    <form>
-                        <h5>Persönliche Unterlagen</h5>
-                        <div class="col-sm-12">
-                          
-
-                            <input type="checkbox" id="cbx" style="display: none;">
-                                <label for="cbx" class="check">
-                                  <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                    <polyline points="1 9 7 14 15 4"></polyline>
-                                  </svg>
-                                </label>
-
-                            <br
->
-                        </div>
-
-                    </form> -->
+                    <h5>Persönliche Unterlagen</h5>
+                    <div class="row">
+                      @php($i=0)
+                      @foreach($checklists as $checklist)
+                      <div class="col-sm-12" style="padding: 10px 30px;">
+                          <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
+                              <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this)" data-id="{{$checklist->id}}">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                  <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                  <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                              </label>
+                              <label for="cbx{{$i}}" onclick="checkedFunction(this)" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                      </div>
+                      @php($i++)
+                      @endforeach
+                    </div>
+                    <br>
+                    <br>
+                    <br>
                 </div>
-
             </div>
         </div>
     </form>
 
 
 
-    
+
     <!-- Modal -->
     <div class="modal fade" id="repayment_modal" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -829,18 +827,18 @@
             //if ( confirm('Are you sure you want to submit?') ) {
             var tenFieldFlag = $('#new_form_controller').val();
             //var serializeForm = $('#kunden_edit_form').serializeArray();
-            
-            /* setTimeout(function(){ 
-                $("#kunden_edit_form").submit(); 
+
+            /* setTimeout(function(){
+                $("#kunden_edit_form").submit();
             }, 500); */
-            
+
             /* $.ajax({
                 url: 'save_timeline',
                 type: 'post',
                 data: {
                     _token: $('[name="_token"]').val(),
 
-                    // New 11 fields 
+                    // New 11 fields
                     bank: $('#bank').val(),
                     annuities: $('#annuities').val(),
                     to_interest: $('#to_interest').val(),
@@ -866,8 +864,8 @@
                     rate_monatlich_phase_zwei: $('#rate_monatlich_phase_zwei').val(),
                     restschuld_ende: $('#restschuld_ende').val(),
                     restschuld_phase_eins: $('#restschuld_phase_eins').val(),
-                    finanzierungsbedarf_phase_eins: $('#finanzierungsbedarf_phase_eins').val(),                    
-                    
+                    finanzierungsbedarf_phase_eins: $('#finanzierungsbedarf_phase_eins').val(),
+
                     fullForm: serializeForm
                 },
                 success: function(res) {
@@ -992,47 +990,47 @@
             return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
         }
 
-        function enabled(checkBox) {
-            var calculation_id = $(checkBox).data('calculation_id');
-            // If the checkbox is checked, display the output text
-            $.ajax({
-                url: '{{ route("calculation.statusChange") }}',
-                type: 'post',
-                data: {
-                    _token: $('[name="_token"]').val(),
-                    calculation_id: calculation_id
-                },
-                success: function (response) {
-                    console.log(response.calculation);
-                    if(response.calculation.enabled == 1) {
-                        $(checkBox).prop('checked', true);
-                    } else {
-                        $(checkBox).prop('checked', false);     
-                    }                    
-                    swal({
-                        title: "Enabled!",
-                        text: "Your selected kalkulation is enabled for print.",
-                        type: "success",
-                        icon: 'success',
-                        timer: 2000
-                    });
-                },
-                error: function (error) {                                    
-                    if (checkBox.checked == false){
-                        $(checkBox).prop('checked', true);
-                    } else {
-                        $(checkBox).prop('checked', false);
-                    }                  
-                    swal({
-                        title: "Error!",
-                        text: "Something wrong. Try again.",
-                        type: "error",
-                        icon: 'error',
-                        timer: 2000
-                    });
-                }
-            });
-        }
+        // function enabled(checkBox) {
+        //     var calculation_id = $(checkBox).data('calculation_id');
+        //     // If the checkbox is checked, display the output text
+        //     $.ajax({
+        //         url: '{{ route("calculation.statusChange") }}',
+        //         type: 'post',
+        //         data: {
+        //             _token: $('[name="_token"]').val(),
+        //             calculation_id: calculation_id
+        //         },
+        //         success: function (response) {
+        //             console.log(response.calculation);
+        //             if(response.calculation.enabled == 1) {
+        //                 $(checkBox).prop('checked', true);
+        //             } else {
+        //                 $(checkBox).prop('checked', false);
+        //             }
+        //             swal({
+        //                 title: "Enabled!",
+        //                 text: "Your selected kalkulation is enabled for print.",
+        //                 type: "success",
+        //                 icon: 'success',
+        //                 timer: 2000
+        //             });
+        //         },
+        //         error: function (error) {
+        //             if (checkBox.checked == false){
+        //                 $(checkBox).prop('checked', true);
+        //             } else {
+        //                 $(checkBox).prop('checked', false);
+        //             }
+        //             swal({
+        //                 title: "Error!",
+        //                 text: "Something wrong. Try again.",
+        //                 type: "error",
+        //                 icon: 'error',
+        //                 timer: 2000
+        //             });
+        //         }
+        //     });
+        // }
 
         function kundenSpouse(th) {
             if($(th).data('status') == 1) {
@@ -1047,7 +1045,30 @@
                 $(th).data('status', 1);
                 $(th).html('Ehepartner entfernen');
                 $(th).removeClass('btn-primary').addClass('btn-danger');
-            }        
+            }
+        }
+        function checkedFunction(th) {
+          $.ajax({
+              url: "{{route('kundenChecklist')}}",
+              type: 'post',
+              data: {
+                  _token: $('[name="_token"]').val(),
+                  data_id: $(th).data('id'),
+                  kunden_id: '{{$kunden->id}}',
+                  action: $(th).parent().find('input[type="checkbox"]').is(':checked') ? 1:0
+              },
+              success: function (res) {
+                if(res.success == true) {
+                    // $(th).parent().find('input[type="checkbox"]').prop('checked', true);
+                } else {
+                    if($(th).parent().find('input[type="checkbox"]').is(':checked')) {
+                      $(th).parent().find('input[type="checkbox"]').prop('checked', false);
+                    } else {
+                      $(th).parent().find('input[type="checkbox"]').prop('checked', true);
+                    }
+                }
+              }
+          });
         }
 
     </script>

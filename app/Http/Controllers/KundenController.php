@@ -14,6 +14,7 @@ use Auth;
 use MVS\User;
 use MVS\Group;
 use MVS\Calculation;
+use MVS\Checklist;
 use DB;
 
 class KundenController extends Controller
@@ -151,9 +152,9 @@ class KundenController extends Controller
      */
     public function show(Kunden $kunden)
     {
-        $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->get();
+        $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->orderBy('id','desc')->get();
         $repayments = Repayment::where('kundens_id', $kunden->id)->get();
-        
+
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
         return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline]);
     }
@@ -172,8 +173,10 @@ class KundenController extends Controller
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
         }
+        
+        $checklists = Checklist::latest()->get();
 
-        return view('admin.kunden.edit', compact('kunden','users','Calculations'));
+        return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists'));
     }
 
     /**
@@ -209,7 +212,7 @@ class KundenController extends Controller
             foreach ($calData as $value) {
                 if( array_key_exists('enabled', $value)) $enabled =1;
                 else  $enabled =0;
-                // 11 fields 
+                // 11 fields
                 if(isset($value['id']) && $value['id'] != null && $value['id'] > 0){
                     $calCheck = DB::table('calculation')->where('id', $value['id'])->get()->first();
                     if($calCheck != null){
@@ -229,9 +232,9 @@ class KundenController extends Controller
                             'optional_sound_recovery' => $value['optional_sound_recovery'],
                             'prepared_by' => auth()->user()->id
                         ];
-        
-                        DB::table('calculation')->where('id', $value['id'])->update($insertData); 
-                        $cid = $value['id']; 
+
+                        DB::table('calculation')->where('id', $value['id'])->update($insertData);
+                        $cid = $value['id'];
                         $usedCardId[] = $cid;
                     }
 
@@ -253,7 +256,7 @@ class KundenController extends Controller
                         'optional_sound_recovery' => $value['optional_sound_recovery'],
                         'prepared_by' => auth()->user()->id
                     ];
-    
+
                     $cid = DB::table('calculation')->insert($insertData);
                     $cid = DB::getPdo()->lastInsertId();
                     $usedCardId[] = $cid;
@@ -345,7 +348,7 @@ class KundenController extends Controller
             $kunden->save();
             return redirect()->route('kunden.index');
         }
-        
+
     }
 
     /**
@@ -479,7 +482,7 @@ class KundenController extends Controller
                 ]
             );
 
-            // 11 fields 
+            // 11 fields
             $insertData = [
                 'bank' => $request->bank,
                 'annuities' => $request->annuities,
@@ -515,7 +518,7 @@ class KundenController extends Controller
             $timeline->save();
         }
         else {
-            // 11 fields 
+            // 11 fields
             $insertData = [
                 'bank' => $request->bank,
                 'annuities' => $request->annuities,
@@ -532,7 +535,7 @@ class KundenController extends Controller
             ];
 
             $cid = DB::table('calculation')->insert($insertData);
-        }        
+        }
 
         return 'success';
     }
