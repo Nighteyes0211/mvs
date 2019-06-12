@@ -14,6 +14,7 @@ use Auth;
 use MVS\User;
 use MVS\Group;
 use MVS\Calculation;
+use MVS\Checklist;
 use DB;
 
 class KundenController extends Controller
@@ -172,8 +173,10 @@ class KundenController extends Controller
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
         }
+        
+        $checklists = Checklist::latest()->get();
 
-        return view('admin.kunden.edit', compact('kunden','users','Calculations'));
+        return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists'));
     }
 
     /**

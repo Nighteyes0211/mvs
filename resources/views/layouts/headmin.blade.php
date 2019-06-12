@@ -24,6 +24,44 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     @yield('css')
+    <style media="screen">
+    .btn-mkhyp {
+        color: #fff;
+        background-color: #f7a824;
+        border-color: #f7a824;
+      }
+
+      .btn-mkhyp:hover {
+        color: #fff;
+        background-color: #ec9c15;
+        border-color: #ad7008;
+      }
+
+      .btn-mkhyp:focus, .btn-mkhyp.focus {
+        color: #fff;
+        background-color: #ec9c15;
+        border-color: #ad7008;
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+      }
+
+      .btn-mkhyp.disabled, .btn-mkhyp:disabled {
+        color: #fff;
+        background-color: #f7a824;
+        border-color: #f7a824;
+      }
+
+      .btn-mkhyp:not(:disabled):not(.disabled):active, .btn-mkhyp:not(:disabled):not(.disabled).active,
+      .show > .btn-mkhyp.dropdown-toggle {
+        color: #fff;
+        background-color: #ad7008;
+        border-color: #005cbf;
+      }
+
+      .btn-mkhyp:not(:disabled):not(.disabled):active:focus, .btn-mkhyp:not(:disabled):not(.disabled).active:focus,
+      .show > .btn-mkhyp.dropdown-toggle:focus {
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+      }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -80,7 +118,7 @@
                                 </a>
                             </div>
                         </li>
-<li class="nav-item"><a class="nav-link" href="{{ url('/support') }}">Support</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/support') }}">Support</a></li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -108,6 +146,9 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class=" btn btn-mkhyp" href="{{ route('checklist') }}" style="border-radius: 0; ">Administration</a>
                             </li>
 
                         @endguest

@@ -15,4 +15,9 @@ class Kunden extends Model
   public function myuser(){
     return $this->belongsTo('MVS\User','user_id');
   }
+
+  public function checklists()
+  {
+    return $this->belongsToMany('MVS\Checklist', 'checklist_kunden', 'kunden_id', 'checklist_id');
+  }
 }
