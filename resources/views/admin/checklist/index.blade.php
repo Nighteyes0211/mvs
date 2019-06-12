@@ -28,10 +28,10 @@
 
                     <div class="row">
                       <div class="col-6" style="margin: auto">
-                          <h3>Checklists</h3>
+                          <h3>Unterlagen</h3>
                           <form class="" action="{{route('checklist')}}" method="post">
                             @csrf
-                            <input type="text" name="body" value="{{old('body')}}" class="form-control" style="margin-bottom: 15px" placeholder="body text">
+                            <input type="text" name="body" value="{{old('body')}}" class="form-control" style="margin-bottom: 15px" placeholder="">
                             @if ($errors->has('body'))
                                 <span class="alert">
                                     <strong>{{ $errors->first('body') }}</strong>
@@ -43,10 +43,10 @@
                             @foreach($checklists as $checklist)
                             <li class="form-control mb-2">
                                 <div class="row checklist-item">
-                                  <div class="col-9">
+                                  <div class="col-8">
                                     <span>{{$checklist->body}}</span>
                                   </div>
-                                  <div class="col-3 text-right">
+                                  <div class="col-4 text-right">
                                       <a href="javascript:void(0)" data-id="{{$checklist->id}}" data-body="{{$checklist->body}}" onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> bearbeiten</a> |
                                       <a href="javascript:void(0)" data-id="{{$checklist->id}}" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> löschen</a>
                                   </div>
