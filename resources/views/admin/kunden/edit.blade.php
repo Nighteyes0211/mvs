@@ -736,7 +736,9 @@
                             <h5>Persönliche Unterlagen</h5>
                             <div class="row">
                               @php($i=0)
+                              <h5 style="padding: 10px 30px;">Personal</h5>
                               @foreach($checklists as $checklist)
+                              @if($checklist->category == 'Personal')
                               <div class="col-sm-12" style="padding: 10px 30px;">
                                   <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
                                       <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
@@ -748,6 +750,24 @@
                                       <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
                               </div>
                               @php($i++)
+                              @endif
+                              @endforeach
+
+                              <h5 style="padding: 10px 30px;">Work</h5>
+                              @foreach($checklists as $checklist)
+                              @if($checklist->category == 'Work')
+                              <div class="col-sm-12" style="padding: 10px 30px;">
+                                  <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
+                                      <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
+                                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                          <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                          <polyline points="1 9 7 14 15 4"></polyline>
+                                        </svg>
+                                      </label>
+                                      <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                              </div>
+                              @php($i++)
+                              @endif
                               @endforeach
                             </div>
                         </div>
@@ -757,7 +777,9 @@
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <h5>Persönliche Unterlagen</h5>
                             <div class="row">
+                              <h5 style="padding: 10px 30px;">Personal</h5>
                               @foreach($checklists as $checklist)
+                              @if($checklist->category == 'Personal')
                               <div class="col-sm-12" style="padding: 10px 30px;">
                                   <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
                                       <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
@@ -766,9 +788,27 @@
                                           <polyline points="1 9 7 14 15 4"></polyline>
                                         </svg>
                                       </label>
-                                      <label for="cbx{{$i}}" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                                      <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
                               </div>
                               @php($i++)
+                              @endif
+                              @endforeach
+
+                              <h5 style="padding: 10px 30px;">Work</h5>
+                              @foreach($checklists as $checklist)
+                              @if($checklist->category == 'Work')
+                              <div class="col-sm-12" style="padding: 10px 30px;">
+                                  <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
+                                      <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
+                                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                          <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                          <polyline points="1 9 7 14 15 4"></polyline>
+                                        </svg>
+                                      </label>
+                                      <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                              </div>
+                              @php($i++)
+                              @endif
                               @endforeach
                             </div>
                         </div>
