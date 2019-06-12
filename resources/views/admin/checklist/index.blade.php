@@ -28,7 +28,7 @@
 
                     <div class="row">
                       <div class="col-6" style="margin: auto">
-                          <h3>Unterlagen</h3>
+                          <h3>Unterlagen Checkliste</h3>
                           <form class="" action="{{route('checklist')}}" method="post">
                             @csrf
                             <input type="text" name="body" value="{{old('body')}}" class="form-control" style="margin-bottom: 15px" placeholder="">
