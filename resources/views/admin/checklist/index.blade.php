@@ -58,7 +58,7 @@
                                 <p class="w-100 text-center"><a href="javascript:void(0)" class=" btn-sm w-100" data-toggle="modal" data-target="#manageCategoryModal">Manage Category</a></p>
                               </div>
                             </div>
-                            <p class="text-right p-10 mt-3"><button class="btn btn-primary">Neuen Punkt hinzufügen</button></p>
+                            <p class="text-right p-10 mb-5"><button class="btn btn-primary">Neuen Punkt hinzufügen</button></p>
                           </form>
                           <ul>
                             @foreach($checklists as $checklist)
