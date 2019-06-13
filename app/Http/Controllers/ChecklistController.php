@@ -68,6 +68,15 @@ class ChecklistController extends Controller
       }
       return response()->json(['success'=>false]);
     }
+    public function deleteCategory(Request $request)
+    {
+      $category = checklistCategory::find($request->data_id);
+      if($category) {
+        $category->delete();
+        return response()->json(['success'=>true]);
+      }
+      return response()->json(['success'=>false]);
+    }
 
     public function kundenChecklist(Request $request)
     {

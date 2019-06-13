@@ -54,6 +54,7 @@ Route::post('/checklistCategory', 'ChecklistController@checklistCategory')->name
 Route::post('/checklistUpdate', 'ChecklistController@update')->name('checklistUpdate');
 Route::post('/kundenChecklist', 'ChecklistController@kundenChecklist')->name('kundenChecklist');
 Route::post('/deleteChecklist', 'ChecklistController@delete')->name('deleteChecklist');
+Route::post('/deleteChecklistCategory', 'ChecklistController@deleteCategory')->name('deleteChecklistCategory');
 
         //
         //
