@@ -32,7 +32,7 @@
                                 <a class="d-block w-100" href="{{ url('headmin/group') }}" style="padding: .25rem 1.5rem;">
                                     Gruppen Anzeigen
                                 </a>
-                                <a class="d-block w-100" href="{{ url('headmin/group/create') }}" style="padding: .25rem 1.5rem;">
+                                <a class="d-block w-100 card-header" href="{{ url('headmin/group/create') }}" style="padding: .25rem 1.5rem;">
                                     Neue Gruppe hinzufügen
                                 </a>
                               </div>
@@ -129,6 +129,7 @@
                       </form>
                     </div>
                   </div>
+                </div>
             </div>
         </div>
     </div>
