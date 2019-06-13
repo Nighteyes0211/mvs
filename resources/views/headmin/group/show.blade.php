@@ -23,7 +23,7 @@
                 <div class="card-body">
 
                   <div class="row">
-                    <div class="col-4">      
+                    <div class="col-3">      
                         <div id="accordion">
                           <div class="card">
                             <div class="card-header" id="headingOne">
@@ -68,60 +68,61 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-9">
+                      <div class="card">
+                        <div class="card-header">
+                          Show Group
+                        </div>
+                        <div class="card-body">
+                          <div>
+                            <label for="">Group Name:</label>
+                            <input type="text" class="form-control" id="" placeholder="Group Name" name="name" value="{{ $groupdata[0]->name }}" readonly>
 
-                      {!! csrf_field() !!}
-                      <input type="hidden" name="_method" value="put" />
-                      <div>
-                        <label for="">Group Name:</label>
-                        <input type="text" class="form-control" id="" placeholder="Group Name" name="name" value="{{ $groupdata[0]->name }}" readonly>
+                          </div>
 
+                          <div>
+                            <label for="">Postal Code:</label>
+                            <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->postal_code }}" readonly>
+
+                          </div>
+
+                          <div>
+                            <label for="">City:</label>
+                            <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->city }}" readonly>
+
+                          </div>
+
+                          <div>
+                            <label for="">Street:</label>
+                            <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->street }}" readonly>
+
+                          </div>
+
+                          <div>
+                            <label for="">Street Number:</label>
+                            <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->street_num }}" readonly>
+
+                          </div>
+
+
+                          <div>
+                            <label for="">Group Leader:</label>
+
+                            @forelse($users as $user)
+
+                                <input type="text" class="form-control" id="" placeholder="Group Leader" name="address" value="{{ $user->name }}" readonly>
+
+                            @empty
+                              <input type="text" class="form-control" id="" placeholder="Group Leader" name="address" readonly>
+                            @endforelse
+                          </div>
                       </div>
 
-                      <div>
-                        <label for="">Postal Code:</label>
-                        <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->postal_code }}" readonly>
 
-                      </div>
-
-                      <div>
-                        <label for="">City:</label>
-                        <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->city }}" readonly>
-
-                      </div>
-
-                      <div>
-                        <label for="">Street:</label>
-                        <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->street }}" readonly>
-
-                      </div>
-
-                      <div>
-                        <label for="">Street Number:</label>
-                        <input type="text" class="form-control" id="" placeholder="Address" name="address" value="{{ $groupdata[0]->street_num }}" readonly>
-
-                      </div>
-
-
-                      <div>
-                        <label for="">Group Leader:</label>
-
-                        @forelse($users as $user)
-
-                            <input type="text" class="form-control" id="" placeholder="Group Leader" name="address" value="{{ $user->name }}" readonly>
-
-                        @empty
-                          <input type="text" class="form-control" id="" placeholder="Group Leader" name="address" readonly>
-                        @endforelse
-                      </div>
+                    </div>
                   </div>
-
-
                 </div>
-
-
-            </div>
-
+              </div>
             </div>
         </div>
     </div>

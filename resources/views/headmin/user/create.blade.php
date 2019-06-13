@@ -22,7 +22,7 @@
 
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-4">      
+                    <div class="col-3">      
                         <div id="accordion">
                           <div class="card">
                             <div class="card-header" id="headingOne">
@@ -67,83 +67,90 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-9">
+                      <div class="card">
+                        <div class="card-header">
+                          Neuen Benutzer anlegen
+                        </div>
+                        <div class="card-body">
 
-                      <form action="{{ route('user.store')}}" method="post">
-                        <!-- <form action="{{ '/headmin/user'}}" method="post"> -->
-                          {!! csrf_field() !!}
-                          <div>
-                            <label for="">Vorname:</label>
-                            <input type="text" class="form-control" placeholder="Vorname" name="name" value="{{ old('name') }}" required>
-                            @if ($errors->has('name'))
-                                <span class="" role="alert">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
+                          <form action="{{ route('user.store')}}" method="post">
+                            <!-- <form action="{{ '/headmin/user'}}" method="post"> -->
+                              {!! csrf_field() !!}
+                              <div>
+                                <label for="">Vorname:</label>
+                                <input type="text" class="form-control" placeholder="Vorname" name="name" value="{{ old('name') }}" required>
+                                @if ($errors->has('name'))
+                                    <span class="" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                              </div>
+
+                              <div>
+                                <label for="">Nachname:</label>
+                                <input type="text" class="form-control" placeholder="Nachname" name="surname" value="{{ old('surname') }}">
+
+                              </div>
+
+                              <div>
+                                <label for="">Telefon:</label>
+                                <input type="text" class="form-control" placeholder="Telefon" name="phone" value="{{ old('phone') }}">
+                                @if ($errors->has('phone'))
+                                    <span class="" role="alert">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                              </div>
+
+                              <div>
+                                <label for="">E-mail:</label>
+                                <input type="email" class="form-control" id="" placeholder="E-Mail" name="email" value="{{ old('email') }}" required>
+                                @if ($errors->has('email'))
+                                    <span class="" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                              </div>
+
+        <!--                      <div>
+                                <label for="">Mail Address:</label>
+                                <input type="text" class="form-control" id="" placeholder="Adresse" name="mail_address" value="{{ old('mail_address') }}">
+
+                              </div>
+        -->
+                              <div>
+                                <label for="">Passwort:</label>
+                                <input type="password" class="form-control" id="" placeholder="Passwort" name="password" required>
+                                @if ($errors->has('password'))
+                                    <span class="" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                              </div>
+
+                              <div>
+                                <label for="">Passwort bestätigen:</label>
+                                <input type="password" class="form-control" id="" placeholder="Confirm Password" name="password_confirmation" required>
+
+                              </div>
+
+                              <div>
+                                <label for="">Gruppe:</label>
+                                <select name="group" class="form-control">
+                                  <!-- <option value="0"></option> -->
+                                  @foreach($groups as $group)
+                                      <option value="{{$group->id}}">{{$group->name}}</option>
+                                  @endforeach
+                                </select>
+
+                              </div>
+
+                              <hr/>
+                              <button type="submit" class="btn btn-default">Erstellen</button>
+                            </form>
                           </div>
-
-                          <div>
-                            <label for="">Nachname:</label>
-                            <input type="text" class="form-control" placeholder="Nachname" name="surname" value="{{ old('surname') }}">
-
-                          </div>
-
-                          <div>
-                            <label for="">Telefon:</label>
-                            <input type="text" class="form-control" placeholder="Telefon" name="phone" value="{{ old('phone') }}">
-                            @if ($errors->has('phone'))
-                                <span class="" role="alert">
-                                    <strong>{{ $errors->first('phone') }}</strong>
-                                </span>
-                            @endif
-                          </div>
-
-                          <div>
-                            <label for="">E-mail:</label>
-                            <input type="email" class="form-control" id="" placeholder="E-Mail" name="email" value="{{ old('email') }}" required>
-                            @if ($errors->has('email'))
-                                <span class="" role="alert">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                          </div>
-
-    <!--                      <div>
-                            <label for="">Mail Address:</label>
-                            <input type="text" class="form-control" id="" placeholder="Adresse" name="mail_address" value="{{ old('mail_address') }}">
-
-                          </div>
-    -->
-                          <div>
-                            <label for="">Passwort:</label>
-                            <input type="password" class="form-control" id="" placeholder="Passwort" name="password" required>
-                            @if ($errors->has('password'))
-                                <span class="" role="alert">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                          </div>
-
-                          <div>
-                            <label for="">Passwort bestätigen:</label>
-                            <input type="password" class="form-control" id="" placeholder="Confirm Password" name="password_confirmation" required>
-
-                          </div>
-
-                          <div>
-                            <label for="">Gruppe:</label>
-                            <select name="group" class="form-control">
-                              <!-- <option value="0"></option> -->
-                              @foreach($groups as $group)
-                                  <option value="{{$group->id}}">{{$group->name}}</option>
-                              @endforeach
-                            </select>
-
-                          </div>
-
-                          <hr/>
-                          <button type="submit" class="btn btn-default">Erstellen</button>
-                        </form>
+                        </div>
                       </div>
                 </div>
               </div>

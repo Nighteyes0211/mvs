@@ -29,7 +29,7 @@
                 <div class="card-body">
 
                   <div class="row">
-                    <div class="col-4">      
+                    <div class="col-3">      
                         <div id="accordion">
                           <div class="card">
                             <div class="card-header" id="headingOne">
@@ -74,47 +74,55 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-8">
-                      @if (session('status'))
+                    <div class="col-9">
+                      <div class="card">
+                        <div class="card-header">
+                          List
+                        </div>
+                        <div class="card-body">
+                          @if (session('status'))
                           <div class="alert alert-success" role="alert">
                               {{ session('status') }}
                           </div>
-                      @endif
-                      <div class="table-responsive">
-                          <table style="width:100%;" class="table">
-                              <thead>
-                              <tr>
-                                  <th>Name</th>
-                                  <th>City</th>
-                                  <th>Street</th>
-                                  <th style="width: 20%;">Options</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              @forelse($groups as $group)
-                                  <tr>
-                                      <td>{{$group->name}}</td>
-                                      <td>{{$group->city}}</td>
-                                      <td>{{$group->street}}</td>
-                                      <td>
-                                          <ul id="optionen">
-                                              <li><a href="{{route('group.show',$group->id)}}"><i class="fas fa-eye fa-lg icon"></i></a></li>
-                                              <li><a href="{{route('group.edit', $group->id)}}"><i class="fas fa-pencil-alt fa-lg icon"></i></a></li>
-                                              <li><a href="javascript: return false;" data-toggle="modal" data-target="#exampleModal" id='{{ route('group.destroy', $group->id) }}' class="delete"><i class="fas fa-trash-alt fa-lg icon" style="color: red;"></i></a></li>
-                                          </ul>
-                                      </td>
-                                  </tr>
-                              @empty
-                                  <tr>No Group</tr>
-                              @endforelse
-                              </tbody>
-                          </table>
-                          @if($groups)
-                            <div class="text-center">
-                              {!! $groups->render() !!}
-                            </div>
                           @endif
+                          <div class="table-responsive">
+                              <table style="width:100%;" class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>Name</th>
+                                      <th>City</th>
+                                      <th>Street</th>
+                                      <th style="width: 20%;">Options</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  @forelse($groups as $group)
+                                      <tr>
+                                          <td>{{$group->name}}</td>
+                                          <td>{{$group->city}}</td>
+                                          <td>{{$group->street}}</td>
+                                          <td>
+                                              <ul id="optionen">
+                                                  <li><a href="{{route('group.show',$group->id)}}"><i class="fas fa-eye fa-lg icon"></i></a></li>
+                                                  <li><a href="{{route('group.edit', $group->id)}}"><i class="fas fa-pencil-alt fa-lg icon"></i></a></li>
+                                                  <li><a href="javascript: return false;" data-toggle="modal" data-target="#exampleModal" id='{{ route('group.destroy', $group->id) }}' class="delete"><i class="fas fa-trash-alt fa-lg icon" style="color: red;"></i></a></li>
+                                              </ul>
+                                          </td>
+                                      </tr>
+                                  @empty
+                                      <tr>No Group</tr>
+                                  @endforelse
+                                  </tbody>
+                              </table>
+                              @if($groups)
+                                <div class="text-center">
+                                  {!! $groups->render() !!}
+                                </div>
+                              @endif
+                          </div>
+                        </div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>

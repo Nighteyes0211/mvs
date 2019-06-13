@@ -28,7 +28,7 @@
                 <div class="card-body">
 
                   <div class="row">
-                    <div class="col-4">      
+                    <div class="col-3">      
                         <div id="accordion">
                           <div class="card">
                             <div class="card-header" id="headingOne">
@@ -73,48 +73,55 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-8">
-                      @if (session('status'))
-                          <div class="alert alert-success" role="alert">
-                              {{ session('status') }}
-                          </div>
-                      @endif
-
-
-                      <h3>Alle Benutzer</h3>
-                      <div class="table-responsive">
-                          <table style="width:100%;" class="table">
-                              <thead>
-                              <tr>
-                                  <th>Vorname</th>
-                                  <th>E-Mail</th>
-                                  <th style="width: 20%;">Optionen</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              @forelse($users as $user)
-                                  <tr>
-                                      <td>{{$user->name}}</td>
-                                      <td>{{$user->email}}</td>
-
-                                      <td>
-                                          <ul id="optionen">
-                                              <li><a href="{{route('user.show' ,$user->id)}}"><i class="fas fa-eye fa-lg icon"></i></a></li>
-                                              <li><a href="{{route('user.edit' ,$user->id)}}"><i class="fas fa-pencil-alt fa-lg icon"></i></a></li>
-                                              <li><a href="javascript: return false;" data-toggle="modal" data-target="#exampleModal" id='{{route('user.destroy' ,$user->id)}}' class="delete"><i class="fas fa-trash-alt fa-lg icon" style="color: red;"></i></a></li>
-                                          </ul>
-                                      </td>
-                                  </tr>
-                              @empty
-                                  <tr>No Group</tr>
-                              @endforelse
-                              </tbody>
-                          </table>
-                          @if($users)
-                            <div class="text-center">
-                              {!! $users->render() !!}
-                            </div>
+                    <div class="col-9">
+                      <div class="card">
+                        <div class="card-header">
+                          List User
+                        </div>
+                        <div class="card-body">
+                          @if (session('status'))
+                              <div class="alert alert-success" role="alert">
+                                  {{ session('status') }}
+                              </div>
                           @endif
+
+
+                          <h3>Alle Benutzer</h3>
+                          <div class="table-responsive">
+                              <table style="width:100%;" class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>Vorname</th>
+                                      <th>E-Mail</th>
+                                      <th style="width: 20%;">Optionen</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  @forelse($users as $user)
+                                      <tr>
+                                          <td>{{$user->name}}</td>
+                                          <td>{{$user->email}}</td>
+
+                                          <td>
+                                              <ul id="optionen">
+                                                  <li><a href="{{route('user.show' ,$user->id)}}"><i class="fas fa-eye fa-lg icon"></i></a></li>
+                                                  <li><a href="{{route('user.edit' ,$user->id)}}"><i class="fas fa-pencil-alt fa-lg icon"></i></a></li>
+                                                  <li><a href="javascript: return false;" data-toggle="modal" data-target="#exampleModal" id='{{route('user.destroy' ,$user->id)}}' class="delete"><i class="fas fa-trash-alt fa-lg icon" style="color: red;"></i></a></li>
+                                              </ul>
+                                          </td>
+                                      </tr>
+                                  @empty
+                                      <tr>No Group</tr>
+                                  @endforelse
+                                  </tbody>
+                              </table>
+                              @if($users)
+                                <div class="text-center">
+                                  {!! $users->render() !!}
+                                </div>
+                              @endif
+                          </div>
+                        </div>
                       </div>
                     </div>
               </div>
