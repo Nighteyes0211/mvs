@@ -50,6 +50,7 @@ Route::get('/setgroupleader', 'GroupController@update');
 
 Route::get('/checklist', 'ChecklistController@index')->name('checklist');
 Route::post('/checklist', 'ChecklistController@store')->name('checklist');
+Route::post('/checklistCategory', 'ChecklistController@checklistCategory')->name('checklistCategory');
 Route::post('/checklistUpdate', 'ChecklistController@update')->name('checklistUpdate');
 Route::post('/kundenChecklist', 'ChecklistController@kundenChecklist')->name('kundenChecklist');
 Route::post('/deleteChecklist', 'ChecklistController@delete')->name('deleteChecklist');

@@ -5,6 +5,7 @@ namespace MVS\Http\Controllers;
 use Illuminate\Http\Request;
 use MVS\Http\Controllers\Controller;
 use MVS\Checklist;
+use MVS\checklistCategory;
 use MVS\Kunden;
 use MVS\group;
 use MVS\user;
@@ -26,7 +27,18 @@ class ChecklistController extends Controller
       ]);
       Checklist::create([
         'body'=>$request->body,
-        'category'=>$request->category,
+        'category_id'=>$request->category,
+        'is_active'=>1,
+      ]);
+      return redirect()->route('checklist');
+    }    
+    public function checklistCategory(Request $request)
+    {
+      $this->validate($request, [
+          'name' => 'required|max:190',
+      ]);
+      checklistCategory::create([
+        'name'=>$request->name,
         'is_active'=>1,
       ]);
       return redirect()->route('checklist');
@@ -41,7 +53,7 @@ class ChecklistController extends Controller
       if($checklist) {
         $checklist->update([
           'body'=>$request->body,
-        'category'=>$request->category,
+          'category_id'=>$request->category,
         ]);
       }
       return redirect()->route('checklist');
