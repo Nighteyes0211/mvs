@@ -16,6 +16,10 @@
 #optionen li:first-child {
   margin: 0px 10px 0px 0px
 }
+.active {
+  color: red !important;
+}
+
 </style>
 
 @section('content')
@@ -36,54 +40,112 @@
                     was möchtest du erledigen?</p>
 
                     <div class="row">
-                      <div class="col-6" style="margin: auto">
-                          <h3>Unterlagen Checkliste</h3>
-                          <form class="w-100" action="{{route('checklist')}}" method="post">
-                            @csrf
-                            <div class=" row">
-                              <div class="col-8">
-                                <input type="text" name="body" value="{{old('body')}}" class="form-control" style="margin-bottom: 15px" placeholder="">
-                                @if ($errors->has('body'))
-                                    <span class="alert">
-                                        <strong>{{ $errors->first('body') }}</strong>
-                                    </span>
-                                @endif
+                        <div class="col-3">      
+                          <div id="accordion">
+                            <div class="card">
+                              <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Gruppen
+                                  </button>
+                                </h5>
                               </div>
-                              <div class="col-4">
-                                <select class="custom-select" name="category">
-                                  @foreach($checklistCategory as $category)
-                                  <option value="{{$category->id}}">{{$category->name}}</option>
-                                  @endforeach
-                                </select>
-                                <p class="w-100 text-center"><a href="javascript:void(0)" class=" btn-sm w-100" data-toggle="modal" data-target="#manageCategoryModal">Manage Category</a></p>
+
+                              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                  <a class="d-block w-100 " href="{{ url('headmin/group') }}" style="padding: .25rem 1.5rem;">
+                                      Gruppen Anzeigen
+                                  </a>
+                                  <a class="d-block w-100" href="{{ url('headmin/group/create') }}" style="padding: .25rem 1.5rem;">
+                                      Neue Gruppe hinzufügen
+                                  </a>
+                                </div>
                               </div>
                             </div>
-                            <p class="text-right p-10 mb-5"><button class="btn btn-primary">Neuen Punkt hinzufügen</button></p>
-                          </form>
-                          <ul>
-                            @foreach($checklists as $checklist)
-                            <li class="form-control mb-2">
-                                <div class="row checklist-item">
-                                  <div class="col-8">
-                                    <span>{{$checklist->body}}</span> | 
-                                    <span>{{$checklist->category? $checklist->category->name : ''}}</span>
-                                  </div>
-                                  <div class="col-4 text-right">
-                                      <a href="javascript:void(0)" data-id="{{$checklist->id}}" data-body="{{$checklist->body}}" data-category='{{$checklist->category}}' onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> bearbeiten</a> |
-                                      <a href="javascript:void(0)" data-id="{{$checklist->id}}" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> löschen</a>
+                            <div class="card">
+                              <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Benutzer
+                                  </button>
+                                </h5>
+                              </div>
+                              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                  <div class=" dropdown-menu-right">
+                                      <a class="d-block w-100" href="{{ url('headmin/user') }}" style="padding: .25rem 1.5rem;">
+                                          Benutzer Anzeigen
+                                      </a>
+                                      <a class="d-block w-100" href="{{ url('headmin/user/create') }}" style="padding: .25rem 1.5rem;">
+                                          Neuen Benutzer hinzufügen
+                                      </a>
                                   </div>
                                 </div>
-                            </li>
-                            @endforeach
-                          </ul>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                  <a class="btn btn-link active" href="{{ url('checklist') }}">
+                                    Checkliste
+                                  </a>
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="col-9" style="margin: auto">
+                          <div class="card">
+                            <div class="card-header">
+                              <h3>This page is for Checkliste...</h3>
+                            </div>
+                            <div class="card-body">
+                              <h3>Unterlagen Checkliste</h3>
+                              <form class="w-100" action="{{route('checklist')}}" method="post">
+                                @csrf
+                                <div class=" row">
+                                  <div class="col-8">
+                                    <input type="text" name="body" value="{{old('body')}}" class="form-control" style="margin-bottom: 15px" placeholder="">
+                                    @if ($errors->has('body'))
+                                        <span class="alert">
+                                            <strong>{{ $errors->first('body') }}</strong>
+                                        </span>
+                                    @endif
+                                  </div>
+                                  <div class="col-4">
+                                    <select class="custom-select" name="category">
+                                      @foreach($checklistCategory as $category)
+                                      <option value="{{$category->id}}">{{$category->name}}</option>
+                                      @endforeach
+                                    </select>
+                                    <p class="w-100 text-center"><a href="javascript:void(0)" class=" btn-sm w-100" data-toggle="modal" data-target="#manageCategoryModal">Manage Category</a></p>
+                                  </div>
+                                </div>
+                                <p class="text-right p-10 mb-5"><button class="btn btn-primary">Neuen Punkt hinzufügen</button></p>
+                              </form>
+                              <ul>
+                                @foreach($checklists as $checklist)
+                                <li class="form-control mb-2">
+                                    <div class="row checklist-item">
+                                      <div class="col-8">
+                                        <span>{{$checklist->body}}</span> | 
+                                        <span>{{$checklist->category? $checklist->category->name : ''}}</span>
+                                      </div>
+                                      <div class="col-4 text-right">
+                                          <a href="javascript:void(0)" data-id="{{$checklist->id}}" data-body="{{$checklist->body}}" data-category='{{$checklist->category}}' onclick="editFunction(this)"><i class="fas fa-pencil-alt"></i> bearbeiten</a> |
+                                          <a href="javascript:void(0)" data-id="{{$checklist->id}}" onclick="deleteFunction(this)"><i class="fas fa-trash"></i> löschen</a>
+                                      </div>
+                                    </div>
+                                </li>
+                                @endforeach
+                              </ul>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                  </div>
+                </div>
             </div>
-
-        <div class="container">
-
-
-        </div>
     </div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
