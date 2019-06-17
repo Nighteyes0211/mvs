@@ -97,10 +97,9 @@
                       <div class="col-9" style="margin: auto">
                           <div class="card">
                             <div class="card-header">
-                              <h3>This page is for Checkliste...</h3>
+                              <h3>Checkliste bearbeiten</h3>
                             </div>
                             <div class="card-body">
-                              <h3>Unterlagen Checkliste</h3>
                               <form class="w-100" action="{{route('checklist')}}" method="post">
                                 @csrf
                                 <div class=" row">
@@ -118,7 +117,7 @@
                                       <option value="{{$category->id}}">{{$category->name}}</option>
                                       @endforeach
                                     </select>
-                                    <p class="w-100 text-center"><a href="javascript:void(0)" class=" btn-sm w-100" data-toggle="modal" data-target="#manageCategoryModal">Manage Category</a></p>
+                                    <p class="w-100 text-center"><a href="javascript:void(0)" class=" btn-sm w-100" data-toggle="modal" data-target="#manageCategoryModal">Kategorien bearbeiten</a></p>
                                   </div>
                                 </div>
                                 <p class="text-right p-10 mb-5"><button class="btn btn-primary">Neuen Punkt hinzufügen</button></p>
@@ -176,7 +175,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="categoryModalLabel">Manage Category</h5>
+        <h5 class="modal-title" id="categoryModalLabel">Kategorien</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -186,10 +185,10 @@
             {{ csrf_field() }}
             <div class="row">
               <div class="col-8">                
-                <input type="text" class="form-control" placeholder="category" name="name">
+                <input type="text" class="form-control" placeholder="Kategorie" name="name">
               </div>
               <div class="col-4">                
-                <button type="submit" class="btn btn-primary mb-2">Add Category</button>
+                <button type="submit" class="btn btn-primary mb-2">Neue Kategorie</button>
               </div>
             </div>
         </form>
@@ -229,7 +228,7 @@
             {{ csrf_field() }}
             <div class="row">
               <div class="col-8">                
-                <input type="text" class="form-control" placeholder="category" name="name">
+                <input type="text" class="form-control" placeholder="Kategorie" name="name">
               </div>
               <div class="col-4">                
                 <button type="submit" class="btn btn-primary mb-2">Add Category</button>
