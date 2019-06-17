@@ -85,26 +85,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item"><a class="nav-link" href="{{ url('/headmin') }}">Dashboard</a></li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Gruppen</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('headmin/group') }}">
-                                    Gruppen Anzeigen
-                                </a>
-                                <a class="dropdown-item" href="{{ url('headmin/group/create') }}">
-                                    Neue Gruppe hinzufügen
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Benutzer</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('headmin/user') }}">
-                                    Benutzer Anzeigen
-                                </a>
-                                <a class="dropdown-item" href="{{ url('headmin/user/create') }}">
-                                    Neuen Benutzer hinzufügen
-                                </a>
-                            </div>
-                        </li>
+                       
                         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Kunden</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <!-- <a class="dropdown-item" href="/showcustomer/{{0}}">
