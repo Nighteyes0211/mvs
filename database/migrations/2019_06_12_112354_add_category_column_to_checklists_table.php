@@ -25,8 +25,12 @@ class AddCategoryColumnToChecklistsTable extends Migration
      */
     public function down()
     {
-        Schema::table('checklists', function (Blueprint $table) {
-            $table->dropColumn('category');
-        });
+        if (Schema::hasColumn('checklists', 'category'))
+        {            
+            Schema::table('checklists', function (Blueprint $table)
+            {
+                $table->dropColumn('category');
+            });
+        }
     }
 }

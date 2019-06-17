@@ -27,53 +27,106 @@
                 <div class="card-header">List Group</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <div class="table-responsive">
-                        <table style="width:100%;" class="table">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>City</th>
-                                <th>Street</th>
-                                <th style="width: 15%;">Options</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @forelse($groups as $group)
-                                <tr>
-                                    <td>{{$group->name}}</td>
-                                    <td>{{$group->city}}</td>
-                                    <td>{{$group->street}}</td>
-                                    <td>
-                                        <ul id="optionen">
-                                            <li><a href="{{route('group.show',$group->id)}}"><i class="fas fa-eye fa-lg icon"></i></a></li>
-                                            <li><a href="{{route('group.edit', $group->id)}}"><i class="fas fa-pencil-alt fa-lg icon"></i></a></li>
-                                            <li><a href="javascript: return false;" data-toggle="modal" data-target="#exampleModal" id='{{ route('group.destroy', $group->id) }}' class="delete"><i class="fas fa-trash-alt fa-lg icon" style="color: red;"></i></a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>No Group</tr>
-                            @endforelse
-                            </tbody>
-                        </table>
-                        @if($groups)
-                          <div class="text-center">
-                            {!! $groups->render() !!}
+
+                  <div class="row">
+                    <div class="col-3">      
+                        <div id="accordion">
+                          <div class="card">
+                            <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  Gruppen
+                                </button>
+                              </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                              <div class="card-body">
+                                <a class="d-block w-100 card-header" href="{{ url('headmin/group') }}" style="padding: .25rem 1.5rem;">
+                                    Gruppen Anzeigen
+                                </a>
+                                <a class="d-block w-100" href="{{ url('headmin/group/create') }}" style="padding: .25rem 1.5rem;">
+                                    Neue Gruppe hinzufügen
+                                </a>
+                              </div>
+                            </div>
                           </div>
-                        @endif
+                          <div class="card">
+                            <div class="card-header" id="headingTwo">
+                              <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  Benutzer
+                                </button>
+                              </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                              <div class="card-body">
+                                <div class=" dropdown-menu-right">
+                                    <a class="d-block w-100" href="{{ url('headmin/user') }}" style="padding: .25rem 1.5rem;">
+                                        Benutzer Anzeigen
+                                    </a>
+                                    <a class="d-block w-100" href="{{ url('headmin/user/create') }}" style="padding: .25rem 1.5rem;">
+                                        Neuen Benutzer hinzufügen
+                                    </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
-
-
+                    <div class="col-9">
+                      <div class="card">
+                        <div class="card-header">
+                          List
+                        </div>
+                        <div class="card-body">
+                          @if (session('status'))
+                          <div class="alert alert-success" role="alert">
+                              {{ session('status') }}
+                          </div>
+                          @endif
+                          <div class="table-responsive">
+                              <table style="width:100%;" class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>Name</th>
+                                      <th>City</th>
+                                      <th>Street</th>
+                                      <th style="width: 20%;">Options</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  @forelse($groups as $group)
+                                      <tr>
+                                          <td>{{$group->name}}</td>
+                                          <td>{{$group->city}}</td>
+                                          <td>{{$group->street}}</td>
+                                          <td>
+                                              <ul id="optionen">
+                                                  <li><a href="{{route('group.show',$group->id)}}"><i class="fas fa-eye fa-lg icon"></i></a></li>
+                                                  <li><a href="{{route('group.edit', $group->id)}}"><i class="fas fa-pencil-alt fa-lg icon"></i></a></li>
+                                                  <li><a href="javascript: return false;" data-toggle="modal" data-target="#exampleModal" id='{{ route('group.destroy', $group->id) }}' class="delete"><i class="fas fa-trash-alt fa-lg icon" style="color: red;"></i></a></li>
+                                              </ul>
+                                          </td>
+                                      </tr>
+                                  @empty
+                                      <tr>No Group</tr>
+                                  @endforelse
+                                  </tbody>
+                              </table>
+                              @if($groups)
+                                <div class="text-center">
+                                  {!! $groups->render() !!}
+                                </div>
+                              @endif
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>
