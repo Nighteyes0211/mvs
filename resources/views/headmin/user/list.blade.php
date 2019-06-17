@@ -79,7 +79,7 @@
                           <div class="card">
                             <div class="card-header" id="headingThree">
                               <h5 class="mb-0">
-                                <a class="btn btn-link" href="{{ url('checklist') }}">
+                                <a class="btn btn-link" href="{{ url('headmin/checklist') }}">
                                   Checkliste
                                 </a>
                               </h5>

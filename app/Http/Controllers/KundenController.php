@@ -210,8 +210,9 @@ class KundenController extends Controller
             // dd($request->angebotdate);
             $usedCardId = [];
             foreach ($calData as $value) {
-                if( array_key_exists('enabled', $value)) $enabled =1;
-                else  $enabled =0;
+                // if( array_key_exists('enabled', $value)) $enabled =1;
+                // else  $enabled =0;
+                $enabled = 1;
                 // 11 fields
                 if(isset($value['id']) && $value['id'] != null && $value['id'] > 0){
                     $calCheck = DB::table('calculation')->where('id', $value['id'])->get()->first();
