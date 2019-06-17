@@ -48,13 +48,16 @@ Route::get('/deleteuser/{id}', 'UserController@destroy');
 Route::get('/edituser/{id}', 'UserController@edit');
 Route::get('/setgroupleader', 'GroupController@update');
 
-Route::get('/checklist', 'ChecklistController@index')->name('checklist');
-Route::post('/checklist', 'ChecklistController@store')->name('checklist');
-Route::post('/checklistCategory', 'ChecklistController@checklistCategory')->name('checklistCategory');
-Route::post('/checklistUpdate', 'ChecklistController@update')->name('checklistUpdate');
-Route::post('/kundenChecklist', 'ChecklistController@kundenChecklist')->name('kundenChecklist');
-Route::post('/deleteChecklist', 'ChecklistController@delete')->name('deleteChecklist');
-Route::post('/deleteChecklistCategory', 'ChecklistController@deleteCategory')->name('deleteChecklistCategory');
+Route::middleware(['auth', 'status'])->prefix('headmin')->group(function () {    
+    Route::get('/checklist', 'ChecklistController@index')->name('checklist');
+    Route::post('/checklist', 'ChecklistController@store')->name('checklist');
+    Route::post('/checklistCategory', 'ChecklistController@checklistCategory')->name('checklistCategory');
+    Route::post('/checklistUpdate', 'ChecklistController@update')->name('checklistUpdate');
+    Route::post('/kundenChecklist', 'ChecklistController@kundenChecklist')->name('kundenChecklist');
+    Route::post('/deleteChecklist', 'ChecklistController@delete')->name('deleteChecklist');
+    Route::post('/deleteChecklistCategory', 'ChecklistController@deleteCategory')->name('deleteChecklistCategory');
+
+});
 
         //
         //
