@@ -84,7 +84,7 @@
     <span>{{ $kunden->vorname }} {{ $kunden->nachname }}</span>
     <hr class="labels-line"/>
     <i>Ihr Berater</i><br/>
-    <span>Lorem Ipsum</span>
+    <span>{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
     <hr class="labels-line"/>
     <i>Angebotsdatum</i><br/>
     <span>{{ date('d.m.Y', strtotime($angebotedate->angebotdate)) }}</span>
@@ -440,9 +440,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @if($key > date('Y'))
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$key}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}} €</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}} €</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}} €</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}} </td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}} </td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}}</td>
                     </tr>
                     @endif
                     @endforeach
