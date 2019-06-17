@@ -80,14 +80,14 @@
     <div style="background-color: white; z-index: 2;width: 400px; height: 100px;position:absolute;right:-80px;top:-80px;" ></div>
     <img src="img/bg-newscreen.jpg" style="position:absolute;top: -60px;margin:0 auto;width:94%;" >
     <div style="z-index: 2;width: 260px;position:absolute;left:55px;top:200px;font-size:14px;" >
-    <i>Heading Ipsum</i><br/>
-    <span>Lorem Ipsum</span>
+    <i>Finanzierungskonzept für</i><br/>
+    <span>{{ $kunden->vorname }} {{ $kunden->nachname }}</span>
     <hr class="labels-line"/>
-    <i>Heading Ipsum</i><br/>
-    <span>Lorem Ipsum</span>
+    <i>Ihr Berater</i><br/>
+    <span>{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
     <hr class="labels-line"/>
-    <i>Heading Ipsum</i><br/>
-    <span>Lorem Ipsum</span>
+    <i>Angebotsdatum</i><br/>
+    <span>{{ date('d.m.Y', strtotime($angebotedate->angebotdate)) }}</span>
     <hr class="labels-line"/>
     </div> </p>
     <br/>
@@ -440,9 +440,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @if($key > date('Y'))
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$key}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}} €</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}} €</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}} €</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}} </td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}} </td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}}</td>
                     </tr>
                     @endif
                     @endforeach
