@@ -9,6 +9,11 @@
 
 <style type="text/css">
 
+#button_edit a {
+    color: #fff !important;
+}
+
+
 .check {
   cursor: pointer;
   position: relative;
@@ -285,6 +290,11 @@
 
 @section('content')
 
+
+
+
+
+
     <form id="kunden_edit_form" method="post" action="{{route('kunden.update',$kunden->id)}}">
 
         <input type="hidden" id="new_form_controller" value="0">
@@ -437,7 +447,15 @@
                     <input type="hidden" id="timelineChecker" name="timelineChecker" value="0" />
                     <button type="submit" class="btn btn-primary">Kunden aktualisieren</button>
 
+
                     <hr>
+
+
+
+<div id="button_edit" style="position: fixed; right: 0px; margin-top: -70px; z-index: 111111; ">
+            <li class="nav-item"><a href="{{route('kunden.show',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden ansehen</a></li>
+</div>
+
 
                     <a onclick="addNewCalc()" href="Javascript:void(0)" class="btn btn-primary">Kalkulation hinzufügen</a>
 
@@ -594,7 +612,7 @@
 
                                                     <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Zeitstrahl entfernen</a>
                                                     @else
-                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Zeitstrahl hinzufügen</a>
+                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -758,8 +776,7 @@
                         @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
                         <div class="col-6" id="ehepartnerChecklist" style="display: {{$checklistEnable}}">
                             <h4>Checkliste (Ehepartner)</h4>
-                            <p>Folgende Unterlagen müssen eingereicht werden:</p>
-                            <h5>Persönliche Unterlagen</h5>
+                            <p>Folgende Unterlagen müssen eingereicht werden:</p>A
                             <div class="row">
 
                               @foreach($checklistCategory as $category)
@@ -826,7 +843,6 @@
             </div>
         </div>
     </div>
-
 
 
 

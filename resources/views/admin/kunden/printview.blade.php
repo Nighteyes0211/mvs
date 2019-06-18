@@ -450,46 +450,30 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
         </div>
         @if(count($kunden->checklists)>0)
         <div>
-            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Folgende Unterlagen werden benötigt</h3>
-            <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
-                <thead>
-                  <tr style="background: #a2a5aa;font-weight: bold;">
-                  </tr>
-                </thead>
-
-                <tbody>
+            <h3 id="" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Folgende Unterlagen werden benötigt</h3>
+            
                     @php($i=1)
+                    <ul>
                     @foreach($kunden->checklists as $checklist)
-                    <tr>
-                        <td>{{$i++}}</td>
-                        <td>{{$checklist->body}}</td>
-                    </tr>
+                    <li>
+                        <!-- {{$i++}} -->
+                        {{$checklist->body}}
+                    </li>
                     @endforeach
-                </tbody>
-            </table>
         </div>
         @endif
         @if(count($kunden->ehepartnerChecklists)>0)
         <div>
-            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1,2em;">Checkliste (Ehepartner)</h3>
-            <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
-                <thead>
-                  <tr style="background: #a2a5aa;font-weight: bold;">
-                      <th>S/L</th>
-                      <th>List item</th>
-                  </tr>
-                </thead>
-
-                <tbody>
+            <h3 id="" style="color:#28367b; font-size: 1,2em;">Checkliste (Ehepartner)</h3>
+                <ul>
                     @php($i=1)
                     @foreach($kunden->ehepartnerChecklists as $checklist)
-                    <tr>
-                        <td>{{$i++}}</td>
-                        <td>{{$checklist->body}}</td>
-                    </tr>
+                    <li>
+                        <!-- {{$i++}} -->
+                        {{$checklist->body}}
+                    </li>
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
             <br>
         </div>
         @endif
