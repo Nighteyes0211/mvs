@@ -82,6 +82,7 @@
         $(document).ready(function(){
             $('.new_form').hide();
             $('.ten_fields').hide();
+            $('.ct_fields').hide();
 
             $('#add_calcualtion_form').click(function(){
                 $('.new_form').show();
@@ -106,9 +107,8 @@
             $('.isTM-'+cardNo).val(1);
 
             var timeLinerBtnText = $('.addTimeLiner-'+cardNo).text();
-
-            if ( timeLinerBtnText == "Zeitstrahl hinzufügen" ) {
-                $('.addTimeLiner-'+cardNo).text('Zeitstrahl entfernen');
+            if ( timeLinerBtnText == "Baufi Zeitstrahl hinzufügen" ) {
+                $('.addTimeLiner-'+cardNo).text('Baufi Zeitstrahl entfernen');
                 $('.addTimeLiner-'+cardNo).removeClass('btn-primary');
                 $('.addTimeLiner-'+cardNo).addClass('btn-danger');
 
@@ -166,11 +166,61 @@
                                     $('.thisTimeline-'+cardNo).html(timeLiner);
             }
 
-            else if ( timeLinerBtnText == "Zeitstrahl entfernen" ) {
-                $('.addTimeLiner-'+cardNo).text('Zeitstrahl hinzufügen');
+            else if ( timeLinerBtnText == "Baufi Zeitstrahl entfernen" ) {
+                $('.addTimeLiner-'+cardNo).text('Baufi Zeitstrahl hinzufügen');
                 $('.addTimeLiner-'+cardNo).removeClass('btn-danger');
                 $('.addTimeLiner-'+cardNo).addClass('btn-primary');
                 $('.thisTimeline-'+cardNo).html('');
+            }
+        }
+
+        function openCtTimeLine(cardNo){
+            $('.ct_fields-'+cardNo).show();
+            $('.isTM-'+cardNo).val(1);
+
+            var ctTimeLinerBtnText = $('.addCtTimeLiner-'+cardNo).text();
+            if ( ctTimeLinerBtnText == "Angepasster Zeitstrahl hinzufügen" ) {
+                $('.addCtTimeLiner-'+cardNo).text('Angepasster Zeitstrahl entfernen');
+                $('.addCtTimeLiner-'+cardNo).removeClass('btn-primary');
+                $('.addCtTimeLiner-'+cardNo).addClass('btn-danger');
+
+                var ctTimeLiner = `<div class="row ct_fields-`+cardNo+` mt-35">
+                                        <div class="col-sm-12">
+                                            <h5>Zeitstrahl Phase 1 (Angepasster)</h5>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label>Darlehen</label>
+                                            <input type="text" name="Cal[`+cardNo+`][customerTimeline][darlehen]" class="form-control" placeholder="" value="" required>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label>Zinsstaz</label>
+                                            <input type="text" name="Cal[`+cardNo+`][customerTimeline][zinsstaz]" class="form-control" placeholder="" value="" required>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label>Tilgung</label>
+                                            <input type="text" name="Cal[`+cardNo+`][customerTimeline][tilgung]" class="form-control" placeholder="" value="" required>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label>Laufzeit</label>
+                                            <input type="text" name="Cal[`+cardNo+`][customerTimeline][laufzeit]" class="form-control" placeholder="" value="" required>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label>Rate monatl</label>
+                                            <input type="text" name="Cal[`+cardNo+`][customerTimeline][rate_monatl]" class="form-control" placeholder="" value="" required>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label>Restschuld</label>
+                                            <input type="text" name="Cal[`+cardNo+`][customerTimeline][restschuld]" class="form-control" placeholder="" value="" required>
+                                        </div>
+                                    </div>`;
+                                    $('.thisCtTimeline-'+cardNo).html(ctTimeLiner);
+            }
+
+            else if ( ctTimeLinerBtnText == "Angepasster Zeitstrahl entfernen" ) {
+                $('.addCtTimeLiner-'+cardNo).text('Angepasster Zeitstrahl hinzufügen');
+                $('.addCtTimeLiner-'+cardNo).removeClass('btn-danger');
+                $('.addCtTimeLiner-'+cardNo).addClass('btn-primary');
+                $('.thisCtTimeline-'+cardNo).html('');
             }
         }
 
@@ -274,12 +324,14 @@
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <input type="hidden" class="isTM-`+cardNo+`"  name="Cal[`+cardNo+`][istm]" value="0">
-                                                <a onclick="openTimeLine(`+cardNo+`)" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-`+cardNo+`">Zeitstrahl hinzufügen</a>
+                                                <a onclick="openTimeLine(`+cardNo+`)" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-`+cardNo+`">Baufi Zeitstrahl hinzufügen</a>
+                                                <a onclick="openCtTimeLine(`+cardNo+`)" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-`+cardNo+`">Angepasster Zeitstrahl hinzufügen</a>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="thisTimeline-`+cardNo+`"></div>
+                                    <div class="thisCtTimeline-`+cardNo+`"></div>
                                 </div>
                             </div>
                         </div>`;
@@ -609,10 +661,15 @@
                                                     <input type="hidden" name="Cal[{{$cIndex}}][id]" value="{{$cal->id}}">
                                                     <input type="hidden" class="isTM-{{$cIndex}}"  name="Cal[{{$cIndex}}][istm]" value="0">
                                                     @if(isset($cal->timeline->id))
-
-                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Zeitstrahl entfernen</a>
+                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl entfernen</a>
                                                     @else
                                                     <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
+                                                    @endif
+
+                                                    @if(isset($cal->customerTimeline->id))
+                                                    <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl entfernen</a>
+                                                    @else
+                                                    <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -620,7 +677,7 @@
 
                                         <div class="thisTimeline-{{$cIndex}}">
                                             @if(isset($cal->timeline->id))
-                                            <input type="hidden" name="Cal[{{$cIndex}}][timeline][id]" value="{{$cal->timeline->id}}">
+                                                <input type="hidden" name="Cal[{{$cIndex}}][timeline][id]" value="{{$cal->timeline->id}}">
                                                 <div class="row ten_fields-{{$cIndex}} mt-35">
                                                     <div class="col-sm-12">
                                                         <h5>Zeitstrahl Phase 1</h5>
@@ -672,6 +729,41 @@
                                                         <input type="text" id="restschuld_ende" name="Cal[{{$cIndex}}][timeline][restschuld_ende]" class="form-control" placeholder="Jahre" value="{{$cal->timeline->restschuld_ende}}" required>
                                                     </div>
                                                 </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="thisCtTimeline-{{$cIndex}}">
+                                            @if(isset($cal->customerTimeline->id))
+                                                <input type="hidden" name="Cal[{{$cIndex}}][customerTimeline][id]" value="{{$cal->customerTimeline->id}}">
+                                                <div class="row ct_fields-{{$cIndex}} mt-35">
+                                                    <div class="col-sm-12">
+                                                        <h5>Zeitstrahl Phase 1 (Angepasster)</h5>
+                                                    </div>
+                                                    <div class="col-sm-3 form-group">
+                                                        <label>Darlehen</label>
+                                                        <input type="text" name="Cal[{{$cIndex}}][customerTimeline][darlehen]" class="form-control" placeholder="" value="{{$cal->customerTimeline->darlehen}}" required>
+                                                    </div>
+                                                    <div class="col-sm-3 form-group">
+                                                        <label>Zinsstaz</label>
+                                                        <input type="text" name="Cal[{{$cIndex}}][customerTimeline][zinsstaz]" class="form-control" placeholder="" value="{{$cal->customerTimeline->zinsstaz}}" required>
+                                                    </div>
+                                                    <div class="col-sm-3 form-group">
+                                                        <label>Tilgung</label>
+                                                        <input type="text" name="Cal[{{$cIndex}}][customerTimeline][tilgung]" class="form-control" placeholder="" value="{{$cal->customerTimeline->tilgung}}" required>
+                                                    </div>
+                                                    <div class="col-sm-3 form-group">
+                                                        <label>Laufzeit</label>
+                                                        <input type="text" name="Cal[{{$cIndex}}][customerTimeline][laufzeit]" class="form-control" placeholder="" value="{{$cal->customerTimeline->laufzeit}}" required>
+                                                    </div>
+                                                    <div class="col-sm-3 form-group">
+                                                        <label>Rate monatl</label>
+                                                        <input type="text" name="Cal[{{$cIndex}}][customerTimeline][rate_monatl]" class="form-control" placeholder="" value="{{$cal->customerTimeline->rate_monatl}}" required>
+                                                    </div>
+                                                    <div class="col-sm-3 form-group">
+                                                        <label>Restschuld</label>
+                                                        <input type="text" name="Cal[{{$cIndex}}][customerTimeline][restschuld]" class="form-control" placeholder="" value="{{$cal->customerTimeline->restschuld}}" required>
+                                                    </div>
+                                                </div>                                                
                                             @endif
                                         </div>
 
@@ -776,7 +868,7 @@
                         @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
                         <div class="col-6" id="ehepartnerChecklist" style="display: {{$checklistEnable}}">
                             <h4>Checkliste (Ehepartner)</h4>
-                            <p>Folgende Unterlagen müssen eingereicht werden:</p>A
+                            <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
 
                               @foreach($checklistCategory as $category)
