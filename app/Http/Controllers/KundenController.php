@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use MVS\Angebote;
 use MVS\Kunden;
 use MVS\timeline;
+use MVS\CustomerTimeline;
 use Illuminate\Http\Request;
 use MVS\Repayment;
 use PDF;
@@ -172,6 +173,7 @@ class KundenController extends Controller
         $Calculations = DB::table('calculation')->where('kunden_id', $kunden->id)->get();
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
+            $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
         }
         
         $checklists = Checklist::latest()->get();
@@ -299,6 +301,37 @@ class KundenController extends Controller
                 else {
                     DB::table('timeline')->where('kundens_id', $request->segment(3))->where('calculation_id', $cid)->delete();
                 }
+
+
+                // customer timeline
+                if (isset($value['customerTimeline'])) {
+                    if(isset($value['customerTimeline']['id'])){
+                        $calCheckTm = CustomerTimeline::where('id', $value['customerTimeline']['id'])->where('calculation_id', $value['id'])->get()->first();
+                        if($calCheckTm != null){
+                            $calCheckTm->darlehen = $value['customerTimeline']['darlehen'];
+                            $calCheckTm->zinsstaz = $value['customerTimeline']['zinsstaz'];
+                            $calCheckTm->tilgung = $value['customerTimeline']['tilgung'];
+                            $calCheckTm->laufzeit = $value['customerTimeline']['laufzeit'];
+                            $calCheckTm->rate_monatl = $value['customerTimeline']['rate_monatl'];
+                            $calCheckTm->restschuld = $value['customerTimeline']['restschuld'];
+                            $calCheckTm->save();
+                        }
+                    } else {
+                        $customerTimeline = new CustomerTimeline;
+                        $customerTimeline->calculation_id = $cid;
+                        $customerTimeline->darlehen = $value['customerTimeline']['darlehen'];
+                        $customerTimeline->zinsstaz = $value['customerTimeline']['zinsstaz'];
+                        $customerTimeline->tilgung = $value['customerTimeline']['tilgung'];
+                        $customerTimeline->laufzeit = $value['customerTimeline']['laufzeit'];
+                        $customerTimeline->rate_monatl = $value['customerTimeline']['rate_monatl'];
+                        $customerTimeline->restschuld = $value['customerTimeline']['restschuld'];
+                        $customerTimeline->kundens_id = $request->segment(3);
+                        $customerTimeline->save();
+                    }
+                }
+                else {
+                    DB::table('customer_timelines')->where('kundens_id', $request->segment(3))->where('calculation_id', $cid)->delete();
+                }
             }
 
             DB::table('calculation')->where('kunden_id', $request->segment(3))->whereNotIn('id', $usedCardId)->delete();
@@ -380,6 +413,7 @@ class KundenController extends Controller
         $Calculations = DB::table('calculation')->where('kunden_id', $id)->get();
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $id)->where('calculation_id', $Calculation->id)->get()->first();
+            $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $id)->where('calculation_id', $Calculation->id)->get()->first();
         }
 
         if (is_null($last_offer)) {

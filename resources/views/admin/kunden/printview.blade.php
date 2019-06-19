@@ -360,7 +360,6 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     <br><br>
                                 </td>
                             </tr>
-
                         @else
                             <tr><td><strong></strong></td></tr>
                             <tr><td></td></tr>
@@ -373,20 +372,55 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             <tr><td></td></tr>
                             <tr><td></td></tr>
                             <tr><td></td></tr>
-                            {{-- <tr>
-                                <td><strong></strong></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr> --}}
+                        @endif
+                        @if ( $calculation->customerTimeline != null )
+                            <tr>
+                                <td>
+                                    <div class="uper_box">
+                                        <div class="container">
+                                            <table style="width: 100%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td style="font-size:10px; text-align: right; padding: 0 50px; ">{{ $calculation->customerTimeline->darlehen }}&euro;</td>
+                                                    <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
+                                                        <table style="width: 100%; border-spacing: 0">
+                                                            <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
+                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->laufzeit }} Jahre</p>
+                                                                </td>
+                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 13%;">
+                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->zinsstaz }}%</p>
+                                                                </td>
+                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->tilgung }} Jahre</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border: 4px solid #f1ac38; width: 100%; height: 70px;">
+                                                                <td style="text-align: center;width: 33.334%;font-size:10px" colspan="3">{{ $calculation->customerTimeline->rate_monatl }}&euro;</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td style="text-align: center;font-size:10px; width: 50px;"> </td>
+                                                    <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->customerTimeline->restschuld }}&euro;</span></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
 
+                                    <br><br>
+                                </td>
+                            </tr>
+                        @else
+                            <tr><td><strong></strong></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td></td></tr>
                         @endif
                         @php($i++)
                     @endforeach
