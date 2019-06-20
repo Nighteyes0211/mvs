@@ -97,10 +97,108 @@
                 $('.angebotdate').val($(this).val());
             });
 
+            $('#finanzierungsbedarf input').on('keypress change', function(e){
+                let _this = this;
+                setTimeout(function(){ 
+                    $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
+                    recalculate();
+                }, 200);
+            });
+
+            $('input[name="kostennotar"], input[name="grunderwerbssteuer"], input[name="maklerkosten"]').change(function(){
+                let _this = this;
+                setTimeout(function(){ 
+                    let val = $(_this).val();
+                    val = val.split('.').join('');
+                    val = val.split(',').join('.');
+                    val = parseFloat(val);
+                    if(val<0.01) val = '0,01';
+                    else if(val>30) val = '30';
+                    else val = val.toString();
+                    $(_this).val(formatNumbers(onlyNumbers(val)));
+                    recalculate();
+                }, 200);
+            });
+
             // Set angebotdate in edit more
             var angebotdate = $('.angebotdate').val();
             $('#angebotdate').val(angebotdate);
         });
+
+        function onlyNumbers(string) {
+            let number = '';
+            for(let i = 0; i<string.length; i++) {
+                if((string[i] >='0' && string[i] <= '9') || string[i] == '.' || string[i] == ',') {
+                    number+=string[i];
+                }
+            }
+            return number;
+        }
+
+        function formatNumbers(string) {
+            let number = '';
+            let firstComma = false;
+            let count = 0;
+            for(let i = string.length-1; i>=0; i--) {
+                if(string[i] == ',' && !firstComma) {
+                    firstComma = true;                    
+                    let temp = '';
+                    for(let j = 0; j <= number.length ; j++) {
+                        if (number[j] >='0' && number[j] <= '9') {
+                            temp += number[j];
+                        }
+                    }
+                    number = temp;
+                    number+=string[i];
+                    count = 0;
+                } else if (string[i] >='0' && string[i] <= '9') { 
+                    number+=string[i];
+                    count++;
+                }
+                if(count == 3 && i!=0) {
+                    count = 0;
+                    number+='.';
+                }
+            }
+            return number.split('').reverse().join('');
+        }
+
+        function recalculate() {
+            let kaufpreis = parseFloat($('input[name=kaufpreis]').val().replace(".", "").replace(",", "."));
+            if(isNaN(kaufpreis)) kaufpreis=0;
+
+            let kostenumbau = parseFloat($('input[name=kostenumbau]').val().replace(".", "").replace(",", "."));
+            if(isNaN(kostenumbau)) kostenumbau=0;
+
+            let kostennotar = parseFloat($('input[name=kostennotar]').val().replace(".", "").replace(",", "."));
+            if(isNaN(kostennotar)) kostennotar=0;
+
+            let grunderwerbssteuer = parseFloat($('input[name=grunderwerbssteuer]').val().replace(".", "").replace(",", "."));
+            if(isNaN(grunderwerbssteuer)) grunderwerbssteuer=0;
+
+            let maklerkosten = parseFloat($('input[name=maklerkosten]').val().replace(".", "").replace(",", "."));
+            if(isNaN(maklerkosten)) maklerkosten=0;
+
+            let eigenkapital = parseFloat($('input[name=eigenkapital]').val().replace(".", "").replace(",", "."));
+            if(isNaN(eigenkapital)) eigenkapital=0;
+
+            let calculatedGesamtkosten = kaufpreis + kostenumbau + kaufpreis*kostennotar/100.0 + kaufpreis*grunderwerbssteuer/100.0  + kaufpreis*maklerkosten/100.0;
+
+            if(calculatedGesamtkosten < eigenkapital) {
+                eigenkapital = calculatedGesamtkosten;
+                $('input[name=eigenkapital]').val(formatNumbers(eigenkapital.toString().replace(".", ",")));
+            }
+
+            let calculatedFinanzierungsbedarf = calculatedGesamtkosten - eigenkapital;
+            let plusMinus = calculatedFinanzierungsbedarf<0? '-':'';
+
+
+            calculatedGesamtkosten = calculatedGesamtkosten.toFixed(2).toString().replace(".", ",");
+            calculatedFinanzierungsbedarf = calculatedFinanzierungsbedarf.toFixed(2).toString().replace(".", ",");
+
+            $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
+            $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
+        }
 
         function openTimeLine(cardNo){
             $('.ten_fields-'+cardNo).show();
@@ -343,7 +441,15 @@
 @section('content')
 
 
-
+<?php 
+    function stringReplace($string, $from = '.', $to=',')
+    {
+        for ($i=0; $i < strlen($string); $i++) { 
+            if($string[$i] == $from) $string[$i] = $to;
+        }
+        return $string;
+    }
+?>
 
 
 
@@ -376,52 +482,91 @@
                     <h4>Baufinanzierungsdaten</h4>
                     <div class="form-group">
                         <label for="kaufpreis">Kaufpreis des Objekts</label>
-                        <input type="text" class="form-control" name="kaufpreis" id="kaufpreis"
-                               placeholder="{{ number_format($kunden->kaufpreis, 2, ',', '.') }}€" value="{{ $kunden->kaufpreis }}">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-right" name="kaufpreis" id="kaufpreis"
+                               placeholder="0.00" value="{{ stringReplace($kunden->kaufpreis, '.', ',') }}">                            
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="kostenumbau">Umbau/Modernisierung</label>
-                        <input type="text" class="form-control" name="kostenumbau" id="kostenumbau"
-                               placeholder="{{ number_format( $kunden->kostenumbau, 2, ',', '.') }}€" value="{{ $kunden->kostenumbau }}">
+                        <div class="input-group">                            
+                            <input type="text" class="form-control text-right" name="kostenumbau" id="kostenumbau"
+                               placeholder="0.00" value="{{ stringReplace($kunden->kostenumbau, '.', ',') }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="kostennotar">Notar/Gericht</label>
-                        <input type="text" class="form-control" name="kostennotar" id="kostennotar"
-                               placeholder="{{ number_format( $kunden->kostennotar, 2, ',', '.') }}€" value="{{ $kunden->kostennotar }}">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-right" name="kostennotar" id="kostennotar"
+                               placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ $kunden->kostennotar }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="grunderwerbssteuer">Grunderwerbssteuer</label>
-                        <input type="text" class="form-control" name="grunderwerbssteuer" id="grunderwerbssteuer"
-                               placeholder="{{ number_format( $kunden->grunderwerbssteuer, 2, ',', '.') }}€" value="{{ $kunden->grunderwerbssteuer }}">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
+                               placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ $kunden->grunderwerbssteuer }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                        
                     </div>
 
                     <div class="form-group">
                         <label for="maklerkosten">Maklerkosten</label>
-                        <input type="text" class="form-control" name="maklerkosten" id="maklerkosten"
-                               placeholder="{{ number_format( $kunden->maklerkosten, 2, ',', '.') }}€" value="{{ $kunden->maklerkosten }}">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-right" name="maklerkosten" id="maklerkosten"
+                               placeholder="0.00" value="{{ stringReplace($kunden->maklerkosten, '.', ',') }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="gesamtkosten">Gesamtkosten</label>
-                        <input type="text" class="form-control" name="gesamtkosten" id="gesamtkosten"
-                               placeholder="{{ number_format( $kunden->gesamtkosten, 2, ',', '.') }}€" value="{{ $kunden->gesamtkosten }}">
+                        <div class="input-group">                            
+                            <input type="text" class="form-control text-right" name="gesamtkosten" id="gesamtkosten"
+                               placeholder="0.00" value="{{ stringReplace($kunden->gesamtkosten, '.', ',')  }}" readonly="">
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="eigenkapital">Eigenkapital</label>
-                        <input type="text" class="form-control" name="eigenkapital" id="eigenkapital"
-                               placeholder="{{ number_format( $kunden->eigenkapital, 2, ',', '.') }}€" value="{{ $kunden->eigenkapital }}">
+                        <div class="input-group">  
+                            <input type="text" class="form-control text-right" name="eigenkapital" id="eigenkapital"
+                               placeholder="0.00" value="{{ stringReplace($kunden->eigenkapital, '.', ',') }}">
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="finanzierungsbedarf">Finanzierungsbedarf</label>
-                        <input type="text" class="form-control" name="finanzierungsbedarf" id="finanzierungsbedarf"
-                               placeholder="{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }}€" value="{{ $kunden->finanzierungsbedarf }}">
-
-
+                        <div class="input-group">                              
+                            <input type="text" class="form-control text-right" name="finanzierungsbedarf"
+                               placeholder="0.00" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" readonly="">
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1216,6 +1361,7 @@
               }
           });
         }
+
 
     </script>
 
