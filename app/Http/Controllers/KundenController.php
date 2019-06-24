@@ -370,14 +370,21 @@ class KundenController extends Controller
             $kunden->ehepartner_geburtsdatum = request('ehepartner_geburtsdatum');
 
             $kunden->user_id = request('kunden_user');
-            $kunden->kaufpreis = request('kaufpreis');
-            $kunden->kostenumbau = request('kostenumbau');
-            $kunden->kostennotar = request('kostennotar');
-            $kunden->grunderwerbssteuer = request('grunderwerbssteuer');
-            $kunden->maklerkosten = request('maklerkosten');
-            $kunden->gesamtkosten = request('gesamtkosten');
-            $kunden->eigenkapital = request('eigenkapital');
-            $kunden->finanzierungsbedarf = request('finanzierungsbedarf');
+
+            // dd($kaufpreis);
+
+
+            $kunden->kaufpreis = $this->stringReplace(request('kaufpreis'), ",",".");
+            $kunden->kostenumbau = $this->stringReplace(request('kostenumbau'), ",",".");
+            $kunden->kostennotar = $this->stringReplace(request('kostennotar'), ",",".");
+            $kunden->grunderwerbssteuer = $this->stringReplace(request('grunderwerbssteuer'), ",",".");
+            $kunden->maklerkosten = $this->stringReplace(request('maklerkosten'), ",",".");
+            $kunden->gesamtkosten = $this->stringReplace(request('gesamtkosten'), ",",".");
+            $kunden->eigenkapital = $this->stringReplace(request('eigenkapital'), ",",".");
+            $kunden->finanzierungsbedarf = $this->stringReplace(request('finanzierungsbedarf'), ",",".");
+
+
+
 
             $kunden->save();
             return redirect()->route('kunden.index');
@@ -583,6 +590,16 @@ class KundenController extends Controller
             $calculation->update();
             return response()->json(['calculation'=>$calculation]);
         }
+    }
+
+    function stringReplace($string, $from = '.', $to=',')
+    {
+        $newString = '';
+        for ($i=0; $i < strlen($string); $i++) { 
+            if($string[$i] >= '0' && $string[$i] <= '9') $newString .= $string[$i];
+            if($string[$i] == $from) $newString .= $to;
+        }
+        return $newString;
     }
 }
 
