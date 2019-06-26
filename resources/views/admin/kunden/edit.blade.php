@@ -193,8 +193,18 @@
             let plusMinus = calculatedFinanzierungsbedarf<0? '-':'';
 
 
+            kostennotar = (kaufpreis*kostennotar/100.0).toFixed(2).toString().replace(".", ",");
+            grunderwerbssteuer = (kaufpreis*grunderwerbssteuer/100.0).toFixed(2).toString().replace(".", ",");
+            maklerkosten = (kaufpreis*maklerkosten/100.0).toFixed(2).toString().replace(".", ",");
+
+
             calculatedGesamtkosten = calculatedGesamtkosten.toFixed(2).toString().replace(".", ",");
             calculatedFinanzierungsbedarf = calculatedFinanzierungsbedarf.toFixed(2).toString().replace(".", ",");
+
+
+            $('span[name=kostennotar]').html(formatNumbers(kostennotar));
+            $('span[name=grunderwerbssteuer]').html(formatNumbers(grunderwerbssteuer));
+            $('span[name=maklerkosten]').html(formatNumbers(maklerkosten));
 
             $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
             $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
@@ -503,7 +513,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="kostennotar">Notar/Gericht</label>
+                        <label for="kostennotar">Notar/Gericht ( <span name="kostennotar" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="kostennotar" id="kostennotar"
                                placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ $kunden->kostennotar }}">
@@ -514,7 +524,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="grunderwerbssteuer">Grunderwerbssteuer</label>
+                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
                                placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ $kunden->grunderwerbssteuer }}">
@@ -526,7 +536,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="maklerkosten">Maklerkosten</label>
+                        <label for="maklerkosten">Maklerkosten ( <span name="maklerkosten" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="maklerkosten" id="maklerkosten"
                                placeholder="0.00" value="{{ stringReplace($kunden->maklerkosten, '.', ',') }}">
