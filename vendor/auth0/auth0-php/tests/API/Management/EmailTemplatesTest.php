@@ -8,11 +8,11 @@ use Auth0\Tests\API\ApiTests;
 use GuzzleHttp\Exception\ClientException;
 
 /**
- * Class EmailTemplateTest
+ * Class EmailTemplatesTest
  *
  * @package Auth0\Tests\API\Management
  */
-class EmailTemplateTest extends ApiTests
+class EmailTemplatesTest extends ApiTests
 {
     /**
      * Email template to test
@@ -74,15 +74,10 @@ class EmailTemplateTest extends ApiTests
      */
     public static function setUpBeforeClass()
     {
-        $env = self::getEnvStatic();
+        $env = self::getEnv();
 
         self::$domain = $env['DOMAIN'];
-        self::$token  = self::getTokenStatic(
-            $env, [
-                'email_templates' => [ 'actions' => ['create', 'read', 'update'] ],
-                'email_provider' => [ 'actions' => ['read'] ],
-            ]
-        );
+        self::$token  = self::getToken($env);
 
         self::$api = new Management(self::$token, self::$domain);
 

@@ -8,9 +8,11 @@ use Auth0\SDK\API\Management\Connections;
 use Auth0\SDK\API\Management\DeviceCredentials;
 use Auth0\SDK\API\Management\Emails;
 use Auth0\SDK\API\Management\EmailTemplates;
+use Auth0\SDK\API\Management\Grants;
 use Auth0\SDK\API\Management\Jobs;
 use Auth0\SDK\API\Management\Logs;
 use Auth0\SDK\API\Management\ResourceServers;
+use Auth0\SDK\API\Management\Roles;
 use Auth0\SDK\API\Management\Rules;
 use Auth0\SDK\API\Management\Stats;
 use Auth0\SDK\API\Management\Tenants;
@@ -105,9 +107,21 @@ class Management
 
     /**
      *
+     * @var Grants
+     */
+    public $grants;
+
+    /**
+     *
      * @var Logs
      */
     public $logs;
+
+    /**
+     *
+     * @var Roles
+     */
+    public $roles;
 
     /**
      *
@@ -181,8 +195,10 @@ class Management
         $this->deviceCredentials = new DeviceCredentials($this->apiClient);
         $this->emails            = new Emails($this->apiClient);
         $this->emailTemplates    = new EmailTemplates($this->apiClient);
+        $this->grants            = new Grants($this->apiClient);
         $this->jobs              = new Jobs($this->apiClient);
         $this->logs              = new Logs($this->apiClient);
+        $this->roles             = new Roles($this->apiClient);
         $this->rules             = new Rules($this->apiClient);
         $this->resource_servers  = new ResourceServers($this->apiClient);
         $this->stats             = new Stats($this->apiClient);

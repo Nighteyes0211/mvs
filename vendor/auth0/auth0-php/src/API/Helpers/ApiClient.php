@@ -1,20 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: germanlena
- * Date: 4/22/15
- * Time: 3:06 PM
- */
-
 namespace Auth0\SDK\API\Helpers;
 
-use Auth0\SDK\API\Header\Header;
 use Auth0\SDK\API\Header\ContentType;
+use Auth0\SDK\API\Header\Telemetry;
 
 class ApiClient
 {
 
-    const API_VERSION = '5.3.2';
+    const API_VERSION = '5.5.1';
 
     protected static $infoHeadersDataEnabled = true;
 
@@ -37,9 +30,7 @@ class ApiClient
 
         if (self::$infoHeadersData === null) {
             self::$infoHeadersData = new InformationHeaders;
-
-            self::$infoHeadersData->setPackage('auth0-php', self::API_VERSION);
-            self::$infoHeadersData->setEnvProperty('php', phpversion());
+            self::$infoHeadersData->setCorePackage();
         }
 
         return self::$infoHeadersData;
@@ -69,7 +60,7 @@ class ApiClient
         $this->guzzleOptions = isset($config['guzzleOptions']) ? $config['guzzleOptions'] : [];
 
         if (self::$infoHeadersDataEnabled) {
-            $this->headers[] = new Header('Auth0-Client', self::getInfoHeadersData()->build());
+            $this->headers[] = new Telemetry(self::getInfoHeadersData()->build());
         }
     }
 
@@ -106,7 +97,7 @@ class ApiClient
         ]);
         $builder->withHeaders($this->headers);
 
-        if (in_array($method, [ 'patch', 'post', 'put' ])) {
+        if (in_array($method, [ 'patch', 'post', 'put', 'delete' ])) {
             $builder->withHeader(new ContentType('application/json'));
         }
 
