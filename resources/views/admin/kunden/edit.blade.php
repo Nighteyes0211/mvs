@@ -78,6 +78,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+
     <script>
 
         $(document).ready(function(){
@@ -726,7 +727,7 @@
                                         <span class="removeCard float-right"><i class="fa fa-times" onclick="removeCard({{$cIndex}})"></i></span>
                                     </h2>
                                 </div>
-                                <div id="collapse-{{$cIndex}}" class="collapse" data-parent="#Calculation">
+                                <div id="collapse-{{$cIndex}}" data-parent="#Calculation">
                                     <div class="card-body">
 
                                         <div class="row">
@@ -879,6 +880,8 @@
 
                                                     });
 
+                                                    //Payment Amount calculation Auszahlungsbetrag (Euro)
+
                                                     $('#payment_amount').click(function () {
 
                                                         var loan_ammount = parseInt($('#loan_amount').val());
@@ -888,6 +891,84 @@
 
                                                         $('#payment_amount').val(payout);
                                                     });
+
+                                                    //Repayment date Calculation Tilgungssatz (Prozent)
+
+                                                    $('#repayment_date').click(function () {
+
+                                                        var montly_deposit = parseInt($('#montly_deposit_val').val());
+                                                        var loan_amount = parseInt($('#loan_amount').val());
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
+                                                        var repayment_rate = montly_deposit*100*12/loan_amount-borrowing_rate;
+
+
+                                                        if(isNaN(repayment_rate))
+                                                        {
+                                                            $('#repayment_date_inp').val('some values are missing');
+                                                        }
+                                                        else {
+                                                            Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
+
+                                                        }
+                                                    });
+
+                                                    //Calculation Tilgungssatz (Prozent)
+
+                                                    $('#payment_opt_rad').click(function () {
+
+                                                        var loan_period = parseInt($('#loan_period').val());
+
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
+
+                                                        var montly_deposit_val = parseInt($('#montly_deposit_val').val());
+
+                                                        var loan_amount = parseInt($('#loan_amount').val());
+
+
+                                                        var finalvalue = finalvalueCal(borrowing_rate/100/12,loan_period*12,montly_deposit_val,0-loan_amount,0);
+                                                        if(loan_period>50)
+                                                        {
+                                                            alert('Fixed interest too long');
+                                                        }
+
+                                                        else if(finalvalue<-1 || isNaN(finalvalue)){
+
+                                                            $('#montly_deposit_val').val('INVALID VALUE');
+                                                            //alert('Loan before end fixed interest rate!');
+                                                        }
+
+                                                        else{
+                                                            $('#montly_deposit_val').val(finalvalue);
+                                                        }
+
+                                                        function finalvalueCal(rate, nper, pmt, pv, type) {
+                                                            var pow = Math.pow(1 + rate, nper),
+                                                                fv;
+                                                            if (rate) {
+                                                                fv = (pmt*(1+rate*type)*(1-pow)/rate)-pv*pow;
+                                                            } else {
+                                                                fv = -1 * (pv + pmt * nper);
+                                                            }
+                                                            return fv.toFixed(2);
+                                                        }
+                                                    });
+
+                                                        $('#new_rate').click(function () {
+
+                                                            var loan_amount  = parseInt($('#loan_amount').val());
+                                                            var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
+                                                            var new_repayment = parseInt($('#new_repayment_inp').val());
+
+                                                            var new_rate_ttl = loan_amount*(new_borrowing_rate+new_repayment)/100/12;
+
+                                                            if(isNaN(new_rate_ttl)){
+
+                                                                $('#new_rate_inp').val('INVALID VALUE');
+                                                            }
+                                                            else {
+                                                                $('#new_rate_inp').val(new_rate_ttl);
+                                                                }
+                                                        });
 
                                                 });
 
@@ -904,7 +985,7 @@
                                                     <td colspan="4"><input class="form-control text-right" id="loan_amount" type=""></td>
                                                 </tr>
                                                 <tr>
-                                                    <td >Zinsbindun</td>
+                                                    <td >Zinsbindung</td>
                                                     <td colspan="4">
                                                         <select id="loan_period" class="form-control">
                                                             <?php
@@ -931,7 +1012,7 @@
                                                     <td>Auszahlungstermin</td>
                                                     <td colspan="2">
                                                         <select id="payment_month" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1008,7 +1089,7 @@
                                                     <td>Sollzinssatz (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="borrowing_rate" class="form-control text-right">
+                                                        <input id="borrowing_rate" class="form-control text-right" value="1.50">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1019,7 +1100,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" class="custom-control-input" id="repayment_date" value="Tilgungssatz (Prozent)" name="repayment">
+                                                            <input type="radio" class="custom-control-input" id="repayment_date" name="repayment">
                                                             <label class="custom-control-label" for="repayment_date">Tilgungssatz (Prozent)</label>
                                                         </div>
                                                     </td>
@@ -1032,15 +1113,19 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+{{--                                                repayment rate /Tilgungssatz calculation--}}
+
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" class="custom-control-input" id="montly_deposit" value="Monatsrate (Euro)" name="repayment">
+{{--                                                            radio button input Monatsrate--}}
+                                                            <input type="radio" class="custom-control-input" id="montly_deposit" name="repayment">
                                                             <label class="custom-control-label" for="montly_deposit">Monatsrate ( € )</label>
                                                         </div>
                                                     </td>
                                                     <td colspan="4">
                                                     <div class="input-group">
+{{--                                                        input field Monatsrate--}}
                                                         <input id="montly_deposit_val" class="form-control text-right">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">€</span>
@@ -1052,8 +1137,8 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" class="custom-control-input" id="payment_type_any" value="Volltilgerdarlehen" name="repayment">
-                                                            <label class="custom-control-label" for="payment_type_any">Volltilgerdarlehen</label>
+                                                            <input type="radio" class="custom-control-input" id="payment_opt_rad" name="repayment">
+                                                            <label class="custom-control-label" for="payment_opt_rad">Volltilgerdarlehen</label>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1062,7 +1147,7 @@
                                                     <td>Jährliche Sondertilgungen ab</td>
                                                     <td>
                                                         <select id="annual_unsheduled_month" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1111,7 +1196,7 @@
                                                     <td>Einmalige Sondertilgung</td>
                                                     <td>
                                                         <select id="onetime_unsheduled_month" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1149,52 +1234,7 @@
                                                         </select>
                                                     </td>
 
-                                                    <td colspan="4"><input id="onetime_unsheduled_val" class="form-control text-right"></td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Einmalige Sondertilgung</td>
-                                                    <td>
-                                                        <select id="onetime_unsheduled_month_1" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
-                                                            <option value='Februar'>Februar</option>
-                                                            <option value='Marz'>Marz</option>
-                                                            <option value='April'>April</option>
-                                                            <option value='Mai'>Mai</option>
-                                                            <option value='Juni'>Juni</option>
-                                                            <option value='Juli'>Juli</option>
-                                                            <option value='August'>August</option>
-                                                            <option value='September'>September</option>
-                                                            <option value='Oktober'>Oktober</option>
-                                                            <option value='November'>November</option>
-                                                            <option value='Dezember'>Dezember</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select id="onetime_unsheduled_year_1"  class="form-control">
-
-                                                            <option value="2018">2018</option>
-                                                            <option value="2019">2019</option>
-                                                            <option value="2020">2020</option>
-                                                            <option value="2021">2021</option>
-                                                            <option value="2022">2022</option>
-                                                            <option value="2023">2023</option>
-                                                            <option value="2024">2024</option>
-                                                            <option value="2025">2025</option>
-                                                            <option value="2026">2026</option>
-                                                            <option value="2027">2027</option>
-                                                            <option value="2028">2028</option>
-                                                            <option value="2029">2029</option>
-                                                            <option value="2030">2030</option>
-                                                            <option value="2031">2031</option>
-                                                            <option value="2032">2032</option>
-                                                            <option value="2033">2033</option>
-                                                            <option value="2032">2034</option>
-                                                            <option value="2033">2035</option>
-                                                        </select>
-                                                    </td>
-
-                                                    <td colspan="4"><input id="onetime_unsheduled_val_1" class="form-control text-right"></td>
+                                                    <td colspan="4"><input id="onetime_unsheduled_val" class="form-control text-right" value="50000"></td>
 
                                                 </tr>
 
@@ -1231,7 +1271,7 @@
                                                     <td>Neuer Sollzinssatz (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_borrowing_rate" class="form-control text-right">
+                                                        <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1256,7 +1296,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_rate_inp" class="form-control text-right">
+                                                        <input id="new_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1270,7 +1310,7 @@
                                                         <div class="input-group">
                                                         <input id="total_maturity" class="form-control text-right">
                                                             <div class="input-group-append">
-                                                                <span class="input-group-text">Y/M</span>
+                                                                <span class="input-group-text">J/M</span>
                                                             </div>
                                                         </div>
                                                     </td>
