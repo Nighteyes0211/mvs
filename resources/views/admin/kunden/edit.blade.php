@@ -901,10 +901,10 @@
 
                                                 <tr>
                                                     <td>Kreditsumme ( € )</td>
-                                                    <td colspan="4"><input class="form-control text-right" id="loan_amount" type=""></td>
+                                                    <td colspan="4"><input class="form-control text-right" id="loan_amount" type="" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td >Zinsbindun</td>
+                                                    <td >Zinsbindung</td>
                                                     <td colspan="4">
                                                         <select id="loan_period" class="form-control">
                                                             <?php
@@ -931,7 +931,7 @@
                                                     <td>Auszahlungstermin</td>
                                                     <td colspan="2">
                                                         <select id="payment_month" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1062,7 +1062,7 @@
                                                     <td>Jährliche Sondertilgungen ab</td>
                                                     <td>
                                                         <select id="annual_unsheduled_month" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1111,7 +1111,7 @@
                                                     <td>Einmalige Sondertilgung</td>
                                                     <td>
                                                         <select id="onetime_unsheduled_month" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1156,7 +1156,7 @@
                                                     <td>Einmalige Sondertilgung</td>
                                                     <td>
                                                         <select id="onetime_unsheduled_month_1" class="form-control">
-                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option selected value='Januar'>Januar</option>
                                                             <option value='Februar'>Februar</option>
                                                             <option value='Marz'>Marz</option>
                                                             <option value='April'>April</option>
@@ -1270,7 +1270,7 @@
                                                         <div class="input-group">
                                                         <input id="total_maturity" class="form-control text-right">
                                                             <div class="input-group-append">
-                                                                <span class="input-group-text">Y/M</span>
+                                                                <span class="input-group-text">J/M</span>
                                                             </div>
                                                         </div>
                                                     </td>
