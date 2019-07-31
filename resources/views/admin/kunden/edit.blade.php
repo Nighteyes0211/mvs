@@ -982,7 +982,14 @@
 
                                                 <tr>
                                                     <td>Disagio (Prozent)</td>
-                                                    <td colspan="4"><input id="payment_discount" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                    <div class="input-group">
+                                                        <input id="payment_discount" class="form-control text-right">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">%</span>
+                                                        </div>
+                                                    </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
@@ -999,7 +1006,14 @@
 
                                                 <tr>
                                                     <td>Sollzinssatz (Prozent)</td>
-                                                    <td colspan="4"><input id="borrowing_rate" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="borrowing_rate" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
@@ -1009,7 +1023,14 @@
                                                             <label class="custom-control-label" for="repayment_date">Tilgungssatz (Prozent)</label>
                                                         </div>
                                                     </td>
-                                                    <td colspan="4"><input id="repayment_date_inp" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="repayment_date_inp" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -1191,7 +1212,14 @@
 
                                                 <tr>
                                                     <td>Effektivzins (Prozent)</td>
-                                                    <td colspan="4"><input id="effective__interest" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="effective__interest" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
@@ -1201,7 +1229,14 @@
 
                                                 <tr>
                                                     <td>Neuer Sollzinssatz (Prozent)</td>
-                                                    <td colspan="4"><input id="new_borrowing_rate" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="new_borrowing_rate" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -1219,12 +1254,26 @@
                                                             <label class="custom-control-label" for="new_rate">Tilgungssatz (Prozent)</label>
                                                         </div>
                                                     </td>
-                                                    <td colspan="4"><input id="new_rate_inp" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="new_rate_inp" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>Gesamtlaufzeit (Jahre/Monate)</td>
-                                                    <td colspan="4"><input id="total_maturity" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="total_maturity" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">Y/M</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
                                                 </tr>
                                             </table>
