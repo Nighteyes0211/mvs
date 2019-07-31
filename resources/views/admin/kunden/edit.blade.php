@@ -969,7 +969,15 @@
 
                                                 <tr>
                                                     <td>Grundbuchkosten ( € )</td>
-                                                    <td colspan="4"><input id="registery_fees" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                            <input id="registery_fees" class="form-control text-right">
+
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
@@ -979,7 +987,14 @@
 
                                                 <tr>
                                                     <td>Auszahlungsbetrag ( € )</td>
-                                                    <td colspan="4"><input id="payment_amount" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                            <input id="payment_amount" class="form-control text-right">
+                                                                <div class="input-group-append">
+                                                              <span class="input-group-text">€</span>
+                                                                </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
@@ -1003,7 +1018,14 @@
                                                             <label class="custom-control-label" for="montly_deposit">Monatsrate ( € )</label>
                                                         </div>
                                                     </td>
-                                                    <td colspan="4"><input id="montly_deposit_val" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                    <div class="input-group">
+                                                        <input id="montly_deposit_val" class="form-control text-right">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">€</span>
+                                                        </div>
+                                                    </div>
+                                                    </td>
 
                                                 </tr>
                                                 <tr>
@@ -1157,7 +1179,14 @@
 
                                                 <tr>
                                                     <td>Restschuld ( € )</td>
-                                                    <td colspan="4"><input id="Outstanding_balance" class="form-control text-right"></td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="Outstanding_balance" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr>
