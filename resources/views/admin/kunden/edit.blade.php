@@ -730,115 +730,100 @@
                                     <div class="card-body">
 
                                         <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Bank</label>
-                                                    <input type="hidden" class="angebotdate" name="angebotdate" value="{{$cal->angebotdate}}" />
-                                                    <input type="text" id="bank" value="{{$cal->bank}}" class="form-control" name="Cal[{{$cIndex}}][bank]"/>
-                                                        {{-- <option @if($cal->bank == 'Deutsche Bank') selected @endif value="Deutsche Bank">Deutsche Bank</option>
-                                                        <option @if($cal->bank == 'DSL') selected @endif value="DSL">DSL</option>
-                                                        <option @if($cal->bank == 'Sparkasse') selected @endif value="Sparkasse">Sparkasse</option>
-                                                    </select> --}}
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Bank</label>--}}
+{{--                                                    <input type="hidden" class="angebotdate" name="angebotdate" value="{{$cal->angebotdate}}" />--}}
+{{--                                                    <input type="text" id="bank" value="{{$cal->bank}}" class="form-control" name="Cal[{{$cIndex}}][bank]"/>--}}
+{{--                                                        --}}{{-- <option @if($cal->bank == 'Deutsche Bank') selected @endif value="Deutsche Bank">Deutsche Bank</option>--}}
+{{--                                                        <option @if($cal->bank == 'DSL') selected @endif value="DSL">DSL</option>--}}
+{{--                                                        <option @if($cal->bank == 'Sparkasse') selected @endif value="Sparkasse">Sparkasse</option>--}}
+{{--                                                    </select> --}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
 
-                                                    <label>Tilgungssatz</label>
-                                                <input type="text" id="annuities" class="form-control" value="{{$cal->annuities}}" name="Cal[{{$cIndex}}][annuities]"/>
-                                                        {{-- <option @if($cal->annuities == 'Annuitäten') selected @endif value="Annuitäten">Annuitäten</option>
-                                                        <option @if($cal->annuities == 'Tilgungsausgesetztes Darlehen') selected @endif value="Tilgungsausgesetztes Darlehen">Tilgungsausgesetztes Darlehen</option>
-                                                    </select> --}}
-                                                </div>
-                                            </div>
+{{--                                                    <label>Tilgungssatz</label>--}}
+{{--                                                <input type="text" id="annuities" class="form-control" value="{{$cal->annuities}}" name="Cal[{{$cIndex}}][annuities]"/>--}}
+{{--                                                        --}}{{-- <option @if($cal->annuities == 'Annuitäten') selected @endif value="Annuitäten">Annuitäten</option>--}}
+{{--                                                        <option @if($cal->annuities == 'Tilgungsausgesetztes Darlehen') selected @endif value="Tilgungsausgesetztes Darlehen">Tilgungsausgesetztes Darlehen</option>--}}
+{{--                                                    </select> --}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Sollzins</label>
-                                                    <input type="text" id="to_interest" value="{{$cal->to_interest}}" class="form-control" name="Cal[{{$cIndex}}][to_interest]" required>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Sollzins</label>--}}
+{{--                                                    <input type="text" id="to_interest" value="{{$cal->to_interest}}" class="form-control" name="Cal[{{$cIndex}}][to_interest]" required>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Effektivzins</label>
-                                                    <input type="text" id="effectiveness" value="{{$cal->effectiveness}}" class="form-control" name="Cal[{{$cIndex}}][effectiveness]" required>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Effektivzins</label>--}}
+{{--                                                    <input type="text" id="effectiveness" value="{{$cal->effectiveness}}" class="form-control" name="Cal[{{$cIndex}}][effectiveness]" required>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Zinsbindung</label>
-                                                    <input type="text" id="fixed_interest_rates" value="{{$cal->fixed_interest_rates}}" class="form-control" name="Cal[{{$cIndex}}][fixed_interest_rates]" required>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Zinsbindung</label>--}}
+{{--                                                    <input type="text" id="fixed_interest_rates" value="{{$cal->fixed_interest_rates}}" class="form-control" name="Cal[{{$cIndex}}][fixed_interest_rates]" required>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Monatliche Rate</label>
-                                                    <input type="text" id="monthly_loan" value="{{$cal->monthly_loan}}" class="form-control" name="Cal[{{$cIndex}}][monthly_loan]" required>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Monatliche Rate</label>--}}
+{{--                                                    <input type="text" id="monthly_loan" value="{{$cal->monthly_loan}}" class="form-control" name="Cal[{{$cIndex}}][monthly_loan]" required>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Restschuld Ende Zinsbindung</label>
-                                                    <input type="text" id="residual_debt_interest_rate" value="{{$cal->residual_debt_interest_rate}}" class="form-control" name="Cal[{{$cIndex}}][residual_debt_interest_rate]" required>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Restschuld Ende Zinsbindung</label>--}}
+{{--                                                    <input type="text" id="residual_debt_interest_rate" value="{{$cal->residual_debt_interest_rate}}" class="form-control" name="Cal[{{$cIndex}}][residual_debt_interest_rate]" required>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Kalkulierte Luafzeit (ca.)</label>
-                                                    <input type="text" id="calculated_luaf_time" value="{{$cal->calculated_luaf_time}}" class="form-control" name="Cal[{{$cIndex}}][calculated_luaf_time]" required>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-sm-3">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label>Kalkulierte Luafzeit (ca.)</label>--}}
+{{--                                                    <input type="text" id="calculated_luaf_time" value="{{$cal->calculated_luaf_time}}" class="form-control" name="Cal[{{$cIndex}}][calculated_luaf_time]" required>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Nettodarlehensbetrag</label>--}}
+                                            {{--                                                    <input type="text" id="net_loan_amount" value="{{$cal->net_loan_amount}}" class="form-control" name="Cal[{{$cIndex}}][net_loan_amount]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Nettodarlehensbetrag</label>
-                                                    <input type="text" id="net_loan_amount" value="{{$cal->net_loan_amount}}" class="form-control" name="Cal[{{$cIndex}}][net_loan_amount]" required>
-                                                </div>
-                                            </div>
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Bereitsellungszins</label>--}}
+                                            {{--                                                    <input type="text" id="initial_interest" value="{{$cal->initial_interest}}" class="form-control" name="Cal[{{$cIndex}}][initial_interest]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Bereitsellungszins</label>
-                                                    <input type="text" id="initial_interest" value="{{$cal->initial_interest}}" class="form-control" name="Cal[{{$cIndex}}][initial_interest]" required>
-                                                </div>
-                                            </div>
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Optionale Soundertilgung</label>--}}
+                                            {{--                                                    <input type="text" id="optional_sound_recovery" value="{{$cal->optional_sound_recovery}}" class="form-control" name="Cal[{{$cIndex}}][optional_sound_recovery]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>
+--}}
 
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label>Optionale Soundertilgung</label>
-                                                    <input type="text" id="optional_sound_recovery" value="{{$cal->optional_sound_recovery}}" class="form-control" name="Cal[{{$cIndex}}][optional_sound_recovery]" required>
-                                                </div>
-                                            </div>
 
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <input type="hidden" name="Cal[{{$cIndex}}][id]" value="{{$cal->id}}">
-                                                    <input type="hidden" class="isTM-{{$cIndex}}"  name="Cal[{{$cIndex}}][istm]" value="0">
-                                                    @if(isset($cal->timeline->id))
-                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl entfernen</a>
-                                                    @else
-                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
-                                                    @endif
-
-                                                    @if(isset($cal->customerTimeline->id))
-                                                    <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl entfernen</a>
-                                                    @else
-                                                    <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+{{--                                            ange--}}
 {{-- new table--}}
 
 
 
 
-                                            <h4>New Calculator</h4>
+{{--                                            <h4>New Calculator</h4>--}}
                                             {{--Hassaan Table--}}
 
                                             <script>
@@ -1215,6 +1200,23 @@
                                                 </tr>
                                             </table>
 
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="Cal[{{$cIndex}}][id]" value="{{$cal->id}}">
+                                                    <input type="hidden" class="isTM-{{$cIndex}}"  name="Cal[{{$cIndex}}][istm]" value="0">
+                                                    @if(isset($cal->timeline->id))
+                                                        <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl entfernen</a>
+                                                    @else
+                                                        <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
+                                                    @endif
+
+                                                    @if(isset($cal->customerTimeline->id))
+                                                        <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl entfernen</a>
+                                                    @else
+                                                        <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="thisTimeline-{{$cIndex}}">
