@@ -488,7 +488,9 @@
                 @endif
             </div>
             <div class="row">
-                <div class="col-md-7 col-md-offset-2" id="finanzierungsbedarf">
+
+{{--                location11--}}
+                <div class="col-md-4 col-md-offset-2" id="finanzierungsbedarf">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <h4>Baufinanzierungsdaten</h4>
@@ -571,7 +573,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="finanzierungsbedarf">Finanzierungsbedarf2323</label>
+                        <label for="finanzierungsbedarf">Finanzierungsbedarf</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="finanzierungsbedarf"
                                placeholder="0.00" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" readonly="">
@@ -580,388 +582,10 @@
                             </div>
                         </div>
                     </div>
-                    <hr><h1>New Calculator</h1>
 
-
-{{--Hassaan Table--}}
-
-                    <script>
-                        $(document).ready(function () {
-
-                            $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
-                            $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
-
-
-                            $('#loan_period').change(function () {
-
-                                if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
-                                {
-
-                                    $('#end_of_fixed_year').empty();
-                                    $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
-                                    $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
-                                }
-else
-                                {
-                                    alert('Monat nicht erlaubt');
-                                }
-
-
-                            });
-
-                            $('#payment_year').change(function () {
-                                if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
-                                {
-
-                                    $('#end_of_fixed_year').empty();
-                                    $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
-                                    $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
-                                }
-                                else
-                                {
-                                    alert('Monat nicht erlaubt');
-                                }
-
-                            });
-                            $('#payment_month').change(function () {
-                                if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
-                                {
-
-                                    $('#end_of_fixed_year').empty();
-                                    $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
-                                    $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
-                                }else
-                                {
-                                    alert('Monat nicht erlaubt');
-                                }
-
-
-                            });
-
-                            $('#payment_amount').click(function () {
-
-                                var loan_ammount = parseInt($('#loan_amount').val());
-
-                                var discount = parseInt($('#payment_discount').val());
-                                var payout = loan_ammount*(100-discount)/100;
-
-                                $('#payment_amount').val(payout);
-                            });
-
-                        });
-
-                    </script>
-                    <table class="table ">
-
-                    <tr>
-                        <td> <h5>Darlehensrechner</h5></td>
-
-                    </tr>
-
-                        <tr>
-                            <td>Kreditsumme ( € )</td>
-                            <td colspan="2"><input class="form-control text-right" id="loan_amount" type=""></td>
-                        </tr>
-                        <tr>
-                            <td >Zinsbindun</td>
-                            <td colspan="2">
-                                <select id="loan_period" class="form-control">
-                                    <?php
-                                    for($i= 1;$i<=30;$i++)
-                                        {
-                                            ?>
-                                    <option value="{{$i}}">
-                                       {{$i}}
-                                        @if($i==1)
-                                        Jahr
-                                            @else
-                                            Jahre
-                                        @endif
-                                    </option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Auszahlungstermin</td>
-                            <td>
-                                <select id="payment_month" class="form-control">
-                                    <option selected value='Janaur'>Janaur</option>
-                                    <option value='Februar'>Februar</option>
-                                    <option value='Marz'>Marz</option>
-                                    <option value='April'>April</option>
-                                    <option value='Mai'>Mai</option>
-                                    <option value='Juni'>Juni</option>
-                                    <option value='Juli'>Juli</option>
-                                    <option value='August'>August</option>
-                                    <option value='September'>September</option>
-                                    <option value='Oktober'>Oktober</option>
-                                    <option value='November'>November</option>
-                                    <option value='Dezember'>Dezember</option>
-                                </select>
-                            </td>
-                            <td>
-
-                                <select id="payment_year"  class="form-control">
-
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Ende der Zinsbindung</td>
-                            <td colspan="2"><input id="end_of_fixed_year" class="form-control text-right"  disabled></td>
-                        </tr>
-
-                        <tr>
-                           <td>Grundbuchkosten ( € )</td>
-                           <td colspan="2"><input id="registery_fees" class="form-control text-right"></td>
-                       </tr>
-
-                        <tr>
-                            <td>Disagio (Prozent)</td>
-                            <td colspan="2"><input id="payment_discount" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Auszahlungsbetrag ( € )</td>
-                            <td colspan="2"><input id="payment_amount" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Sollzinssatz (Prozent)</td>
-                            <td colspan="2"><input id="borrowing_rate" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="repayment_date" value="Tilgungssatz (Prozent)" name="repayment">
-                                    <label class="custom-control-label" for="repayment_date">Tilgungssatz (Prozent)</label>
-                                </div>
-                            </td>
-                            <td colspan="2"><input id="repayment_date_inp" class="form-control text-right"></td>
-                        </tr>
-                            <tr>
-                            <td>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="montly_deposit" value="Monatsrate (Euro)" name="repayment">
-                                    <label class="custom-control-label" for="montly_deposit">Monatsrate ( € )</label>
-                                </div>
-                            </td>
-                                <td colspan="2"><input id="montly_deposit_val" class="form-control text-right"></td>
-
-                            </tr>
-                        <tr>
-                        <td>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="payment_type_any" value="Volltilgerdarlehen" name="repayment">
-                                    <label class="custom-control-label" for="payment_type_any">Volltilgerdarlehen</label>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Jährliche Sondertilgungen ab</td>
-                            <td>
-                                <select id="annual_unsheduled_month" class="form-control">
-                                    <option selected value='Janaur'>Janaur</option>
-                                    <option value='Februar'>Februar</option>
-                                    <option value='Marz'>Marz</option>
-                                    <option value='April'>April</option>
-                                    <option value='Mai'>Mai</option>
-                                    <option value='Juni'>Juni</option>
-                                    <option value='Juli'>Juli</option>
-                                    <option value='August'>August</option>
-                                    <option value='September'>September</option>
-                                    <option value='Oktober'>Oktober</option>
-                                    <option value='November'>November</option>
-                                    <option value='Dezember'>Dezember</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="annual_unsheduled_year"  class="form-control">
-
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                </select>
-                            </td>
-
-                            <td colspan="2"><input id="annual_unsheduled_val" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>bis</td>
-                            <td>
-                                <select id="annual_to_month" class="form-control">
-
-                                </select>
-                            </td>
-                            <td>
-                                <select id="annual_to_year"  class="form-control">
-
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Einmalige Sondertilgung</td>
-                            <td>
-                                <select id="onetime_unsheduled_month" class="form-control">
-                                    <option selected value='Janaur'>Janaur</option>
-                                    <option value='Februar'>Februar</option>
-                                    <option value='Marz'>Marz</option>
-                                    <option value='April'>April</option>
-                                    <option value='Mai'>Mai</option>
-                                    <option value='Juni'>Juni</option>
-                                    <option value='Juli'>Juli</option>
-                                    <option value='August'>August</option>
-                                    <option value='September'>September</option>
-                                    <option value='Oktober'>Oktober</option>
-                                    <option value='November'>November</option>
-                                    <option value='Dezember'>Dezember</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="onetime_unsheduled_year"  class="form-control">
-
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
-                                    <option value="2028">2028</option>
-                                    <option value="2029">2029</option>
-                                    <option value="2030">2030</option>
-                                    <option value="2031">2031</option>
-                                    <option value="2032">2032</option>
-                                    <option value="2033">2033</option>
-                                    <option value="2032">2034</option>
-                                    <option value="2033">2035</option>
-                                </select>
-                            </td>
-
-                            <td colspan="2"><input id="onetime_unsheduled_val" class="form-control text-right"></td>
-
-                        </tr>
-                        <tr>
-                            <td>Einmalige Sondertilgung</td>
-                            <td>
-                                <select id="onetime_unsheduled_month_1" class="form-control">
-                                    <option selected value='Janaur'>Janaur</option>
-                                    <option value='Februar'>Februar</option>
-                                    <option value='Marz'>Marz</option>
-                                    <option value='April'>April</option>
-                                    <option value='Mai'>Mai</option>
-                                    <option value='Juni'>Juni</option>
-                                    <option value='Juli'>Juli</option>
-                                    <option value='August'>August</option>
-                                    <option value='September'>September</option>
-                                    <option value='Oktober'>Oktober</option>
-                                    <option value='November'>November</option>
-                                    <option value='Dezember'>Dezember</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select id="onetime_unsheduled_year_1"  class="form-control">
-
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
-                                    <option value="2028">2028</option>
-                                    <option value="2029">2029</option>
-                                    <option value="2030">2030</option>
-                                    <option value="2031">2031</option>
-                                    <option value="2032">2032</option>
-                                    <option value="2033">2033</option>
-                                    <option value="2032">2034</option>
-                                    <option value="2033">2035</option>
-                                </select>
-                            </td>
-
-                            <td colspan="2"><input id="onetime_unsheduled_val_1" class="form-control text-right"></td>
-
-                        </tr>
-
-                        <tr>
-                            <td>Restschuld ( € )</td>
-                            <td colspan="2"><input id="Outstanding_balance" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Effektivzins (Prozent)</td>
-                            <td colspan="2"><input id="effective__interest" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Anschlusskredit</td>
-                            <td colspan="2"><input id="connection_credit" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Neuer Sollzinssatz (Prozent)</td>
-                            <td colspan="2"><input id="new_borrowing_rate" class="form-control text-right"></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="new_repayment_date" value="Tilgungssatz (Prozent)" name="new_repayment">
-                                    <label class="custom-control-label" for="new_repayment_date">Neuer Tilgungssatz (Proz.)</label>
-                                </div>
-                            </td>
-                            <td colspan="2"><input id="new_repayment_inp" class="form-control text-right"></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="new_rate" value="Tilgungssatz (Prozent)" name="new_repayment">
-                                    <label class="custom-control-label" for="new_rate">Tilgungssatz (Prozent)</label>
-                                </div>
-                            </td>
-                            <td colspan="2"><input id="new_rate_inp" class="form-control text-right"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Gesamtlaufzeit (Jahre/Monate)</td>
-                            <td colspan="2"><input id="total_maturity" class="form-control text-right"></td>
-
-                        </tr>
-                    </table>
 
                 </div>
-
-                <div class="col-md-5 col-md-offset-2">
+                <div class="col-md-8 col-md-offset-2">
                     <h4>Stammdaten</h4>
                     <div class="form-group">
                         <label class="col-form-label" for="vorname">Vorname</label>
@@ -1209,6 +833,388 @@ else
                                                     @endif
                                                 </div>
                                             </div>
+{{-- new table--}}
+
+
+
+
+                                            <h4>New Calculator</h4>
+                                            {{--Hassaan Table--}}
+
+                                            <script>
+                                                $(document).ready(function () {
+
+                                                    $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
+                                                    $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
+
+
+                                                    $('#loan_period').change(function () {
+
+                                                        if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
+                                                        {
+
+                                                            $('#end_of_fixed_year').empty();
+                                                            $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
+                                                            $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
+                                                        }
+                                                        else
+                                                        {
+                                                            alert('Monat nicht erlaubt');
+                                                        }
+
+
+                                                    });
+
+                                                    $('#payment_year').change(function () {
+                                                        if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
+                                                        {
+
+                                                            $('#end_of_fixed_year').empty();
+                                                            $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
+                                                            $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
+                                                        }
+                                                        else
+                                                        {
+                                                            alert('Monat nicht erlaubt');
+                                                        }
+
+                                                    });
+                                                    $('#payment_month').change(function () {
+                                                        if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
+                                                        {
+
+                                                            $('#end_of_fixed_year').empty();
+                                                            $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
+                                                            $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
+                                                        }else
+                                                        {
+                                                            alert('Monat nicht erlaubt');
+                                                        }
+
+
+                                                    });
+
+                                                    $('#payment_amount').click(function () {
+
+                                                        var loan_ammount = parseInt($('#loan_amount').val());
+
+                                                        var discount = parseInt($('#payment_discount').val());
+                                                        var payout = loan_ammount*(100-discount)/100;
+
+                                                        $('#payment_amount').val(payout);
+                                                    });
+
+                                                });
+
+                                            </script>
+                                            <table class="table table-striped table-bordered">
+
+                                                <tr>
+                                                    <td colspan="4"> <h5>Darlehensrechner</h5></td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Kreditsumme ( € )</td>
+                                                    <td colspan="4"><input class="form-control text-right" id="loan_amount" type=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td >Zinsbindun</td>
+                                                    <td colspan="4">
+                                                        <select id="loan_period" class="form-control">
+                                                            <?php
+                                                            for($i= 1;$i<=30;$i++)
+                                                            {
+                                                            ?>
+                                                            <option value="{{$i}}">
+                                                                {{$i}}
+                                                                @if($i==1)
+                                                                    Jahr
+                                                                @else
+                                                                    Jahre
+                                                                @endif
+                                                            </option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Auszahlungstermin</td>
+                                                    <td colspan="2">
+                                                        <select id="payment_month" class="form-control">
+                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option value='Februar'>Februar</option>
+                                                            <option value='Marz'>Marz</option>
+                                                            <option value='April'>April</option>
+                                                            <option value='Mai'>Mai</option>
+                                                            <option value='Juni'>Juni</option>
+                                                            <option value='Juli'>Juli</option>
+                                                            <option value='August'>August</option>
+                                                            <option value='September'>September</option>
+                                                            <option value='Oktober'>Oktober</option>
+                                                            <option value='November'>November</option>
+                                                            <option value='Dezember'>Dezember</option>
+                                                        </select>
+                                                    </td>
+                                                    <td colspan="4">
+
+                                                        <select id="payment_year"  class="form-control">
+
+                                                            <option value="2018">2018</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Ende der Zinsbindung</td>
+                                                    <td colspan="4"><input id="end_of_fixed_year" class="form-control text-right"  disabled></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Grundbuchkosten ( € )</td>
+                                                    <td colspan="4"><input id="registery_fees" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Disagio (Prozent)</td>
+                                                    <td colspan="4"><input id="payment_discount" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Auszahlungsbetrag ( € )</td>
+                                                    <td colspan="4"><input id="payment_amount" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Sollzinssatz (Prozent)</td>
+                                                    <td colspan="4"><input id="borrowing_rate" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="repayment_date" value="Tilgungssatz (Prozent)" name="repayment">
+                                                            <label class="custom-control-label" for="repayment_date">Tilgungssatz (Prozent)</label>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="4"><input id="repayment_date_inp" class="form-control text-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="montly_deposit" value="Monatsrate (Euro)" name="repayment">
+                                                            <label class="custom-control-label" for="montly_deposit">Monatsrate ( € )</label>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="4"><input id="montly_deposit_val" class="form-control text-right"></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="payment_type_any" value="Volltilgerdarlehen" name="repayment">
+                                                            <label class="custom-control-label" for="payment_type_any">Volltilgerdarlehen</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Jährliche Sondertilgungen ab</td>
+                                                    <td>
+                                                        <select id="annual_unsheduled_month" class="form-control">
+                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option value='Februar'>Februar</option>
+                                                            <option value='Marz'>Marz</option>
+                                                            <option value='April'>April</option>
+                                                            <option value='Mai'>Mai</option>
+                                                            <option value='Juni'>Juni</option>
+                                                            <option value='Juli'>Juli</option>
+                                                            <option value='August'>August</option>
+                                                            <option value='September'>September</option>
+                                                            <option value='Oktober'>Oktober</option>
+                                                            <option value='November'>November</option>
+                                                            <option value='Dezember'>Dezember</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="annual_unsheduled_year"  class="form-control">
+
+                                                            <option value="2018">2018</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td colspan="4"><input id="annual_unsheduled_val" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>bis</td>
+                                                    <td>
+                                                        <select id="annual_to_month" class="form-control">
+
+                                                        </select>
+                                                    </td>
+                                                    <td colspan="4">
+                                                        <select id="annual_to_year"  class="form-control">
+
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Einmalige Sondertilgung</td>
+                                                    <td>
+                                                        <select id="onetime_unsheduled_month" class="form-control">
+                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option value='Februar'>Februar</option>
+                                                            <option value='Marz'>Marz</option>
+                                                            <option value='April'>April</option>
+                                                            <option value='Mai'>Mai</option>
+                                                            <option value='Juni'>Juni</option>
+                                                            <option value='Juli'>Juli</option>
+                                                            <option value='August'>August</option>
+                                                            <option value='September'>September</option>
+                                                            <option value='Oktober'>Oktober</option>
+                                                            <option value='November'>November</option>
+                                                            <option value='Dezember'>Dezember</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="onetime_unsheduled_year"  class="form-control">
+
+                                                            <option value="2018">2018</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+                                                            <option value="2026">2026</option>
+                                                            <option value="2027">2027</option>
+                                                            <option value="2028">2028</option>
+                                                            <option value="2029">2029</option>
+                                                            <option value="2030">2030</option>
+                                                            <option value="2031">2031</option>
+                                                            <option value="2032">2032</option>
+                                                            <option value="2033">2033</option>
+                                                            <option value="2032">2034</option>
+                                                            <option value="2033">2035</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td colspan="4"><input id="onetime_unsheduled_val" class="form-control text-right"></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Einmalige Sondertilgung</td>
+                                                    <td>
+                                                        <select id="onetime_unsheduled_month_1" class="form-control">
+                                                            <option selected value='Janaur'>Janaur</option>
+                                                            <option value='Februar'>Februar</option>
+                                                            <option value='Marz'>Marz</option>
+                                                            <option value='April'>April</option>
+                                                            <option value='Mai'>Mai</option>
+                                                            <option value='Juni'>Juni</option>
+                                                            <option value='Juli'>Juli</option>
+                                                            <option value='August'>August</option>
+                                                            <option value='September'>September</option>
+                                                            <option value='Oktober'>Oktober</option>
+                                                            <option value='November'>November</option>
+                                                            <option value='Dezember'>Dezember</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="onetime_unsheduled_year_1"  class="form-control">
+
+                                                            <option value="2018">2018</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+                                                            <option value="2026">2026</option>
+                                                            <option value="2027">2027</option>
+                                                            <option value="2028">2028</option>
+                                                            <option value="2029">2029</option>
+                                                            <option value="2030">2030</option>
+                                                            <option value="2031">2031</option>
+                                                            <option value="2032">2032</option>
+                                                            <option value="2033">2033</option>
+                                                            <option value="2032">2034</option>
+                                                            <option value="2033">2035</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td colspan="4"><input id="onetime_unsheduled_val_1" class="form-control text-right"></td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Restschuld ( € )</td>
+                                                    <td colspan="4"><input id="Outstanding_balance" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Effektivzins (Prozent)</td>
+                                                    <td colspan="4"><input id="effective__interest" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Anschlusskredit</td>
+                                                    <td colspan="4"><input id="connection_credit" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Neuer Sollzinssatz (Prozent)</td>
+                                                    <td colspan="4"><input id="new_borrowing_rate" class="form-control text-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="new_repayment_date" value="Tilgungssatz (Prozent)" name="new_repayment">
+                                                            <label class="custom-control-label" for="new_repayment_date">Neuer Tilgungssatz (Proz.)</label>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="4"><input id="new_repayment_inp" class="form-control text-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="new_rate" value="Tilgungssatz (Prozent)" name="new_repayment">
+                                                            <label class="custom-control-label" for="new_rate">Tilgungssatz (Prozent)</label>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="4"><input id="new_rate_inp" class="form-control text-right"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Gesamtlaufzeit (Jahre/Monate)</td>
+                                                    <td colspan="4"><input id="total_maturity" class="form-control text-right"></td>
+
+                                                </tr>
+                                            </table>
+
                                         </div>
 
                                         <div class="thisTimeline-{{$cIndex}}">
