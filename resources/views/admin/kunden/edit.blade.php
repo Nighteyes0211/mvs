@@ -1,77 +1,77 @@
 @extends(Auth::user()->admin == '1' ? 'layouts/headmin' : 'layouts/app')
 
 @section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
 
 @endsection
 
 
 <style type="text/css">
 
-#button_edit a {
-    color: #fff !important;
-}
+    #button_edit a {
+        color: #fff !important;
+    }
 
 
-.check {
-  cursor: pointer;
-  position: relative;
-  margin: auto;
-  width: 18px;
-  height: 18px;
-  -webkit-tap-highlight-color: transparent;
-  transform: translate3d(0, 0, 0);
-}
-.check:before {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(34,50,84,0.03);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-.check svg {
-  position: relative;
-  z-index: 1;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke: #c8ccd4;
-  stroke-width: 1.5;
-  transform: translate3d(0, 0, 0);
-  transition: all 0.2s ease;
-}
-.check svg path {
-  stroke-dasharray: 60;
-  stroke-dashoffset: 0;
-}
-.check svg polyline {
-  stroke-dasharray: 22;
-  stroke-dashoffset: 66;
-}
-.check:hover:before {
-  opacity: 1;
-}
-.check:hover svg {
-  stroke: #4285f4;
-}
-.cbx:checked + .check svg {
-  stroke: #4285f4;
-}
-.cbx:checked + .check svg path {
-  stroke-dashoffset: 60;
-  transition: all 0.3s linear;
-}
-.cbx:checked + .check svg polyline {
-  stroke-dashoffset: 42;
-  transition: all 0.2s linear;
-  transition-delay: 0.15s;
-}
+    .check {
+        cursor: pointer;
+        position: relative;
+        margin: auto;
+        width: 18px;
+        height: 18px;
+        -webkit-tap-highlight-color: transparent;
+        transform: translate3d(0, 0, 0);
+    }
+    .check:before {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(34,50,84,0.03);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    .check svg {
+        position: relative;
+        z-index: 1;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke: #c8ccd4;
+        stroke-width: 1.5;
+        transform: translate3d(0, 0, 0);
+        transition: all 0.2s ease;
+    }
+    .check svg path {
+        stroke-dasharray: 60;
+        stroke-dashoffset: 0;
+    }
+    .check svg polyline {
+        stroke-dasharray: 22;
+        stroke-dashoffset: 66;
+    }
+    .check:hover:before {
+        opacity: 1;
+    }
+    .check:hover svg {
+        stroke: #4285f4;
+    }
+    .cbx:checked + .check svg {
+        stroke: #4285f4;
+    }
+    .cbx:checked + .check svg path {
+        stroke-dashoffset: 60;
+        transition: all 0.3s linear;
+    }
+    .cbx:checked + .check svg polyline {
+        stroke-dashoffset: 42;
+        transition: all 0.2s linear;
+        transition-delay: 0.15s;
+    }
 </style>
 
 @section('js')
@@ -273,7 +273,7 @@
                                             <input type="text" id="restschuld_ende" name="Cal[`+cardNo+`][timeline][restschuld_ende]" class="form-control" placeholder="Jahre" value="" required>
                                         </div>
                                     </div>`;
-                                    $('.thisTimeline-'+cardNo).html(timeLiner);
+                $('.thisTimeline-'+cardNo).html(timeLiner);
             }
 
             else if ( timeLinerBtnText == "Baufi Zeitstrahl entfernen" ) {
@@ -323,7 +323,7 @@
                                             <input type="text" name="Cal[`+cardNo+`][customerTimeline][restschuld]" class="form-control" placeholder="" value="" required>
                                         </div>
                                     </div>`;
-                                    $('.thisCtTimeline-'+cardNo).html(ctTimeLiner);
+                $('.thisCtTimeline-'+cardNo).html(ctTimeLiner);
             }
 
             else if ( ctTimeLinerBtnText == "Angepasster Zeitstrahl entfernen" ) {
@@ -342,8 +342,8 @@
             var Calc = `<div class="card card-`+cardNo+`">
                             <div class="card-header" id="heading-`+cardNo+`">
                                 <h2 class="mb-0">`+
-                                    // <input type="checkbox" checked name="Cal[`+cardNo+`][enabled]">
-                                    `<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-`+cardNo+`">
+                // <input type="checkbox" checked name="Cal[`+cardNo+`][enabled]">
+                `<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-`+cardNo+`">
                                         Finanzbaustein #`+(cardNo+1)+`
                                     </button>
                                     <span class="removeCard float-right"><i class="fa fa-times" onclick="removeCard(`+cardNo+`)"></i></span>
@@ -454,7 +454,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
-<?php
+    <?php
     function stringReplace($string, $from = '.', $to=',')
     {
         for ($i=0; $i < strlen($string); $i++) {
@@ -462,7 +462,7 @@
         }
         return $string;
     }
-?>
+    ?>
 
 
 
@@ -490,7 +490,7 @@
             </div>
             <div class="row">
 
-{{--                location11--}}
+                {{--                location11--}}
                 <div class="col-md-4 col-md-offset-2" id="finanzierungsbedarf">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
@@ -499,7 +499,7 @@
                         <label for="kaufpreis">Kaufpreis des Objekts</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="kaufpreis" id="kaufpreis"
-                               placeholder="0.00" value="{{ stringReplace($kunden->kaufpreis, '.', ',') }}">
+                                   placeholder="0.00" value="{{ stringReplace($kunden->kaufpreis, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -510,7 +510,7 @@
                         <label for="kostenumbau">Umbau/Modernisierung</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="kostenumbau" id="kostenumbau"
-                               placeholder="0.00" value="{{ stringReplace($kunden->kostenumbau, '.', ',') }}">
+                                   placeholder="0.00" value="{{ stringReplace($kunden->kostenumbau, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -521,7 +521,7 @@
                         <label for="kostennotar">Notar/Gericht ( <span name="kostennotar" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="kostennotar" id="kostennotar"
-                               placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ $kunden->kostennotar }}">
+                                   placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ $kunden->kostennotar }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -532,7 +532,7 @@
                         <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
-                               placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ $kunden->grunderwerbssteuer }}">
+                                   placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ $kunden->grunderwerbssteuer }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -544,7 +544,7 @@
                         <label for="maklerkosten">Maklerkosten ( <span name="maklerkosten" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="maklerkosten" id="maklerkosten"
-                               placeholder="0.00" value="{{ stringReplace($kunden->maklerkosten, '.', ',') }}">
+                                   placeholder="0.00" value="{{ stringReplace($kunden->maklerkosten, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -555,7 +555,7 @@
                         <label for="gesamtkosten">Gesamtkosten</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="gesamtkosten" id="gesamtkosten"
-                               placeholder="0.00" value="{{ stringReplace($kunden->gesamtkosten, '.', ',')  }}" readonly="">
+                                   placeholder="0.00" value="{{ stringReplace($kunden->gesamtkosten, '.', ',')  }}" readonly="">
                             <div class="input-group-append">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -566,7 +566,7 @@
                         <label for="eigenkapital">Eigenkapital</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="eigenkapital" id="eigenkapital"
-                               placeholder="0.00" value="{{ stringReplace($kunden->eigenkapital, '.', ',') }}">
+                                   placeholder="0.00" value="{{ stringReplace($kunden->eigenkapital, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -577,7 +577,7 @@
                         <label for="finanzierungsbedarf">Finanzierungsbedarf</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="finanzierungsbedarf"
-                               placeholder="0.00" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" readonly="">
+                                   placeholder="0.00" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" readonly="">
                             <div class="input-group-append">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -633,25 +633,25 @@
                         <label for="geburtsdatum">Geburtsdatum</label>
                         <input type="date" class="form-control" name="geburtsdatum" id="geburtsdatum"
                                placeholder="{{ $kunden->geburtsdatum }}" value="{{ $kunden->geburtsdatum }}"
-                               >
+                        >
                     </div>
                     <div class="form-group">
                         <label>Select User</label>
                         <select class="form-control" name="kunden_user">
-                          @forelse($users as $user)
-                            @if(isset($kunden->myuser))
+                            @forelse($users as $user)
+                                @if(isset($kunden->myuser))
 
-                              @if ($kunden->myuser->name == $user->name)
-                              <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
-                              @else
-                              <option value="{{ $user->id }}">{{ $user->name }}</option>
-                              @endif
-                            @else
-                              <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endif
-                          @empty
-                            <option>Please select group to show...</option>
-                          @endforelse
+                                    @if ($kunden->myuser->name == $user->name)
+                                        <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                    @else
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endif
+                                @else
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endif
+                            @empty
+                                <option>Please select group to show...</option>
+                            @endforelse
 
                         </select>
                     </div>
@@ -665,19 +665,19 @@
 
 
 
-<div id="button_edit" style="position: fixed; right: 0px; margin-top: -70px; z-index: 111111; ">
-            <li class="nav-item"><a href="{{route('kunden.show',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden ansehen</a></li>
-</div>
+                    <div id="button_edit" style="position: fixed; right: 0px; margin-top: -70px; z-index: 111111; ">
+                        <li class="nav-item"><a href="{{route('kunden.show',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden ansehen</a></li>
+                    </div>
 
 
                     <a onclick="addNewCalc()" href="Javascript:void(0)" class="btn btn-primary">Kalkulation hinzufügen</a>
 
                     @if($kunden->ehepartner_enabled)
-                    @php($spouseDivShown = 'block')
-                    <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
+                        @php($spouseDivShown = 'block')
+                        <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
                     @else
-                    @php($spouseDivShown = 'none')
-                    <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">Ehepartner hinzufügen</a>
+                        @php($spouseDivShown = 'none')
+                        <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">Ehepartner hinzufügen</a>
                     @endif
                     <div id="spouseDiv"  style="display: {{$spouseDivShown}}">
                         <input type="hidden" name="ehepartner_enabled" value="{{$kunden->ehepartner_enabled}}">
@@ -720,7 +720,7 @@
                             <div class="card card-{{$cIndex}}">
                                 <div class="card-header" id="heading-{{$cIndex}}">
                                     <h2 class="mb-0">
-                                        <!-- <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]"> -->
+                                    <!-- <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]"> -->
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$cIndex}}">
                                             Finanzbaustein #{{$cIndex+1}}
                                         </button>
@@ -731,70 +731,70 @@
                                     <div class="card-body">
 
                                         <div class="row">
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Bank</label>--}}
-{{--                                                    <input type="hidden" class="angebotdate" name="angebotdate" value="{{$cal->angebotdate}}" />--}}
-{{--                                                    <input type="text" id="bank" value="{{$cal->bank}}" class="form-control" name="Cal[{{$cIndex}}][bank]"/>--}}
-{{--                                                        --}}{{-- <option @if($cal->bank == 'Deutsche Bank') selected @endif value="Deutsche Bank">Deutsche Bank</option>--}}
-{{--                                                        <option @if($cal->bank == 'DSL') selected @endif value="DSL">DSL</option>--}}
-{{--                                                        <option @if($cal->bank == 'Sparkasse') selected @endif value="Sparkasse">Sparkasse</option>--}}
-{{--                                                    </select> --}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Bank</label>--}}
+                                            {{--                                                    <input type="hidden" class="angebotdate" name="angebotdate" value="{{$cal->angebotdate}}" />--}}
+                                            {{--                                                    <input type="text" id="bank" value="{{$cal->bank}}" class="form-control" name="Cal[{{$cIndex}}][bank]"/>--}}
+                                            {{--                                                        --}}{{-- <option @if($cal->bank == 'Deutsche Bank') selected @endif value="Deutsche Bank">Deutsche Bank</option>--}}
+                                            {{--                                                        <option @if($cal->bank == 'DSL') selected @endif value="DSL">DSL</option>--}}
+                                            {{--                                                        <option @if($cal->bank == 'Sparkasse') selected @endif value="Sparkasse">Sparkasse</option>--}}
+                                            {{--                                                    </select> --}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
 
-{{--                                                    <label>Tilgungssatz</label>--}}
-{{--                                                <input type="text" id="annuities" class="form-control" value="{{$cal->annuities}}" name="Cal[{{$cIndex}}][annuities]"/>--}}
-{{--                                                        --}}{{-- <option @if($cal->annuities == 'Annuitäten') selected @endif value="Annuitäten">Annuitäten</option>--}}
-{{--                                                        <option @if($cal->annuities == 'Tilgungsausgesetztes Darlehen') selected @endif value="Tilgungsausgesetztes Darlehen">Tilgungsausgesetztes Darlehen</option>--}}
-{{--                                                    </select> --}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                                    <label>Tilgungssatz</label>--}}
+                                            {{--                                                <input type="text" id="annuities" class="form-control" value="{{$cal->annuities}}" name="Cal[{{$cIndex}}][annuities]"/>--}}
+                                            {{--                                                        --}}{{-- <option @if($cal->annuities == 'Annuitäten') selected @endif value="Annuitäten">Annuitäten</option>--}}
+                                            {{--                                                        <option @if($cal->annuities == 'Tilgungsausgesetztes Darlehen') selected @endif value="Tilgungsausgesetztes Darlehen">Tilgungsausgesetztes Darlehen</option>--}}
+                                            {{--                                                    </select> --}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Sollzins</label>--}}
-{{--                                                    <input type="text" id="to_interest" value="{{$cal->to_interest}}" class="form-control" name="Cal[{{$cIndex}}][to_interest]" required>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Sollzins</label>--}}
+                                            {{--                                                    <input type="text" id="to_interest" value="{{$cal->to_interest}}" class="form-control" name="Cal[{{$cIndex}}][to_interest]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Effektivzins</label>--}}
-{{--                                                    <input type="text" id="effectiveness" value="{{$cal->effectiveness}}" class="form-control" name="Cal[{{$cIndex}}][effectiveness]" required>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Effektivzins</label>--}}
+                                            {{--                                                    <input type="text" id="effectiveness" value="{{$cal->effectiveness}}" class="form-control" name="Cal[{{$cIndex}}][effectiveness]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Zinsbindung</label>--}}
-{{--                                                    <input type="text" id="fixed_interest_rates" value="{{$cal->fixed_interest_rates}}" class="form-control" name="Cal[{{$cIndex}}][fixed_interest_rates]" required>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Zinsbindung</label>--}}
+                                            {{--                                                    <input type="text" id="fixed_interest_rates" value="{{$cal->fixed_interest_rates}}" class="form-control" name="Cal[{{$cIndex}}][fixed_interest_rates]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Monatliche Rate</label>--}}
-{{--                                                    <input type="text" id="monthly_loan" value="{{$cal->monthly_loan}}" class="form-control" name="Cal[{{$cIndex}}][monthly_loan]" required>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Monatliche Rate</label>--}}
+                                            {{--                                                    <input type="text" id="monthly_loan" value="{{$cal->monthly_loan}}" class="form-control" name="Cal[{{$cIndex}}][monthly_loan]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Restschuld Ende Zinsbindung</label>--}}
-{{--                                                    <input type="text" id="residual_debt_interest_rate" value="{{$cal->residual_debt_interest_rate}}" class="form-control" name="Cal[{{$cIndex}}][residual_debt_interest_rate]" required>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Restschuld Ende Zinsbindung</label>--}}
+                                            {{--                                                    <input type="text" id="residual_debt_interest_rate" value="{{$cal->residual_debt_interest_rate}}" class="form-control" name="Cal[{{$cIndex}}][residual_debt_interest_rate]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
 
-{{--                                            <div class="col-sm-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label>Kalkulierte Luafzeit (ca.)</label>--}}
-{{--                                                    <input type="text" id="calculated_luaf_time" value="{{$cal->calculated_luaf_time}}" class="form-control" name="Cal[{{$cIndex}}][calculated_luaf_time]" required>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="col-sm-3">--}}
+                                            {{--                                                <div class="form-group">--}}
+                                            {{--                                                    <label>Kalkulierte Luafzeit (ca.)</label>--}}
+                                            {{--                                                    <input type="text" id="calculated_luaf_time" value="{{$cal->calculated_luaf_time}}" class="form-control" name="Cal[{{$cIndex}}][calculated_luaf_time]" required>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
                                             {{--                                            <div class="col-sm-3">--}}
                                             {{--                                                <div class="form-group">--}}
                                             {{--                                                    <label>Nettodarlehensbetrag</label>--}}
@@ -818,13 +818,13 @@
 --}}
 
 
-{{--                                            ange--}}
-{{-- new table--}}
+                                            {{--                                            ange--}}
+                                            {{-- new table--}}
 
 
 
 
-{{--                                            <h4>New Calculator</h4>--}}
+                                            {{--                                            <h4>New Calculator</h4>--}}
                                             {{--Hassaan Table--}}
 
                                             <script>
@@ -943,7 +943,7 @@
                                                         else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
 
-                                                                Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
+                                                            Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
 
                                                         }
                                                     });
@@ -952,13 +952,13 @@
 
                                                     $('#payment_opt_rad').click(function () {
 
-                                                            var loan_period = parseInt($('#loan_period').val());
+                                                        var loan_period = parseInt($('#loan_period').val());
 
-                                                            var borrowing_rate = parseFloat($('#borrowing_rate').val());
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
 
-                                                            var montly_deposit_val = parseInt($('#montly_deposit_val').val());
+                                                        var montly_deposit_val = parseInt($('#montly_deposit_val').val());
 
-                                                            var loan_amount = parseInt($('#loan_amount').val());
+                                                        var loan_amount = parseInt($('#loan_amount').val());
 
                                                         // Input fields Checks
 
@@ -998,7 +998,7 @@
                                                             }
                                                         }
 
-                                                            else {
+                                                        else {
 
                                                             if ((isNaN(loan_amount))) {
                                                                 $('#message_loan_amount').html('* Pflichtfeld');
@@ -1016,25 +1016,25 @@
                                                         }
                                                     });
 
-                                                        $('#new_repayment_rate').click(function () {
+                                                    $('#new_repayment_rate').click(function () {
 
-                                                            var loan_amount = parseInt($('#loan_amount').val());
-                                                            var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
-                                                            var new_repayment_rate = parseInt($('#new_repayment_rate_inp').val());
+                                                        var loan_amount = parseInt($('#loan_amount').val());
+                                                        var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
+                                                        var new_repayment_rate = parseInt($('#new_repayment_rate_inp').val());
 
-                                                            if(loan_amount && new_borrowing_rate && new_repayment_rate)
-                                                            {
-                                                                var new_rate =loan_amount*new_borrowing_rate+new_repayment_rate/100/12;
-                                                                $('#new_rate_inp').val(new_rate);
-                                                            }
-                                                            else{
-                                                                alert('go');
-                                                                if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
-                                                                if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
-                                                                if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
-                                                            }
+                                                        if(loan_amount && new_borrowing_rate && new_repayment_rate)
+                                                        {
+                                                            var new_rate =loan_amount*new_borrowing_rate+new_repayment_rate/100/12;
+                                                            $('#new_rate_inp').val(new_rate);
+                                                        }
+                                                        else{
+                                                            alert('go');
+                                                            if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
+                                                            if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
+                                                            if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
+                                                        }
 
-                                                        });
+                                                    });
 
                                                     $('#new_rate').click(function () {
 
@@ -1053,6 +1053,259 @@
                                                             if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
                                                         }
 
+                                                    });
+
+                                                    //NPER function
+                                                    function nper(rate, per, pmt, pv, fv)
+                                                    {
+
+                                                        fv = parseFloat(fv);
+
+                                                        pmt = parseFloat(pmt);
+
+                                                        pv = parseFloat(pv);
+
+                                                        per = parseFloat(per);
+
+                                                        if (( per == 0 ) || ( pmt == 0 )){
+
+                                                            return(0);
+
+                                                        }
+
+                                                        rate = eval((rate)/(per * 100));
+
+                                                        if ( rate == 0 ) // Interest rate is 0
+
+                                                        {
+
+                                                            nper_value = - (fv + pv)/pmt;
+
+                                                        }
+
+                                                        else
+
+                                                        {
+
+                                                            nper_value = Math.log((-fv * rate + pmt)/(pmt + rate * pv))/ Math.log(1 + rate);
+
+                                                        }
+
+                                                        nper_value = conv_number(nper_value,2);
+
+                                                        return (nper_value);
+
+                                                    }
+
+                                                    function conv_number(expr, decplaces)
+
+                                                    { // This function is from David Goodman's Javascript Bible.
+
+                                                        var str = "" + Math.round(eval(expr) * Math.pow(10,decplaces));
+
+                                                        while (str.length <= decplaces) {
+
+                                                            str = "0" + str;
+
+                                                        }
+
+                                                        var decpoint = str.length - decplaces;
+
+                                                        return (str.substring(0,decpoint) + "." + str.substring(decpoint,str.length));
+
+                                                    }
+
+                                                    //Final Value Calculation
+                                                    function fv(rate, per, nper, pmt, pv)
+
+                                                    {
+
+                                                        nper = parseFloat(nper);
+
+                                                        pmt = parseFloat(pmt);
+
+                                                        pv = parseFloat(pv);
+
+                                                        rate = eval((rate)/(per * 100));
+
+                                                        if (( pmt == 0 ) || ( nper == 0 )) {
+
+                                                            return(0);
+
+                                                        }
+
+                                                        if ( rate == 0 ) // Interest rate is 0
+
+                                                        {
+
+                                                            fv_value = -(pv + (pmt * nper));
+
+                                                        }
+
+                                                        else
+
+                                                        {
+
+                                                            x = Math.pow(1 + rate, nper);
+
+                                                            // y = Math.pow(1 + rate, nper);
+
+                                                            fv_value = - ( -pmt + x * pmt + rate * x * pv ) /rate;
+
+                                                        }
+
+                                                        fv_value = conv_number(fv_value,2);
+
+                                                        return (fv_value);
+
+                                                    }
+
+                                                    //Rate Calculation
+                                                    function rate(periods, payment, present, future, type, guess) {
+                                                        guess = (guess === undefined) ? 0.01 : guess;
+                                                        future = (future === undefined) ? 0 : future;
+                                                        type = (type === undefined) ? 0 : type;
+
+                                                        // Set maximum epsilon for end of iteration
+                                                        var epsMax = 1e-10;
+
+                                                        // Set maximum number of iterations
+                                                        var iterMax = 10;
+
+                                                        // Implement Newton's method
+                                                        var y, y0, y1, x0, x1 = 0,
+                                                            f = 0,
+                                                            i = 0;
+                                                        var rate = guess;
+                                                        if (Math.abs(rate) < epsMax) {
+                                                            y = present * (1 + periods * rate) + payment * (1 + rate * type) * periods + future;
+                                                        } else {
+                                                            f = Math.exp(periods * Math.log(1 + rate));
+                                                            y = present * f + payment * (1 / rate + type) * (f - 1) + future;
+                                                        }
+                                                        y0 = present + payment * periods + future;
+                                                        y1 = present * f + payment * (1 / rate + type) * (f - 1) + future;
+                                                        i = x0 = 0;
+                                                        x1 = rate;
+                                                        while ((Math.abs(y0 - y1) > epsMax) && (i < iterMax)) {
+                                                            rate = (y1 * x0 - y0 * x1) / (y1 - y0);
+                                                            x0 = x1;
+                                                            x1 = rate;
+                                                            if (Math.abs(rate) < epsMax) {
+                                                                y = present * (1 + periods * rate) + payment * (1 + rate * type) * periods + future;
+                                                            } else {
+                                                                f = Math.exp(periods * Math.log(1 + rate));
+                                                                y = present * f + payment * (1 / rate + type) * (f - 1) + future;
+                                                            }
+                                                            y0 = y1;
+                                                            y1 = y;
+                                                            ++i;
+                                                        }
+                                                        return rate;
+                                                    };
+
+                                                    $('#effective_interest').click(function () {
+
+                                                        var e73_val = e73Calculate();
+                                                        var e75_val = e75Calculate();
+                                                        var e74_val = e74Calculation();
+
+                                                        if(e73_val==0 || e73_val==null)
+                                                        {
+                                                            $('#effective_interest').val(e75_val);
+                                                        }
+                                                        else{
+                                                            $('#effective_interest').val(e74_val);
+                                                        }
+
+                                                        //e73 excel cell calculation
+                                                        function e73Calculate() {
+
+                                                            var borrowing_rate = $('#borrowing_rate').val();
+                                                            var monthly_deposit = $('#montly_deposit').val();
+                                                            var loan_amount = $('#loan_amount').val();
+                                                            var loan_period = $('#loan_period').val();
+
+                                                            function e72Calculate(borrowing_rate,monthly_deposit,loan_amount){
+                                                                var e72_val = nper(borrowing_rate/1200,monthly_deposit,-loan_amount);
+                                                                return e72_val;
+                                                            }
+
+                                                            var e72_val = e72Calculate(borrowing_rate,monthly_deposit,loan_amount);
+
+                                                            if(e72_val<loan_period*12)
+                                                            { return 1;}
+                                                            else
+                                                            { return 0; }
+                                                        }
+
+                                                        //e75 excel cell calculation
+                                                        function e75Calculate()
+                                                        {
+                                                            var borrowing_rate = $('#borrowing_rate').val();
+                                                            var monthly_deposit = $('#montly_deposit').val();
+                                                            var loan_amount = $('#loan_amount').val();
+                                                            var loan_period = $('#loan_period').val();
+                                                            var payment_amount = $('#payment_amount').val();
+                                                            var registery_fess = $('#registery_fees').val();
+
+                                                            // 1--E69 Calculation
+                                                            function e69Calculate()
+                                                            {
+                                                                var fv_val = fv(borrowing_rate/1200,loan_period*12,monthly_deposit,-loan_amount);
+                                                                return fv_val;
+                                                            }
+
+                                                            // 2--E70 Calculation
+                                                            function e70Calculation()
+                                                            {
+                                                                var fv_val = e69Calculate();
+                                                                var rate_val = Math.pow(1+rate(loan_period*12,monthly_deposit,-payment_amount,fv_val),12-1)*100;
+                                                                return rate_val;
+                                                            }
+
+                                                            // 3--E71 Calculation
+                                                            function e71Calculation()
+                                                            {
+                                                                var e70_val = e70Calculation();
+                                                                var e71_val = Math.pow((1+e70_val/100),((1/12)-1)*1200)*100;
+                                                                return e71_val;
+                                                            }
+
+                                                            // 4--E68 Calculation
+                                                            function e68Calculation()
+                                                            {
+                                                                var e71_val = e71Calculation();
+                                                                var e68_val = nper(e71_val/1200,monthly_deposit,-loan_amount);
+                                                                return e68_val;
+                                                            }
+
+                                                            var e68_val = e68Calculation();
+                                                            var e75_val = Math.pow((1+rate(e68_val,monthly_deposit,-loan_amount+registery_fess)),12-1)*100;
+
+                                                            return e75_val;
+                                                        }
+
+                                                        function e74Calculation()
+                                                        {
+                                                            var borrowing_rate = $('#borrowing_rate').val();
+                                                            var monthly_deposit = $('#montly_deposit').val();
+                                                            var loan_amount = $('#loan_amount').val();
+                                                            var loan_period = $('#loan_period').val();
+                                                            var payment_amount = $('#payment_amount').val();
+                                                            var registery_fess = $('#registery_fees').val();
+
+                                                            function e72Calculation()
+                                                            {
+                                                                var e72_val = nper(borrowing_rate/1200,monthly_deposit,-loan_amount);
+                                                                return e72_val;
+                                                            }
+
+                                                            var e72_val = e72Calculation();
+                                                            var e74_val = Math.pow((1+rate(e72_val,monthly_deposit,-payment_amount+registery_fess)),12-1)*100;
+
+                                                            return e74_val;
+                                                        }
                                                     });
 
                                                 });
@@ -1149,12 +1402,12 @@
                                                 <tr>
                                                     <td>Disagio (Prozent)</td>
                                                     <td colspan="4">
-                                                    <div class="input-group">
-                                                        <input id="payment_discount" class="form-control text-right">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">%</span>
+                                                        <div class="input-group">
+                                                            <input id="payment_discount" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     </td>
                                                 </tr>
 
@@ -1163,9 +1416,9 @@
                                                     <td colspan="4">
                                                         <div class="input-group">
                                                             <input id="payment_amount" class="form-control text-right">
-                                                                <div class="input-group-append">
-                                                              <span class="input-group-text">€</span>
-                                                                </div>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1174,7 +1427,7 @@
                                                     <td>Sollzinssatz (Prozent) <span class="text-danger" id="message_borrowing_rate"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="borrowing_rate" class="form-control text-right" value="1.50">
+                                                            <input id="borrowing_rate" class="form-control text-right" value="1.50">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1191,7 +1444,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="repayment_date_inp" class="form-control text-right">
+                                                            <input id="repayment_date_inp" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1203,19 +1456,19 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-radio">
-{{--                                                            radio button input Monatsrate--}}
+                                                            {{--                                                            radio button input Monatsrate--}}
                                                             <input type="radio" class="custom-control-input" id="montly_deposit" name="repayment">
                                                             <label class="custom-control-label" for="montly_deposit">Monatsrate ( € ) <span class="text-danger" id="message_montly_deposit"></span></label>
                                                         </div>
                                                     </td>
                                                     <td colspan="4">
-                                                    <div class="input-group">
-{{--                                                        input field Monatsrate--}}
-                                                        <input id="montly_deposit_val" class="form-control text-right" value="1500">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">€</span>
+                                                        <div class="input-group">
+                                                            {{--                                                        input field Monatsrate--}}
+                                                            <input id="montly_deposit_val" class="form-control text-right" value="1500">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     </td>
 
                                                 </tr>
@@ -1327,7 +1580,7 @@
                                                     <td>Restschuld ( € )</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="Outstanding_balance" class="form-control text-right">
+                                                            <input id="Outstanding_balance" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -1339,7 +1592,7 @@
                                                     <td>Effektivzins (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="effective__interest" class="form-control text-right">
+                                                            <input id="effective_interest" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1356,7 +1609,7 @@
                                                     <td>Neuer Sollzinssatz (Prozent) <span id="message_new_borrowing_rate" class="text-danger"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
+                                                            <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1372,7 +1625,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_repayment_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
+                                                            <input id="new_repayment_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1388,7 +1641,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_rate_inp" class="form-control text-right">
+                                                            <input id="new_rate_inp" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -1400,7 +1653,7 @@
                                                     <td>Gesamtlaufzeit (Jahre/Monate)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="total_maturity" class="form-control text-right">
+                                                            <input id="total_maturity" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">J/M</span>
                                                             </div>
@@ -1438,7 +1691,7 @@
                                                     </div>
                                                     <div class="col-sm-3 form-group">
                                                         <label for="bank">Finanzierungsbedarf</label>
-                                                    <input type="text" id="finanzierungsbedarf_phase_eins" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_eins]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_eins}}" required>
+                                                        <input type="text" id="finanzierungsbedarf_phase_eins" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_eins]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_eins}}" required>
                                                     </div>
                                                     <div class="col-sm-3 form-group">
                                                         <label for="bank">Zins p.a.</label>
@@ -1525,7 +1778,7 @@
                                 </div>
                             </div>
 
-                        <?php $cIndex++; ?>
+                            <?php $cIndex++; ?>
                         @endforeach
                     </div>
 
@@ -1598,25 +1851,25 @@
                             <h4>Checkliste</h4>
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
-                              @php($i=0)
-                              @foreach($checklistCategory as $category)
-                              @if(count($category->checklists)>0)
-                              <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
-                              @foreach($category->checklists as $checklist)
-                              <div class="col-sm-12" style="padding: 10px 30px;">
-                                    <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
-                                    <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
-                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                        <polyline points="1 9 7 14 15 4"></polyline>
-                                    </svg>
-                                    </label>
-                                    <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
-                              </div>
-                              @php($i++)
-                              @endforeach
-                              @endif
-                              @endforeach
+                                @php($i=0)
+                                @foreach($checklistCategory as $category)
+                                    @if(count($category->checklists)>0)
+                                        <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
+                                        @foreach($category->checklists as $checklist)
+                                            <div class="col-sm-12" style="padding: 10px 30px;">
+                                                <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
+                                                <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
+                                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                    </svg>
+                                                </label>
+                                                <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                                            </div>
+                                            @php($i++)
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                         @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
@@ -1625,24 +1878,24 @@
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
 
-                              @foreach($checklistCategory as $category)
-                              @if(count($category->checklists)>0)
-                              <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
-                              @foreach($category->checklists as $checklist)
-                              <div class="col-sm-12" style="padding: 10px 30px;">
-                                    <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
-                                    <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
-                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                        <polyline points="1 9 7 14 15 4"></polyline>
-                                    </svg>
-                                    </label>
-                                    <label for="cbx{{$i}}" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
-                              </div>
-                              @php($i++)
-                              @endforeach
-                              @endif
-                              @endforeach
+                                @foreach($checklistCategory as $category)
+                                    @if(count($category->checklists)>0)
+                                        <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
+                                        @foreach($category->checklists as $checklist)
+                                            <div class="col-sm-12" style="padding: 10px 30px;">
+                                                <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
+                                                <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
+                                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                    </svg>
+                                                </label>
+                                                <label for="cbx{{$i}}" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                                            </div>
+                                            @php($i++)
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -1947,28 +2200,28 @@
             }
         }
         function checkedFunction(th, who) {
-          $.ajax({
-              url: "{{route('kundenChecklist')}}",
-              type: 'post',
-              data: {
-                  _token: $('[name="_token"]').val(),
-                  data_id: $(th).data('id'),
-                  kunden_id: '{{$kunden->id}}',
-                  who: who,
-                  action: $(th).parent().find('input[type="checkbox"]').is(':checked') ? 1:0
-              },
-              success: function (res) {
-                if(res.success == true) {
-                    // $(th).parent().find('input[type="checkbox"]').prop('checked', true);
-                } else {
-                    if($(th).parent().find('input[type="checkbox"]').is(':checked')) {
-                      $(th).parent().find('input[type="checkbox"]').prop('checked', false);
+            $.ajax({
+                url: "{{route('kundenChecklist')}}",
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    data_id: $(th).data('id'),
+                    kunden_id: '{{$kunden->id}}',
+                    who: who,
+                    action: $(th).parent().find('input[type="checkbox"]').is(':checked') ? 1:0
+                },
+                success: function (res) {
+                    if(res.success == true) {
+                        // $(th).parent().find('input[type="checkbox"]').prop('checked', true);
                     } else {
-                      $(th).parent().find('input[type="checkbox"]').prop('checked', true);
+                        if($(th).parent().find('input[type="checkbox"]').is(':checked')) {
+                            $(th).parent().find('input[type="checkbox"]').prop('checked', false);
+                        } else {
+                            $(th).parent().find('input[type="checkbox"]').prop('checked', true);
+                        }
                     }
                 }
-              }
-          });
+            });
         }
 
 
