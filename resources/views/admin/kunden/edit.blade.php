@@ -952,98 +952,108 @@
 
                                                     $('#payment_opt_rad').click(function () {
 
-                                                        var loan_period = parseInt($('#loan_period').val());
+                                                            var loan_period = parseInt($('#loan_period').val());
 
-                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
+                                                            var borrowing_rate = parseFloat($('#borrowing_rate').val());
 
-                                                        var montly_deposit_val = parseInt($('#montly_deposit_val').val());
+                                                            var montly_deposit_val = parseInt($('#montly_deposit_val').val());
 
-                                                        var loan_amount = parseInt($('#loan_amount').val());
+                                                            var loan_amount = parseInt($('#loan_amount').val());
 
-                                                    // Input fields Checks
+                                                        // Input fields Checks
 
-                                                        if(isNaN(loan_amount))
+                                                        if(loan_amount && loan_period && borrowing_rate && montly_deposit_val)
                                                         {
-                                                            $('#message_loan_amount').html('* Pflichtfeld');
-                                                        }
+                                                            alert('hi');
+                                                            var finalvalue = finalvalueCal(0.00125,180,1500,-350000,0);
 
-                                                        else {
+                                                            if(loan_period>50)
+                                                            {
+                                                                $('#message_montly_deposit').html('Zinsbindung zu lang!');
+                                                            }
 
-                                                            var finalvalue = finalvalueCal(borrowing_rate/100/12,loan_period*12,montly_deposit_val,0-loan_amount,0);
+                                                            else if(finalvalue<-1 || isNaN(finalvalue)){
 
-                                                                if(loan_period>50)
-                                                                    {
-                                                                        $('#message_montly_deposit').html('Zinsbindung zu lang');
-                                                                    }
+                                                                $('#message_montly_deposit').html('Darlehen vor Ende Zinsbindung getilgt!');
+                                                                //alert('Loan before end fixed interest rate!');
+                                                            }
 
-                                                                else if(finalvalue<-1 || isNaN(finalvalue)){
+                                                            else{
+                                                                $('#montly_deposit_val').val(finalvalue);
+                                                            }
 
-                                                                    $('#montly_deposit_val').val('INVALID VALUE');
-                                                                    //alert('Loan before end fixed interest rate!');
+                                                            function finalvalueCal(rate, nper, pmt, pv, type) {
+                                                                if (!type) type = 0;
+
+                                                                var pow = Math.pow(1 + rate, nper);
+                                                                var fv = 0;
+
+                                                                if (rate) {
+                                                                    fv = (pmt * (1 + rate * type) * (1 - pow) / rate) - pv * pow;
+                                                                } else {
+                                                                    fv = -1 * (pv + pmt * nper);
                                                                 }
 
-                                                                else{
-                                                                    $('#montly_deposit_val').val(finalvalue);
-                                                                }
-
-                                                                function finalvalueCal(rate, nper, pmt, pv, type) {
-                                                                    var pow = Math.pow(1 + rate, nper),
-                                                                        fv;
-                                                                    if (rate) {
-                                                                        fv = (pmt*(1+rate*type)*(1-pow)/rate)-pv*pow;
-                                                                    } else {
-                                                                        fv = -1 * (pv + pmt * nper);
-                                                                    }
-                                                                    return fv.toFixed(2);
-                                                                }
+                                                                return fv;
+                                                            }
                                                         }
 
-                                                        if(isNaN(loan_period))
-                                                        {
-                                                            $('#message_loan_amount').html('* Pflichtfeld');
-                                                        }
+                                                            else {
 
-                                                        else{
-
-                                                        }
-
-                                                        if(isNaN(borrowing_rate))
-                                                        {
-                                                            $('#message_borrowing_rate').html('* Pflichtfeld');
-                                                        }
-
-                                                        else{
-
-                                                        }
-
-                                                        if(isNaN(montly_deposit_val))
-                                                        {
-                                                            $('#message_montly_deposit').html('* Pflichtfeld');
-                                                        }
-
-                                                        else {
+                                                            if ((isNaN(loan_amount))) {
+                                                                $('#message_loan_amount').html('* Pflichtfeld');
+                                                            }
+                                                            if ((isNaN(loan_period))) {
+                                                                $('#message_loan_period').html('* Pflichtfeld');
+                                                            }
+                                                            if ((isNaN(borrowing_rate))) {
+                                                                $('#message_borrowing_rate').html('* Pflichtfeld');
+                                                            }
+                                                            if ((isNaN(montly_deposit_val))) {
+                                                                $('#message_montly_deposit').html('* Pflichtfeld');
+                                                            }
 
                                                         }
-
-
                                                     });
 
-                                                        $('#new_rate').click(function () {
+                                                        $('#new_repayment_rate').click(function () {
 
-                                                            var loan_amount  = parseInt($('#loan_amount').val());
+                                                            var loan_amount = parseInt($('#loan_amount').val());
                                                             var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
-                                                            var new_repayment = parseInt($('#new_repayment_inp').val());
+                                                            var new_repayment_rate = parseInt($('#new_repayment_rate_inp').val());
 
-                                                            var new_rate_ttl = loan_amount*(new_borrowing_rate+new_repayment)/100/12;
-
-                                                            if(isNaN(new_rate_ttl)){
-
-                                                                $('#new_rate_inp').val('INVALID VALUE');
+                                                            if(loan_amount && new_borrowing_rate && new_repayment_rate)
+                                                            {
+                                                                var new_rate =loan_amount*new_borrowing_rate+new_repayment_rate/100/12;
+                                                                $('#new_rate_inp').val(new_rate);
                                                             }
-                                                            else {
-                                                                $('#new_rate_inp').val(new_rate_ttl);
-                                                                }
+                                                            else{
+                                                                alert('go');
+                                                                if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
+                                                                if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
+                                                                if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
+                                                            }
+
                                                         });
+
+                                                    $('#new_rate').click(function () {
+
+                                                        var new_rate_inp = parseInt($('#new_rate_inp').val());
+                                                        var loan_amount = parseInt($('#loan_amount').val());
+                                                        var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
+
+                                                        if(new_borrowing_rate && new_repayment_rate)
+                                                        {
+                                                            var new_repayment_rate_inp = new_rate_inp*100*12/loan_amount-new_borrowing_rate;
+                                                            $('#new_repayment_rate_inp').val(new_repayment_rate_inp);
+                                                        }
+                                                        else{
+                                                            if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
+                                                            if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
+                                                            if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
+                                                        }
+
+                                                    });
 
                                                 });
 
@@ -1343,7 +1353,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td>Neuer Sollzinssatz (Prozent)</td>
+                                                    <td>Neuer Sollzinssatz (Prozent) <span id="message_new_borrowing_rate" class="text-danger"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
                                                         <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
@@ -1356,24 +1366,31 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" class="custom-control-input" id="new_repayment_date" value="Tilgungssatz (Prozent)" name="new_repayment">
-                                                            <label class="custom-control-label" for="new_repayment_date">Neuer Tilgungssatz (Proz.)</label>
-                                                        </div>
-                                                    </td>
-                                                    <td colspan="4"><input id="new_repayment_inp" class="form-control text-right"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" class="custom-control-input" id="new_rate" value="Tilgungssatz (Prozent)" name="new_repayment">
-                                                            <label class="custom-control-label" for="new_rate">Tilgungssatz (Prozent)</label>
+                                                            <input type="radio" class="custom-control-input" id="new_repayment_rate" name="rates">
+                                                            <label class="custom-control-label" for="new_repayment_rate">Neuer Tilgungssatz (Proz.) <span id="message_new_repayment_rate" class="text-danger"></span></label>
                                                         </div>
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
+                                                        <input id="new_repayment_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="new_rate" name="rates">
+                                                            <label class="custom-control-label" for="new_rate">Neuer Rate (Euro)</label>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="4">
+                                                        <div class="input-group">
+                                                        <input id="new_rate_inp" class="form-control text-right">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
                                                             </div>
                                                         </div>
                                                     </td>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3388a856-773d-4b90-9258-22f5a97e7ec6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="3388a856-773d-4b90-9258-22f5a97e7ec6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="980" column="114" lean-forward="true" selection-start-line="980" selection-start-column="114" selection-end-line="980" selection-end-column="114" />
+            <state relative-caret-position="348">
+              <caret line="971" column="67" selection-start-line="971" selection-start-column="67" selection-end-line="971" selection-end-column="67" />
               <folding>
                 <marker date="1564659195372" expanded="true" signature="43680:45468" ph="..." />
               </folding>
@@ -201,7 +198,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="852" />
+    <option name="x" value="851" />
     <option name="width" value="1555" />
     <option name="height" value="1310" />
   </component>
@@ -298,6 +295,7 @@
       <workItem from="1564654010165" duration="1782000" />
       <workItem from="1564655825779" duration="1915000" />
       <workItem from="1564657785516" duration="1851000" />
+      <workItem from="1564661747639" duration="386000" />
     </task>
     <task id="LOCAL-00001" summary="Commmit 1 from Technovier,&#10;Front-end and some checks enabeled on calculator">
       <created>1564501683924</created>
@@ -348,17 +346,23 @@
       <option name="project" value="LOCAL" />
       <updated>1564583109932</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Commmit 7 from Technovier,&#10;Updated Checks and some functions.">
+      <created>1564661857811</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1564661857811</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69576000" />
+    <option name="totallyTimeSpent" value="69962000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23892617" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24228188" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -392,7 +396,8 @@
     <MESSAGE value="Commmit 4 from Technovier,&#10;euro sign on input fields." />
     <MESSAGE value="Commmit 5 from Technovier,&#10;euro sign and percent sign on input fields." />
     <MESSAGE value="Commmit 6 from Technovier,&#10;Some checks and updated content." />
-    <option name="LAST_COMMIT_MESSAGE" value="Commmit 6 from Technovier,&#10;Some checks and updated content." />
+    <MESSAGE value="Commmit 7 from Technovier,&#10;Updated Checks and some functions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Commmit 7 from Technovier,&#10;Updated Checks and some functions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -502,8 +507,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="980" column="114" lean-forward="true" selection-start-line="980" selection-start-column="114" selection-end-line="980" selection-end-column="114" />
+        <state relative-caret-position="348">
+          <caret line="971" column="67" selection-start-line="971" selection-start-column="67" selection-end-line="971" selection-end-column="67" />
           <folding>
             <marker date="1564659195372" expanded="true" signature="43680:45468" ph="..." />
           </folding>
