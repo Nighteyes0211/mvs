@@ -1322,6 +1322,7 @@
 
                                                     //Anschlusskredit Calculation
                                                     $('#connection_credit').click(function (){
+
                                                         var outstanding_balance = $('#Outstanding_balance').val();
 
                                                         if(isNaN(outstanding_balance) || outstanding_balance==0 || outstanding_balance==null)
@@ -1330,7 +1331,111 @@
                                                         }
                                                         else
                                                         { repaymentscheduleA(); $('#connection_credit').val(outstanding_balance); }
+
                                                     });
+
+                                                    //Arrays Declaration
+                                                    var A=[];
+                                                    var B=[];
+                                                    var C=[];
+
+                                                    $('#Outstanding_balance').click(function (){
+
+                                                        columnA();
+                                                        columnB();
+                                                        columnC();
+                                                    });
+
+                                                    // Column A calculaton table 3
+                                                    function columnA(){
+
+                                                        var i=0;
+
+                                                        A[i] = null;
+                                                        A[i++] = null;
+                                                        A[i++] = null;
+                                                        A[i++] = null;
+                                                        A[i++] = null;
+
+                                                        for (var a = 0; a <= 360; a++) {
+                                                            A[i++] =a;
+                                                        }
+                                                        console.log(A[364]);
+                                                    }
+
+                                                    // Column B calculaton table 3
+                                                    function columnB(){
+
+                                                        var loan_amount = $('#loan_amount').val();
+                                                        alert(loan_amount);
+
+                                                        for(var b = 4; b <=364; b++ )
+                                                        {
+                                                            if(A[b] > (loan_amount*12)){
+                                                                B[b] = "";
+                                                            }
+                                                            else{
+                                                                B[b] = A[b];
+                                                            }
+                                                        }
+
+
+                                                        for(var b1 = 4; b1 <= 364; b1++)
+                                                        {
+                                                            for(var b2 = 4; b2 <= 364; b2++)
+
+                                                                B[2] = Math.max(B[b1],B[b2])+4;
+                                                        }
+                                                        console.log(B[2]);
+
+                                                    }
+
+
+                                                    //Column 'C' calculation for table 3
+                                                    function columnC(){
+                                                        var payment_month = $('#payment_month').val();
+                                                        var payment_year = $('#payment_year').val();
+
+                                                        var months = [
+                                                            'Januar','Februar','Marz',
+                                                            'April','Mai','Juni','Juli',
+                                                            'August','September','Oktober',
+                                                            'November','Dezember'
+                                                        ];
+
+                                                        function monthNameToNum(monthname) {
+                                                            var month = months.indexOf(monthname);
+                                                            return month ? month + 1 : 0;
+                                                        }
+
+                                                        var month_in_num = monthNameToNum(payment_month);
+                                                        console.log(month_in_num);
+
+                                                        function daysInMonth (month, year) {
+                                                            return new Date(year, month, 0).getDate();
+                                                        }
+
+                                                        var days_in_month = daysInMonth(month_in_num,payment_year);
+                                                        C[4] = month_in_num+'/'+'/'+days_in_month+'/'+payment_year;
+                                                        console.log(C[4]);
+
+                                                        function endofMonth(){
+                                                            var today = new Date();
+                                                            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+                                                        }
+
+                                                        for(var c =5; c <= 364; c++)
+                                                        {
+                                                            if(B[c]="")
+                                                            {
+                                                                B[C]="";
+                                                            }
+                                                            else{
+
+                                                            }
+                                                        }
+
+                                                    }
                                                 });
 
                                             </script>
@@ -1343,7 +1448,7 @@
 
                                                 <tr>
                                                     <td>Kreditsumme ( € ) <span class="text-danger" id="message_loan_amount"></span></td>
-                                                    <td colspan="4"><input class="form-control text-right" id="loan_amount" type=""></td>
+                                                    <td colspan="4"><input class="form-control text-right" value=350000 id="loan_amount" type=""></td>
                                                 </tr>
                                                 <tr>
                                                     <td >Zinsbindung <span class="text-danger" id="message_loan_period"></span></td>
@@ -1606,40 +1711,10 @@
                                                 </tr>
 
                                                 <tr>
-                                                <!--                                                    --
-//
-//                                                    $A = array();
-//
-//                                                    for($i=0;$i<=4;$i++)
-//                                                    {
-//                                                        array_push($A,$i);
-//                                                    }
-//
-//                                                 function columnB(){
-//
-//                                                        $loan_period = $_REQUEST['loan_period'];
-//
-//                                                    for($b=4;$b<=364;$b++)
-//                                                        {
-//
-//                                                            if($A[$b] > $loan_period*12)
-//                                                            {
-//                                                                return 1;
-//                                                            }
-//
-//                                                            else{
-//                                                                return $A[$b];
-//                                                            }
-//
-//                                                        }
-//
-//                                                    }
-//
-
                                                     <td>Restschuld ( € ) <span class="text-danger" id="message_Outstanding_balance"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="Outstanding_balance" class="form-control text-right">
+                                                            <input id="Outstanding_balance" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -1651,7 +1726,7 @@
                                                     <td>Effektivzins (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="effective_interest" class="form-control text-right">
+                                                            <input id="effective_interest" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1668,7 +1743,7 @@
                                                     <td>Neuer Sollzinssatz (Prozent) <span id="message_new_borrowing_rate" class="text-danger"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
+                                                            <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1684,7 +1759,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_repayment_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
+                                                            <input id="new_repayment_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1700,7 +1775,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="new_rate_inp" class="form-control text-right">
+                                                            <input id="new_rate_inp" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -1712,7 +1787,7 @@
                                                     <td>Gesamtlaufzeit (Jahre/Monate)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                        <input id="total_maturity" class="form-control text-right">
+                                                            <input id="total_maturity" class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">J/M</span>
                                                             </div>
@@ -1727,30 +1802,30 @@
                                                     <input type="hidden" name="Cal[{{$cIndex}}][id]" value="{{$cal->id}}">
                                                     <input type="hidden" class="isTM-{{$cIndex}}"  name="Cal[{{$cIndex}}][istm]" value="0">
                                                     @if(isset($cal->timeline->id))
-                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl entfernen</a>
+                                                        <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl entfernen</a>
                                                     @else
-                                                    <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
+                                                        <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
                                                     @endif
 
-                                                @if(isset($cal->customerTimeline->id))
-                                                    <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl entfernen</a>
+                                                    @if(isset($cal->customerTimeline->id))
+                                                        <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl entfernen</a>
                                                     @else
-                                                    <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
+                                                        <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
                                                     @endif
-                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <div class="thisTimeline-{{$cIndex}}">
+                                        <div class="thisTimeline-{{$cIndex}}">
                                             @if(isset($cal->timeline->id))
-                                                    <input type="hidden" name="Cal[{{$cIndex}}][timeline][id]" value="{{$cal->timeline->id}}">
+                                                <input type="hidden" name="Cal[{{$cIndex}}][timeline][id]" value="{{$cal->timeline->id}}">
                                                 <div class="row ten_fields-{{$cIndex}} mt-35">
                                                     <div class="col-sm-12">
                                                         <h5>Zeitstrahl Phase 1</h5>
                                                     </div>
                                                     <div class="col-sm-3 form-group">
                                                         <label for="bank">Finanzierungsbedarf</label>
-                                                    <input type="text" id="finanzierungsbedarf_phase_eins" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_eins]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_eins}}" required>
+                                                        <input type="text" id="finanzierungsbedarf_phase_eins" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_eins]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_eins}}" required>
                                                     </div>
                                                     <div class="col-sm-3 form-group">
                                                         <label for="bank">Zins p.a.</label>
@@ -1796,11 +1871,11 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                                    </div>
+                                        </div>
 
-                                                    <div class="thisCtTimeline-{{$cIndex}}">
+                                        <div class="thisCtTimeline-{{$cIndex}}">
                                             @if(isset($cal->customerTimeline->id))
-                                                    <input type="hidden" name="Cal[{{$cIndex}}][customerTimeline][id]" value="{{$cal->customerTimeline->id}}">
+                                                <input type="hidden" name="Cal[{{$cIndex}}][customerTimeline][id]" value="{{$cal->customerTimeline->id}}">
                                                 <div class="row ct_fields-{{$cIndex}} mt-35">
                                                     <div class="col-sm-12">
                                                         <h5>Zeitstrahl Phase 1 (Angepasster)</h5>
@@ -1831,20 +1906,20 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                                    </div>
-
-                                                </div>
-                                            </div>
                                         </div>
 
-<?php $cIndex++; ?>
-                                                @endforeach
-                                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php $cIndex++; ?>
+                        @endforeach
+                    </div>
 
 
 
-                                                    <div class="row mt-15">
-                                                        <div class="col-sm-12 @if(count($Calculations) == 0) new_form @endif">
+                    <div class="row mt-15">
+                        <div class="col-sm-12 @if(count($Calculations) == 0) new_form @endif">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h5>Angebotsdatum</h5>
@@ -1910,380 +1985,380 @@
                             <h4>Checkliste</h4>
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
-                              @php($i=0)
-                                                @foreach($checklistCategory as $category)
-                                                    @if(count($category->checklists)>0)
-                                                        <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
-                              @foreach($category->checklists as $checklist)
-                                                            <div class="col-sm-12" style="padding: 10px 30px;">
-                                                                  <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
-                                    <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
-                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                        <polyline points="1 9 7 14 15 4"></polyline>
-                                    </svg>
-                                    </label>
-                                    <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
-                              </div>
-                              @php($i++)
-                                                        @endforeach
-                                                    @endif
-                                                @endforeach
-                                                    </div>
-                                                </div>
-@php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
-                                                    <div class="col-6" id="ehepartnerChecklist" style="display: {{$checklistEnable}}">
+                                @php($i=0)
+                                @foreach($checklistCategory as $category)
+                                    @if(count($category->checklists)>0)
+                                        <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
+                                        @foreach($category->checklists as $checklist)
+                                            <div class="col-sm-12" style="padding: 10px 30px;">
+                                                <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->checklists->contains($checklist)?"checked":''}}>
+                                                <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">
+                                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                    </svg>
+                                                </label>
+                                                <label for="cbx{{$i}}" onclick="checkedFunction(this, 'kunden')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
+                                            </div>
+                                            @php($i++)
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
+                        <div class="col-6" id="ehepartnerChecklist" style="display: {{$checklistEnable}}">
                             <h4>Checkliste (Ehepartner)</h4>
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
 
-                              @foreach($checklistCategory as $category)
-                                                    @if(count($category->checklists)>0)
-                                                        <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
-                              @foreach($category->checklists as $checklist)
-                                                            <div class="col-sm-12" style="padding: 10px 30px;">
-                                                                  <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
-                                    <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
-                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                        <polyline points="1 9 7 14 15 4"></polyline>
-                                    </svg>
-                                    </label>
-                                    <label for="cbx{{$i}}" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
-                              </div>
-                              @php($i++)
-                                                        @endforeach
-                                                    @endif
-                                                @endforeach
-                                                    </div>
-                                                </div>
+                                @foreach($checklistCategory as $category)
+                                    @if(count($category->checklists)>0)
+                                        <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
+                                        @foreach($category->checklists as $checklist)
+                                            <div class="col-sm-12" style="padding: 10px 30px;">
+                                                <input type="checkbox" class="cbx" id="cbx{{$i}}" style="display: none;" {{ $kunden->ehepartnerChecklists->contains($checklist)?"checked":''}}>
+                                                <label for="cbx{{$i}}" class="check" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">
+                                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                    </svg>
+                                                </label>
+                                                <label for="cbx{{$i}}" onclick="checkedFunction(this, 'ehepartner')" data-id="{{$checklist->id}}">{{$checklist->body}}</label>
                                             </div>
-                                            <br>
-                                            <br>
-                                            <br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                                            @php($i++)
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </form>
 
 
 
 
-<!-- Modal -->
-                                                    <div class="modal fade" id="repayment_modal" role="dialog">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title pull-left">Tilgungsplan</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                </div>
-                                                                <div class="modal-body" >
-                                                                    <div>
-                                                                        <table id="example" class="display" style="width:100%; height: 500px !important; overflow: scroll">
-                                                                            <thead>
-                                                                            <tr>
-                                                                                <th>Rückzahlungsdatum</th>
-                                                                                <th>Zinsen</th>
-                                                                                <th>Tilgung</th>
-                                                                                <th>Darlehensrest</th>
-                                                                            </tr>
-                                                                            </thead>
-                                                                            <tbody style="height: 500px !important;">
+    <!-- Modal -->
+    <div class="modal fade" id="repayment_modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Tilgungsplan</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" >
+                    <div>
+                        <table id="example" class="display" style="width:100%; height: 500px !important; overflow: scroll">
+                            <thead>
+                            <tr>
+                                <th>Rückzahlungsdatum</th>
+                                <th>Zinsen</th>
+                                <th>Tilgung</th>
+                                <th>Darlehensrest</th>
+                            </tr>
+                            </thead>
+                            <tbody style="height: 500px !important;">
 
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="modal fade" id="confirm_modal" role="dialog">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title pull-left">Info</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                </div>
-                                                                <div class="modal-body" >
-                                                                    <p>Soll der Tilgungsplan gelöscht werden??</p>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Schließen</button>
-                                                                    <button type="button" class="btn btn-primary" id="confirm_delete_yes" onclick="deleteCalc()">Ja</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {{csrf_field()}}
-                                                    <script type="text/javascript" src="{{ asset('/js/sweetalert.min.js') }}"></script>
-
-                                                    <script type="text/javascript">
-
-                                                        function removeCard(cardNo) {
-                                                            $('.card-' + cardNo).remove();
-                                                        }
-
-                                                        function save_timeline() {
-                                                            // alert('1');
-                                                            //if ( confirm('Are you sure you want to submit?') ) {
-                                                            var tenFieldFlag = $('#new_form_controller').val();
-                                                            //var serializeForm = $('#kunden_edit_form').serializeArray();
-
-                                                            /* setTimeout(function(){
-                                                                $("#kunden_edit_form").submit();
-                                                            }, 500); */
-
-                                                            /* $.ajax({
-                                                                url: 'save_timeline',
-                                                                type: 'post',
-                                                                data: {
-                                                                    _token: $('[name="_token"]').val(),
-
-                                                                    // New 11 fields
-                                                                    bank: $('#bank').val(),
-                                                                    annuities: $('#annuities').val(),
-                                                                    to_interest: $('#to_interest').val(),
-                                                                    effectiveness: $('#effectiveness').val(),
-                                                                    fixed_interest_rates: $('#fixed_interest_rates').val(),
-                                                                    monthly_loan: $('#monthly_loan').val(),
-                                                                    residual_debt_interest_rate: $('#residual_debt_interest_rate').val(),
-                                                                    calculated_luaf_time: $('#calculated_luaf_time').val(),
-                                                                    net_loan_amount: $('#net_loan_amount').val(),
-                                                                    initial_interest: $('#initial_interest').val(),
-                                                                    optional_sound_recovery: $('#optional_sound_recovery').val(),
-                                                                    prepared_by: $('#prepared_by').val(),
-
-                                                                    // New 10 fields flag
-                                                                    ten_fields_flag: tenFieldFlag,
-
-                                                                    jahreszins_phase_eins: $('#jahreszins_phase_eins').val(),
-                                                                    laufzeit_phase_eins: $('#laufzeit_phase_eins').val(),
-                                                                    rate_monatlich_phase_eins: $('#rate_monatlich_phase_eins').val(),
-                                                                    finanzierungsbedarf_phase_zwei: $('#finanzierungsbedarf_phase_zwei').val(),
-                                                                    jahreszins_phase_zwei: $('#jahreszins_phase_zwei').val(),
-                                                                    laufzeit_phase_zwei: $('#laufzeit_phase_zwei').val(),
-                                                                    rate_monatlich_phase_zwei: $('#rate_monatlich_phase_zwei').val(),
-                                                                    restschuld_ende: $('#restschuld_ende').val(),
-                                                                    restschuld_phase_eins: $('#restschuld_phase_eins').val(),
-                                                                    finanzierungsbedarf_phase_eins: $('#finanzierungsbedarf_phase_eins').val(),
-
-                                                                    fullForm: serializeForm
-                                                                },
-                                                                success: function(res) {
-                                                                    toastr.success(res);
-                                                                },
-                                                                error: function(error) {
-                                                                    var error = JSON.parse(error.responseText);
-                                                                    error = error.errors;
-                                                                    $.each(error, function(k, v){
-                                                                        toastr.error(k+': '+v[0]);
-                                                                    })
-                                                                }
-                                                            }); */
-                                                        }
-                                                        function deleteCalc() {
-                                                            $.ajax({
-                                                                url: 'delete_repayment',
-                                                                type: 'get',
-                                                                success: function (res) {
-                                                                    $('#confirm_modal').modal('hide');
-                                                                    alert("Kalkulation erfolgreich gelöscht.");
-                                                                }
-                                                            });
-                                                        }
-
-                                                        function calculate()
-                                                        {
-                                                            // Werte aus den Inputfeldern
-                                                            var loan = Number.parseFloat(document.getElementById("loan").value);
-                                                            var interest = Number.parseFloat(document.getElementById("interest").value);
-                                                            var repayment = Number.parseFloat(document.getElementById("repayment").value);
-                                                            var repaymentStart = document.getElementById("repaymentStart").value;
-                                                            var fixedInterestRate = document.getElementById("fixedInterestRate").value;
-                                                            var payout = document.getElementById("payout").value;
-                                                            var rate = Number.parseFloat(document.getElementById("rate").value);
-
-                                                            if(!(repaymentStart instanceof Date))
-                                                            {
-                                                                repaymentStart = new Date(repaymentStart);
-                                                            }
-
-                                                            if(!(fixedInterestRate instanceof Date))
-                                                            {
-                                                                fixedInterestRate = new Date(fixedInterestRate);
-                                                            }
-
-                                                            if(!(payout instanceof Date))
-                                                            {
-                                                                payout = new Date(payout);
-                                                            }
-
-                                                            // Werte für die Berechnung
-                                                            var calcInterest = 0;
-                                                            var calcRepayment = 0;
-
-                                                            var loansRest = loan;
-
-                                                            var months = monthDiff(payout, fixedInterestRate);
-                                                            var curPayoutDate = new Date(payout.getFullYear(), payout.getMonth() + 1, 0);   // Nur zu Ausgabezwecken
-
-                                                            var resultString = "";
-
-                                                            // Nun monatlich kalkulieren
-
-                                                            month_names_short = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-
-                                                            function changeString(s) {
-                                                                return s.toLocaleString('de-DE', {
-                                                                    style: 'currency',
-                                                                    currency: 'EUR',
-                                                                    minimumFractionDigits: 2
-                                                                });
-                                                            }
-                                                            var resarr = [];
-                                                            for(var i = 0; i <= months; i++)
-                                                            {
-                                                                calcInterest = (loansRest * interest / 12) / 100;
-                                                                calcRepayment = rate - calcInterest;
-                                                                loansRest -= calcRepayment;
-                                                                loansRest = loansRest;
-
-                                                                resultString += "<tr><td>" + month_names_short[curPayoutDate.getMonth()] + " " + curPayoutDate.getFullYear() + "</td><td>" + changeString(round(calcInterest, 2)) + "     " + "</td><td>" +changeString(round(calcRepayment, 2)) + "</td><td>" + changeString(round(loansRest, 2)) + "</td></tr>";
-
-                                                                curPayoutDate.setMonth(curPayoutDate.getMonth() + 1);
-
-                                                                var temp = {
-                                                                    'repayment_date':(month_names_short[curPayoutDate.getMonth()]) + " " + curPayoutDate.getFullYear(),
-                                                                    'zinsen': changeString(round(calcInterest, 2)),
-                                                                    'tilgung': changeString(round(calcRepayment, 2)),
-                                                                    'darlehensrest': changeString(round(loansRest, 2))
-                                                                };
-
-                                                                resarr.push(temp);
-                                                            }
-
-                                                            //console.log(resultString);
-                                                            // document.getElementById("result").innerHTML = resultString;
-
-                                                            $.ajax({
-                                                                url: 'save_repayment',
-                                                                type: 'post',
-                                                                data: {
-                                                                    _token: $('[name="_token"]').val(),
-                                                                    data: resarr
-                                                                },
-                                                                success: function (res) {
-                                                                    $('#example').find('tbody').html(resultString);
-                                                                }
-                                                            });
-                                                        }
-
-                                                        //Berechnet die Differenz in Monaten zweier Datetimes um die Laufzeit des Darlehens zu ermitteln
-                                                        function monthDiff(d1, d2) {
-                                                            var months;
-                                                            months = (d2.getFullYear() - d1.getFullYear()) * 12;
-                                                            months -= d1.getMonth() + 1;
-                                                            months += d2.getMonth();
-                                                            return months <= 0 ? 0 : months;
-                                                        }
-
-                                                        function round(value, decimals) {
-                                                            return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-                                                        }
-
-                                                        // function enabled(checkBox) {
-                                                        //     var calculation_id = $(checkBox).data('calculation_id');
-                                                        //     // If the checkbox is checked, display the output text
-                                                        //     $.ajax({
-                                                        //         url: '{{ route("calculation.statusChange") }}',
-                                                        //         type: 'post',
-                                                        //         data: {
-                                                        //             _token: $('[name="_token"]').val(),
-                                                        //             calculation_id: calculation_id
-                                                        //         },
-                                                        //         success: function (response) {
-                                                        //             console.log(response.calculation);
-                                                        //             if(response.calculation.enabled == 1) {
-                                                        //                 $(checkBox).prop('checked', true);
-                                                        //             } else {
-                                                        //                 $(checkBox).prop('checked', false);
-                                                        //             }
-                                                        //             swal({
-                                                        //                 title: "Enabled!",
-                                                        //                 text: "Your selected kalkulation is enabled for print.",
-                                                        //                 type: "success",
-                                                        //                 icon: 'success',
-                                                        //                 timer: 2000
-                                                        //             });
-                                                        //         },
-                                                        //         error: function (error) {
-                                                        //             if (checkBox.checked == false){
-                                                        //                 $(checkBox).prop('checked', true);
-                                                        //             } else {
-                                                        //                 $(checkBox).prop('checked', false);
-                                                        //             }
-                                                        //             swal({
-                                                        //                 title: "Error!",
-                                                        //                 text: "Something wrong. Try again.",
-                                                        //                 type: "error",
-                                                        //                 icon: 'error',
-                                                        //                 timer: 2000
-                                                        //             });
-                                                        //         }
-                                                        //     });
-                                                        // }
-
-                                                        function kundenSpouse(th) {
-                                                            if($(th).data('status') == 1) {
-                                                                $('input[name="ehepartner_enabled"]').val(0);
-                                                                $('#spouseDiv').fadeOut();
-                                                                $('#ehepartnerChecklist').fadeOut();
-                                                                $(th).data('status', 0);
-                                                                $(th).html('Ehepartner hinzufügen');
-                                                                $(th).removeClass('btn-danger').addClass('btn-primary');
-                                                            } else {
-                                                                $('input[name="ehepartner_enabled"]').val(1);
-                                                                $('#spouseDiv').fadeIn();
-                                                                $('#ehepartnerChecklist').fadeIn();
-                                                                $(th).data('status', 1);
-                                                                $(th).html('Ehepartner entfernen');
-                                                                $(th).removeClass('btn-primary').addClass('btn-danger');
-                                                            }
-                                                        }
-                                                        function checkedFunction(th, who) {
-                                                            $.ajax({
-                                                                url: "{{route('kundenChecklist')}}",
-                                                                type: 'post',
-                                                                data: {
-                                                                    _token: $('[name="_token"]').val(),
-                                                                    data_id: $(th).data('id'),
-                                                                    kunden_id: '{{$kunden->id}}',
-                                                                    who: who,
-                                                                    action: $(th).parent().find('input[type="checkbox"]').is(':checked') ? 1:0
-                                                                },
-                                                                success: function (res) {
-                                                                    if(res.success == true) {
-                                                                        // $(th).parent().find('input[type="checkbox"]').prop('checked', true);
-                                                                    } else {
-                                                                        if($(th).parent().find('input[type="checkbox"]').is(':checked')) {
-                                                                            $(th).parent().find('input[type="checkbox"]').prop('checked', false);
-                                                                        } else {
-                                                                            $(th).parent().find('input[type="checkbox"]').prop('checked', true);
-                                                                        }
-                                                                    }
-                                                                }
-                                                            });
-                                                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-                                                    </script>
+
+    <div class="modal fade" id="confirm_modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Info</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" >
+                    <p>Soll der Tilgungsplan gelöscht werden??</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Schließen</button>
+                    <button type="button" class="btn btn-primary" id="confirm_delete_yes" onclick="deleteCalc()">Ja</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{csrf_field()}}
+    <script type="text/javascript" src="{{ asset('/js/sweetalert.min.js') }}"></script>
+
+    <script type="text/javascript">
+
+        function removeCard(cardNo) {
+            $('.card-' + cardNo).remove();
+        }
+
+        function save_timeline() {
+            // alert('1');
+            //if ( confirm('Are you sure you want to submit?') ) {
+            var tenFieldFlag = $('#new_form_controller').val();
+            //var serializeForm = $('#kunden_edit_form').serializeArray();
+
+            /* setTimeout(function(){
+                $("#kunden_edit_form").submit();
+            }, 500); */
+
+            /* $.ajax({
+                url: 'save_timeline',
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+
+                    // New 11 fields
+                    bank: $('#bank').val(),
+                    annuities: $('#annuities').val(),
+                    to_interest: $('#to_interest').val(),
+                    effectiveness: $('#effectiveness').val(),
+                    fixed_interest_rates: $('#fixed_interest_rates').val(),
+                    monthly_loan: $('#monthly_loan').val(),
+                    residual_debt_interest_rate: $('#residual_debt_interest_rate').val(),
+                    calculated_luaf_time: $('#calculated_luaf_time').val(),
+                    net_loan_amount: $('#net_loan_amount').val(),
+                    initial_interest: $('#initial_interest').val(),
+                    optional_sound_recovery: $('#optional_sound_recovery').val(),
+                    prepared_by: $('#prepared_by').val(),
+
+                    // New 10 fields flag
+                    ten_fields_flag: tenFieldFlag,
+
+                    jahreszins_phase_eins: $('#jahreszins_phase_eins').val(),
+                    laufzeit_phase_eins: $('#laufzeit_phase_eins').val(),
+                    rate_monatlich_phase_eins: $('#rate_monatlich_phase_eins').val(),
+                    finanzierungsbedarf_phase_zwei: $('#finanzierungsbedarf_phase_zwei').val(),
+                    jahreszins_phase_zwei: $('#jahreszins_phase_zwei').val(),
+                    laufzeit_phase_zwei: $('#laufzeit_phase_zwei').val(),
+                    rate_monatlich_phase_zwei: $('#rate_monatlich_phase_zwei').val(),
+                    restschuld_ende: $('#restschuld_ende').val(),
+                    restschuld_phase_eins: $('#restschuld_phase_eins').val(),
+                    finanzierungsbedarf_phase_eins: $('#finanzierungsbedarf_phase_eins').val(),
+
+                    fullForm: serializeForm
+                },
+                success: function(res) {
+                    toastr.success(res);
+                },
+                error: function(error) {
+                    var error = JSON.parse(error.responseText);
+                    error = error.errors;
+                    $.each(error, function(k, v){
+                        toastr.error(k+': '+v[0]);
+                    })
+                }
+            }); */
+        }
+        function deleteCalc() {
+            $.ajax({
+                url: 'delete_repayment',
+                type: 'get',
+                success: function (res) {
+                    $('#confirm_modal').modal('hide');
+                    alert("Kalkulation erfolgreich gelöscht.");
+                }
+            });
+        }
+
+        function calculate()
+        {
+            // Werte aus den Inputfeldern
+            var loan = Number.parseFloat(document.getElementById("loan").value);
+            var interest = Number.parseFloat(document.getElementById("interest").value);
+            var repayment = Number.parseFloat(document.getElementById("repayment").value);
+            var repaymentStart = document.getElementById("repaymentStart").value;
+            var fixedInterestRate = document.getElementById("fixedInterestRate").value;
+            var payout = document.getElementById("payout").value;
+            var rate = Number.parseFloat(document.getElementById("rate").value);
+
+            if(!(repaymentStart instanceof Date))
+            {
+                repaymentStart = new Date(repaymentStart);
+            }
+
+            if(!(fixedInterestRate instanceof Date))
+            {
+                fixedInterestRate = new Date(fixedInterestRate);
+            }
+
+            if(!(payout instanceof Date))
+            {
+                payout = new Date(payout);
+            }
+
+            // Werte für die Berechnung
+            var calcInterest = 0;
+            var calcRepayment = 0;
+
+            var loansRest = loan;
+
+            var months = monthDiff(payout, fixedInterestRate);
+            var curPayoutDate = new Date(payout.getFullYear(), payout.getMonth() + 1, 0);   // Nur zu Ausgabezwecken
+
+            var resultString = "";
+
+            // Nun monatlich kalkulieren
+
+            month_names_short = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+
+            function changeString(s) {
+                return s.toLocaleString('de-DE', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 2
+                });
+            }
+            var resarr = [];
+            for(var i = 0; i <= months; i++)
+            {
+                calcInterest = (loansRest * interest / 12) / 100;
+                calcRepayment = rate - calcInterest;
+                loansRest -= calcRepayment;
+                loansRest = loansRest;
+
+                resultString += "<tr><td>" + month_names_short[curPayoutDate.getMonth()] + " " + curPayoutDate.getFullYear() + "</td><td>" + changeString(round(calcInterest, 2)) + "     " + "</td><td>" +changeString(round(calcRepayment, 2)) + "</td><td>" + changeString(round(loansRest, 2)) + "</td></tr>";
+
+                curPayoutDate.setMonth(curPayoutDate.getMonth() + 1);
+
+                var temp = {
+                    'repayment_date':(month_names_short[curPayoutDate.getMonth()]) + " " + curPayoutDate.getFullYear(),
+                    'zinsen': changeString(round(calcInterest, 2)),
+                    'tilgung': changeString(round(calcRepayment, 2)),
+                    'darlehensrest': changeString(round(loansRest, 2))
+                };
+
+                resarr.push(temp);
+            }
+
+            //console.log(resultString);
+            // document.getElementById("result").innerHTML = resultString;
+
+            $.ajax({
+                url: 'save_repayment',
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    data: resarr
+                },
+                success: function (res) {
+                    $('#example').find('tbody').html(resultString);
+                }
+            });
+        }
+
+        //Berechnet die Differenz in Monaten zweier Datetimes um die Laufzeit des Darlehens zu ermitteln
+        function monthDiff(d1, d2) {
+            var months;
+            months = (d2.getFullYear() - d1.getFullYear()) * 12;
+            months -= d1.getMonth() + 1;
+            months += d2.getMonth();
+            return months <= 0 ? 0 : months;
+        }
+
+        function round(value, decimals) {
+            return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+
+        // function enabled(checkBox) {
+        //     var calculation_id = $(checkBox).data('calculation_id');
+        //     // If the checkbox is checked, display the output text
+        //     $.ajax({
+        //         url: '{{ route("calculation.statusChange") }}',
+        //         type: 'post',
+        //         data: {
+        //             _token: $('[name="_token"]').val(),
+        //             calculation_id: calculation_id
+        //         },
+        //         success: function (response) {
+        //             console.log(response.calculation);
+        //             if(response.calculation.enabled == 1) {
+        //                 $(checkBox).prop('checked', true);
+        //             } else {
+        //                 $(checkBox).prop('checked', false);
+        //             }
+        //             swal({
+        //                 title: "Enabled!",
+        //                 text: "Your selected kalkulation is enabled for print.",
+        //                 type: "success",
+        //                 icon: 'success',
+        //                 timer: 2000
+        //             });
+        //         },
+        //         error: function (error) {
+        //             if (checkBox.checked == false){
+        //                 $(checkBox).prop('checked', true);
+        //             } else {
+        //                 $(checkBox).prop('checked', false);
+        //             }
+        //             swal({
+        //                 title: "Error!",
+        //                 text: "Something wrong. Try again.",
+        //                 type: "error",
+        //                 icon: 'error',
+        //                 timer: 2000
+        //             });
+        //         }
+        //     });
+        // }
+
+        function kundenSpouse(th) {
+            if($(th).data('status') == 1) {
+                $('input[name="ehepartner_enabled"]').val(0);
+                $('#spouseDiv').fadeOut();
+                $('#ehepartnerChecklist').fadeOut();
+                $(th).data('status', 0);
+                $(th).html('Ehepartner hinzufügen');
+                $(th).removeClass('btn-danger').addClass('btn-primary');
+            } else {
+                $('input[name="ehepartner_enabled"]').val(1);
+                $('#spouseDiv').fadeIn();
+                $('#ehepartnerChecklist').fadeIn();
+                $(th).data('status', 1);
+                $(th).html('Ehepartner entfernen');
+                $(th).removeClass('btn-primary').addClass('btn-danger');
+            }
+        }
+        function checkedFunction(th, who) {
+            $.ajax({
+                url: "{{route('kundenChecklist')}}",
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    data_id: $(th).data('id'),
+                    kunden_id: '{{$kunden->id}}',
+                    who: who,
+                    action: $(th).parent().find('input[type="checkbox"]').is(':checked') ? 1:0
+                },
+                success: function (res) {
+                    if(res.success == true) {
+                        // $(th).parent().find('input[type="checkbox"]').prop('checked', true);
+                    } else {
+                        if($(th).parent().find('input[type="checkbox"]').is(':checked')) {
+                            $(th).parent().find('input[type="checkbox"]').prop('checked', false);
+                        } else {
+                            $(th).parent().find('input[type="checkbox"]').prop('checked', true);
+                        }
+                    }
+                }
+            });
+        }
+
+
+    </script>
 
 @endsection
