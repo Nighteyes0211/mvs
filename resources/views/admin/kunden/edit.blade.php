@@ -453,7 +453,6 @@
 @section('content')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
     <?php
     function stringReplace($string, $from = '.', $to=',')
     {
@@ -826,6 +825,7 @@
 
                                             {{--                                            <h4>New Calculator</h4>--}}
                                             {{--Hassaan Table--}}
+
 
                                             <script>
                                                 $(document).ready(function () {
@@ -1252,6 +1252,7 @@
                                                         }
 
                                                         //e75 excel cell calculation
+
                                                         function e75Calculate()
                                                         {
                                                             var borrowing_rate = $('#borrowing_rate').val();
@@ -1320,6 +1321,7 @@
                                                         }
                                                     });
 
+
                                                     //Anschlusskredit Calculation
                                                     $('#connection_credit').click(function (){
 
@@ -1330,7 +1332,311 @@
                                                             $('#message_Outstanding_balance').html('* Pflichtfeld');
                                                         }
                                                         else
-                                                        { repaymentscheduleA(); $('#connection_credit').val(outstanding_balance); }
+                                                        { $('#message_Outstanding_balance').html('');
+                                                            $('#connection_credit').val(outstanding_balance); }
+
+                                                    });
+
+                                                    //Gesamtlaufzeit (Jahre/Monate) Calculation
+                                                    $('#total_maturity').click(function(){
+
+                                                        var outstanding_balance = parseFloat($('#Outstanding_balance').val()).toFixed(2);
+                                                        var loan_period = parseInt($('#loan_period').val());
+                                                        var e66_val = calculateE66();
+                                                        var e65_val = calculateE65();
+                                                        var e64_val = calculateE64();
+                                                        var e55_val = calculateE55();
+                                                        var e56_val = calculateE56();
+
+                                                        if(outstanding_balance==0)
+                                                        {
+                                                            console.log('iam in 1');
+                                                            var p4 = columnCellP4();
+                                                            var q4 = columncellQ4();
+                                                            var R4 = p4 +'/'+q4;
+                                                            return R4;
+                                                        }
+                                                        else if(e66_val==1){
+                                                            console.log('iam in 2');
+
+                                                            $('#total_maturity').val(e65_val+'/'+e64_val);
+
+                                                        }
+                                                        else if(outstanding_balance==0){
+                                                            console.log('iam in 3');
+
+                                                            $('#total_maturity').val(loan_period);
+
+                                                        }
+                                                        else{
+                                                            console.log('iam in 4');
+                                                            console.log('E55=',e55_val);
+                                                            console.log('E56=',e56_val);
+
+                                                            var a = loan_period + e56_val;
+                                                            $('#total_maturity').val(a+'/'+e55_val);
+                                                        }
+
+
+                                                    });
+                                                    //nper for calculation of E66
+                                                    function NPER1(rate, payment, present, future, type) {
+                                                        // Initialize type
+                                                        var type = (typeof type === 'undefined') ? 0 : type;
+
+                                                        // Initialize future value
+                                                        var future = (typeof future === 'undefined') ? 0 : future;
+
+                                                        // Evaluate rate and periods (TODO: replace with secure expression evaluator)
+                                                        rate = eval(rate);
+
+                                                        // Return number of periods
+                                                        var num = payment * (1 + rate * type) - future * rate;
+                                                        var den = (present * rate + payment * (1 + rate * type));
+                                                        return Math.log(num / den) / Math.log(1 + rate);
+                                                    }
+
+
+                                                    function calculateE56()
+                                                    {
+                                                        var e54_val = calculateE54();
+                                                        var e51_val = calculateE51();
+
+                                                        if(e54_val==12)
+                                                        {
+                                                            return e51_val + 1;
+                                                        }
+                                                        else{
+                                                            return e51_val;
+                                                        }
+                                                    }
+
+                                                    function calculateE55(){
+
+                                                        var e54_val = calculateE54();
+                                                        console.log('i am in E55','E54=',e54_val);
+                                                        var e55_val;
+
+                                                        if(e54_val==12)
+                                                        {
+                                                            e55_val =0;
+                                                            console.log('i am in E55','E54=',e55_val,'true');
+                                                            return e55_val;
+                                                        }
+                                                        else{
+                                                            console.log('false i am in E55');
+                                                            return e54_val;
+                                                        }
+                                                    }
+
+                                                    function calculateE54(){
+
+                                                        var e53_val = calculateE53();
+                                                        console.log('i am in 54','E53=',e53_val);
+                                                        var e54_val = Math.round(e53_val);
+                                                        return e54_val;
+                                                    }
+
+                                                    function calculateE53(){
+
+                                                        var e52_val = calculateE52();
+                                                        console.log('i am in 53','E52=',e52_val);
+                                                        var e53_val = 12 * e52_val;
+                                                        return e53_val;
+
+                                                    }
+
+                                                    function calculateE52(){
+
+                                                        var e51_val = calculateE51();
+                                                        console.log('i am in 52','E51=',e51_val);
+                                                        var e50_val = calculateE50();
+                                                        console.log('i am in 52','E50=',e50_val);
+                                                        var e52_val = e50_val-e51_val;
+
+                                                        var e52_val_rn = Math.round(e52_val);
+                                                        return e52_val_rn;
+
+                                                    }
+
+                                                    function calculateE50(){
+
+                                                        var new_borrowing_rate = parseFloat($('#new_borrowing_rate').val());
+                                                        var new_rate = parseFloat($('#new_rate_inp').val());
+                                                        var connection_credit = parseFloat($('#connection_credit').val());
+                                                        console.log(new_borrowing_rate);
+                                                        console.log(new_rate);
+                                                        console.log(connection_credit);
+
+                                                        var e50_val_n = NPER1(new_borrowing_rate/100/12,new_rate,-connection_credit,0,0);
+                                                        console.log('i am in 50','E50=',e50_val_n);
+                                                        var e50_val_rn = Math.round(e50_val_n/12).toFixed(5);
+                                                        console.log('i am in 50','E50=',e50_val_rn);
+
+                                                        return e50_val_rn;
+
+                                                    }
+
+                                                    function calculateE51()
+                                                    {
+                                                        var e50_val = calculateE50();
+                                                        var e51_val = Math.trunc(e50_val);
+                                                        console.log(e51_val);
+
+                                                        return e51_val;
+                                                    }
+
+
+
+                                                    function calculateE64()
+                                                    {
+                                                        var e63_val = calculateE63();
+                                                        var e64_val;
+
+
+                                                        if(e63_val==12)
+                                                        {
+                                                            e64_val=0;
+                                                            return e64_val;
+
+                                                        }
+                                                        else{
+                                                            return e63_val;
+                                                        }
+                                                    }
+
+                                                    //E66 Caulculation
+                                                    function calculateE66(){
+                                                        //E58 Calculation
+                                                        function calculateE58()
+                                                        {
+
+                                                            var borrowing_rate = parseFloat($('#borrowing_rate').val());
+                                                            var monthly_deposit = parseInt($('#montly_deposit_val').val());
+                                                            var loan_amount = parseInt($('#loan_amount').val());
+                                                            var E58_val;
+
+                                                            E58_val = NPER1(borrowing_rate/100/12,monthly_deposit,-loan_amount,0,0);
+
+                                                            return E58_val;
+
+                                                        }
+
+                                                        var E58_val = calculateE58();
+                                                        var E66_val;
+                                                        var loan_period = parseInt($('#loan_period').val());
+
+                                                        if(E58_val < loan_period *12)
+                                                        {
+                                                            E66_val = 1;
+                                                        }
+                                                        else{
+                                                            E66_val = 0;
+                                                        }
+                                                        return E66_val;
+                                                    }
+
+                                                    function calculateE65() {
+
+
+                                                        var e63_val = calculateE63();
+                                                        var e60_val = calculateE60();
+
+                                                        if (e63_val == 12) {
+
+                                                            return e60_val + 1;
+                                                        } else {
+                                                            return e60_val;
+                                                        }
+                                                    }
+
+                                                    function calculateE60(){
+                                                        var e59_val = calculateE59();
+                                                        var e60_val = Math.trunc(e59_val);
+
+                                                        return e60_val;
+                                                    }
+
+                                                    function calculateE62(){
+
+                                                        var e61_val = calculateE61;
+                                                        var e62_val = 12*e61_val;
+                                                        return e62_val;
+                                                    }
+
+                                                    function calculateE61(){
+
+                                                        var e59_val = calculateE59();
+                                                        var e60_val = calculateE60();
+                                                        var e61_val = e59_val - e60_val;
+                                                        var e61_val_rn = Math.round(e61_val).toFixed(5);
+                                                        return e61_val_rn;
+                                                    }
+
+                                                    function calculateE59(){
+
+                                                        var e58_val = calculateE58();
+                                                        var e59_val = e58_val/12;
+
+                                                        return e59_val;
+                                                    }
+
+                                                    function calculateE58(){
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
+                                                        var monthly_deposit = parseInt($('#montly_deposit_val').val());
+                                                        var loan_amount = parseInt($('#loan_amount').val());
+
+                                                        var e58_val = NPER1(borrowing_rate/100/12,monthly_deposit,-loan_amount,0,0);
+
+                                                        return e58_val;
+                                                    }
+
+                                                    function calculateE63(){
+
+                                                        var e62_val = calculateE62();
+                                                        var e63_val = Math.round(e62_val);
+                                                        return e63_val;
+                                                    }
+
+                                                    //Function that COUNTIF and calculate column D (records) the column O
+                                                    function countRecordsO4(){
+
+                                                        var loan_period = parseInt($('#loan_period').val());
+                                                        var total_years_count = loan_period*12;
+                                                        return total_years_count;
+                                                    }
+
+                                                    function columnCellP4(){
+
+                                                        var total_years_count = countRecordsO4();
+                                                        var trunc_value = total_years_count/12;
+                                                        var p4 = Math.trunc(trunc_value);
+
+                                                        return p4;
+                                                    }
+
+                                                    function columncellQ4(){
+
+                                                        var total_years_count = countRecordsO4();
+                                                        var q4 = total_years_count % 12;
+
+                                                        return q4;
+                                                    }
+
+
+                                                    //Restschuld (Euro) Calculation
+                                                    $('#Outstanding_balance').click(function (){
+
+                                                        console.log('started A');
+                                                        columnA();
+                                                        console.log('started B');
+                                                        columnB();
+                                                        console.log('started C');
+                                                        columnC();
+
+                                                        console.log('started M');
+                                                        columnM();
+                                                        residualDebt();
 
                                                     });
 
@@ -1338,17 +1644,166 @@
                                                     var A=[];
                                                     var B=[];
                                                     var C=[];
+                                                    var D=[];
+                                                    var E=[];
+                                                    var F=[];
+                                                    var G=[];
+                                                    var H=[];
+                                                    var I=[];
+                                                    var J=[];
+                                                    var K=[];
+                                                    var L=[];
+                                                    var M=[];
 
-                                                    $('#Outstanding_balance').click(function (){
+                                                    function residualDebt(){
 
-                                                        columnA();
-                                                        columnB();
-                                                        columnC();
-                                                    });
+                                                        var loan_period = $('#loan_period').val();
+                                                        var lookup_value = loan_period*12;
+                                                        var ret_value;
+
+                                                        for(var a=4; a<=364; a++ )
+                                                        {
+                                                            if(A[a]==lookup_value || B[a]==lookup_value || C[a]==lookup_value || D[a]==lookup_value ||
+                                                                E[a]==lookup_value  || F[a]==lookup_value || G[a]==lookup_value || H[a]==lookup_value
+                                                                || I[a]==lookup_value || J[a]==lookup_value || K[a]==lookup_value
+                                                                || L[a]==lookup_value || M[a]==lookup_value)
+                                                            {
+                                                                ret_value = M[a];
+                                                                console.log('true');
+                                                                console.log(ret_value);
+                                                                $('#Outstanding_balance').val(ret_value);
+                                                                break;
+                                                            }
+                                                            else{
+                                                                console.log('false');
+                                                                $('#Outstanding_balance').val('No value found');
+                                                            }
+                                                        }
+
+
+                                                    }
+
+                                                    function M4() {
+                                                        var loan_amount = parseInt($('#loan_amount').val());
+                                                        M[4] = loan_amount;
+                                                    }
+
+                                                    function J5(){
+                                                        var monthly_deposit = parseInt($('#montly_deposit_val').val());
+                                                        var borrowing_rate = parseInt($('#borrowing_rate').val());
+
+                                                        if(monthly_deposit>M[4]*(1+borrowing_rate/100/12))
+                                                        {
+                                                            console.log('false in column k');
+                                                            J[5] = M[4]*(1+borrowing_rate/100/12);
+                                                        }
+                                                        else
+                                                        {
+                                                            columnD(5);
+                                                            columnI(5);
+                                                            console.log('true in column k','value of d=5',D[5],'value of i',I[5]);
+
+                                                            J[5] = D[5]+I[5];
+                                                        }
+
+                                                    }
+
+                                                    function K5()
+                                                    {
+                                                        var borrowing_rate = $('#borrowing_rate').val();
+                                                        if(B[5]="")
+                                                        {
+                                                            K[5]="";
+                                                        }
+                                                        else{
+                                                            K[5] = M[4]*(borrowing_rate/1200);
+                                                        }
+                                                    }
+                                                    //Calculating column k
+                                                    function columnk(k){
+
+                                                        K[0] = null;
+                                                        K[1] =null;
+                                                        K[2] = null;
+                                                        K[3] = null;
+                                                        K[4] = null;
+
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
+                                                        var k1 = k;
+
+                                                        if(B[k]="")
+                                                        {
+                                                            K[k] ="";
+                                                        }
+                                                        else{
+                                                            console.log('i am in column k=',k,'column m=',M[--k1],borrowing_rate);
+                                                            K[k] = M[--k1]*borrowing_rate/100/12;
+
+                                                        }
+
+                                                    }
+
+                                                    //Function for calculating column L including L5
+                                                    function columnL(l){
+
+                                                        if(B[l]="")
+                                                        {
+                                                            console.log('false in column l');
+                                                            L[l] ="";
+                                                        }
+                                                        else{
+                                                            console.log('true in column l',l);
+                                                            if(l==5){
+
+                                                                J5();
+                                                                K5();
+                                                                console.log('j=',J[l],'K=',K[l],'l=',l);
+                                                                L[l] = J[l]-K[l];
+                                                                console.log('value of column l=5',L[l],l);
+                                                            }
+                                                            else{
+                                                                columnJ(l);
+                                                                columnk(l);
+                                                                console.log('j=',J[l],'K=',K[l],'l=',l);
+                                                                L[l] = J[l]-K[l];
+                                                                console.log('value of column l',L[l],l);
+                                                            }
+                                                        }
+
+                                                    }
+
+                                                    //Calculating column M
+                                                    function columnM() {
+
+                                                        M4();
+                                                        console.log('M4 executed');
+
+                                                        for (var m = 5; m <= 184; m++) {
+                                                            {
+                                                                var m1 = m;
+                                                                if (B[m] = "") {
+                                                                    M[m] = "";
+                                                                    console.log('false');
+                                                                } else {
+                                                                    console.log('started L');
+                                                                    //console.log('value of M',m,M[--m]);
+                                                                    columnL(m);
+                                                                    //console.log('value of L',L[m]);
+                                                                    // console.log(M[m--]);
+                                                                    M[m] = M[--m1] - L[m];
+                                                                    console.log('Calculated', M[m]);
+                                                                }
+                                                                console.log('Others started calclatting');
+                                                                columnI(m);
+                                                                columnD(m);
+
+                                                            }
+
+                                                        }
+                                                    }
 
                                                     // Column A calculaton table 3
                                                     function columnA(){
-
                                                         var i=0;
 
                                                         A[i] = null;
@@ -1360,18 +1815,16 @@
                                                         for (var a = 0; a <= 360; a++) {
                                                             A[i++] =a;
                                                         }
-                                                        console.log(A[364]);
                                                     }
 
                                                     // Column B calculaton table 3
                                                     function columnB(){
 
-                                                        var loan_amount = $('#loan_amount').val();
-                                                        alert(loan_amount);
+                                                        var loan_period = parseInt($('#loan_period').val());
 
                                                         for(var b = 4; b <=364; b++ )
                                                         {
-                                                            if(A[b] > (loan_amount*12)){
+                                                            if(A[b] > (loan_period*12)){
                                                                 B[b] = "";
                                                             }
                                                             else{
@@ -1386,52 +1839,216 @@
 
                                                                 B[2] = Math.max(B[b1],B[b2])+4;
                                                         }
-                                                        console.log(B[2]);
-
                                                     }
 
 
                                                     //Column 'C' calculation for table 3
-                                                    function columnC(){
-                                                        var payment_month = $('#payment_month').val();
-                                                        var payment_year = $('#payment_year').val();
+                                                    function columnC() {
+                                                        var payment_year = parseInt($('#payment_year').val());
+                                                        var loan_period = parseInt($('#loan_period').val());
+                                                        var total_year = payment_year + loan_period;
 
-                                                        var months = [
-                                                            'Januar','Februar','Marz',
-                                                            'April','Mai','Juni','Juli',
-                                                            'August','September','Oktober',
-                                                            'November','Dezember'
-                                                        ];
+                                                        C[0] = null;
+                                                        C[1] = null;
+                                                        C[2] = null;
+                                                        C[3] = null;
+                                                        var c = 4;
 
-                                                        function monthNameToNum(monthname) {
-                                                            var month = months.indexOf(monthname);
-                                                            return month ? month + 1 : 0;
+                                                        var itr;
+                                                        for (itr = payment_year; itr <= total_year; itr++) {
+                                                            for (var m = 0; m <= 11; m++) {
+                                                                var d = new Date(itr, m + 1, 0);
+                                                                C[c] = d;
+                                                                c++;
+
+                                                            }
                                                         }
+                                                    }
 
-                                                        var month_in_num = monthNameToNum(payment_month);
-                                                        console.log(month_in_num);
+                                                    // calculating column D
+                                                    function columnD(d)
+                                                    {
+                                                        var monthly_Deposit =parseInt($('#montly_deposit_val').val());
+                                                        var borrowing_rate = parseInt($('#borrowing_rate').val());
 
-                                                        function daysInMonth (month, year) {
-                                                            return new Date(year, month, 0).getDate();
-                                                        }
+                                                        D[0] = null;
+                                                        D[1] =null;
+                                                        D[2] = null;
+                                                        D[3] = null;
+                                                        var d1 = d;
 
-                                                        var days_in_month = daysInMonth(month_in_num,payment_year);
-                                                        C[4] = month_in_num+'/'+'/'+days_in_month+'/'+payment_year;
-                                                        console.log(C[4]);
-
-                                                        function endofMonth(){
-                                                            var today = new Date();
-                                                            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
-                                                        }
-
-                                                        for(var c =5; c <= 364; c++)
+                                                        if(B[d]="")
                                                         {
-                                                            if(B[c]="")
+                                                            D[d]="";
+                                                            console.log('false');
+                                                        }
+
+
+                                                        else{
+                                                            if(monthly_Deposit > M[--d1]*(1+borrowing_rate/100/12))
                                                             {
-                                                                B[C]="";
+                                                                console.log('column d true');
+                                                                D[d] = M[--d1]*(1+borrowing_rate/100/12);
+                                                            }
+                                                            else{ D[d] = monthly_Deposit;
+                                                                console.log('column d false',D[d],d); }
+
+                                                        }}
+
+                                                    //Calculating column E
+                                                    function columnE() {
+
+                                                        E[0] = null;
+                                                        E[1] =null;
+                                                        E[2] = null;
+                                                        E[3] = null;
+
+                                                        for(var e=5; e <= 364; e++)
+                                                        {
+                                                            //     console.log('tu8');
+                                                            //     for(var i=45; i<=364; i++)
+                                                            //     {
+                                                            //         console.log('tu2');
+                                                            //         for(var j=5; j<=91; j++) {
+                                                            //             console.log('tu1');
+                                                            //             if (A[i] == C[e] || B[j] == C[e]) {
+                                                            //                     E[e] = B[e];
+                                                            //             }
+                                                            //             else{
+                                                            //                 E[e]="";
+                                                            //             }
+                                                            //         }
+                                                            //     }
+                                                            E[e]="N/A";
+                                                        }
+
+                                                    }
+
+                                                    //Calculating Column F
+                                                    function columnF(f){
+
+                                                        F[0] = null;
+                                                        F[1] = null;
+                                                        F[2] = null;
+                                                        F[3] = null;
+                                                        columnE();
+
+                                                        if(B[f]="")
+                                                        {
+                                                            F[f]="";
+                                                        }
+                                                        else if(E[f]="N/A")
+                                                        {
+                                                            F[f]=0;
+                                                        }
+                                                        else{
+                                                            console.log('False');
+                                                        }
+
+                                                    }
+
+                                                    //Calculating Column G
+                                                    function columnG(){
+
+                                                        G[0] = null;
+                                                        G[1] = null;
+                                                        G[2] = null;
+                                                        G[3] = null;
+
+                                                        for(var g=4;  g<=364; g++ )
+                                                        {
+                                                            G[4]="N/A";
+                                                        }
+
+                                                    }
+
+                                                    // Calculating Column H
+                                                    function columnH(h){
+                                                        columnG();
+
+                                                        if(B[h]="")
+                                                        {
+                                                            H[h]="";
+                                                        }
+                                                        else if(G[h]="N/A"){
+                                                            H[h]=0;
+                                                        }
+                                                        else{
+                                                            console.log('False');
+                                                        }
+
+                                                    }
+
+                                                    //Calculating Column I
+                                                    function columnI(i){
+
+                                                        I[0] = null;
+                                                        I[1] = null;
+                                                        I[2] = null;
+                                                        I[3] = null;
+                                                        I[4] = null;
+
+                                                        if(i==5){
+                                                            if (B[5] = "") {
+
+                                                                I[5] = 0;
+                                                            } else {
+                                                                columnF(5);
+                                                                columnH(5);
+                                                                I[5] = F[5] + H[5];
+                                                            }
+                                                        }
+                                                        else{
+
+                                                            if(B[i]="")
+                                                            {
+                                                                I[i]=0;
                                                             }
                                                             else{
+                                                                columnF(i);
+                                                                columnH(i);
+                                                                var i1=i;
+                                                                if(F[i]+H[i] > M[--i1]){
+                                                                    I[i]=0;
 
+                                                                }
+                                                                else{
+                                                                    columnF(i);
+                                                                    columnH(i);
+                                                                    I[i] = F[i]+H[i];
+
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+
+                                                    //Calculating Column J
+                                                    function columnJ(j)
+                                                    {
+                                                        var monthly_depoit = parseInt($('#montly_deposit_val').val());
+                                                        var borrowing_rate = parseInt($('#borrowing_rate').val());
+                                                        var j1 = j;
+
+                                                        if(B[j]="")
+                                                        {
+                                                            J[j]=0;
+                                                        }
+
+                                                        else {
+                                                            console.log('im on right place');
+                                                            if(monthly_depoit > M[--j1] * (1 + borrowing_rate / 100 / 12))
+                                                            {
+                                                                console.log('Now in column j is false');
+                                                                J[j] = M[--j1] * (1 + borrowing_rate / 100 / 12);
+
+                                                            }
+                                                            else{
+                                                                columnD(j);
+                                                                columnI(j);
+                                                                console.log('Now in column j is true','D=',D[j],'I=',I[j]);
+                                                                J[j] = D[j]+I[j];
+                                                                console.log('value of column j is=',J[j],j);
                                                             }
                                                         }
 
@@ -1439,6 +2056,7 @@
                                                 });
 
                                             </script>
+
                                             <table class="table table-striped table-bordered">
 
                                                 <tr>
@@ -1531,7 +2149,7 @@
                                                     <td>Disagio (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="payment_discount" class="form-control text-right">
+                                                            <input id="payment_discount" value=0.00 class="form-control text-right">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1647,7 +2265,7 @@
                                                         </select>
                                                     </td>
 
-                                                    <td colspan="4"><input id="annual_unsheduled_val" class="form-control text-right"></td>
+                                                    <td colspan="4"><input id="annual_unsheduled_val" value=2400 class="form-control text-right"></td>
                                                 </tr>
 
                                                 <tr>
@@ -1706,7 +2324,7 @@
                                                         </select>
                                                     </td>
 
-                                                    <td colspan="4"><input id="onetime_unsheduled_val" class="form-control text-right" value="50000"></td>
+                                                    <td colspan="4"><input id="onetime_unsheduled_val" value=50000 class="form-control text-right" value="50000"></td>
 
                                                 </tr>
 
