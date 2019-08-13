@@ -104,6 +104,15 @@
                 setTimeout(function(){
                     $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
                     recalculate();
+                    recalculate_1();
+                }, 200);
+                });
+
+            $('[data-parent="#Calculation"] input').on('keypress change', function(e){
+                let _this = this;
+                setTimeout(function(){
+                    // $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
+                    recalculate_1();
                 }, 200);
             });
 
@@ -200,6 +209,7 @@
             maklerkosten = (kaufpreis*maklerkosten/100.0).toFixed(2).toString().replace(".", ",");
 
 
+
             calculatedGesamtkosten = calculatedGesamtkosten.toFixed(2).toString().replace(".", ",");
             calculatedFinanzierungsbedarf = calculatedFinanzierungsbedarf.toFixed(2).toString().replace(".", ",");
 
@@ -210,8 +220,46 @@
 
             $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
             $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
+            $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
         }
 
+        function recalculate_1() {
+            // var loan_ammount = parseFloat($('#loan_amount').val());
+            // var discount = parseFloat($('#payment_discount').val());
+            // var payout = loan_ammount*(100-discount)/100;
+            //
+            // $('#payment_amount').val(payout);
+            $('#payment_amount').click();
+            $('#Outstanding_balance').click();
+            $('#effective_interest').click();
+            $('#connection_credit').click();
+            $('#total_maturity').click();
+            registery_fee();
+            // $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
+        }
+
+        var registery_fees={500:15, 1000:19, 1500:23, 2000:27, 3000:33, 4000:39, 5000:45, 6000:51, 7000:57, 8000:63, 9000:69, 10000:75, 13000:83, 16000:91, 19000:99, 22000:107, 25000:115, 30000:125, 35000:135, 40000:145, 45000:155, 50000:165, 65000:192, 80000:219, 95000:246, 110000:273, 125000:300, 140000:327, 155000:354, 170000:381, 185000:408, 200000:435, 230000:485, 260000:535, 290000:585, 320000:635, 350000:685, 380000:735, 410000:785, 440000:835, 470000:885, 500000:935, 550000:1015, 600000:1095, 650000:1175, 700000:1255, 750000:1335, 800000:1415, 850000:1495, 900000:1575, 950000:1655, 1000000:1735, 1050000:1815, 1100000:1895, 1150000:1975, 1200000:2055, 1250000:2135, 1300000:2215, 1350000:2295, 1400000:2375, 1450000:2455, 1500000:2535, 1550000:2615, 1600000:2695, 1650000:2775, 1700000:2855, 1750000:2935, 1800000:3015, 1850000:3095, 1900000:3175, 1950000:3255, 2000000:3335, 2050000:3415, 2100000:3495, 2150000:3575, 2200000:3655, 2250000:3735, 2300000:3815, 2350000:3895, 2400000:3975, 2450000:4055, 2500000:4135, 2550000:4215, 2600000:4295, 2650000:4375, 2700000:4455, 2750000:4535, 2800000:4615, 2850000:4695, 2900000:4775, 2950000:4855, 3000000:4935}
+
+        registery_fee();
+        function registery_fee() {
+            var fee = registery_fees[x(registery_fees, parseInt($('#loan_amount').val()))];
+            // setTimeout(function () {
+            $('#registery_fees').val(fee);
+            // },2000);
+
+            function x(rprice, qty) {
+                var prev = -1;
+                var i=0;
+                for (i in rprice) {
+                    var n = parseInt(i);
+                    if ((prev != -1) && (qty < n))
+                        return prev;
+                    else
+                        prev = n;
+                }
+            }
+
+        }
         function openTimeLine(cardNo){
             $('.ten_fields-'+cardNo).show();
             $('.isTM-'+cardNo).val(1);
@@ -884,10 +932,9 @@
 
                                                     $('#payment_amount').click(function () {
 
-                                                        var loan_ammount = parseInt($('#loan_amount').val());
-                                                        var discount = parseInt($('#payment_discount').val());
+                                                        var loan_ammount = parseFloat($('#loan_amount').val());
+                                                        var discount = parseFloat($('#payment_discount').val());
                                                         var payout = loan_ammount*(100-discount)/100;
-
                                                         $('#payment_amount').val(payout);
                                                     });
 
@@ -903,8 +950,7 @@
                                                             $('#message_montly_deposit').html('* Pflichtfeld');
                                                         } else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
-
-
+                                                            repayment_rate = Math.round(repayment_rate*100)/100;
                                                             if (isNaN(repayment_rate)) {
                                                                 $('#repayment_date_inp').val('some values are missing');
                                                             } else {
@@ -918,6 +964,7 @@
                                                             $('#message_loan_amount').html('* Pflichtfeld');
                                                         } else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                                                            repayment_rate = Math.round(repayment_rate*100)/100;
 
 
                                                             if (isNaN(repayment_rate)) {
@@ -933,6 +980,7 @@
                                                             $('#message_borrowing_rate').html('* Pflichtfeld');
                                                         } else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                                                            repayment_rate = Math.round(repayment_rate*100)/100;
 
                                                             Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
 
@@ -956,7 +1004,17 @@
 
                                                         //Tilgungssatz (Prozent) will be calculated upon calling this function
                                                         repaymentDate();
+                                                        $('#repayment_date_inp').attr("disabled",false);
+                                                        $('#montly_deposit_val').attr("disabled",true);
 
+                                                    });
+
+                                                    $('#montly_deposit').click(function () {
+
+                                                        //Tilgungssatz (Prozent) will be calculated upon calling this function
+                                                        repaymentDate();
+                                                        $('#repayment_date_inp').attr("disabled",true);
+                                                        $('#montly_deposit_val').attr("disabled",false);
 
                                                     });
 
@@ -1037,7 +1095,7 @@
 
                                                         if(loan_amount && new_borrowing_rate && new_repayment_rate)
                                                         {
-                                                            var new_rate =loan_amount*(new_borrowing_rate+new_repayment_rate)/100/12;
+                                                            var new_rate =Math.round(loan_amount*(new_borrowing_rate+new_repayment_rate)/100/12*100)/100;
                                                             $('#new_rate_inp').val(new_rate);
                                                         }
                                                         else{
@@ -1057,7 +1115,8 @@
                                                         if(new_borrowing_rate && new_repayment_rate)
                                                         {
                                                             var new_repayment_rate_inp = new_rate_inp*100*12/loan_amount-new_borrowing_rate;
-                                                            $('#new_repayment_rate_inp').val(new_repayment_rate_inp);
+                                                            new_repayment_rate_inp = Math.round(new_repayment_rate_inp*100)/100;
+                                                            $('#new_repayment_rate_inp').val(new_repayment_rate_inp.toFixed(2));
                                                         }
                                                         else{
                                                             if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
@@ -1068,47 +1127,54 @@
                                                     });
 
                                                     //NPER function
-                                                    function nper(rate, per, pmt, pv, fv)
+                                                 /*   function nper(rate, per, pmt, pv, fv)
                                                     {
 
-                                                        fv = parseFloat(fv);
-
-                                                        pmt = parseFloat(pmt);
-
-                                                        pv = parseFloat(pv);
-
-                                                        per = parseFloat(per);
-
-                                                        if (( per == 0 ) || ( pmt == 0 )){
-
-                                                            return(0);
-
-                                                        }
-
-                                                        rate = eval((rate)/(per * 100));
-
-                                                        if ( rate == 0 ) // Interest rate is 0
-
-                                                        {
-
-                                                            nper_value = - (fv + pv)/pmt;
-
-                                                        }
-
-                                                        else
-
-                                                        {
-
-                                                            nper_value = Math.log((-fv * rate + pmt)/(pmt + rate * pv))/ Math.log(1 + rate);
-
-                                                        }
-
-                                                        nper_value = conv_number(nper_value,2);
+                                                        // fv = parseFloat(fv);
+                                                        //
+                                                        // pmt = parseFloat(pmt);
+                                                        //
+                                                        // pv = parseFloat(pv);
+                                                        //
+                                                        // per = parseFloat(per);
+                                                        //
+                                                        // if (( per == 0 ) || ( pmt == 0 )){
+                                                        //
+                                                        //     return(0);
+                                                        //
+                                                        // }
+                                                        //
+                                                        // rate = eval((rate)/(per * 100));
+                                                        //
+                                                        // if ( rate == 0 ) // Interest rate is 0
+                                                        //
+                                                        // {
+                                                        //
+                                                        //     nper_value = - (fv + pv)/pmt;
+                                                        //
+                                                        // }
+                                                        //
+                                                        // else
+                                                        //
+                                                        // {
+                                                        //
+                                                        //     nper_value = Math.log((-fv * rate + pmt)/(pmt + rate * pv))/ Math.log(1 + rate);
+                                                        //
+                                                        // }
+                                                        //
+                                                        // nper_value = conv_number(nper_value,2);
 
                                                         return (nper_value);
 
-                                                    }
+                                                    }*/
+                                                    function nper(ir, pmt, pv, fv=0) {
+                                                        var nbperiods;
 
+
+                                                        nbperiods = Math.log((-fv * ir + pmt)/(pmt + ir * pv))/ Math.log(1 + ir)
+
+                                                        return Math.round(nbperiods*100)/100;
+                                                    }
                                                     function conv_number(expr, decplaces)
 
                                                     { // This function is from David Goodman's Javascript Bible.
@@ -1128,47 +1194,58 @@
                                                     }
 
                                                     //Final Value Calculation
-                                                    function fv(rate, per, nper, pmt, pv)
+                                                    function fv(rate, nper, pmt, pv)
 
                                                     {
 
-                                                        nper = parseFloat(nper);
+                                                        // nper = parseFloat(nper);
+                                                        //
+                                                        // pmt = parseFloat(pmt);
+                                                        //
+                                                        // pv = parseFloat(pv);
+                                                        //
+                                                        // rate = eval((rate)/(per * 100));
+                                                        //
+                                                        // if (( pmt == 0 ) || ( nper == 0 )) {
+                                                        //
+                                                        //     return(0);
+                                                        //
+                                                        // }
+                                                        //
+                                                        // if ( rate == 0 ) // Interest rate is 0
+                                                        //
+                                                        // {
+                                                        //
+                                                        //     fv_value = -(pv + (pmt * nper));
+                                                        //
+                                                        // }
+                                                        //
+                                                        // else
+                                                        //
+                                                        // {
+                                                        //
+                                                        //     x = Math.pow(1 + rate, nper);
+                                                        //
+                                                        //     // y = Math.pow(1 + rate, nper);
+                                                        //
+                                                        //     fv_value = - ( -pmt + x * pmt + rate * x * pv ) /rate;
+                                                        //
+                                                        // }
+                                                        //
+                                                        // fv_value = conv_number(fv_value,2);
+                                                        //
+                                                        // return (fv_value);
+                                                        var pow = Math.pow(1 + rate, nper),
+                                                            fv;
 
-                                                        pmt = parseFloat(pmt);
+                                                        pv = pv || 0;
 
-                                                        pv = parseFloat(pv);
-
-                                                        rate = eval((rate)/(per * 100));
-
-                                                        if (( pmt == 0 ) || ( nper == 0 )) {
-
-                                                            return(0);
-
+                                                        if (rate) {
+                                                            fv = (pmt*(1-pow)/rate)-pv*pow;
+                                                        } else {
+                                                            fv = -1 * (pv + pmt * nper);
                                                         }
-
-                                                        if ( rate == 0 ) // Interest rate is 0
-
-                                                        {
-
-                                                            fv_value = -(pv + (pmt * nper));
-
-                                                        }
-
-                                                        else
-
-                                                        {
-
-                                                            x = Math.pow(1 + rate, nper);
-
-                                                            // y = Math.pow(1 + rate, nper);
-
-                                                            fv_value = - ( -pmt + x * pmt + rate * x * pv ) /rate;
-
-                                                        }
-
-                                                        fv_value = conv_number(fv_value,2);
-
-                                                        return (fv_value);
+                                                        return Math.round(fv*100)/100;
 
                                                     }
 
@@ -1256,7 +1333,7 @@
                                                         function e75Calculate()
                                                         {
                                                             var borrowing_rate = $('#borrowing_rate').val();
-                                                            var monthly_deposit = $('#montly_deposit').val();
+                                                            var monthly_deposit = parseFloat($('#montly_deposit_val').val());
                                                             var loan_amount = $('#loan_amount').val();
                                                             var loan_period = $('#loan_period').val();
                                                             var payment_amount = $('#payment_amount').val();
@@ -1273,7 +1350,7 @@
                                                             function e70Calculation()
                                                             {
                                                                 var fv_val = e69Calculate();
-                                                                var rate_val = Math.pow(1+rate(loan_period*12,monthly_deposit,-payment_amount,fv_val),12-1)*100;
+                                                                var rate_val = (Math.pow(1+rate(loan_period*12,monthly_deposit,-payment_amount,fv_val),12)-1)*100;
                                                                 return rate_val;
                                                             }
 
@@ -1281,7 +1358,7 @@
                                                             function e71Calculation()
                                                             {
                                                                 var e70_val = e70Calculation();
-                                                                var e71_val = Math.pow((1+e70_val/100),((1/12)-1)*1200)*100;
+                                                                var e71_val = ((Math.pow((1+e70_val/100),1/12))-1)*1200;
                                                                 return e71_val;
                                                             }
 
@@ -1294,15 +1371,14 @@
                                                             }
 
                                                             var e68_val = e68Calculation();
-                                                            var e75_val = Math.pow((1+rate(e68_val,monthly_deposit,-loan_amount+registery_fess)),12-1)*100;
-
-                                                            return e75_val;
+                                                            var e75_val = (Math.pow((1+rate(e68_val,monthly_deposit,registery_fess-loan_amount)),12)-1)*100;
+                                                            return Math.round(e75_val*100)/100;
                                                         }
 
                                                         function e74Calculation()
                                                         {
                                                             var borrowing_rate = $('#borrowing_rate').val();
-                                                            var monthly_deposit = $('#montly_deposit').val();
+                                                            var monthly_deposit = $('#montly_deposit_val').val();
                                                             var loan_amount = $('#loan_amount').val();
                                                             var loan_period = $('#loan_period').val();
                                                             var payment_amount = $('#payment_amount').val();
@@ -1377,7 +1453,7 @@
                                                             $('#total_maturity').val(a+'/'+e55_val);
                                                         }
 
-
+                                                        registery_fee();
                                                     });
                                                     //nper for calculation of E66
                                                     function NPER1(rate, payment, present, future, type) {
@@ -1433,7 +1509,7 @@
 
                                                         var e53_val = calculateE53();
                                                         console.log('i am in 54','E53=',e53_val);
-                                                        var e54_val = Math.round(e53_val);
+                                                        var e54_val = Math.ceil(e53_val);
                                                         return e54_val;
                                                     }
 
@@ -1454,7 +1530,7 @@
                                                         console.log('i am in 52','E50=',e50_val);
                                                         var e52_val = e50_val-e51_val;
 
-                                                        var e52_val_rn = Math.round(e52_val);
+                                                        var e52_val_rn = Math.round(e52_val*10000)/10000;
                                                         return e52_val_rn;
 
                                                     }
@@ -1470,7 +1546,7 @@
 
                                                         var e50_val_n = NPER1(new_borrowing_rate/100/12,new_rate,-connection_credit,0,0);
                                                         console.log('i am in 50','E50=',e50_val_n);
-                                                        var e50_val_rn = Math.round(e50_val_n/12).toFixed(5);
+                                                        var e50_val_rn = Math.round(e50_val_n/12*100000)/100000;
                                                         console.log('i am in 50','E50=',e50_val_rn);
 
                                                         return e50_val_rn;
@@ -1627,14 +1703,25 @@
                                                     //Restschuld (Euro) Calculation
                                                     $('#Outstanding_balance').click(function (){
 
-                                                        console.log('started A');
+                                                        // console.log('started A');
                                                         columnA();
-                                                        console.log('started B');
+                                                        // console.log('started B');
                                                         columnB();
-                                                        console.log('started C');
+                                                        // console.log('started C');
                                                         columnC();
-
-                                                        console.log('started M');
+                                                        // columnD();
+                                                        // columnE();
+                                                        // columnF();
+                                                        // columnG();
+                                                        // columnH();
+                                                        // columnI();
+                                                        // columnJ();
+                                                        // columnk();
+                                                        // columnL();
+                                                        //
+                                                        //
+                                                        //
+                                                        // console.log('started M');
                                                         columnM();
                                                         residualDebt();
 
@@ -1668,9 +1755,7 @@
                                                                 || I[a]==lookup_value || J[a]==lookup_value || K[a]==lookup_value
                                                                 || L[a]==lookup_value || M[a]==lookup_value)
                                                             {
-                                                                ret_value = M[a];
-                                                                console.log('true');
-                                                                console.log(ret_value);
+                                                                ret_value = Math.round(M[a]*100)/100;
                                                                 $('#Outstanding_balance').val(ret_value);
                                                                 break;
                                                             }
@@ -1695,7 +1780,7 @@
                                                         if(monthly_deposit>M[4]*(1+borrowing_rate/100/12))
                                                         {
                                                             console.log('false in column k');
-                                                            J[5] = M[4]*(1+borrowing_rate/100/12);
+                                                            J[5] = Math.round(M[4]*(1+borrowing_rate/12))/100;
                                                         }
                                                         else
                                                         {
@@ -1716,7 +1801,7 @@
                                                             K[5]="";
                                                         }
                                                         else{
-                                                            K[5] = M[4]*(borrowing_rate/1200);
+                                                            K[5] = Math.round(M[4]*(borrowing_rate/1200)*100)/100;
                                                         }
                                                     }
                                                     //Calculating column k
@@ -1737,10 +1822,9 @@
                                                         }
                                                         else{
                                                             console.log('i am in column k=',k,'column m=',M[--k1],borrowing_rate);
-                                                            K[k] = M[--k1]*borrowing_rate/100/12;
-
+                                                            K[k] = Math.round(M[k1]*borrowing_rate/12)/100;
+                                                            console.log('K*****',M[8],K[8],K[9]);
                                                         }
-
                                                     }
 
                                                     //Function for calculating column L including L5
@@ -1791,12 +1875,13 @@
                                                                     //console.log('value of L',L[m]);
                                                                     // console.log(M[m--]);
                                                                     M[m] = M[--m1] - L[m];
+                                                                    console.log('L___');
+                                                                    console.log(L[m]);
                                                                     console.log('Calculated', M[m]);
                                                                 }
                                                                 console.log('Others started calclatting');
                                                                 columnI(m);
                                                                 columnD(m);
-
                                                             }
 
                                                         }
@@ -1888,7 +1973,7 @@
                                                             if(monthly_Deposit > M[--d1]*(1+borrowing_rate/100/12))
                                                             {
                                                                 console.log('column d true');
-                                                                D[d] = M[--d1]*(1+borrowing_rate/100/12);
+                                                                D[d] = M[--d1]*Math.round(1+borrowing_rate/12)/100;
                                                             }
                                                             else{ D[d] = monthly_Deposit;
                                                                 console.log('column d false',D[d],d); }
@@ -2066,7 +2151,7 @@
 
                                                 <tr>
                                                     <td>Kreditsumme ( € ) <span class="text-danger" id="message_loan_amount"></span></td>
-                                                    <td colspan="4"><input class="form-control text-right" value=350000 id="loan_amount" type=""></td>
+                                                    <td colspan="4"><input class="form-control text-right" value="{{ ($kunden->finanzierungsbedarf) }}" id="loan_amount" type=""></td>
                                                 </tr>
                                                 <tr>
                                                     <td >Zinsbindung <span class="text-danger" id="message_loan_period"></span></td>
@@ -2136,7 +2221,7 @@
                                                     <td>Grundbuchkosten ( € )</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="registery_fees" class="form-control text-right">
+                                                            <input id="registery_fees" class="form-control text-right" disabled>
 
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
@@ -2149,7 +2234,7 @@
                                                     <td>Disagio (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="payment_discount" value=0.00 class="form-control text-right">
+                                                            <input id="payment_discount" value=0.00 class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -2161,7 +2246,7 @@
                                                     <td>Auszahlungsbetrag ( € )</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="payment_amount" class="form-control text-right">
+                                                            <input id="payment_amount" class="form-control text-right" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -2975,6 +3060,12 @@
                 }
             });
         }
+
+
+
+
+
+
 
 
     </script>
