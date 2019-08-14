@@ -8,12 +8,9 @@
 
 
 <style type="text/css">
-
     #button_edit a {
         color: #fff !important;
     }
-
-
     .check {
         cursor: pointer;
         position: relative;
@@ -80,25 +77,20 @@
 
 
     <script>
-
         $(document).ready(function(){
             $('.new_form').hide();
             $('.ten_fields').hide();
             $('.ct_fields').hide();
-
             $('#add_calcualtion_form').click(function(){
                 $('.new_form').show();
             });
-
             $('#ten_field_controller').click(function(){
                 $('.ten_fields').show();
                 $('#new_form_controller').val(1);
             });
-
             $('#angebotdate').change(function(){
                 $('.angebotdate').val($(this).val());
             });
-
             $('#finanzierungsbedarf input').on('keypress change', function(e){
                 let _this = this;
                 setTimeout(function(){
@@ -106,16 +98,14 @@
                     recalculate();
                     recalculate_1();
                 }, 200);
-                });
-
+            });
             $('[data-parent="#Calculation"] input').on('keypress change', function(e){
                 let _this = this;
+                $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
                 setTimeout(function(){
-                    // $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
-                    recalculate_1();
+                    recalculate_1(e);
                 }, 200);
             });
-
             $('input[name="kostennotar"], input[name="grunderwerbssteuer"], input[name="maklerkosten"]').change(function(){
                 let _this = this;
                 setTimeout(function(){
@@ -130,12 +120,10 @@
                     recalculate();
                 }, 200);
             });
-
             // Set angebotdate in edit more
             var angebotdate = $('.angebotdate').val();
             $('#angebotdate').val(angebotdate);
         });
-
         function onlyNumbers(string) {
             let number = '';
             for(let i = 0; i<string.length; i++) {
@@ -145,7 +133,6 @@
             }
             return number;
         }
-
         function formatNumbers(string) {
             let number = '';
             let firstComma = false;
@@ -173,57 +160,39 @@
             }
             return number.split('').reverse().join('');
         }
-
         function recalculate() {
             let kaufpreis = parseFloat($('input[name=kaufpreis]').val().replace(".", "").replace(",", "."));
             if(isNaN(kaufpreis)) kaufpreis=0;
-
             let kostenumbau = parseFloat($('input[name=kostenumbau]').val().replace(".", "").replace(",", "."));
             if(isNaN(kostenumbau)) kostenumbau=0;
-
             let kostennotar = parseFloat($('input[name=kostennotar]').val().replace(".", "").replace(",", "."));
             if(isNaN(kostennotar)) kostennotar=0;
-
             let grunderwerbssteuer = parseFloat($('input[name=grunderwerbssteuer]').val().replace(".", "").replace(",", "."));
             if(isNaN(grunderwerbssteuer)) grunderwerbssteuer=0;
-
             let maklerkosten = parseFloat($('input[name=maklerkosten]').val().replace(".", "").replace(",", "."));
             if(isNaN(maklerkosten)) maklerkosten=0;
-
             let eigenkapital = parseFloat($('input[name=eigenkapital]').val().replace(".", "").replace(",", "."));
             if(isNaN(eigenkapital)) eigenkapital=0;
-
             let calculatedGesamtkosten = kaufpreis + kostenumbau + kaufpreis*kostennotar/100.0 + kaufpreis*grunderwerbssteuer/100.0  + kaufpreis*maklerkosten/100.0;
-
             if(calculatedGesamtkosten < eigenkapital) {
                 eigenkapital = calculatedGesamtkosten;
                 $('input[name=eigenkapital]').val(formatNumbers(eigenkapital.toString().replace(".", ",")));
             }
-
             let calculatedFinanzierungsbedarf = calculatedGesamtkosten - eigenkapital;
             let plusMinus = calculatedFinanzierungsbedarf<0? '-':'';
-
-
             kostennotar = (kaufpreis*kostennotar/100.0).toFixed(2).toString().replace(".", ",");
             grunderwerbssteuer = (kaufpreis*grunderwerbssteuer/100.0).toFixed(2).toString().replace(".", ",");
             maklerkosten = (kaufpreis*maklerkosten/100.0).toFixed(2).toString().replace(".", ",");
-
-
-
             calculatedGesamtkosten = calculatedGesamtkosten.toFixed(2).toString().replace(".", ",");
             calculatedFinanzierungsbedarf = calculatedFinanzierungsbedarf.toFixed(2).toString().replace(".", ",");
-
-
             $('span[name=kostennotar]').html(formatNumbers(kostennotar));
             $('span[name=grunderwerbssteuer]').html(formatNumbers(grunderwerbssteuer));
             $('span[name=maklerkosten]').html(formatNumbers(maklerkosten));
-
             $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
             $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
             $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
         }
-
-        function recalculate_1() {
+        function recalculate_1(e) {
             // var loan_ammount = parseFloat($('#loan_amount').val());
             // var discount = parseFloat($('#payment_discount').val());
             // var payout = loan_ammount*(100-discount)/100;
@@ -233,20 +202,70 @@
             $('#Outstanding_balance').click();
             $('#effective_interest').click();
             $('#connection_credit').click();
+            repaymentDate_1();
+            new_repayment_rate();
+            function repaymentDate_1() {
+                var montly_deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                var loan_amount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                if (isNaN(montly_deposit)) {
+                    $('#message_montly_deposit').html('* Pflichtfeld');
+                } else {
+                    var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                    repayment_rate = formatNumbers((Math.round(repayment_rate*100)/100).toString().replace(".",","));
+                    if (isNaN(repayment_rate)) {
+                        $('#repayment_date_inp').val('some values are missing');
+                    } else {
+                        Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
+                    }
+                }
+                if (isNaN(loan_amount)) {
+                    $('#message_loan_amount').html('* Pflichtfeld');
+                } else {
+                    var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                    repayment_rate = formatNumbers((Math.round(repayment_rate*100)/100).toString().replace(".",","));
+                    if (isNaN(repayment_rate)) {
+                        $('#repayment_date_inp').val('some values are missing');
+                    } else {
+                        Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
+                    }
+                }
+                if (isNaN(borrowing_rate)) {
+                    $('#message_borrowing_rate').html('* Pflichtfeld');
+                } else {
+                    var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                    repayment_rate = formatNumbers((Math.round(repayment_rate*100)/100).toString().replace(".",","));
+                    Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
+                }
+            }
+            function new_repayment_rate(){
+                var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                var new_borrowing_rate = parseInt($('#new_borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                var new_repayment_rate = parseInt($('#new_repayment_rate_inp').val().replace(/\./g,"").replace(",","."));
+                if(loan_amount && new_borrowing_rate && new_repayment_rate)
+                {
+                    var new_rate =Math.round(loan_amount*(new_borrowing_rate+new_repayment_rate)/100/12*100)/100;
+                    $('#new_rate_inp').val(formatNumbers(new_rate.toString().replace(".",",")));
+                }
+                else{
+                    if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
+                    if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
+                    if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
+                }
+            }
             $('#total_maturity').click();
             registery_fee();
+
+
             // $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
         }
-
         var registery_fees={500:15, 1000:19, 1500:23, 2000:27, 3000:33, 4000:39, 5000:45, 6000:51, 7000:57, 8000:63, 9000:69, 10000:75, 13000:83, 16000:91, 19000:99, 22000:107, 25000:115, 30000:125, 35000:135, 40000:145, 45000:155, 50000:165, 65000:192, 80000:219, 95000:246, 110000:273, 125000:300, 140000:327, 155000:354, 170000:381, 185000:408, 200000:435, 230000:485, 260000:535, 290000:585, 320000:635, 350000:685, 380000:735, 410000:785, 440000:835, 470000:885, 500000:935, 550000:1015, 600000:1095, 650000:1175, 700000:1255, 750000:1335, 800000:1415, 850000:1495, 900000:1575, 950000:1655, 1000000:1735, 1050000:1815, 1100000:1895, 1150000:1975, 1200000:2055, 1250000:2135, 1300000:2215, 1350000:2295, 1400000:2375, 1450000:2455, 1500000:2535, 1550000:2615, 1600000:2695, 1650000:2775, 1700000:2855, 1750000:2935, 1800000:3015, 1850000:3095, 1900000:3175, 1950000:3255, 2000000:3335, 2050000:3415, 2100000:3495, 2150000:3575, 2200000:3655, 2250000:3735, 2300000:3815, 2350000:3895, 2400000:3975, 2450000:4055, 2500000:4135, 2550000:4215, 2600000:4295, 2650000:4375, 2700000:4455, 2750000:4535, 2800000:4615, 2850000:4695, 2900000:4775, 2950000:4855, 3000000:4935}
-
         registery_fee();
         function registery_fee() {
-            var fee = registery_fees[x(registery_fees, parseInt($('#loan_amount').val()))];
+            var fee = registery_fees[x(registery_fees, parseInt($('#loan_amount').val().replace(/\./g, "").replace(",",".")))];
             // setTimeout(function () {
-            $('#registery_fees').val(fee);
+            $('#registery_fees').val(formatNumbers(fee.toFixed(2).toString().replace(".", ",")));
             // },2000);
-
             function x(rprice, qty) {
                 var prev = -1;
                 var i=0;
@@ -258,18 +277,15 @@
                         prev = n;
                 }
             }
-
         }
         function openTimeLine(cardNo){
             $('.ten_fields-'+cardNo).show();
             $('.isTM-'+cardNo).val(1);
-
             var timeLinerBtnText = $('.addTimeLiner-'+cardNo).text();
             if ( timeLinerBtnText == "Baufi Zeitstrahl hinzufügen" ) {
                 $('.addTimeLiner-'+cardNo).text('Baufi Zeitstrahl entfernen');
                 $('.addTimeLiner-'+cardNo).removeClass('btn-primary');
                 $('.addTimeLiner-'+cardNo).addClass('btn-danger');
-
                 var timeLiner = `<div class="row ten_fields-`+cardNo+` mt-35">
                                         <div class="col-sm-12">
                                             <h5>Zeitstrahl Phase 1</h5>
@@ -299,7 +315,6 @@
                                         <div class="col-sm-12">
                                             <h5>Zeitstrahl Phase 2</h5>
                                         </div>
-
                                         <div class="col-sm-3 form-group">
                                             <label for="bank">Finanzierungsbedarf</label>
                                             <input type="text" id="finanzierungsbedarf_phase_zwei" name="Cal[`+cardNo+`][timeline][finanzierungsbedarf_phase_zwei]" class="form-control" placeholder="0€" value="" required>
@@ -323,7 +338,6 @@
                                     </div>`;
                 $('.thisTimeline-'+cardNo).html(timeLiner);
             }
-
             else if ( timeLinerBtnText == "Baufi Zeitstrahl entfernen" ) {
                 $('.addTimeLiner-'+cardNo).text('Baufi Zeitstrahl hinzufügen');
                 $('.addTimeLiner-'+cardNo).removeClass('btn-danger');
@@ -331,17 +345,14 @@
                 $('.thisTimeline-'+cardNo).html('');
             }
         }
-
         function openCtTimeLine(cardNo){
             $('.ct_fields-'+cardNo).show();
             $('.isTM-'+cardNo).val(1);
-
             var ctTimeLinerBtnText = $('.addCtTimeLiner-'+cardNo).text();
             if ( ctTimeLinerBtnText == "Angepasster Zeitstrahl hinzufügen" ) {
                 $('.addCtTimeLiner-'+cardNo).text('Angepasster Zeitstrahl entfernen');
                 $('.addCtTimeLiner-'+cardNo).removeClass('btn-primary');
                 $('.addCtTimeLiner-'+cardNo).addClass('btn-danger');
-
                 var ctTimeLiner = `<div class="row ct_fields-`+cardNo+` mt-35">
                                         <div class="col-sm-12">
                                             <h5>Zeitstrahl Phase 1 (Angepasster)</h5>
@@ -373,7 +384,6 @@
                                     </div>`;
                 $('.thisCtTimeline-'+cardNo).html(ctTimeLiner);
             }
-
             else if ( ctTimeLinerBtnText == "Angepasster Zeitstrahl entfernen" ) {
                 $('.addCtTimeLiner-'+cardNo).text('Angepasster Zeitstrahl hinzufügen');
                 $('.addCtTimeLiner-'+cardNo).removeClass('btn-danger');
@@ -381,7 +391,6 @@
                 $('.thisCtTimeline-'+cardNo).html('');
             }
         }
-
         function addNewCalc(){
             $('.new_form').show();
             $('#timelineChecker').val(1);
@@ -399,7 +408,6 @@
                             </div>
                             <div id="collapse-`+cardNo+`" class="collapse" data-parent="#Calculation">
                                 <div class="card-body">
-
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
@@ -408,77 +416,66 @@
                                                 <input type="text" id="bank" class="form-control" name="Cal[`+cardNo+`][bank]"/>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Tilgungssatz</label>
                                                 <input type="text" id="annuities" class="form-control" name="Cal[`+cardNo+`][annuities]"/>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Sollzins</label>
                                                 <input type="text" id="to_interest" value="" class="form-control" name="Cal[`+cardNo+`][to_interest]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Effektivzins</label>
                                                 <input type="text" id="effectiveness" value="" class="form-control" name="Cal[`+cardNo+`][effectiveness]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Zinsbindung</label>
                                                 <input type="text" id="fixed_interest_rates" value="" class="form-control" name="Cal[`+cardNo+`][fixed_interest_rates]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Monatliche Rate</label>
                                                 <input type="text" id="monthly_loan" value="" class="form-control" name="Cal[`+cardNo+`][monthly_loan]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Restschuld Ende Zinsbindung</label>
                                                 <input type="text" id="residual_debt_interest_rate" value="" class="form-control" name="Cal[`+cardNo+`][residual_debt_interest_rate]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Kalkulierte Luafzeit (ca.)</label>
                                                 <input type="text" id="calculated_luaf_time" value="" class="form-control" name="Cal[`+cardNo+`][calculated_luaf_time]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Nettodarlehensbetrag</label>
                                                 <input type="text" id="net_loan_amount" value="" class="form-control" name="Cal[`+cardNo+`][net_loan_amount]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Bereitsellungszins</label>
                                                 <input type="text" id="initial_interest" value="" class="form-control" name="Cal[`+cardNo+`][initial_interest]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Optionale Soundertilgung</label>
                                                 <input type="text" id="optional_sound_recovery" value="" class="form-control" name="Cal[`+cardNo+`][optional_sound_recovery]" required>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <input type="hidden" class="isTM-`+cardNo+`"  name="Cal[`+cardNo+`][istm]" value="0">
@@ -487,7 +484,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="thisTimeline-`+cardNo+`"></div>
                                     <div class="thisCtTimeline-`+cardNo+`"></div>
                                 </div>
@@ -880,13 +876,9 @@
 
                                                     $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
                                                     $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
-
-
                                                     $('#loan_period').change(function () {
-
                                                         if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
                                                         {
-
                                                             $('#end_of_fixed_year').empty();
                                                             $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
                                                             $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
@@ -895,14 +887,10 @@
                                                         {
                                                             alert('Monat nicht erlaubt');
                                                         }
-
-
                                                     });
-
                                                     $('#payment_year').change(function () {
                                                         if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
                                                         {
-
                                                             $('#end_of_fixed_year').empty();
                                                             $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
                                                             $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
@@ -911,12 +899,10 @@
                                                         {
                                                             alert('Monat nicht erlaubt');
                                                         }
-
                                                     });
                                                     $('#payment_month').change(function () {
                                                         if ($('#payment_month').val() !='Marz' && $('#payment_month').val()!='Mai'&&$('#payment_month').val()!='Juni'&&$('#payment_month').val()!='Juli'&&$('#payment_month').val()!='Oktober'&&$('#payment_month').val()!='Dezember')
                                                         {
-
                                                             $('#end_of_fixed_year').empty();
                                                             $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
                                                             $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
@@ -924,153 +910,117 @@
                                                         {
                                                             alert('Monat nicht erlaubt');
                                                         }
-
-
                                                     });
-
                                                     //Payment Amount calculation Auszahlungsbetrag (Euro)
-
                                                     $('#payment_amount').click(function () {
-
-                                                        var loan_ammount = parseFloat($('#loan_amount').val());
+                                                        var loan_ammount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
                                                         var discount = parseFloat($('#payment_discount').val());
                                                         var payout = loan_ammount*(100-discount)/100;
-                                                        $('#payment_amount').val(payout);
+                                                        $('#payment_amount').val($('#loan_amount').val());
                                                     });
-
                                                     //Tilgungssatz (Prozent) Calculation
                                                     function repaymentDate() {
-
-                                                        var montly_deposit = parseInt($('#montly_deposit_val').val());
-                                                        var loan_amount = parseInt($('#loan_amount').val());
-                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
-
+                                                        var montly_deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var loan_amount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
                                                         if (isNaN(montly_deposit)) {
-
                                                             $('#message_montly_deposit').html('* Pflichtfeld');
                                                         } else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
-                                                            repayment_rate = Math.round(repayment_rate*100)/100;
+                                                            repayment_rate = formatNumbers((Math.round(repayment_rate*100)/100).toString().replace(".",","));
                                                             if (isNaN(repayment_rate)) {
                                                                 $('#repayment_date_inp').val('some values are missing');
                                                             } else {
                                                                 Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
-
                                                             }
                                                         }
-
                                                         if (isNaN(loan_amount)) {
-
                                                             $('#message_loan_amount').html('* Pflichtfeld');
                                                         } else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
-                                                            repayment_rate = Math.round(repayment_rate*100)/100;
-
-
+                                                            repayment_rate = formatNumbers((Math.round(repayment_rate*100)/100).toString().replace(".",","));
                                                             if (isNaN(repayment_rate)) {
                                                                 $('#repayment_date_inp').val('some values are missing');
                                                             } else {
                                                                 Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
-
                                                             }
                                                         }
-
                                                         if (isNaN(borrowing_rate)) {
-
                                                             $('#message_borrowing_rate').html('* Pflichtfeld');
                                                         } else {
                                                             var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
-                                                            repayment_rate = Math.round(repayment_rate*100)/100;
-
+                                                            repayment_rate = formatNumbers((Math.round(repayment_rate*100)/100).toString().replace(".",","));
                                                             Math.round(parseInt($('#repayment_date_inp').val(repayment_rate)));
-
                                                         }
                                                     }
-
                                                     function monthlyDeposit(){
-
-                                                        var loan_amount = parseInt($('#loan_amount').val());
-                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
-                                                        var repayment_date = parseFloat($('#repayment_date_inp').val());
-
+                                                        var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                                                        var repayment_date = parseFloat($('#repayment_date_inp').val().replace(/\./g,"").replace(",","."));
                                                         var monthly_deposit = loan_amount*(borrowing_rate+repayment_date)/1200;
-                                                        alert(monthly_deposit);
-
                                                         $('#montly_deposit_val').val(monthly_deposit);
-
                                                     }
-
                                                     $('#repayment_date').click(function () {
-
                                                         //Tilgungssatz (Prozent) will be calculated upon calling this function
-                                                        repaymentDate();
+                                                        // repaymentDate();
                                                         $('#repayment_date_inp').attr("disabled",false);
                                                         $('#montly_deposit_val').attr("disabled",true);
-
                                                     });
-
                                                     $('#montly_deposit').click(function () {
-
                                                         //Tilgungssatz (Prozent) will be calculated upon calling this function
-                                                        repaymentDate();
+                                                        // repaymentDate();
                                                         $('#repayment_date_inp').attr("disabled",true);
                                                         $('#montly_deposit_val').attr("disabled",false);
+                                                    });
+
+
+                                                    $('#montly_deposit_val').on('keypress change', function(){
+                                                        repaymentDate();
 
                                                     });
 
+                                                    $('#repayment_date_inp').on('keypress change', function(){
+                                                        repaymentDate();
+
+                                                    });
+
+
                                                     //Calculation Tilgungssatz (Prozent)
-
                                                     $('#payment_opt_rad').click(function () {
-
-                                                        var loan_period = parseInt($('#loan_period').val());
-
-                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
-
-                                                        var montly_deposit_val = parseInt($('#montly_deposit_val').val());
-
-                                                        var loan_amount = parseInt($('#loan_amount').val());
-
+                                                    /*    var loan_period = parseInt($('#loan_period').val());
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
+                                                        var montly_deposit_val = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
                                                         // Input fields Checks
-
                                                         if(loan_amount && loan_period && borrowing_rate && montly_deposit_val)
                                                         {
-                                                            var finalvalue = finalvalueCal(borrowing_rate/100/12,loan_period*12,montly_deposit_val,-loan_amount,0);
-
+                                                            var finalvalue = fv(borrowing_rate/100/12,loan_period*12,montly_deposit_val,-loan_amount,0);
                                                             if(loan_period>50)
                                                             {
                                                                 $('#message_payment_opt').html('Zinsbindung zu lang!');
                                                             }
-
                                                             else if(finalvalue<-1 || isNaN(finalvalue)){
-
                                                                 $('#message_payment_opt').html('Darlehen vor Ende Zinsbindung getilgt!');
                                                                 //alert('Loan before end fixed interest rate!');
                                                             }
-
                                                             else{
                                                                 $('#message_payment_opt').html('');
                                                                 monthlyDeposit();
                                                                 //repaymentDate();
                                                             }
-
                                                             function finalvalueCal(rate, nper, pmt, pv, type) {
                                                                 if (!type) type = 0;
-
                                                                 var pow = Math.pow(1 + rate, nper);
                                                                 var fv = 0;
-
                                                                 if (rate) {
                                                                     fv = (pmt * (1 + rate * type) * (1 - pow) / rate) - pv * pow;
                                                                 } else {
                                                                     fv = -1 * (pv + pmt * nper);
                                                                 }
-
                                                                 return fv;
                                                             }
                                                         }
-
                                                         else {
-
                                                             if ((isNaN(loan_amount))) {
                                                                 $('#message_loan_amount').html('* Pflichtfeld');
                                                             }
@@ -1083,121 +1033,103 @@
                                                             if ((isNaN(montly_deposit_val))) {
                                                                 $('#message_montly_deposit').html('* Pflichtfeld');
                                                             }
-
-                                                        }
+                                                        }*/
+                                                        console.log(goalSeek({
+                                                            Func: get_ourstanding_balance,
+                                                            aFuncParams: [1],
+                                                            oFuncArgTarget: {
+                                                                Position: 0
+                                                            },
+                                                            Goal: 41747
+                                                        }));
+                                                        console.log(get_ourstanding_balance(16000));
                                                     });
-
-                                                    $('#new_repayment_rate').click(function () {
-
-                                                        var loan_amount = parseInt($('#loan_amount').val());
-                                                        var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
-                                                        var new_repayment_rate = parseInt($('#new_repayment_rate_inp').val());
-
-                                                        if(loan_amount && new_borrowing_rate && new_repayment_rate)
-                                                        {
-                                                            var new_rate =Math.round(loan_amount*(new_borrowing_rate+new_repayment_rate)/100/12*100)/100;
-                                                            $('#new_rate_inp').val(new_rate);
-                                                        }
-                                                        else{
-                                                            if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
-                                                            if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
-                                                            if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
-                                                        }
-
-                                                    });
-
-                                                    $('#new_rate').click(function () {
-
-                                                        var new_rate_inp = parseInt($('#new_rate_inp').val());
-                                                        var loan_amount = parseInt($('#loan_amount').val());
-                                                        var new_borrowing_rate = parseInt($('#new_borrowing_rate').val());
-
-                                                        if(new_borrowing_rate && new_repayment_rate)
-                                                        {
-                                                            var new_repayment_rate_inp = new_rate_inp*100*12/loan_amount-new_borrowing_rate;
-                                                            new_repayment_rate_inp = Math.round(new_repayment_rate_inp*100)/100;
-                                                            $('#new_repayment_rate_inp').val(new_repayment_rate_inp.toFixed(2));
-                                                        }
-                                                        else{
-                                                            if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
-                                                            if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
-                                                            if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
-                                                        }
-
-                                                    });
-
+                                                    // $('#new_repayment_rate').click(function () {
+                                                    //     var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                    //     var new_borrowing_rate = parseInt($('#new_borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                                                    //     var new_repayment_rate = parseInt($('#new_repayment_rate_inp').val().replace(/\./g,"").replace(",","."));
+                                                    //     if(loan_amount && new_borrowing_rate && new_repayment_rate)
+                                                    //     {
+                                                    //         var new_rate =Math.round(loan_amount*(new_borrowing_rate+new_repayment_rate)/100/12*100)/100;
+                                                    //         $('#new_rate_inp').val(formatNumbers(new_rate.toString().replace(".",",")));
+                                                    //     }
+                                                    //     else{
+                                                    //         if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
+                                                    //         if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
+                                                    //         if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
+                                                    //     }
+                                                    // });
+                                                    // $('#new_rate').click(function () {
+                                                    //     var new_rate_inp = parseInt($('#new_rate_inp').val());
+                                                    //     var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                    //     var new_borrowing_rate = parseInt($('#new_borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                                                    //     if(new_borrowing_rate && new_repayment_rate)
+                                                    //     {
+                                                    //         var new_repayment_rate_inp = new_rate_inp*100*12/loan_amount-new_borrowing_rate;
+                                                    //         new_repayment_rate_inp = Math.round(new_repayment_rate_inp*100)/100;
+                                                    //         $('#new_repayment_rate_inp').val(new_repayment_rate_inp.toFixed(2));
+                                                    //     }
+                                                    //     else{
+                                                    //         if(isNaN(loan_amount)){ $('#message_loan_amount').html('* Pflichtfeld'); } //else {if(loan_amount){ $('#message_loan_amount').html(''); }}
+                                                    //         if(isNaN(new_borrowing_rate)){ $('#message_new_borrowing_rate').html('* Pflichtfeld'); }
+                                                    //         if(isNaN(new_repayment_rate)){ $('#message_new_repayment_date').html('* Pflichtfeld'); }
+                                                    //     }
+                                                    // });
                                                     //NPER function
-                                                 /*   function nper(rate, per, pmt, pv, fv)
-                                                    {
-
-                                                        // fv = parseFloat(fv);
-                                                        //
-                                                        // pmt = parseFloat(pmt);
-                                                        //
-                                                        // pv = parseFloat(pv);
-                                                        //
-                                                        // per = parseFloat(per);
-                                                        //
-                                                        // if (( per == 0 ) || ( pmt == 0 )){
-                                                        //
-                                                        //     return(0);
-                                                        //
-                                                        // }
-                                                        //
-                                                        // rate = eval((rate)/(per * 100));
-                                                        //
-                                                        // if ( rate == 0 ) // Interest rate is 0
-                                                        //
-                                                        // {
-                                                        //
-                                                        //     nper_value = - (fv + pv)/pmt;
-                                                        //
-                                                        // }
-                                                        //
-                                                        // else
-                                                        //
-                                                        // {
-                                                        //
-                                                        //     nper_value = Math.log((-fv * rate + pmt)/(pmt + rate * pv))/ Math.log(1 + rate);
-                                                        //
-                                                        // }
-                                                        //
-                                                        // nper_value = conv_number(nper_value,2);
-
-                                                        return (nper_value);
-
-                                                    }*/
+                                                    /*   function nper(rate, per, pmt, pv, fv)
+                                                       {
+                                                           // fv = parseFloat(fv);
+                                                           //
+                                                           // pmt = parseFloat(pmt);
+                                                           //
+                                                           // pv = parseFloat(pv);
+                                                           //
+                                                           // per = parseFloat(per);
+                                                           //
+                                                           // if (( per == 0 ) || ( pmt == 0 )){
+                                                           //
+                                                           //     return(0);
+                                                           //
+                                                           // }
+                                                           //
+                                                           // rate = eval((rate)/(per * 100));
+                                                           //
+                                                           // if ( rate == 0 ) // Interest rate is 0
+                                                           //
+                                                           // {
+                                                           //
+                                                           //     nper_value = - (fv + pv)/pmt;
+                                                           //
+                                                           // }
+                                                           //
+                                                           // else
+                                                           //
+                                                           // {
+                                                           //
+                                                           //     nper_value = Math.log((-fv * rate + pmt)/(pmt + rate * pv))/ Math.log(1 + rate);
+                                                           //
+                                                           // }
+                                                           //
+                                                           // nper_value = conv_number(nper_value,2);
+                                                           return (nper_value);
+                                                       }*/
                                                     function nper(ir, pmt, pv, fv=0) {
                                                         var nbperiods;
-
-
                                                         nbperiods = Math.log((-fv * ir + pmt)/(pmt + ir * pv))/ Math.log(1 + ir)
-
                                                         return Math.round(nbperiods*100)/100;
                                                     }
                                                     function conv_number(expr, decplaces)
-
                                                     { // This function is from David Goodman's Javascript Bible.
-
                                                         var str = "" + Math.round(eval(expr) * Math.pow(10,decplaces));
-
                                                         while (str.length <= decplaces) {
-
                                                             str = "0" + str;
-
                                                         }
-
                                                         var decpoint = str.length - decplaces;
-
                                                         return (str.substring(0,decpoint) + "." + str.substring(decpoint,str.length));
-
                                                     }
-
                                                     //Final Value Calculation
                                                     function fv(rate, nper, pmt, pv)
-
                                                     {
-
                                                         // nper = parseFloat(nper);
                                                         //
                                                         // pmt = parseFloat(pmt);
@@ -1237,30 +1169,23 @@
                                                         // return (fv_value);
                                                         var pow = Math.pow(1 + rate, nper),
                                                             fv;
-
                                                         pv = pv || 0;
-
                                                         if (rate) {
                                                             fv = (pmt*(1-pow)/rate)-pv*pow;
                                                         } else {
                                                             fv = -1 * (pv + pmt * nper);
                                                         }
                                                         return Math.round(fv*100)/100;
-
                                                     }
-
                                                     //Rate Calculation
                                                     function rate(periods, payment, present, future, type, guess) {
                                                         guess = (guess === undefined) ? 0.01 : guess;
                                                         future = (future === undefined) ? 0 : future;
                                                         type = (type === undefined) ? 0 : type;
-
                                                         // Set maximum epsilon for end of iteration
                                                         var epsMax = 1e-10;
-
                                                         // Set maximum number of iterations
                                                         var iterMax = 10;
-
                                                         // Implement Newton's method
                                                         var y, y0, y1, x0, x1 = 0,
                                                             f = 0,
@@ -1292,60 +1217,48 @@
                                                         }
                                                         return rate;
                                                     };
-
                                                     $('#effective_interest').click(function () {
-
                                                         var e73_val = e73Calculate();
                                                         var e75_val = e75Calculate();
                                                         var e74_val = e74Calculation();
-
                                                         if(e73_val==0 || e73_val==null)
                                                         {
-                                                            $('#effective_interest').val(e75_val);
+                                                            $('#effective_interest').val(formatNumbers(e75_val.toString().replace(".",",")));
                                                         }
                                                         else{
-                                                            $('#effective_interest').val(e74_val);
+                                                            $('#effective_interest').val(formatNumbers(e74_val.toString().replace(".",",")));
                                                         }
-
                                                         //e73 excel cell calculation
                                                         function e73Calculate() {
-
-                                                            var borrowing_rate = $('#borrowing_rate').val();
-                                                            var monthly_deposit = $('#montly_deposit').val();
-                                                            var loan_amount = $('#loan_amount').val();
+                                                            var borrowing_rate = $('#borrowing_rate').val().replace(".", "").replace(",", ".");
+                                                            var monthly_deposit = $('#montly_deposit_val').val().replace(".", "").replace(",", ".");
+                                                            var loan_amount = $('#loan_amount').val().replace(/\./g,"").replace(",",".");
                                                             var loan_period = $('#loan_period').val();
-
                                                             function e72Calculate(borrowing_rate,monthly_deposit,loan_amount){
                                                                 var e72_val = nper(borrowing_rate/1200,monthly_deposit,-loan_amount);
                                                                 return e72_val;
                                                             }
-
                                                             var e72_val = e72Calculate(borrowing_rate,monthly_deposit,loan_amount);
-
                                                             if(e72_val<loan_period*12)
                                                             { return 1;}
                                                             else
                                                             { return 0; }
                                                         }
-
                                                         //e75 excel cell calculation
-
                                                         function e75Calculate()
                                                         {
-                                                            var borrowing_rate = $('#borrowing_rate').val();
-                                                            var monthly_deposit = parseFloat($('#montly_deposit_val').val());
-                                                            var loan_amount = $('#loan_amount').val();
+                                                            var borrowing_rate = $('#borrowing_rate').val().replace(".", "").replace(",", ".");
+                                                            var monthly_deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                            var loan_amount = $('#loan_amount').val().replace(/\./g,"").replace(",",".");
                                                             var loan_period = $('#loan_period').val();
-                                                            var payment_amount = $('#payment_amount').val();
-                                                            var registery_fess = $('#registery_fees').val();
-
+                                                            var payment_amount = $('#payment_amount').val().replace(/\./g,"").replace(",",".");
+                                                            var registery_fess = $('#registery_fees').val().replace(/\./g, "").replace(",",".");
                                                             // 1--E69 Calculation
                                                             function e69Calculate()
                                                             {
                                                                 var fv_val = fv(borrowing_rate/1200,loan_period*12,monthly_deposit,-loan_amount);
                                                                 return fv_val;
                                                             }
-
                                                             // 2--E70 Calculation
                                                             function e70Calculation()
                                                             {
@@ -1353,7 +1266,6 @@
                                                                 var rate_val = (Math.pow(1+rate(loan_period*12,monthly_deposit,-payment_amount,fv_val),12)-1)*100;
                                                                 return rate_val;
                                                             }
-
                                                             // 3--E71 Calculation
                                                             function e71Calculation()
                                                             {
@@ -1361,7 +1273,6 @@
                                                                 var e71_val = ((Math.pow((1+e70_val/100),1/12))-1)*1200;
                                                                 return e71_val;
                                                             }
-
                                                             // 4--E68 Calculation
                                                             function e68Calculation()
                                                             {
@@ -1369,115 +1280,84 @@
                                                                 var e68_val = nper(e71_val/1200,monthly_deposit,-loan_amount);
                                                                 return e68_val;
                                                             }
-
                                                             var e68_val = e68Calculation();
                                                             var e75_val = (Math.pow((1+rate(e68_val,monthly_deposit,registery_fess-loan_amount)),12)-1)*100;
                                                             return Math.round(e75_val*100)/100;
                                                         }
-
                                                         function e74Calculation()
                                                         {
-                                                            var borrowing_rate = $('#borrowing_rate').val();
-                                                            var monthly_deposit = $('#montly_deposit_val').val();
-                                                            var loan_amount = $('#loan_amount').val();
+                                                            var borrowing_rate = $('#borrowing_rate').val().replace(".", "").replace(",", ".");
+                                                            var monthly_deposit = $('#montly_deposit_val').val().replace(".", "").replace(",", ".");
+                                                            var loan_amount = $('#loan_amount').val().replace(/\./g,"").replace(",",".");
                                                             var loan_period = $('#loan_period').val();
-                                                            var payment_amount = $('#payment_amount').val();
-                                                            var registery_fess = $('#registery_fees').val();
-
+                                                            var payment_amount = $('#payment_amount').val().replace(/\./g,"").replace(",",".");
+                                                            var registery_fess = $('#registery_fees').val().replace(/\./g, "").replace(",",".");
                                                             function e72Calculation()
                                                             {
                                                                 var e72_val = nper(borrowing_rate/1200,monthly_deposit,-loan_amount);
                                                                 return e72_val;
                                                             }
-
                                                             var e72_val = e72Calculation();
                                                             var e74_val = Math.pow((1+rate(e72_val,monthly_deposit,-payment_amount+registery_fess)),12-1)*100;
-
                                                             return e74_val;
                                                         }
                                                     });
-
-
                                                     //Anschlusskredit Calculation
                                                     $('#connection_credit').click(function (){
-
-                                                        var outstanding_balance = $('#Outstanding_balance').val();
-
+                                                        var outstanding_balance = parseFloat($('#Outstanding_balance').val().replace(".", "").replace(",", "."));
                                                         if(isNaN(outstanding_balance) || outstanding_balance==0 || outstanding_balance==null)
                                                         {
                                                             $('#message_Outstanding_balance').html('* Pflichtfeld');
                                                         }
                                                         else
                                                         { $('#message_Outstanding_balance').html('');
-                                                            $('#connection_credit').val(outstanding_balance); }
-
+                                                            $('#connection_credit').val($('#Outstanding_balance').val()); }
                                                     });
-
                                                     //Gesamtlaufzeit (Jahre/Monate) Calculation
                                                     $('#total_maturity').click(function(){
-
-                                                        var outstanding_balance = parseFloat($('#Outstanding_balance').val()).toFixed(2);
+                                                        var outstanding_balance = parseFloat($('#Outstanding_balance').val().replace(".", "").replace(",", ".")).toFixed(2);
                                                         var loan_period = parseInt($('#loan_period').val());
                                                         var e66_val = calculateE66();
                                                         var e65_val = calculateE65();
                                                         var e64_val = calculateE64();
                                                         var e55_val = calculateE55();
                                                         var e56_val = calculateE56();
-
                                                         if(outstanding_balance==0)
                                                         {
-                                                            console.log('iam in 1');
                                                             var p4 = columnCellP4();
                                                             var q4 = columncellQ4();
                                                             var R4 = p4 +'/'+q4;
                                                             return R4;
                                                         }
                                                         else if(e66_val==1){
-                                                            console.log('iam in 2');
-
                                                             $('#total_maturity').val(e65_val+'/'+e64_val);
-
                                                         }
                                                         else if(outstanding_balance==0){
-                                                            console.log('iam in 3');
-
                                                             $('#total_maturity').val(loan_period);
-
                                                         }
                                                         else{
-                                                            console.log('iam in 4');
-                                                            console.log('E55=',e55_val);
-                                                            console.log('E56=',e56_val);
-
                                                             var a = loan_period + e56_val;
                                                             $('#total_maturity').val(a+'/'+e55_val);
                                                         }
-
                                                         registery_fee();
                                                     });
                                                     //nper for calculation of E66
                                                     function NPER1(rate, payment, present, future, type) {
                                                         // Initialize type
                                                         var type = (typeof type === 'undefined') ? 0 : type;
-
                                                         // Initialize future value
                                                         var future = (typeof future === 'undefined') ? 0 : future;
-
                                                         // Evaluate rate and periods (TODO: replace with secure expression evaluator)
                                                         rate = eval(rate);
-
                                                         // Return number of periods
                                                         var num = payment * (1 + rate * type) - future * rate;
                                                         var den = (present * rate + payment * (1 + rate * type));
                                                         return Math.log(num / den) / Math.log(1 + rate);
                                                     }
-
-
                                                     function calculateE56()
                                                     {
                                                         var e54_val = calculateE54();
                                                         var e51_val = calculateE51();
-
                                                         if(e54_val==12)
                                                         {
                                                             return e51_val + 1;
@@ -1486,122 +1366,77 @@
                                                             return e51_val;
                                                         }
                                                     }
-
                                                     function calculateE55(){
-
                                                         var e54_val = calculateE54();
-                                                        console.log('i am in E55','E54=',e54_val);
                                                         var e55_val;
-
                                                         if(e54_val==12)
                                                         {
                                                             e55_val =0;
-                                                            console.log('i am in E55','E54=',e55_val,'true');
                                                             return e55_val;
                                                         }
                                                         else{
-                                                            console.log('false i am in E55');
                                                             return e54_val;
                                                         }
                                                     }
-
                                                     function calculateE54(){
-
                                                         var e53_val = calculateE53();
-                                                        console.log('i am in 54','E53=',e53_val);
                                                         var e54_val = Math.ceil(e53_val);
                                                         return e54_val;
                                                     }
-
                                                     function calculateE53(){
-
                                                         var e52_val = calculateE52();
-                                                        console.log('i am in 53','E52=',e52_val);
                                                         var e53_val = 12 * e52_val;
                                                         return e53_val;
-
                                                     }
-
                                                     function calculateE52(){
-
                                                         var e51_val = calculateE51();
-                                                        console.log('i am in 52','E51=',e51_val);
                                                         var e50_val = calculateE50();
-                                                        console.log('i am in 52','E50=',e50_val);
                                                         var e52_val = e50_val-e51_val;
-
                                                         var e52_val_rn = Math.round(e52_val*10000)/10000;
                                                         return e52_val_rn;
-
                                                     }
-
                                                     function calculateE50(){
-
-                                                        var new_borrowing_rate = parseFloat($('#new_borrowing_rate').val());
-                                                        var new_rate = parseFloat($('#new_rate_inp').val());
-                                                        var connection_credit = parseFloat($('#connection_credit').val());
-                                                        console.log(new_borrowing_rate);
-                                                        console.log(new_rate);
-                                                        console.log(connection_credit);
-
+                                                        var new_borrowing_rate = parseFloat($('#new_borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                                                        var new_rate = parseFloat($('#new_rate_inp').val().replace(/\./g,"").replace(",","."));
+                                                        var connection_credit = parseFloat($('#connection_credit').val().replace(".", "").replace(",", "."));
                                                         var e50_val_n = NPER1(new_borrowing_rate/100/12,new_rate,-connection_credit,0,0);
-                                                        console.log('i am in 50','E50=',e50_val_n);
                                                         var e50_val_rn = Math.round(e50_val_n/12*100000)/100000;
-                                                        console.log('i am in 50','E50=',e50_val_rn);
-
                                                         return e50_val_rn;
-
                                                     }
-
                                                     function calculateE51()
                                                     {
                                                         var e50_val = calculateE50();
                                                         var e51_val = Math.trunc(e50_val);
-                                                        console.log(e51_val);
-
                                                         return e51_val;
                                                     }
-
-
-
                                                     function calculateE64()
                                                     {
                                                         var e63_val = calculateE63();
                                                         var e64_val;
-
-
                                                         if(e63_val==12)
                                                         {
                                                             e64_val=0;
                                                             return e64_val;
-
                                                         }
                                                         else{
                                                             return e63_val;
                                                         }
                                                     }
-
                                                     //E66 Caulculation
                                                     function calculateE66(){
                                                         //E58 Calculation
                                                         function calculateE58()
                                                         {
-
                                                             var borrowing_rate = parseFloat($('#borrowing_rate').val());
-                                                            var monthly_deposit = parseInt($('#montly_deposit_val').val());
-                                                            var loan_amount = parseInt($('#loan_amount').val());
+                                                            var monthly_deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                            var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
                                                             var E58_val;
-
                                                             E58_val = NPER1(borrowing_rate/100/12,monthly_deposit,-loan_amount,0,0);
-
                                                             return E58_val;
-
                                                         }
-
                                                         var E58_val = calculateE58();
                                                         var E66_val;
                                                         var loan_period = parseInt($('#loan_period').val());
-
                                                         if(E58_val < loan_period *12)
                                                         {
                                                             E66_val = 1;
@@ -1611,123 +1446,66 @@
                                                         }
                                                         return E66_val;
                                                     }
-
                                                     function calculateE65() {
-
-
                                                         var e63_val = calculateE63();
                                                         var e60_val = calculateE60();
-
                                                         if (e63_val == 12) {
-
                                                             return e60_val + 1;
                                                         } else {
                                                             return e60_val;
                                                         }
                                                     }
-
                                                     function calculateE60(){
                                                         var e59_val = calculateE59();
                                                         var e60_val = Math.trunc(e59_val);
-
                                                         return e60_val;
                                                     }
-
                                                     function calculateE62(){
-
-                                                        var e61_val = calculateE61;
+                                                        var e61_val = calculateE61();
                                                         var e62_val = 12*e61_val;
                                                         return e62_val;
                                                     }
-
                                                     function calculateE61(){
-
                                                         var e59_val = calculateE59();
                                                         var e60_val = calculateE60();
                                                         var e61_val = e59_val - e60_val;
-                                                        var e61_val_rn = Math.round(e61_val).toFixed(5);
+                                                        var e61_val_rn = Math.round(e61_val*100000)/100000;
                                                         return e61_val_rn;
                                                     }
-
                                                     function calculateE59(){
-
                                                         var e58_val = calculateE58();
                                                         var e59_val = e58_val/12;
-
                                                         return e59_val;
                                                     }
-
                                                     function calculateE58(){
-                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
-                                                        var monthly_deposit = parseInt($('#montly_deposit_val').val());
-                                                        var loan_amount = parseInt($('#loan_amount').val());
-
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
+                                                        var monthly_deposit = parseInt($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
                                                         var e58_val = NPER1(borrowing_rate/100/12,monthly_deposit,-loan_amount,0,0);
-
                                                         return e58_val;
                                                     }
-
                                                     function calculateE63(){
-
                                                         var e62_val = calculateE62();
-                                                        var e63_val = Math.round(e62_val);
+                                                        var e63_val = Math.ceil(e62_val);
                                                         return e63_val;
                                                     }
-
                                                     //Function that COUNTIF and calculate column D (records) the column O
                                                     function countRecordsO4(){
-
                                                         var loan_period = parseInt($('#loan_period').val());
                                                         var total_years_count = loan_period*12;
                                                         return total_years_count;
                                                     }
-
                                                     function columnCellP4(){
-
                                                         var total_years_count = countRecordsO4();
                                                         var trunc_value = total_years_count/12;
                                                         var p4 = Math.trunc(trunc_value);
-
                                                         return p4;
                                                     }
-
                                                     function columncellQ4(){
-
                                                         var total_years_count = countRecordsO4();
                                                         var q4 = total_years_count % 12;
-
                                                         return q4;
                                                     }
-
-
-                                                    //Restschuld (Euro) Calculation
-                                                    $('#Outstanding_balance').click(function (){
-
-                                                        // console.log('started A');
-                                                        columnA();
-                                                        // console.log('started B');
-                                                        columnB();
-                                                        // console.log('started C');
-                                                        columnC();
-                                                        // columnD();
-                                                        // columnE();
-                                                        // columnF();
-                                                        // columnG();
-                                                        // columnH();
-                                                        // columnI();
-                                                        // columnJ();
-                                                        // columnk();
-                                                        // columnL();
-                                                        //
-                                                        //
-                                                        //
-                                                        // console.log('started M');
-                                                        columnM();
-                                                        residualDebt();
-
-                                                    });
-
-                                                    //Arrays Declaration
                                                     var A=[];
                                                     var B=[];
                                                     var C=[];
@@ -1741,13 +1519,156 @@
                                                     var K=[];
                                                     var L=[];
                                                     var M=[];
+                                                    //Restschuld (Euro) Calculation
+                                                    $('#Outstanding_balance').click(function (){
+                                                        get_ourstanding_balance();
+                                                    });
+                                                    function get_ourstanding_balance(monthly_Deposit = parseInt($('#montly_deposit_val').val().replace(".", "").replace(",", "."))) {
+
+                                                            columnA();
+                                                            columnB();
+                                                            columnC();
+                                                            columnM(monthly_Deposit);
+                                                            return residualDebt();
+                                                    }
+                                                    function goalSeek(oParams) {
+                                                        var g, Y, Y1, OldTarget;
+
+                                                        oParams.Tol = (oParams.Tol || 0.001 * oParams.Goal || 0.1);
+                                                        oParams.maxIter = (oParams.maxIter || 1000);
+
+                                                        //is the independent variable within an object?
+                                                        if (oParams.oFuncArgTarget.propStr) {
+                                                            //check if a guess has been provided
+                                                            if (!oParams.aFuncParams[oParams.oFuncArgTarget.Position][oParams.oFuncArgTarget.propStr]) {
+                                                                //iterate through 100 guesses, max
+                                                                for (var i = 0; i < 100; i++) {
+                                                                    var iGuess = Math.random();
+                                                                    setObjVal(oParams.aFuncParams[oParams.oFuncArgTarget.Position], oParams.oFuncArgTarget.propStr, iGuess);
+                                                                    if (oParams.Func.apply(oParams.This, oParams.aFuncParams)) {
+                                                                        break;
+                                                                    };
+                                                                    if (i === 99) {
+                                                                        //we couldn't find any guess that worked!
+                                                                        return null;
+                                                                    };
+                                                                };
+                                                            };
+
+                                                            //Iterate through the guesses
+                                                            for (var i = 0; i < oParams.maxIter; i++) {
+                                                                //define the root of the function as the error
+                                                                Y = oParams.Func.apply(oParams.This, oParams.aFuncParams) - oParams.Goal;
+
+                                                                //was our initial guess a good one?
+                                                                if (Math.abs(Y) <= oParams.Tol) {
+                                                                    return getObjVal(oParams.aFuncParams[oParams.oFuncArgTarget.Position], oParams.oFuncArgTarget.propStr);
+                                                                } else {
+                                                                    OldTarget = getObjVal(oParams.aFuncParams[oParams.oFuncArgTarget.Position], oParams.oFuncArgTarget.propStr);
+                                                                    setObjVal(oParams.aFuncParams[oParams.oFuncArgTarget.Position], oParams.oFuncArgTarget.propStr, OldTarget + Y);
+                                                                    Y1 = oParams.Func.apply(oParams.This, oParams.aFuncParams) - oParams.Goal;
+                                                                    g = (Y1 - Y) / Y;
+
+                                                                    if (g === 0) {
+                                                                        g = 0.0001;
+                                                                    };
+
+                                                                    setObjVal(oParams.aFuncParams[oParams.oFuncArgTarget.Position], oParams.oFuncArgTarget.propStr, OldTarget - Y / g);
+                                                                };
+
+                                                            };
+                                                            if (Math.abs(Y) > oParams.Tol) {
+                                                                return null;
+                                                            };
+                                                        } else {
+                                                            //check if a guess has been provided
+                                                            if (!oParams.aFuncParams[oParams.oFuncArgTarget.Position]) {
+                                                                //iterate through 100 guesses, max
+                                                                for (var i = 0; i < 100; i++) {
+                                                                    var iGuess = Math.random();
+                                                                    oParams.aFuncParams[oParams.oFuncArgTarget.Position] = iGuess;
+                                                                    if (oParams.Func.apply(oParams.This, oParams.aFuncParams)) {
+                                                                        break;
+                                                                    };
+                                                                    if (i === 99) {
+                                                                        //we couldn't find any guess that worked!
+                                                                        return null;
+                                                                    };
+                                                                };
+                                                            };
+
+                                                            //Iterate through the guesses
+                                                            for (var i = 0; i < oParams.maxIter; i++) {
+                                                                //define the root of the function as the error
+                                                                Y = oParams.Func.apply(oParams.This, oParams.aFuncParams) - oParams.Goal;
+                                                                //was our initial guess a good one?
+                                                                if (Math.abs(Y) <= oParams.Tol) {
+                                                                    return oParams.aFuncParams[oParams.oFuncArgTarget.Position];
+                                                                } else {
+                                                                    OldTarget = oParams.aFuncParams[oParams.oFuncArgTarget.Position];
+                                                                    oParams.aFuncParams[oParams.oFuncArgTarget.Position] = OldTarget + Y;
+                                                                    Y1 = oParams.Func.apply(oParams.This, oParams.aFuncParams) - oParams.Goal;
+                                                                    g = (Y1 - Y) / Y;
+
+                                                                    if (g === 0) {
+                                                                        g = 0.0001;
+                                                                    };
+
+                                                                    oParams.aFuncParams[oParams.oFuncArgTarget.Position] = OldTarget - Y / g;
+                                                                };
+
+                                                            };
+                                                            if (Math.abs(Y) > oParams.Tol) {
+                                                                return null;
+                                                            };
+                                                        };
+                                                    };
+
+                                                    //source (modified from original): http://stackoverflow.com/questions/18936915/dynamically-set-property-of-nested-object
+                                                    //answerer: bpmason1; questioner: John B.
+                                                    //answerer url: http://stackoverflow.com/users/2736119/bpmason1
+                                                    //license: http://creativecommons.org/licenses/by-sa/3.0/legalcode
+                                                    function setObjVal(Obj, propStr, Value) {
+                                                        var Schema = Obj;  // a moving reference to internal objects within obj
+                                                        var pList = propStr.split('.');
+                                                        var Len = pList.length;
+
+                                                        for(var i = 0; i < Len-1; i++) {
+                                                            var Elem = pList[i];
+                                                            if( !Schema[Elem] ) Schema[Elem] = {}
+                                                            Schema = Schema[Elem];
+                                                        };
+
+                                                        Schema[pList[Len-1]] = Value;
+                                                    };
+
+                                                    //source (modified from original): http://stackoverflow.com/questions/4343028/in-javascript-test-for-property-deeply-nested-in-object-graph
+                                                    //answerer: Zach; questioner: thisismyname
+                                                    //answerer url: http://stackoverflow.com/users/230892/zach
+                                                    //license: http://creativecommons.org/licenses/by-sa/3.0/legalcode
+                                                    function getObjVal(Obj, propStr) {
+                                                        var Parts = propStr.split(".");
+                                                        var Cur = Obj;
+
+                                                        for (var i=0; i<Parts.length; i++) {
+                                                            Cur = Cur[Parts[i]];
+                                                        };
+
+                                                        return Cur;
+                                                    };
+
+
+                                                    // console.log(get_ourstanding_balance(1000));
+                                                    function test(a) {
+                                                        return a * a;
+                                                    }
+                                                   // setInterval(console.log(get_ourstanding_balance(1500)),500) ;
+                                                    //Arrays Declaration
 
                                                     function residualDebt(){
-
                                                         var loan_period = $('#loan_period').val();
                                                         var lookup_value = loan_period*12;
                                                         var ret_value;
-
                                                         for(var a=4; a<=364; a++ )
                                                         {
                                                             if(A[a]==lookup_value || B[a]==lookup_value || C[a]==lookup_value || D[a]==lookup_value ||
@@ -1755,47 +1676,37 @@
                                                                 || I[a]==lookup_value || J[a]==lookup_value || K[a]==lookup_value
                                                                 || L[a]==lookup_value || M[a]==lookup_value)
                                                             {
-                                                                ret_value = Math.round(M[a]*100)/100;
-                                                                $('#Outstanding_balance').val(ret_value);
+                                                                ret_value = (Math.round(M[a]*100)/100);
+                                                                $('#Outstanding_balance').val(formatNumbers(ret_value.toString().replace(".",",")));
                                                                 break;
                                                             }
                                                             else{
-                                                                console.log('false');
                                                                 $('#Outstanding_balance').val('No value found');
                                                             }
                                                         }
-
-
+                                                        return ret_value;
                                                     }
-
                                                     function M4() {
-                                                        var loan_amount = parseInt($('#loan_amount').val());
+                                                        var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
                                                         M[4] = loan_amount;
                                                     }
-
-                                                    function J5(){
-                                                        var monthly_deposit = parseInt($('#montly_deposit_val').val());
-                                                        var borrowing_rate = parseInt($('#borrowing_rate').val());
-
+                                                    function J5(monthly_deposit){
+                                                       // var monthly_deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         if(monthly_deposit>M[4]*(1+borrowing_rate/100/12))
                                                         {
-                                                            console.log('false in column k');
                                                             J[5] = Math.round(M[4]*(1+borrowing_rate/12))/100;
                                                         }
                                                         else
                                                         {
-                                                            columnD(5);
+                                                            columnD(5, monthly_deposit);
                                                             columnI(5);
-                                                            console.log('true in column k','value of d=5',D[5],'value of i',I[5]);
-
                                                             J[5] = D[5]+I[5];
                                                         }
-
                                                     }
-
                                                     function K5()
                                                     {
-                                                        var borrowing_rate = $('#borrowing_rate').val();
+                                                        var borrowing_rate = $('#borrowing_rate').val().replace(".", "").replace(",", ".");
                                                         if(B[5]="")
                                                         {
                                                             K[5]="";
@@ -1806,107 +1717,72 @@
                                                     }
                                                     //Calculating column k
                                                     function columnk(k){
-
                                                         K[0] = null;
                                                         K[1] =null;
                                                         K[2] = null;
                                                         K[3] = null;
                                                         K[4] = null;
-
-                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val());
-                                                        var k1 = k;
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
 
                                                         if(B[k]="")
                                                         {
                                                             K[k] ="";
                                                         }
                                                         else{
-                                                            console.log('i am in column k=',k,'column m=',M[--k1],borrowing_rate);
-                                                            K[k] = Math.round(M[k1]*borrowing_rate/12)/100;
-                                                            console.log('K*****',M[8],K[8],K[9]);
+                                                            K[k] = Math.round(M[k-1]*borrowing_rate/12)/100;
                                                         }
                                                     }
-
                                                     //Function for calculating column L including L5
-                                                    function columnL(l){
-
+                                                    function columnL(l, monthly_Deposit){
                                                         if(B[l]="")
                                                         {
-                                                            console.log('false in column l');
                                                             L[l] ="";
                                                         }
                                                         else{
-                                                            console.log('true in column l',l);
                                                             if(l==5){
-
-                                                                J5();
+                                                                J5(monthly_Deposit);
                                                                 K5();
-                                                                console.log('j=',J[l],'K=',K[l],'l=',l);
                                                                 L[l] = J[l]-K[l];
-                                                                console.log('value of column l=5',L[l],l);
                                                             }
                                                             else{
-                                                                columnJ(l);
+                                                                columnJ(l, monthly_Deposit);
                                                                 columnk(l);
-                                                                console.log('j=',J[l],'K=',K[l],'l=',l);
                                                                 L[l] = J[l]-K[l];
-                                                                console.log('value of column l',L[l],l);
                                                             }
                                                         }
-
                                                     }
-
                                                     //Calculating column M
-                                                    function columnM() {
-
+                                                    function columnM(monthly_Deposit) {
                                                         M4();
-                                                        console.log('M4 executed');
-
                                                         for (var m = 5; m <= 184; m++) {
                                                             {
-                                                                var m1 = m;
                                                                 if (B[m] = "") {
                                                                     M[m] = "";
-                                                                    console.log('false');
                                                                 } else {
-                                                                    console.log('started L');
-                                                                    //console.log('value of M',m,M[--m]);
-                                                                    columnL(m);
-                                                                    //console.log('value of L',L[m]);
-                                                                    // console.log(M[m--]);
-                                                                    M[m] = M[--m1] - L[m];
-                                                                    console.log('L___');
-                                                                    console.log(L[m]);
-                                                                    console.log('Calculated', M[m]);
+                                                                    columnL(m, monthly_Deposit);
+                                                                    M[m] = M[m-1] - L[m];
                                                                 }
-                                                                console.log('Others started calclatting');
-                                                                columnI(m);
-                                                                columnD(m);
-                                                            }
 
+                                                                columnI(m);
+                                                                columnD(m, monthly_Deposit);
+                                                            }
                                                         }
                                                     }
-
                                                     // Column A calculaton table 3
                                                     function columnA(){
                                                         var i=0;
-
                                                         A[i] = null;
                                                         A[i++] = null;
                                                         A[i++] = null;
                                                         A[i++] = null;
                                                         A[i++] = null;
-
                                                         for (var a = 0; a <= 360; a++) {
                                                             A[i++] =a;
                                                         }
                                                     }
-
                                                     // Column B calculaton table 3
                                                     function columnB(){
-
                                                         var loan_period = parseInt($('#loan_period').val());
-
                                                         for(var b = 4; b <=364; b++ )
                                                         {
                                                             if(A[b] > (loan_period*12)){
@@ -1916,78 +1792,62 @@
                                                                 B[b] = A[b];
                                                             }
                                                         }
-
-
                                                         for(var b1 = 4; b1 <= 364; b1++)
                                                         {
                                                             for(var b2 = 4; b2 <= 364; b2++)
-
                                                                 B[2] = Math.max(B[b1],B[b2])+4;
                                                         }
                                                     }
-
-
                                                     //Column 'C' calculation for table 3
                                                     function columnC() {
                                                         var payment_year = parseInt($('#payment_year').val());
                                                         var loan_period = parseInt($('#loan_period').val());
                                                         var total_year = payment_year + loan_period;
-
                                                         C[0] = null;
                                                         C[1] = null;
                                                         C[2] = null;
                                                         C[3] = null;
                                                         var c = 4;
-
                                                         var itr;
                                                         for (itr = payment_year; itr <= total_year; itr++) {
                                                             for (var m = 0; m <= 11; m++) {
                                                                 var d = new Date(itr, m + 1, 0);
                                                                 C[c] = d;
                                                                 c++;
-
                                                             }
                                                         }
                                                     }
-
                                                     // calculating column D
-                                                    function columnD(d)
+                                                    function columnD(d, monthly_Deposit)
                                                     {
-                                                        var monthly_Deposit =parseInt($('#montly_deposit_val').val());
-                                                        var borrowing_rate = parseInt($('#borrowing_rate').val());
-
+                                                        // var monthly_Deposit =parseInt($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var borrowing_rate = parseInt($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         D[0] = null;
                                                         D[1] =null;
                                                         D[2] = null;
                                                         D[3] = null;
                                                         var d1 = d;
-
                                                         if(B[d]="")
                                                         {
                                                             D[d]="";
-                                                            console.log('false');
+
                                                         }
-
-
                                                         else{
                                                             if(monthly_Deposit > M[--d1]*(1+borrowing_rate/100/12))
                                                             {
-                                                                console.log('column d true');
+
                                                                 D[d] = M[--d1]*Math.round(1+borrowing_rate/12)/100;
                                                             }
                                                             else{ D[d] = monthly_Deposit;
-                                                                console.log('column d false',D[d],d); }
 
+                                                            }
                                                         }}
-
                                                     //Calculating column E
                                                     function columnE() {
-
                                                         E[0] = null;
                                                         E[1] =null;
                                                         E[2] = null;
                                                         E[3] = null;
-
                                                         for(var e=5; e <= 364; e++)
                                                         {
                                                             //     console.log('tu8');
@@ -2006,18 +1866,14 @@
                                                             //     }
                                                             E[e]="N/A";
                                                         }
-
                                                     }
-
                                                     //Calculating Column F
                                                     function columnF(f){
-
                                                         F[0] = null;
                                                         F[1] = null;
                                                         F[2] = null;
                                                         F[3] = null;
                                                         columnE();
-
                                                         if(B[f]="")
                                                         {
                                                             F[f]="";
@@ -2027,30 +1883,23 @@
                                                             F[f]=0;
                                                         }
                                                         else{
-                                                            console.log('False');
+                                                            // console.log('False');
                                                         }
-
                                                     }
-
                                                     //Calculating Column G
                                                     function columnG(){
-
                                                         G[0] = null;
                                                         G[1] = null;
                                                         G[2] = null;
                                                         G[3] = null;
-
                                                         for(var g=4;  g<=364; g++ )
                                                         {
                                                             G[4]="N/A";
                                                         }
-
                                                     }
-
                                                     // Calculating Column H
                                                     function columnH(h){
                                                         columnG();
-
                                                         if(B[h]="")
                                                         {
                                                             H[h]="";
@@ -2059,23 +1908,18 @@
                                                             H[h]=0;
                                                         }
                                                         else{
-                                                            console.log('False');
+                                                            // console.log('False');
                                                         }
-
                                                     }
-
                                                     //Calculating Column I
                                                     function columnI(i){
-
                                                         I[0] = null;
                                                         I[1] = null;
                                                         I[2] = null;
                                                         I[3] = null;
                                                         I[4] = null;
-
                                                         if(i==5){
                                                             if (B[5] = "") {
-
                                                                 I[5] = 0;
                                                             } else {
                                                                 columnF(5);
@@ -2084,7 +1928,6 @@
                                                             }
                                                         }
                                                         else{
-
                                                             if(B[i]="")
                                                             {
                                                                 I[i]=0;
@@ -2095,51 +1938,42 @@
                                                                 var i1=i;
                                                                 if(F[i]+H[i] > M[--i1]){
                                                                     I[i]=0;
-
                                                                 }
                                                                 else{
                                                                     columnF(i);
                                                                     columnH(i);
                                                                     I[i] = F[i]+H[i];
-
                                                                 }
                                                             }
-
                                                         }
                                                     }
-
                                                     //Calculating Column J
-                                                    function columnJ(j)
+                                                    function columnJ(j, monthly_depoit)
                                                     {
-                                                        var monthly_depoit = parseInt($('#montly_deposit_val').val());
-                                                        var borrowing_rate = parseInt($('#borrowing_rate').val());
+                                                        // var monthly_depoit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         var j1 = j;
-
                                                         if(B[j]="")
                                                         {
                                                             J[j]=0;
                                                         }
-
                                                         else {
-                                                            console.log('im on right place');
+
                                                             if(monthly_depoit > M[--j1] * (1 + borrowing_rate / 100 / 12))
                                                             {
-                                                                console.log('Now in column j is false');
-                                                                J[j] = M[--j1] * (1 + borrowing_rate / 100 / 12);
 
+                                                                J[j] = M[--j1] * (1 + borrowing_rate / 100 / 12);
                                                             }
                                                             else{
-                                                                columnD(j);
+                                                                columnD(j, monthly_depoit);
                                                                 columnI(j);
-                                                                console.log('Now in column j is true','D=',D[j],'I=',I[j]);
+
                                                                 J[j] = D[j]+I[j];
-                                                                console.log('value of column j is=',J[j],j);
+
                                                             }
                                                         }
-
                                                     }
                                                 });
-
                                             </script>
 
                                             <table class="table table-striped table-bordered">
@@ -2258,7 +2092,7 @@
                                                     <td>Sollzinssatz (Prozent) <span class="text-danger" id="message_borrowing_rate"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="borrowing_rate" class="form-control text-right" value="1.50">
+                                                            <input id="borrowing_rate" class="form-control text-right" value="1,50">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -2295,7 +2129,7 @@
                                                     <td colspan="4">
                                                         <div class="input-group">
                                                             {{--                                                        input field Monatsrate--}}
-                                                            <input id="montly_deposit_val" class="form-control text-right" value="1500">
+                                                            <input id="montly_deposit_val" class="form-control text-right" value="1.500,00">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -2446,7 +2280,7 @@
                                                     <td>Neuer Sollzinssatz (Prozent) <span id="message_new_borrowing_rate" class="text-danger"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="new_borrowing_rate" class="form-control text-right" value="4.00">
+                                                            <input id="new_borrowing_rate" class="form-control text-right" value="4,00">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -2462,7 +2296,7 @@
                                                     </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="new_repayment_rate_inp" class="form-control text-right" value="1.00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
+                                                            <input id="new_repayment_rate_inp" class="form-control text-right" value="1,00" data-toggle="tooltip" data-placement="right" title="Redemption rate as a percentage of the initial loan smount">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -2804,27 +2638,22 @@
     <script type="text/javascript" src="{{ asset('/js/sweetalert.min.js') }}"></script>
 
     <script type="text/javascript">
-
         function removeCard(cardNo) {
             $('.card-' + cardNo).remove();
         }
-
         function save_timeline() {
             // alert('1');
             //if ( confirm('Are you sure you want to submit?') ) {
             var tenFieldFlag = $('#new_form_controller').val();
             //var serializeForm = $('#kunden_edit_form').serializeArray();
-
             /* setTimeout(function(){
                 $("#kunden_edit_form").submit();
             }, 500); */
-
             /* $.ajax({
                 url: 'save_timeline',
                 type: 'post',
                 data: {
                     _token: $('[name="_token"]').val(),
-
                     // New 11 fields
                     bank: $('#bank').val(),
                     annuities: $('#annuities').val(),
@@ -2838,10 +2667,8 @@
                     initial_interest: $('#initial_interest').val(),
                     optional_sound_recovery: $('#optional_sound_recovery').val(),
                     prepared_by: $('#prepared_by').val(),
-
                     // New 10 fields flag
                     ten_fields_flag: tenFieldFlag,
-
                     jahreszins_phase_eins: $('#jahreszins_phase_eins').val(),
                     laufzeit_phase_eins: $('#laufzeit_phase_eins').val(),
                     rate_monatlich_phase_eins: $('#rate_monatlich_phase_eins').val(),
@@ -2852,7 +2679,6 @@
                     restschuld_ende: $('#restschuld_ende').val(),
                     restschuld_phase_eins: $('#restschuld_phase_eins').val(),
                     finanzierungsbedarf_phase_eins: $('#finanzierungsbedarf_phase_eins').val(),
-
                     fullForm: serializeForm
                 },
                 success: function(res) {
@@ -2877,7 +2703,6 @@
                 }
             });
         }
-
         function calculate()
         {
             // Werte aus den Inputfeldern
@@ -2888,37 +2713,27 @@
             var fixedInterestRate = document.getElementById("fixedInterestRate").value;
             var payout = document.getElementById("payout").value;
             var rate = Number.parseFloat(document.getElementById("rate").value);
-
             if(!(repaymentStart instanceof Date))
             {
                 repaymentStart = new Date(repaymentStart);
             }
-
             if(!(fixedInterestRate instanceof Date))
             {
                 fixedInterestRate = new Date(fixedInterestRate);
             }
-
             if(!(payout instanceof Date))
             {
                 payout = new Date(payout);
             }
-
             // Werte für die Berechnung
             var calcInterest = 0;
             var calcRepayment = 0;
-
             var loansRest = loan;
-
             var months = monthDiff(payout, fixedInterestRate);
             var curPayoutDate = new Date(payout.getFullYear(), payout.getMonth() + 1, 0);   // Nur zu Ausgabezwecken
-
             var resultString = "";
-
             // Nun monatlich kalkulieren
-
             month_names_short = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-
             function changeString(s) {
                 return s.toLocaleString('de-DE', {
                     style: 'currency',
@@ -2933,24 +2748,18 @@
                 calcRepayment = rate - calcInterest;
                 loansRest -= calcRepayment;
                 loansRest = loansRest;
-
                 resultString += "<tr><td>" + month_names_short[curPayoutDate.getMonth()] + " " + curPayoutDate.getFullYear() + "</td><td>" + changeString(round(calcInterest, 2)) + "     " + "</td><td>" +changeString(round(calcRepayment, 2)) + "</td><td>" + changeString(round(loansRest, 2)) + "</td></tr>";
-
                 curPayoutDate.setMonth(curPayoutDate.getMonth() + 1);
-
                 var temp = {
                     'repayment_date':(month_names_short[curPayoutDate.getMonth()]) + " " + curPayoutDate.getFullYear(),
                     'zinsen': changeString(round(calcInterest, 2)),
                     'tilgung': changeString(round(calcRepayment, 2)),
                     'darlehensrest': changeString(round(loansRest, 2))
                 };
-
                 resarr.push(temp);
             }
-
             //console.log(resultString);
             // document.getElementById("result").innerHTML = resultString;
-
             $.ajax({
                 url: 'save_repayment',
                 type: 'post',
@@ -2963,7 +2772,6 @@
                 }
             });
         }
-
         //Berechnet die Differenz in Monaten zweier Datetimes um die Laufzeit des Darlehens zu ermitteln
         function monthDiff(d1, d2) {
             var months;
@@ -2972,11 +2780,9 @@
             months += d2.getMonth();
             return months <= 0 ? 0 : months;
         }
-
         function round(value, decimals) {
             return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
         }
-
         // function enabled(checkBox) {
         //     var calculation_id = $(checkBox).data('calculation_id');
         //     // If the checkbox is checked, display the output text
@@ -3018,7 +2824,6 @@
         //         }
         //     });
         // }
-
         function kundenSpouse(th) {
             if($(th).data('status') == 1) {
                 $('input[name="ehepartner_enabled"]').val(0);
@@ -3060,10 +2865,6 @@
                 }
             });
         }
-
-
-
-
 
 
 
