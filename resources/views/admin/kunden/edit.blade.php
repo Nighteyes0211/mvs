@@ -2475,43 +2475,7 @@
                     </div>
 
                     <hr>
-                    <h4>Tilgungsplan</h4>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Bank</label>
-                            <input type="text" id="bank" class="form-control"  value="Deutsche Bank">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Darlehen</label>
-                            <input type="number" class="form-control" id="loan" placeholder="150.000,00€">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Nominalzins(%)</label>
-                            <input type="number" class="form-control" name="interest" id="interest" placeholder=2.19%>
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Tilgung (%)</label>
-                            <input type="number" class="form-control" name="repayment" id="repayment" placeholder=2.00%>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Tilgungsbeginn</label>
-                            <input type="date"  class="form-control" name="repaymentStart" id="repaymentStart" value="2018-04-01">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="fixed_interest_rate">Zinsfestschreibung</label>
-                            <input type="date" class="form-control"  name="fixedInterestRate" id="fixedInterestRate" value="2028-04-30">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="payout">Auszahlung</label>
-                            <input type="date" class="form-control" name="payout" id="payout" value="2018-04-01">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Rate</label>
-                            <input type="number" class="form-control"  name="rate" id="rate" value=523.75>
-                        </div>
-                    </div>
+                    
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#repayment_modal" type="button"  onclick="calculate()">Kalkulieren</button>

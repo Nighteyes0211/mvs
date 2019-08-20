@@ -156,29 +156,7 @@
 <li class="nav-item"><a href="{{route('kunden.edit',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden bearbeiten</a></li>
 
 </div>
-            <h5><b>Tilgungsplan </b></h5>
-            <div style="max-height: 300px; overflow-y: scroll">
-                <table style="width:100%; max-height: 500px !important;">
-                    <thead>
-                        <tr>
-                            <th>Rückzahlungsdatum</th>
-                            <th>Zinsen</th>
-                            <th>Tilgung</th>
-                            <th>Darlehensrest</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($repayments as $repayment)
-                        <tr>
-                            <td>{{$repayment->repayment_date}}</td>
-                            <td>{{$repayment->zinsen}}</td>
-                            <td>{{$repayment->tilgung}}</td>
-                            <td>{{$repayment->darlehensrest}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+            
             <br>
             <a  class="btn btn-danger" style="color: #fff" href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}"> Angebot erstellen </a>
             <hr/>
