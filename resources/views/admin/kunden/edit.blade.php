@@ -2476,12 +2476,7 @@
 
                     <hr>
                     
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#repayment_modal" type="button"  onclick="calculate()">Kalkulieren</button>
-                            <button class="btn btn-danger" type="button"  data-toggle="modal" data-target="#confirm_modal">Tilgungsplan löschen</button>
-                        </div>
-                    </div>
+                    
                     <label for="result" id="result"></label>
                     <hr />
                     <br>
