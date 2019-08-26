@@ -93,7 +93,7 @@
             $('#annual_to_year').val('{{$CalData->annual_to_year}}');
             $('#onetime_unsheduled_month').val('{{$CalData->onetime_unsheduled_month}}');
             $('#onetime_unsheduled_year').val('{{$CalData->onetime_unsheduled_year}}');
-            $('#onetime_unsheduled_val').val('{{$CalData->onetime_unsheduled_val}}');
+            {{--$('#onetime_unsheduled_val').val('{{$CalData->onetime_unsheduled_val}}');--}}
             $('#new_borrowing_rate').val('{{$CalData->new_borrowing_rate}}');
             $('#new_repayment_rate_inp').val('{{$CalData->new_repayment_rate_inp}}');
             $('#annual_unsheduled_year').change(function () {
@@ -985,9 +985,23 @@
 
 
                                             <script>
+                                                var A=[];
+                                                var B=[];
+                                                var C=[];
+                                                var D=[];
+                                                var E=[];
+                                                var F=[];
+                                                var G=[];
+                                                var H=[];
+                                                var I=[];
+                                                var J=[];
+                                                var K=[];
+                                                var L=[];
+                                                var M=[];
+
                                                 $(document).ready(function () {
-                                                    var A=[];
-                                                    var B=[];
+
+
                                                     columnAB();
                                                     setTimeout(function(){
                                                         recalculate_1();
@@ -1153,6 +1167,11 @@
                                                             }
                                                         }*/
                                                         $('#montly_deposit_val').val(((Math.ceil(goal(0)*100)/100).toString().replace(".",",")));
+                                                        setTimeout(function () {
+                                                            $('#Outstanding_balance').val('0,00');
+                                                            $('#connection_credit').val('0,00');
+                                                        },500);
+
                                                         // $('#Outstanding_balance').val('0,00');
                                                         // $('#connection_credit').val('0,00');
                                                         // recalculate_1();
@@ -1181,8 +1200,6 @@
                                                                     //     step = 0.01;
                                                                     //     flag = 1;
                                                                     // }
-
-
                                                             }
                                                         return i - 0.01;
                                                     }
@@ -1653,17 +1670,6 @@
                                                         return q4;
                                                     }
 
-                                                    var C=[];
-                                                    var D=[];
-                                                    var E=[];
-                                                    var F=[];
-                                                    var G=[];
-                                                    var H=[];
-                                                    var I=[];
-                                                    var J=[];
-                                                    var K=[];
-                                                    var L=[];
-                                                    var M=[];
                                                     //Restschuld (Euro) Calculation
                                                     $('#Outstanding_balance').click(function (){
                                                         get_ourstanding_balance();
@@ -1676,7 +1682,6 @@
                                                             B2();
                                                             columnC();
                                                             columnM(monthly_Deposit);
-                                                            console.log("M",M);
                                                             return residualDebt();
                                                     }
 
@@ -1906,13 +1911,16 @@
                                                         var d;
                                                         for (itr = payment_year; itr <= total_year; itr++) {
                                                             for (var m = 1; m <= 12; m++) {
-                                                                if ((payment_month+ m)>12){
+                                                                if ((payment_month+ m)>13){
                                                                     d = new Date(itr+1, payment_month+ m -12, 0);
                                                                 }
                                                                 else{
                                                                     d = new Date(itr, payment_month+ m, 0);
                                                                 }
                                                                 C[c] = d.getMonth()+"/"+d.getFullYear();
+                                                                if(d.getMonth()==0){
+                                                                    C[c] = "12"+"/"+(d.getFullYear()-1);
+                                                                }
                                                                 c++;
                                                             }
                                                         }
@@ -2118,7 +2126,96 @@
                                                             }
                                                         }
                                                     }
+
+
+
                                                 });
+                                                function save_calculation() {
+                                                    //if ( confirm('Are you sure you want to submit?') ) {
+                                                    // var tenFieldFlag = $('#new_form_controller').val();
+                                                    //var serializeForm = $('#kunden_edit_form').serializeArray();
+                                                    //  setTimeout(function(){
+                                                    //     $("#kunden_edit_form").submit();
+                                                    // }, 600);
+                                                    setTimeout(function(){
+                                                        repayment_save();
+                                                    }, 300);
+                                                    $.ajax({
+                                                        url: 'save_calculation',
+                                                        type: 'post',
+                                                        data: {
+                                                            _token: $('[name="_token"]').val(),
+                                                            // New 11 fields
+                                                            loan_period: $('#loan_period').val(),
+                                                            payment_month: $('#payment_month').val(),
+                                                            payment_year: $('#payment_year').val(),
+                                                            payment_discount: $('#payment_discount').val(),
+                                                            borrowing_rate: $('#borrowing_rate').val(),
+                                                            montly_deposit_val: $('#montly_deposit_val').val(),
+                                                            annual_unsheduled_month: $('#annual_unsheduled_month').val(),
+                                                            annual_unsheduled_year: $('#annual_unsheduled_year').val(),
+                                                            annual_unsheduled_val: $('#annual_unsheduled_val').val(),
+                                                            annual_to_month: $('#annual_to_month').val(),
+                                                            annual_to_year: $('#annual_to_year').val(),
+                                                            onetime_unsheduled_month: $('#onetime_unsheduled_month').val(),
+                                                            onetime_unsheduled_year: $('#onetime_unsheduled_year').val(),
+                                                            onetime_unsheduled_val: $('#onetime_unsheduled_val').val(),
+                                                            new_borrowing_rate: $('#new_borrowing_rate').val(),
+                                                            new_repayment_rate_inp: $('#new_repayment_rate_inp').val(),
+                                                        },
+                                                        success: function(res) {
+                                                            toastr.success(res);
+                                                        },
+                                                        error: function(error) {
+                                                            var error = JSON.parse(error.responseText);
+                                                            error = error.errors;
+                                                            $.each(error, function(k, v){
+                                                                toastr.error(k+': '+v[0]);
+                                                            })
+                                                        }
+                                                    });
+
+
+
+
+
+
+                                                    function repayment_save()
+                                                    {
+
+                                                        var resarr = [];
+                                                        for (var m = 4; m <= parseInt($('#loan_period').val()) * 12 + 4 ; m++) {
+                                                            {
+                                                                if([m]==4){
+                                                                    K[m] = "__";
+                                                                    L[m] = "__";
+                                                                }
+                                                                else{
+                                                                    K[m]=K[m].toFixed(2);
+                                                                    L[m]=L[m].toFixed(2);
+                                                                    M[m]=M[m].toFixed(2);
+                                                                }
+                                                                var temp = {
+                                                                    'repayment_date': C[m],
+                                                                    'zinsen': K[m],
+                                                                    'tilgung': L[m],
+                                                                    'darlehensrest': M[m]
+                                                                };
+                                                                resarr.push(temp);
+                                                            }
+                                                        }
+
+                                                        $.ajax({
+                                                            url: 'save_repayment',
+                                                            type: 'post',
+                                                            data: {
+                                                                _token: $('[name="_token"]').val(),
+                                                                data: resarr
+                                                            }
+                                                        });
+                                                    }
+
+                                                }
                                             </script>
 
                                             <table class="table table-striped table-bordered">
@@ -2410,7 +2507,7 @@
                                                         </select>
                                                     </td>
 
-                                                    <td colspan="4"><input id="onetime_unsheduled_val" value=50000 class="form-control text-right" value="50000"></td>
+                                                    <td colspan="4"><input id="onetime_unsheduled_val" value="0" class="form-control text-right" value="50000"></td>
 
                                                 </tr>
 
@@ -2491,7 +2588,7 @@
                                                     <td>Gesamtlaufzeit (Jahre/Monate)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="total_maturity" class="form-control text-right">
+                                                            <input id="total_maturity" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">J/M</span>
                                                             </div>
@@ -2861,48 +2958,7 @@
                 }
             }); */
         }
-        function save_calculation() {
-            //if ( confirm('Are you sure you want to submit?') ) {
-            // var tenFieldFlag = $('#new_form_controller').val();
-            //var serializeForm = $('#kunden_edit_form').serializeArray();
-             setTimeout(function(){
-                $("#kunden_edit_form").submit();
-            }, 500);
-             $.ajax({
-                url: 'save_calculation',
-                type: 'post',
-                data: {
-                    _token: $('[name="_token"]').val(),
-                    // New 11 fields
-                    loan_period: $('#loan_period').val(),
-                    payment_month: $('#payment_month').val(),
-                    payment_year: $('#payment_year').val(),
-                    payment_discount: $('#payment_discount').val(),
-                    borrowing_rate: $('#borrowing_rate').val(),
-                    montly_deposit_val: $('#montly_deposit_val').val(),
-                    annual_unsheduled_month: $('#annual_unsheduled_month').val(),
-                    annual_unsheduled_year: $('#annual_unsheduled_year').val(),
-                    annual_unsheduled_val: $('#annual_unsheduled_val').val(),
-                    annual_to_month: $('#annual_to_month').val(),
-                    annual_to_year: $('#annual_to_year').val(),
-                    onetime_unsheduled_month: $('#onetime_unsheduled_month').val(),
-                    onetime_unsheduled_year: $('#onetime_unsheduled_year').val(),
-                    onetime_unsheduled_val: $('#onetime_unsheduled_val').val(),
-                    new_borrowing_rate: $('#new_borrowing_rate').val(),
-                    new_repayment_rate_inp: $('#new_repayment_rate_inp').val(),
-                },
-                success: function(res) {
-                    toastr.success(res);
-                },
-                error: function(error) {
-                    var error = JSON.parse(error.responseText);
-                    error = error.errors;
-                    $.each(error, function(k, v){
-                        toastr.error(k+': '+v[0]);
-                    })
-                }
-            });
-        }
+
         function deleteCalc() {
             $.ajax({
                 url: 'delete_repayment',
