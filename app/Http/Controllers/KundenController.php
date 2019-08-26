@@ -462,6 +462,7 @@ class KundenController extends Controller
 
         $angebote = Angebote::where('pdf_name', $pdf_name)->first();
 
+//        return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
 
@@ -483,7 +484,6 @@ class KundenController extends Controller
     public function saveRepayment($id, Request $request) {
 
         $data = $request->data;
-
         Repayment::where('kundens_id', $id)->delete();
         foreach ($data as $item) {
             $repayItem = new Repayment;
@@ -492,8 +492,11 @@ class KundenController extends Controller
             $repayItem->zinsen = $item['zinsen'];
             $repayItem->tilgung = $item['tilgung'];
             $repayItem->darlehensrest = $item['darlehensrest'];
+            $repayItem->rate = $item['rate'];
+            $repayItem->sonder_tilgung = $item['sonder_tilgung'];
             $repayItem->save();
         }
+
         return 'success';
     }
 
