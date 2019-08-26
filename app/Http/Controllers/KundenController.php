@@ -155,7 +155,6 @@ class KundenController extends Controller
     {
         $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->orderBy('id','desc')->get();
         $repayments = Repayment::where('kundens_id', $kunden->id)->get();
-
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
         return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline]);
     }
@@ -168,6 +167,7 @@ class KundenController extends Controller
      */
     public function edit(Kunden $kunden)
     {
+
         $users = user::all();
 
         $Calculations = DB::table('calculation')->where('kunden_id', $kunden->id)->get();
@@ -175,10 +175,9 @@ class KundenController extends Controller
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
             $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
         }
-        
+        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->first();
         $checklists = Checklist::latest()->get();
-
-        return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists'));
+        return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
     }
 
     /**
@@ -190,7 +189,7 @@ class KundenController extends Controller
      */
     public function update(Request $request, Kunden $kunden)
     {
-        if ( isset($request->calculation) && $request->calculation == 'calculation' ) {
+        /*if ( isset($request->calculation) && $request->calculation == 'calculation' ) {
             $calData = $request->Cal;
             $cid = 0;
             // Calculation data
@@ -388,8 +387,26 @@ class KundenController extends Controller
 
             $kunden->save();
             return redirect()->route('kunden.index');
-        }
+        }*/
+        $kunden->user_id = request('kunden_user');
 
+        // dd($kaufpreis);
+
+
+        $kunden->kaufpreis = $this->stringReplace(request('kaufpreis'), ",",".");
+        $kunden->kostenumbau = $this->stringReplace(request('kostenumbau'), ",",".");
+        $kunden->kostennotar = $this->stringReplace(request('kostennotar'), ",",".");
+        $kunden->grunderwerbssteuer = $this->stringReplace(request('grunderwerbssteuer'), ",",".");
+        $kunden->maklerkosten = $this->stringReplace(request('maklerkosten'), ",",".");
+        $kunden->gesamtkosten = $this->stringReplace(request('gesamtkosten'), ",",".");
+        $kunden->eigenkapital = $this->stringReplace(request('eigenkapital'), ",",".");
+        $kunden->finanzierungsbedarf = $this->stringReplace(request('finanzierungsbedarf'), ",",".");
+
+
+
+
+        $kunden->save();
+        return redirect()->route('kunden.index');
     }
 
     /**
@@ -484,7 +501,15 @@ class KundenController extends Controller
         Repayment::where('kundens_id', $id)->delete();
         return 'success';
     }
-
+    public function saveCalculation($id, Request $request){
+        $request->request->add(['kunden_id' => $id]);
+        DB::table('calc_result')
+            ->updateOrInsert(
+                ['kunden_id' => $id],
+                $request->except('_token')
+            );
+        echo 'Saved successfully!';
+    }
     public function saveTimeline($id, Request $request) {
 
         dd(($request->fullForm));

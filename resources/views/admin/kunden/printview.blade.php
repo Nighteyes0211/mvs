@@ -429,7 +429,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
 <br><br><br>
 
         <div>
-            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Tilgungsplan</h3>
+            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1.2em; margin-top: 50px">Tilgungsplan</h3>
             <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                 <thead>
                 <tr style="background: #a2a5aa;font-weight: bold;">
@@ -459,16 +459,16 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             $payments [$year]['darlehensrest'] = $darlehensrest;
                         }
                     ?>
-                    @if($year == date('Y'))
+                    {{--@if($year == date('Y'))--}}
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->repayment_date}}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->zinsen}}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->tilgung}}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->darlehensrest}}</td>
                     </tr>
-                    @endif
+                    {{--@endif--}}
                     @endforeach
-                    @foreach($payments as $key=>$value)
+ {{--                   @foreach($payments as $key=>$value)
                     @if($key > date('Y'))
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$key}}</td>
@@ -477,7 +477,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}}</td>
                     </tr>
                     @endif
-                    @endforeach
+                    @endforeach--}}
                 </tbody>
             </table>
             <br>
