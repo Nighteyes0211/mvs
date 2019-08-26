@@ -2186,7 +2186,7 @@
                                                         var resarr = [];
                                                         for (var m = 4; m <= parseInt($('#loan_period').val()) * 12 + 4 ; m++) {
                                                             {
-                                                                if([m]==4){
+                                                                if(m==4){
                                                                     K[m] = "__";
                                                                     L[m] = "__";
                                                                 }
