@@ -6,10 +6,12 @@
 
 @endsection
 
-
 <style type="text/css">
     #button_edit a {
         color: #fff !important;
+    }
+    .toast-message{
+        color: green;
     }
     .check {
         cursor: pointer;
@@ -78,6 +80,80 @@
 
     <script>
         $(document).ready(function(){
+            $('#loan_period').val('{{$CalData->loan_period}}');
+            $('#payment_month').val('{{$CalData->payment_month}}');
+            $('#payment_year').val('{{$CalData->payment_year}}');
+            $('#payment_discount').val('{{$CalData->payment_discount}}');
+            $('#borrowing_rate').val('{{$CalData->borrowing_rate}}');
+            $('#montly_deposit_val').val('{{$CalData->montly_deposit_val}}');
+            $('#annual_unsheduled_month').val('{{$CalData->annual_unsheduled_month}}');
+            $('#annual_unsheduled_year').val('{{$CalData->annual_unsheduled_year}}');
+            $('#annual_unsheduled_val').val('{{$CalData->annual_unsheduled_val}}');
+            $('#annual_to_month').val('{{$CalData->annual_to_month}}');
+            $('#annual_to_year').val('{{$CalData->annual_to_year}}');
+            $('#onetime_unsheduled_month').val('{{$CalData->onetime_unsheduled_month}}');
+            $('#onetime_unsheduled_year').val('{{$CalData->onetime_unsheduled_year}}');
+            $('#onetime_unsheduled_val').val('{{$CalData->onetime_unsheduled_val}}');
+            $('#new_borrowing_rate').val('{{$CalData->new_borrowing_rate}}');
+            $('#new_repayment_rate_inp').val('{{$CalData->new_repayment_rate_inp}}');
+            $('#annual_unsheduled_year').change(function () {
+                $('#annual_to_year').html('');
+                var html = '';
+                var year =parseInt($(this).val());
+                for(var i = year + 1;i <= parseInt($('#payment_year').val())+parseInt($('#loan_period').val());i++){
+                    html+='<option value="'+i+'">'+i+'</option>';
+                }
+                $('#annual_to_year').html(html);
+            });
+            $('#annual_unsheduled_month').change(function () {
+                $('#annual_to_month').html('');
+                var month =parseInt($(this).val());
+                $('#annual_to_month').html(get_month_option(month));
+            });
+
+
+            function get_month_option(month) {
+                switch (month) {
+                    case 1:
+                        html = '<option selected value=\'1\'>Januar</option>';
+                        break;
+                    case 2:
+                        html = '<option value=\'2\'>Februar</option>';
+                        break;
+                    case 3:
+                        html = '<option value=\'3\'>Marz</option>';
+                        break;
+                    case 4:
+                        html = '<option value=\'4\'>April</option>';
+                        break;
+                    case 5:
+                        html = '<option value=\'5\'>Mai</option>';
+                        break;
+                    case 6:
+                        html = '<option value=\'6\'>Juni</option>';
+                        break;
+                    case 7:
+                        html = '<option value=\'7\'>Juli</option>';
+                        break;
+                    case 8:
+                        html = '<option value=\'8\'>August</option>';
+                        break;
+                    case 9:
+                        html = '<option value=\'9\'>September</option>';
+                        break;
+                    case 10:
+                        html = '<option value=\'10\'>Oktober</option>';
+                        break;
+                    case 11:
+                        html = '<option value=\'11\'>November</option>';
+                        break;
+                    case 12:
+                        html = '<option value=\'12\'>Dezember</option>';
+                        break;
+                }
+                return html;
+            }
+
             $('.new_form').hide();
             $('.ten_fields').hide();
             $('.ct_fields').hide();
@@ -492,6 +568,7 @@
                                             <div class="form-group">
                                                 <label>Kalkulierte Luafzeit (ca.)</label>
                                                 <input type="text" id="calculated_luaf_time" value="" class="form-control" name="Cal[`+cardNo+`][calculated_luaf_time]" required>
+                                            </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -909,6 +986,9 @@
 
                                             <script>
                                                 $(document).ready(function () {
+                                                    var A=[];
+                                                    var B=[];
+                                                    columnAB();
                                                     setTimeout(function(){
                                                         recalculate_1();
                                                     }, 200);
@@ -1082,20 +1162,29 @@
                                                         var i = 0;
                                                         var flag = 0;
                                                         var step=10000;
-                                                            while( Math.abs(get_ourstanding_balance(i)) > 10){
-                                                                    if (get_ourstanding_balance(i) < 0) {
-                                                                        if(flag == 1) break;
+                                                            while( true){
+                                                                console.log(get_ourstanding_balance(i), i);
+                                                                if(get_ourstanding_balance(i) == 0){
+                                                                    if (get_ourstanding_balance(i-0.01) == 0) {
+                                                                        // if(flag == 1) break;
                                                                         i-=step;
                                                                         step = step/2;
                                                                     }
-                                                                    if (Math.abs(get_ourstanding_balance(i)) < 20)
-                                                                    {
-                                                                        step = 0.01;
-                                                                        flag = 1;
+                                                                    else{
+                                                                        break;
                                                                     }
-                                                                i += step;
+                                                                }
+
+                                                               i += step;
+                                                                    // if (Math.abs(get_ourstanding_balance(i)) < 20)
+                                                                    // {
+                                                                    //     step = 0.01;
+                                                                    //     flag = 1;
+                                                                    // }
+
+
                                                             }
-                                                        return i;
+                                                        return i - 0.01;
                                                     }
 
                                                     });
@@ -1563,8 +1652,7 @@
                                                         var q4 = total_years_count % 12;
                                                         return q4;
                                                     }
-                                                    var A=[];
-                                                    var B=[];
+
                                                     var C=[];
                                                     var D=[];
                                                     var E=[];
@@ -1579,16 +1667,16 @@
                                                     //Restschuld (Euro) Calculation
                                                     $('#Outstanding_balance').click(function (){
                                                         get_ourstanding_balance();
-                                                        // console.log(get_ourstanding_balance(334514.00));
+
                                                     });
                                                     function get_ourstanding_balance(monthly_Deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."))) {
                                                         G=[];
                                                         H=[];
                                                         I=[];
-                                                            columnA();
-                                                            columnB();
+                                                            B2();
                                                             columnC();
                                                             columnM(monthly_Deposit);
+                                                            console.log("M",M);
                                                             return residualDebt();
                                                     }
 
@@ -1638,7 +1726,7 @@
                                                         var loan_period = $('#loan_period').val();
                                                         var lookup_value = loan_period*12;
                                                         var ret_value;
-                                                        for(var a=4; a<=364; a++ )
+                                                        for(var a=4; a<=parseInt($('#loan_period').val() * 12 + 4); a++ )
                                                         {
                                                             if(A[a]==lookup_value || B[a]==lookup_value || C[a]==lookup_value || D[a]==lookup_value ||
                                                                 E[a]==lookup_value  || F[a]==lookup_value || G[a]==lookup_value || H[a]==lookup_value
@@ -1648,16 +1736,19 @@
                                                                 if(M[a]>=0){
                                                                     ret_value = M[a].toFixed(2);
                                                                     $('#Outstanding_balance').val(formatNumbers(ret_value.toString().replace(".",",")));
+                                                                    $('#connection_credit').val(formatNumbers(ret_value.toString().replace(".",",")));
                                                                 }
                                                                 else{
 
                                                                     $('#Outstanding_balance').val("0,00");
+                                                                    $('#connection_credit').val("0,00");
                                                                 }
 
                                                                 break;
                                                             }
                                                             else{
                                                                 $('#Outstanding_balance').val('0,00');
+                                                                $('#connection_credit').val('0,00');
                                                             }
                                                         }
                                                         return M[a].toFixed(2);
@@ -1688,7 +1779,7 @@
                                                             K[5]="";
                                                         }
                                                         else{
-                                                            K[5] =(M[4]*(borrowing_rate/1200)).toFixed(2);
+                                                            K[5] =(M[4]*(borrowing_rate/1200));
                                                         }
                                                     }
                                                     //Calculating column k
@@ -1705,16 +1796,17 @@
                                                             K[k] ="";
                                                         }
                                                         else{
-                                                            K[k] = (M[k-1]*borrowing_rate/12/100).toFixed(2);
+                                                            K[k] = (M[k-1]*borrowing_rate/12/100);
                                                         }
                                                     }
                                                     //Function for calculating column L including L5
                                                     function columnL(l, monthly_Deposit){
-                                                        if(B[l]="")
+                                                     /*   if(B[l]="")
                                                         {
                                                             L[l] ="";
-                                                        }
-                                                        else{
+                                                        }*/
+                                                        // else
+                                                            {
                                                             if(l==5){
                                                                 J5(monthly_Deposit);
                                                                 K5();
@@ -1731,49 +1823,56 @@
                                                     function columnM(monthly_Deposit) {
                                                         M4();
                                                         var flag = 1;
-                                                        for (var m = 5; m <= 184; m++) {
+                                                        for (var m = 5; m <= parseInt($('#loan_period').val()) * 12 + 4 ; m++) {
                                                             {
-                                                                if(flag==1){
-                                                                    if (B[m] = "") {
+                                                                // if(flag==1){
+                                                                  /*  if (B[m] = "") {
                                                                         M[m] = "";
-                                                                    } else {
+                                                                    } else*/ {
                                                                         columnL(m, monthly_Deposit);
                                                                         if(M[m-1] - L[m] < 0){
-                                                                            M[m] = -50;
-                                                                            flag = -1;
-                                                                            continue;
+                                                                            M[m] = 0;
+                                                                            // flag = -1;
+                                                                            // continue;
                                                                         }
                                                                         else{
                                                                             M[m] = M[m-1] - L[m];
                                                                         }
                                                                     }
-                                                                }
-                                                                else{
-                                                                    M[m]=-50;
-                                                                }
-
-
+//                                                                 }
+//                                                                 else{
+//                                                                     M[m]=-50;
+//                                                                 }
+// /*
+                                                                //columnL(m, monthly_Deposit);
+                                                                //M[m] = M[m-1] - L[m];
                                                                 columnI(m);
                                                                 columnD(m, monthly_Deposit);
                                                             }
                                                         }
+                                                 /*       console.log("D",D);
+                                                        console.log("J",J);
+                                                        console.log("K",K);
+                                                        console.log("L",L);
+                                                        console.log("M",M);*/
                                                     }
                                                     // Column A calculaton table 3
-                                                    function columnA(){
+                                                    function columnAB(){
                                                         var i=0;
-                                                        A[i] = null;
-                                                        A[i++] = null;
-                                                        A[i++] = null;
-                                                        A[i++] = null;
-                                                        A[i++] = null;
-                                                        for (var a = 0; a <= 360; a++) {
-                                                            A[i++] =a;
+                                                        A[0] = null;
+                                                        A[1] = null;
+                                                        A[2] = null;
+                                                        A[3] = null;
+                                                        for (var i = 4; i <= 364; i++) {
+                                                            A[i] =i-4;
+                                                            B[i] = A[i];
                                                         }
                                                     }
                                                     // Column B calculaton table 3
                                                     function columnB(){
-                                                        var loan_period = parseInt($('#loan_period').val());
-                                                        for(var b = 4; b <=364; b++ )
+
+                                                      /*  var loan_period = parseInt($('#loan_period').val());
+                                                        for(var b = 4; b <=parseInt($('#loan_period').val()) * 12 + 4; b++ )
                                                         {
                                                             if(A[b] > (loan_period*12)){
                                                                 B[b] = "";
@@ -1782,11 +1881,15 @@
                                                                 B[b] = A[b];
                                                             }
                                                         }
-                                                        for(var b1 = 4; b1 <= 364; b1++)
+                                                        for(var b1 = 4; b1 <= parseInt($('#loan_period').val())* 12 + 4; b1++)
                                                         {
-                                                            for(var b2 = 4; b2 <= 364; b2++)
+                                                            for(var b2 = 4; b2 <= parseInt($('#loan_period').val()) * 12 + 4; b2++)
                                                                 B[2] = Math.max(B[b1],B[b2])+4;
-                                                        }
+                                                        }*/
+
+                                                    }
+                                                    function B2(){
+                                                        B[2] = parseInt($('#loan_period').val())* 12 + 4;
                                                     }
                                                     //Column 'C' calculation for table 3
                                                     function columnC() {
@@ -1818,35 +1921,58 @@
                                                     function columnD(d, monthly_Deposit)
                                                     {
                                                         // var monthly_Deposit =parseInt($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
-                                                        var borrowing_rate = parseInt($('#borrowing_rate').val().replace(".", "").replace(",", "."));
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         D[0] = null;
                                                         D[1] =null;
                                                         D[2] = null;
                                                         D[3] = null;
-                                                        var d1 = d;
-                                                        if(B[d]="")
+                                                /*        if(B[d]="")
                                                         {
                                                             D[d]="";
 
                                                         }
-                                                        else{
-                                                            if(monthly_Deposit > M[--d1]*(1+borrowing_rate/100/12))
+                                                        else*/
+                                                            {
+                                                            if(monthly_Deposit > M[d - 1]*(1+borrowing_rate/100/12))
                                                             {
 
-                                                                D[d] = M[--d1]*(1+borrowing_rate/12/100).toFixed(2);
+                                                                D[d] = M[d - 1]*(1+borrowing_rate/12/100);
                                                             }
-                                                            else{ D[d] = monthly_Deposit;
-
+                                                            else
+                                                                {
+                                                                D[d] = monthly_Deposit;
                                                             }
                                                         }}
                                                     //Calculating column E
-                                                    function columnE() {
-                                                        E[0] = null;
-                                                        E[1] =null;
-                                                        E[2] = null;
-                                                        E[3] = null;
-                                                        for(var e=5; e <= 364; e++)
-                                                        {
+                                                    function columnE(e) {
+                                                        // E[0] = null;
+                                                        // E[1] =null;
+                                                        // E[2] = null;
+                                                        // E[3] = null;
+                                                        // for(var e=5; e <= parseInt($('#loan_period').val()) * 12 + 4; e++)
+                                                        // {
+                                                            if(C[e]!=undefined){
+                                                                if(parseInt(C[e].split("/")[0]) == parseInt($('#annual_unsheduled_month').val()) &&
+                                                                    parseInt(C[e].split("/")[1]) >=$('#annual_unsheduled_year').val() &&
+                                                                    parseInt(C[e].split("/")[1]) <=$('#annual_to_year').val())
+                                                                {
+                                                                    E[e] = parseFloat($('#annual_unsheduled_val').val());
+                                                                }
+                                                                else if(parseInt(C[e].split("/")[0]) == parseInt($('#annual_unsheduled_month').val()) &&
+                                                                    parseInt(C[e].split("/")[1]) == $('#annual_unsheduled_year').val() &&
+                                                                    $('#annual_to_year').val() ==null)
+                                                                {
+                                                                    E[e] = parseFloat($('#annual_unsheduled_val').val());
+                                                                }
+                                                                else{
+                                                                    // E[e]="#N/A";
+                                                                    E[e]=0;
+                                                                }
+                                                            }
+                                                            else{
+                                                                // E[e]="#N/A";
+                                                                E[e]=0;
+                                                            }
                                                             //     console.log('tu8');
                                                             //     for(var i=45; i<=364; i++)
                                                             //     {
@@ -1861,54 +1987,65 @@
                                                             //             }
                                                             //         }
                                                             //     }
-                                                            E[e]="N/A";
-                                                        }
+                                                        // }
+
                                                     }
                                                     //Calculating Column F
                                                     function columnF(f){
-                                                        F[0] = null;
-                                                        F[1] = null;
-                                                        F[2] = null;
-                                                        F[3] = null;
-                                                        columnE();
-                                                        if(B[f]="")
+                                                        // F[0] = null;
+                                                        // F[1] = null;
+                                                        // F[2] = null;
+                                                        // F[3] = null;
+                                                        columnE(f);
+                                                    /*    if(B[f]=="")
                                                         {
                                                             F[f]="";
                                                         }
-                                                        else if(E[f]="N/A")
-                                                        {
-                                                            F[f]=0;
+                                                        else*/
+                                                            {
+                                                            if(E[f]=="N/A")
+                                                            {
+                                                                F[f]=0;
+                                                            }
+                                                            else{
+                                                                F[f]=E[f];
+                                                                // console.log('False');
+                                                            }
                                                         }
-                                                        else{
-                                                            // console.log('False');
-                                                        }
+
                                                     }
                                                     //Calculating Column G
-                                                    function columnG(){
-                                                        G[0] = null;
-                                                        G[1] = null;
-                                                        G[2] = null;
-                                                        G[3] = null;
-                                                        for(var g=4;  g<=100; g++ )
-                                                        {
+                                                    function columnG(g){
+                                                        // G[0] = null;
+                                                        // G[1] = null;
+                                                        // G[2] = null;
+                                                        // G[3] = null;
+                                                        // for(var g=4;  g<=parseInt($('#loan_period').val()) * 12 + 4; g++ )
+                                                        // {
                                                             if(($('#onetime_unsheduled_month').val()+"/"+$('#onetime_unsheduled_year').val())==C[g]){
                                                                 G[g]=parseFloat($('#onetime_unsheduled_val').val());
-                                                                break;
+                                                                // break;
                                                             }
                                                             else{
                                                                 G[g]="N/A";
 
                                                             }
-                                                        }
+                                                        // }
+
                                                     }
                                                     // Calculating Column H
                                                     function columnH(h){
-                                                        columnG();
-                                                        if(B[h]="")
+
+                                                        columnG(h);
+
+                                                        // console.log("L",L);
+                                                        // console.log("M",M);
+                                                      /*  if(B[h]="")
                                                         {
                                                             H[h]="";
                                                         }
-                                                        else if(G[h]=="N/A" || G[h] ==null){
+                                                        else */
+                                                            if(G[h]=="N/A" || G[h] ==null){
                                                             H[h]=0;
                                                         }
                                                         else{
@@ -1922,53 +2059,57 @@
                                                         I[2] = null;
                                                         I[3] = null;
                                                         I[4] = null;
-                                                        if(i==5){
-                                                            if (B[5] = "") {
-                                                                I[5] = 0;
-                                                            } else {
-                                                                columnF(5);
-                                                                columnH(5);
-                                                                I[5] = F[5] + H[5];
-                                                            }
-                                                        }
-                                                        else{
-                                                            if(B[i]="")
-                                                            {
-                                                                I[i]=0;
-                                                            }
-                                                            else{
-                                                                columnF(i);
-                                                                columnH(i);
-                                                                var i1=i;
-                                                                if(F[i]+H[i] > M[--i1]){
-                                                                    I[i]=0;
-                                                                }
-                                                                else{
-                                                                    columnF(i);
+                                                        columnF(i);
                                                                     columnH(i);
                                                                     I[i] = F[i]+H[i];
-                                                                }
-                                                            }
-                                                        }
+                                                        // if(i==5){
+                                                        //     if (B[5] = "") {
+                                                        //         I[5] = 0;
+                                                        //     } else {
+                                                        //         columnF(5);
+                                                        //         columnH(5);
+                                                        //         I[5] = F[5] + H[5];
+                                                        //     }
+                                                        // }
+                                                        // else{
+                                                        //     if(B[i]="")
+                                                        //     {
+                                                        //         I[i]=0;
+                                                        //     }
+                                                        //     else{
+                                                        //         columnF(i);
+                                                        //         columnH(i);
+                                                        //         var i1=i;
+                                                        //         if(F[i]+H[i] > M[--i1]){
+                                                        //             I[i]=0;
+                                                        //         }
+                                                        //         else{
+                                                        //             columnF(i);
+                                                        //             columnH(i);
+                                                        //             I[i] = F[i]+H[i];
+                                                        //         }
+                                                        //     }
+                                                        // }
                                                     }
                                                     //Calculating Column J
                                                     function columnJ(j, monthly_depoit)
                                                     {
                                                         // var monthly_depoit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
                                                         var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
-                                                        var j1 = j;
-                                                        if(B[j]="")
+                                                   /*     if(B[j]="")
                                                         {
                                                             J[j]=0;
                                                         }
-                                                        else {
-
-                                                            if(monthly_depoit > M[--j1] * (1 + borrowing_rate / 100 / 12))
+                                                        else */
                                                             {
 
-                                                                J[j] = M[--j1] * (1 + borrowing_rate / 100 / 12);
+                                                          /*  if(monthly_depoit > M[j - 1] * (1 + borrowing_rate / 100 / 12))
+                                                            {
+
+                                                                J[j] = M[j - 1] * (1 + borrowing_rate / 100 / 12);
                                                             }
-                                                            else{
+                                                            else*/
+                                                                {
                                                                 columnD(j, monthly_depoit);
                                                                 columnI(j);
 
@@ -2160,18 +2301,18 @@
                                                     <td>Jährliche Sondertilgungen ab</td>
                                                     <td>
                                                         <select id="annual_unsheduled_month" class="form-control">
-                                                            <option selected value='Januar'>Januar</option>
-                                                            <option value='Februar'>Februar</option>
-                                                            <option value='Marz'>Marz</option>
-                                                            <option value='April'>April</option>
-                                                            <option value='Mai'>Mai</option>
-                                                            <option value='Juni'>Juni</option>
-                                                            <option value='Juli'>Juli</option>
-                                                            <option value='August'>August</option>
-                                                            <option value='September'>September</option>
-                                                            <option value='Oktober'>Oktober</option>
-                                                            <option value='November'>November</option>
-                                                            <option value='Dezember'>Dezember</option>
+                                                            <option selected value='1'>Januar</option>
+                                                            <option value='2'>Februar</option>
+                                                            <option value='3'>Marz</option>
+                                                            <option value='4'>April</option>
+                                                            <option value='5'>Mai</option>
+                                                            <option value='6'>Juni</option>
+                                                            <option value='7'>Juli</option>
+                                                            <option value='8'>August</option>
+                                                            <option value='9'>September</option>
+                                                            <option value='10'>Oktober</option>
+                                                            <option value='11'>November</option>
+                                                            <option value='12'>Dezember</option>
                                                         </select>
                                                     </td>
                                                     <td>
@@ -2195,12 +2336,34 @@
                                                     <td>bis</td>
                                                     <td>
                                                         <select id="annual_to_month" class="form-control">
-
+                                                            <option value='1'>Januar</option>
+                                                            <option value='2'>Februar</option>
+                                                            <option value='3'>Marz</option>
+                                                            <option value='4'>April</option>
+                                                            <option value='5'>Mai</option>
+                                                            <option value='6'>Juni</option>
+                                                            <option value='7'>Juli</option>
+                                                            <option value='8'>August</option>
+                                                            <option value='9'>September</option>
+                                                            <option value='10'>Oktober</option>
+                                                            <option value='11'>November</option>
+                                                            <option value='12'>Dezember</option>
                                                         </select>
                                                     </td>
                                                     <td colspan="4">
                                                         <select id="annual_to_year"  class="form-control">
-
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+                                                            <option value="2025">2026</option>
+                                                            <option value="2025">2027</option>
+                                                            <option value="2025">2028</option>
+                                                            <option value="2025">2029</option>
+                                                            <option value="2025">2030</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -2468,15 +2631,56 @@
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="submit" value="calculation" name="calculation" class="btn btn-primary float-right">Berechnung speichern</button>
+                                    <button type="button" value="calculation" name="calculation" class="btn btn-primary float-right" onclick="save_calculation()">Berechnung speichern</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <hr>
-                    
-                    
+                    <h4>Tilgungsplan</h4>
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            <label for="bank">Bank</label>
+                            <input type="text" id="bank" class="form-control"  value="Deutsche Bank">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label for="bank">Darlehen</label>
+                            <input type="number" class="form-control" id="loan" placeholder="150.000,00€">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label for="bank">Nominalzins(%)</label>
+                            <input type="number" class="form-control" name="interest" id="interest" placeholder=2.19%>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label for="bank">Tilgung (%)</label>
+                            <input type="number" class="form-control" name="repayment" id="repayment" placeholder=2.00%>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            <label for="bank">Tilgungsbeginn</label>
+                            <input type="date"  class="form-control" name="repaymentStart" id="repaymentStart" value="2018-04-01">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label for="fixed_interest_rate">Zinsfestschreibung</label>
+                            <input type="date" class="form-control"  name="fixedInterestRate" id="fixedInterestRate" value="2028-04-30">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label for="payout">Auszahlung</label>
+                            <input type="date" class="form-control" name="payout" id="payout" value="2018-04-01">
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label for="bank">Rate</label>
+                            <input type="number" class="form-control"  name="rate" id="rate" value=523.75>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#repayment_modal" type="button"  onclick="calculate()">Kalkulieren</button>
+                            <button class="btn btn-danger" type="button"  data-toggle="modal" data-target="#confirm_modal">Tilgungsplan löschen</button>
+                        </div>
+                    </div>
                     <label for="result" id="result"></label>
                     <hr />
                     <br>
@@ -2657,6 +2861,48 @@
                 }
             }); */
         }
+        function save_calculation() {
+            //if ( confirm('Are you sure you want to submit?') ) {
+            // var tenFieldFlag = $('#new_form_controller').val();
+            //var serializeForm = $('#kunden_edit_form').serializeArray();
+             setTimeout(function(){
+                $("#kunden_edit_form").submit();
+            }, 500);
+             $.ajax({
+                url: 'save_calculation',
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    // New 11 fields
+                    loan_period: $('#loan_period').val(),
+                    payment_month: $('#payment_month').val(),
+                    payment_year: $('#payment_year').val(),
+                    payment_discount: $('#payment_discount').val(),
+                    borrowing_rate: $('#borrowing_rate').val(),
+                    montly_deposit_val: $('#montly_deposit_val').val(),
+                    annual_unsheduled_month: $('#annual_unsheduled_month').val(),
+                    annual_unsheduled_year: $('#annual_unsheduled_year').val(),
+                    annual_unsheduled_val: $('#annual_unsheduled_val').val(),
+                    annual_to_month: $('#annual_to_month').val(),
+                    annual_to_year: $('#annual_to_year').val(),
+                    onetime_unsheduled_month: $('#onetime_unsheduled_month').val(),
+                    onetime_unsheduled_year: $('#onetime_unsheduled_year').val(),
+                    onetime_unsheduled_val: $('#onetime_unsheduled_val').val(),
+                    new_borrowing_rate: $('#new_borrowing_rate').val(),
+                    new_repayment_rate_inp: $('#new_repayment_rate_inp').val(),
+                },
+                success: function(res) {
+                    toastr.success(res);
+                },
+                error: function(error) {
+                    var error = JSON.parse(error.responseText);
+                    error = error.errors;
+                    $.each(error, function(k, v){
+                        toastr.error(k+': '+v[0]);
+                    })
+                }
+            });
+        }
         function deleteCalc() {
             $.ajax({
                 url: 'delete_repayment',
@@ -2711,15 +2957,17 @@
                 calcInterest = (loansRest * interest / 12) / 100;
                 calcRepayment = rate - calcInterest;
                 loansRest -= calcRepayment;
-                loansRest = loansRest;
+                // loansRest = loansRest;
                 resultString += "<tr><td>" + month_names_short[curPayoutDate.getMonth()] + " " + curPayoutDate.getFullYear() + "</td><td>" + changeString(round(calcInterest, 2)) + "     " + "</td><td>" +changeString(round(calcRepayment, 2)) + "</td><td>" + changeString(round(loansRest, 2)) + "</td></tr>";
-                curPayoutDate.setMonth(curPayoutDate.getMonth() + 1);
+                // curPayoutDate.setMonth(curPayoutDate.getMonth() + 1);
+                curPayoutDate= new Date(curPayoutDate.getFullYear(), curPayoutDate.getMonth() + 1, 0);
                 var temp = {
                     'repayment_date':(month_names_short[curPayoutDate.getMonth()]) + " " + curPayoutDate.getFullYear(),
                     'zinsen': changeString(round(calcInterest, 2)),
                     'tilgung': changeString(round(calcRepayment, 2)),
                     'darlehensrest': changeString(round(loansRest, 2))
                 };
+                curPayoutDate.setDate(curPayoutDate.getDate()+1);
                 resarr.push(temp);
             }
             //console.log(resultString);
