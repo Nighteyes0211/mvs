@@ -26,6 +26,7 @@ Route::post('/admin/kunden/{id}/save_repayment', 'KundenController@saveRepayment
 Route::get('/admin/kunden/{id}/delete_repayment', 'KundenController@deleteRepayment');
 Route::get('/admin/kunden/{id}/delete_timeline', 'KundenController@deleteTimeline');
 Route::post('/admin/kunden/{id}/save_timeline', 'KundenController@saveTimeline');
+Route::post('/admin/kunden/{id}/save_calculation', 'KundenController@saveCalculation');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dynamic_pdf', 'DynamicPDFController@index');
