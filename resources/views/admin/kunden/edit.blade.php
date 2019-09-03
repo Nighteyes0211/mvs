@@ -2739,7 +2739,7 @@
                             </div>
                         </div>
                     </div>
-
+<!-- 
                     <hr>
                     <h4>Tilgungsplan</h4>
                     <div class="row">
@@ -2786,6 +2786,8 @@
                     </div>
                     <label for="result" id="result"></label>
                     <hr />
+
+                -->
                     <br>
                     <div class="row">
                         <div class="col-6">
