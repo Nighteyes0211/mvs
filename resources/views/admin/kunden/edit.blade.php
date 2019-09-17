@@ -643,9 +643,6 @@
                             <div class="card-body">
 
                             <div class="row">
-
-
-
                             <table class="table table-striped table-bordered">
 
                             <tr>
@@ -657,7 +654,7 @@
                             <td>Kreditsumme ( € ) <span class="text-danger"
                             id="message_loan_amount"></span></td>
                             <td colspan="4"><input class="form-control text-right"
-                            value=""
+                            value="{{ stringReplace($kunden->finanzierungsbedarf,'.',',') }}"
                             id="loan_amount_` + cardNo +`" type=""
                             disabled></td>
                             </tr>
@@ -800,7 +797,7 @@
                             </td>
                             <td colspan="4">
                             <div class="input-group">
-                            {{--                                                        input field Monatsrate--}}
+                            {{-- input field Monatsrate--}}
                             <input id="montly_deposit_val_` + cardNo +`"
                             class="form-control text-right" value="1.500.00">
                             <div class="input-group-append">
@@ -860,7 +857,7 @@
                             </select>
                             </td>
 
-                            <td colspan="4"><input id="annual_unsheduled_val" value=2400
+                            <td colspan="4"><input id="annual_unsheduled_val_` + cardNo +`" value=2400
                             class="form-control text-right"></td>
                             </tr>
 
@@ -1256,32 +1253,31 @@
                             </div>
                             </div>
                             </div>`;
-            target.append(Calc);
-                            console.log($('#loan_period_'+ cardNo).val());
+
             $.ajax({
                 url: 'add_calculation',
                 type: 'post',
                 data: {
                     _token: $('[name="_token"]').val(),
-                    // New 11 fields
                     loan_period: 1,//$('#loan_period_'+ cardNo).val(),
-                    payment_month: $('#payment_month_' + cardNo).val(),
-                    payment_year: $('#payment_year_' + cardNo).val(),
-                    payment_discount: $('#payment_discount_' + cardNo).val(),
-                    borrowing_rate: $('#borrowing_rate_' + cardNo).val(),
-                    montly_deposit_val: $('#montly_deposit_val_' + cardNo).val(),
-                    annual_unsheduled_month: $('#annual_unsheduled_month_' + cardNo).val(),
-                    annual_unsheduled_year: $('#annual_unsheduled_year_' + cardNo).val(),
-                    annual_unsheduled_val: $('#annual_unsheduled_val' + cardNo).val(),
-                    annual_to_month: $('#annual_to_month_' + cardNo).val(),
-                    annual_to_year: $('#annual_to_year_' + cardNo).val(),
-                    onetime_unsheduled_month: $('#onetime_unsheduled_month_' + cardNo).val(),
-                    onetime_unsheduled_year: $('#onetime_unsheduled_year_' + cardNo).val(),
-                    onetime_unsheduled_val: $('#onetime_unsheduled_val_' + cardNo).val(),
-                    new_borrowing_rate: $('#new_borrowing_rate_' + cardNo).val(),
-                    new_repayment_rate_inp: $('#new_repayment_rate_inp_' + cardNo).val()
+                    payment_month: 1,//$('#payment_month_' + cardNo).val(),
+                    payment_year: 2018,//$('#payment_year_' + cardNo).val(),
+                    payment_discount: 0.0,//('#payment_discount_' + cardNo).val(),
+                    borrowing_rate: 1.5,//$('#borrowing_rate_' + cardNo).val(),
+                    montly_deposit_val: 1500,//$('#montly_deposit_val_' + cardNo).val(),
+                    annual_unsheduled_month: 1,//$('#annual_unsheduled_month_' + cardNo).val(),
+                    annual_unsheduled_year: 2018,//$('#annual_unsheduled_year_' + cardNo).val(),
+                    annual_unsheduled_val: 2400,//$('#annual_unsheduled_val' + cardNo).val(),
+                    annual_to_month: 1,//$('#annual_to_month_' + cardNo).val(),
+                    annual_to_year: 2019 ,//$('#annual_to_year_' + cardNo).val(),
+                    onetime_unsheduled_month:1,// $('#onetime_unsheduled_month_' + cardNo).val(),
+                    onetime_unsheduled_year:2019 ,//$('#onetime_unsheduled_year_' + cardNo).val(),
+                    onetime_unsheduled_val: 0,//$('#onetime_unsheduled_val_' + cardNo).val(),
+                    new_borrowing_rate: 4,//$('#new_borrowing_rate_' + cardNo).val(),
+                    new_repayment_rate_inp: 1//$('#new_repayment_rate_inp_' + cardNo).val()
                 },
                 success: function (res) {
+                    target.append(Calc);
                     toastr.success(res);
                 },
                 error: function (error) {
@@ -1579,19 +1575,30 @@
                     </div>
 
                     <div class="accordion mt-35" id="Calculation">
+
                         <?php $cIndex = 0 ?>
+                        <div class="row mt-15">
+                            <div class="col-sm-12 @if(count($Calculations) == 0) new_form @endif">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>Angebotsdatum</h5>
+                                        <input type="date" name="angebotdate" id="angebotdate_{{$cIndex}}" value=""
+                                                placeholder="Angebotsdatum" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         @foreach($CalData as $data)
-                            <div class="card card-{{$cIndex}}">
-                                <div class="card-header" id="heading-{{$cIndex}}">
+                            <div class="card card-{{ $data->id }}">
+                                <div class="card-header" id="heading-{{ $data->id}}">
                                     <h2 class="mb-0">
-
-                                        <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                data-target="#collapse-{{$cIndex}}">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$cIndex}}">
                                             Finanzbaustein #{{$cIndex+1}}
                                         </button>
-                                        <span class="removeCard float-right"><i class="fa fa-times"
-                                                                                onclick="removeCard({{$cIndex}})"></i></span>
+                                        <span class="removeCard float-right">
+                                            <i class="fa fa-times" onclick="removeCard({{ $data->id }},{{ $cIndex }})"></i>
+                                        </span>
                                     </h2>
                                 </div>
                                 <div id="collapse-{{$cIndex}}" data-parent="#Calculation">
@@ -1602,16 +1609,17 @@
                                                     <td colspan="4"><h5>Darlehensrechner</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Kreditsumme ( € ) <span class="text-danger"
-                                                                                id="message_loan_amount"></span></td>
-                                                    <td colspan="4"><input class="form-control text-right"
-                                                                           value="{{ stringReplace($kunden->finanzierungsbedarf,'.',',') }}"
+                                                    <td>Kreditsumme ( € ) <span class="text-danger" id="message_loan_amount"></span></td>
+                                                    <td colspan="4">
+                                                        <input class="form-control text-right"
+                                                                           value="{{ $kunden->finanzierungsbedarf }}"
                                                                            id="loan_amount_{{$cIndex}}" type=""
-                                                                           disabled></td>
+                                                                           disabled>
+                                                        </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Zinsbindung <span class="text-danger"
-                                                                          id="message_loan_period_{{$cIndex}}"></span>
+                                                    <td>
+                                                        Zinsbindung <span class="text-danger" id="message_loan_period_{{$cIndex}}"></span>
                                                     </td>
                                                     <td colspan="4">
                                                         <select id="loan_period_{{$cIndex}}" class="form-control">
@@ -1631,10 +1639,8 @@
                                                             }
                                                             ?>
                                                         </select>
-
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td>Auszahlungstermin</td>
                                                     <td colspan="2">
@@ -1703,7 +1709,7 @@
                                                         <div class="input-group">
                                                             <input id="payment_amount_{{$cIndex}}"
                                                                    class="form-control text-right"
-                                                                   value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}"
+                                                                   value="{{ $kunden->finanzierungsbedarf }}"
                                                                    disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
@@ -1732,7 +1738,7 @@
                                                     <td>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" class="custom-control-input"
-                                                                   id="repayment_date_{{$cIndex}}" name="repayment">
+                                                                   id="repayment_date_{{$cIndex}}" name="repayment_{{$cIndex}}">
                                                             <label class="custom-control-label" for="repayment_date">Tilgungssatz
                                                                 (Prozent)</label>
                                                         </div>
@@ -1751,9 +1757,9 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-radio">
-                                                            {{--                                                            radio button input Monatsrate--}}
+                                                            {{-- radio button input Monatsrate--}}
                                                             <input type="radio" class="custom-control-input"
-                                                                   id="montly_deposit_{{$cIndex}}" name="repayment"
+                                                                   id="montly_deposit_{{$cIndex}}" name="repayment_{{$cIndex}}"
                                                                    checked>
                                                             <label class="custom-control-label" for="montly_deposit">Monatsrate
                                                                 ( € ) <span class="text-danger"
@@ -1764,7 +1770,7 @@
                                                         <div class="input-group">
                                                             {{--                                                        input field Monatsrate--}}
                                                             <input id="montly_deposit_val_{{$cIndex}}"
-                                                                   class="form-control text-right" value="1.500,00">
+                                                                   class="form-control text-right" value="1.5">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -1776,7 +1782,7 @@
                                                     <td>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" class="custom-control-input"
-                                                                   id="payment_opt_rad_{{$cIndex}}" name="repayment">
+                                                                   id="payment_opt_rad_{{$cIndex}}" name="repayment_{{$cIndex}}">
                                                             <label class="custom-control-label" for="payment_opt_rad">Volltilgerdarlehen</label>
                                                         </div>
                                                     </td>
@@ -1822,7 +1828,7 @@
                                                         </select>
                                                     </td>
 
-                                                    <td colspan="4"><input id="annual_unsheduled_val" value=2400
+                                                    <td colspan="4"><input id="annual_unsheduled_val_{{$cIndex}}" value=2400
                                                                            class="form-control text-right"></td>
                                                 </tr>
 
@@ -1958,7 +1964,7 @@
                                                     <td colspan="4">
                                                         <div class="input-group">
                                                             <input id="new_borrowing_rate_{{$cIndex}}"
-                                                                   class="form-control text-right" value="4,00">
+                                                                   class="form-control text-right" value="4.00">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -2210,25 +2216,22 @@
                                 </div>
                             </div>
                             <div class="row mt-15">
-                                <div class="col-sm-12 @if(count($Calculations) == 0) new_form @endif">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h5>Angebotsdatum</h5>
-                                            <input type="date" name="angebotdate" id="angebotdate_{{$cIndex}}" value=""
-                                                   placeholder="Angebotsdatum" class="form-control">
-
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button type="button" value="calculation" name="calculation"
-                                                    class="btn btn-primary float-right"
-                                                    onclick="save_calculation({{$cIndex}} )">
-                                                Berechnung
-                                                speichern
-                                            </button>
+                                    <div class="col-sm-12 @if(count($Calculations) == 0) new_form @endif">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="button" value="calculation" name="calculation"
+                                                        class="btn btn-primary float-right"
+                                                        onclick="save_calculation({{ $data->id }},{{ $cIndex }} )">
+                                                    Berechnung
+                                                    speichern
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <?php $cIndex++; ?>
                         @endforeach
                     </div>
@@ -3276,7 +3279,7 @@
 
         });
 
-        function save_calculation(cardNo) {
+        function save_calculation(id,cardNo) {
             //if ( confirm('Are you sure you want to submit?') ) {
             // var tenFieldFlag = $('#new_form_controller').val();
             //var serializeForm = $('#kunden_edit_form').serializeArray();
@@ -3290,6 +3293,7 @@
                 url: 'save_calculation',
                 type: 'post',
                 data: {
+                    calid:id,
                     _token: $('[name="_token"]').val(),
                     // New 11 fields
                     loan_period: $('#loan_period_'+ cardNo).val(),
@@ -3364,9 +3368,21 @@
         }
     </script>
     <script type="text/javascript">
-
         function removeCard(cardNo) {
-            $('.card-' + cardNo).remove();
+            $.ajax({
+                url: 'del_calculation',
+                type: 'post',
+                data: {
+                    id: cardNo
+                },
+                success:function(res){
+                    $('.card-' + cardNo).remove();
+                    toastr.success(res);
+                },
+                error:function(res){
+                    toastr.error("error");
+                }
+            });
         }
 
         function save_timeline() {

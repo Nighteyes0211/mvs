@@ -506,11 +506,27 @@ class KundenController extends Controller
         return 'success';
     }
     public function saveCalculation($id, Request $request){
-        $request->request->add(['kunden_id' => $id]);
-        DB::table('calc_result')
-            ->updateOrInsert(
-                ['kunden_id' => $id],
-                $request->except('_token')
+        $insertData = [
+            'kunden_id' => $id,
+            'loan_period' => $request->loan_period,
+            'payment_month' => $request->payment_month,
+            'payment_year' => $request->payment_year,
+            'payment_discount' => $request->payment_discount,
+            'borrowing_rate' => $request->borrowing_rate,
+            'montly_deposit_val' => $request->montly_deposit_val,
+            'annual_unsheduled_month' => $request->annual_unsheduled_month,
+            'annual_unsheduled_year' => $request->annual_unsheduled_year,
+            'annual_unsheduled_val' => $request->annual_unsheduled_val,
+            'annual_to_month' => $request->annual_to_month,
+            'annual_to_year' => $request->annual_to_year,
+            'onetime_unsheduled_month' => $request->onetime_unsheduled_month,
+            'onetime_unsheduled_year' => $request->onetime_unsheduled_year,
+            'onetime_unsheduled_val' => $request->onetime_unsheduled_val,
+            'new_borrowing_rate' => $request->new_borrowing_rate,
+            'new_repayment_rate_inp' => $request->new_repayment_rate_inp
+        ];
+        DB::table('calc_result')->where('id',$request->calid)->update(
+                $insertData
             );
         echo 'Saved successfully!';
     }
@@ -643,7 +659,7 @@ class KundenController extends Controller
             'montly_deposit_val' => $request->montly_deposit_val,
             'annual_unsheduled_month' => $request->annual_unsheduled_month,
             'annual_unsheduled_year' => $request->annual_unsheduled_year,
-            'annual_unsheduled_val' => 0,//$request->annual_unsheduled_val,
+            'annual_unsheduled_val' => $request->annual_unsheduled_val,
             'annual_to_month' => $request->annual_to_month,
             'annual_to_year' => $request->annual_to_year,
             'onetime_unsheduled_month' => $request->onetime_unsheduled_month,
@@ -652,17 +668,19 @@ class KundenController extends Controller
             'new_borrowing_rate' => $request->new_borrowing_rate,
             'new_repayment_rate_inp' => $request->new_repayment_rate_inp
         ];
-        // $cid = DB::table('calc_result')
-        // ->insert(
-        //     ['kunden_id' => $id],
-        //     $request->except('_token')
-        // );
-        // $request->request->add(['kunden_id' => $id]);
+
          $cid = DB::table('calc_result')->insert($insertData);
 
-        echo $cid;
+         echo 'Successful save';
+    }
 
-        echo 'Saved successfully!';
+    function deleteCalculation($id, Request $request)
+    {
+        echo 'here';
+        $id = $id;
+        echo $request->id;
+        // DB::table('calc_result')->where('id',$request->id)->delete();
+        // echo 'removed';
     }
 }
 

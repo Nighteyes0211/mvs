@@ -30,6 +30,7 @@ Route::get('/admin/kunden/{id}/delete_timeline', 'KundenController@deleteTimelin
 Route::post('/admin/kunden/{id}/save_timeline', 'KundenController@saveTimeline');
 Route::post('/admin/kunden/{id}/save_calculation', 'KundenController@saveCalculation');
 Route::post('/admin/kunden/{id}/add_calculation', 'KundenController@addCalculation');
+Route::post('/admin/kunden/{id}/del_calculation', 'KundenController@deleteCalculation');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dynamic_pdf', 'DynamicPDFController@index');
