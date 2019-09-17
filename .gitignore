@@ -1,3 +1,11 @@
 /vendor
 .env
 .env.dev
+.idea
+.idea/
+.idea/misc.xml
+.idea/modules.xml
+.idea/mvs.iml
+.idea/php.xml
+.idea/vcs.xml
+.idea/workspace.xml

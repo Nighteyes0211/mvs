@@ -14,76 +14,12 @@
       <executable />
     </execution>
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="971" column="67" selection-start-line="971" selection-start-column="67" selection-end-line="971" selection-end-column="67" />
-              <folding>
-                <marker date="1564659195372" expanded="true" signature="43680:45468" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>new calcula</find>
-      <find>Fina</find>
-      <find>Optionale Soundertilgung</find>
-      <find>Baufi</find>
-      <find>bis</find>
-      <find>new cal</find>
-      <find>jan</find>
-      <find>new calcu</find>
-      <find>Bank</find>
-      <find>Finanzbauste</find>
-      <find>new</find>
-      <find>banl</find>
-      <find>#</find>
-      <find>finanzbauts</find>
-      <find>Tilgungssatz</find>
-      <find>Angebotsdatum</find>
-      <find>new ca</find>
-      <find>Eigenkapital</find>
-      <find>hassaa</find>
-      <find>montly_deposit</find>
-      <find>finanzbaustein #</find>
-      <find>end_of_fixed_year</find>
-      <find>repayment_date</find>
-      <find>css</find>
-      <find>bootstrap</find>
-      <find>Janaur</find>
-      <find>Zinsbindun</find>
-      <find>payment_opt_rad</find>
-      <find>borrowing_rate</find>
-      <find>maklerkosten</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/config/app.php" />
-        <option value="$PROJECT_DIR$/storage/app/count.txt" />
-        <option value="$PROJECT_DIR$/app/Angebote.php" />
-        <option value="$PROJECT_DIR$/app/Repayment.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2018_11_19_121848_create_repayments_table.php" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/kunden/show.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/kunden/printview.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/KundenController.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php" />
-      </list>
-    </option>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -197,31 +133,8 @@
       <path value="$PROJECT_DIR$/vendor/kylekatarnls/update-helper" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="851" />
-    <option name="width" value="1555" />
-    <option name="height" value="1310" />
-  </component>
+  <component name="ProjectId" id="1Qw7WMm1UjxtyurlwKlLhgwK4LR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="mvs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvs" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="kun&#9;FILE&#9;file://D:/xampp/htdocs/mvs/app/Http/Controllers/KundenController.php&#10;we&#9;FILE&#9;file://D:/xampp/htdocs/mvs/routes/web.php&#10;repaym&#9;FILE&#9;file://D:/xampp/htdocs/mvs/database/migrations/2018_11_19_121848_create_repayments_table.php&#10;KundenController&#9;FILE&#9;file://D:/xampp/htdocs/mvs/app/Http/Controllers/KundenController.php&#10;web.php&#9;FILE&#9;file://D:/xampp/htdocs/mvs/routes/web.php" />
@@ -296,6 +209,7 @@
       <workItem from="1564655825779" duration="1915000" />
       <workItem from="1564657785516" duration="1851000" />
       <workItem from="1564661747639" duration="386000" />
+      <workItem from="1568669840491" duration="9230000" />
     </task>
     <task id="LOCAL-00001" summary="Commmit 1 from Technovier,&#10;Front-end and some checks enabeled on calculator">
       <created>1564501683924</created>
@@ -356,34 +270,6 @@
     <option name="localTasksCounter" value="9" />
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69962000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24228188" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -398,122 +284,5 @@
     <MESSAGE value="Commmit 6 from Technovier,&#10;Some checks and updated content." />
     <MESSAGE value="Commmit 7 from Technovier,&#10;Updated Checks and some functions." />
     <option name="LAST_COMMIT_MESSAGE" value="Commmit 7 from Technovier,&#10;Updated Checks and some functions." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php</url>
-          <line>1414</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php</url>
-          <line>1551</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="167" column="19" lean-forward="true" selection-start-line="167" selection-start-column="19" selection-end-line="167" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/fonts/dompdf_font_family_cache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/app/count.txt" />
-    <entry file="file://$PROJECT_DIR$/app/Kunden.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Angebote.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repayment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="73827" selection-start-column="73827" selection-end-column="73827" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_11_19_121848_create_repayments_table.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/kunden/printview.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2329">
-          <caret line="137" column="12" selection-start-line="137" selection-start-column="12" selection-end-line="137" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/kunden/show.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2618">
-          <caret line="154" column="20" selection-start-line="130" selection-start-column="14" selection-end-line="154" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/KundenController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="176" column="48" lean-forward="true" selection-start-line="176" selection-start-column="48" selection-end-line="176" selection-end-column="48" />
-          <folding>
-            <element signature="e#40#79#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/kunden/edit.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="971" column="67" selection-start-line="971" selection-start-column="67" selection-end-line="971" selection-end-column="67" />
-          <folding>
-            <marker date="1564659195372" expanded="true" signature="43680:45468" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>
