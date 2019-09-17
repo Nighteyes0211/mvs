@@ -15,6 +15,7 @@ use Auth;
 use MVS\User;
 use MVS\Group;
 use MVS\Calculation;
+use MVS\Calc_Result;
 use MVS\Checklist;
 use DB;
 
@@ -154,9 +155,10 @@ class KundenController extends Controller
     public function show(Kunden $kunden)
     {
         $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->orderBy('id','desc')->get();
+        $calc_results = Calc_Result::where('kunden_id', $kunden->id)->get();
         $repayments = Repayment::where('kundens_id', $kunden->id)->get();
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
-        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline]);
+        return view('admin.kunden.show', ['kunden' => $kunden, 'calc_results' =>$calc_results, 'repayments' => $repayments, 'timeline' => $timeline]);
     }
 
     /**
@@ -505,12 +507,33 @@ class KundenController extends Controller
         return 'success';
     }
     public function saveCalculation($id, Request $request){
-        $request->request->add(['kunden_id' => $id]);
-        DB::table('calc_result')
-            ->updateOrInsert(
-                ['kunden_id' => $id],
-                $request->except('_token')
-            );
+        
+        $size = count($request->module_number);
+        Calc_Result::where('kunden_id', $id)->delete();
+        
+        for ($i=0; $i < $size; $i++) {
+            $calItem = new Calc_Result;
+            $calItem->kunden_id = $id;
+            $calItem->module_id = $request->module_number[$i];
+            $calItem->loan_period = $request->loan_period[$i];
+            $calItem->payment_month = $request->payment_month[$i];
+            $calItem->payment_year = $request->payment_year[$i];
+            $calItem->payment_discount = $request->payment_discount[$i];
+            $calItem->borrowing_rate = $request->borrowing_rate[$i];
+            $calItem->montly_deposit_val = $request->montly_deposit_val[$i];
+            $calItem->annual_unsheduled_month = $request->annual_unsheduled_month[$i];
+            $calItem->annual_unsheduled_year = $request->annual_unsheduled_year[$i];
+            $calItem->annual_unsheduled_val = $request->annual_unsheduled_val[$i];
+            $calItem->annual_to_month = $request->annual_to_month[$i];
+            $calItem->annual_to_year = $request->annual_to_year[$i];
+            $calItem->onetime_unsheduled_month = $request->onetime_unsheduled_month[$i];
+            $calItem->onetime_unsheduled_year = $request->onetime_unsheduled_year[$i];
+            $calItem->onetime_unsheduled_val = $request->onetime_unsheduled_val[$i];
+            $calItem->new_borrowing_rate = $request->new_borrowing_rate[$i];
+            $calItem->new_repayment_rate_inp = $request->new_repayment_rate_inp[$i];
+            $calItem->save();
+        }
+
         echo 'Saved successfully!';
     }
     public function saveTimeline($id, Request $request) {

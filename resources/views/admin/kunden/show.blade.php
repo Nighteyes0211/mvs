@@ -111,78 +111,81 @@
             {{ $kunden->strasse }}<br>
             {{ $kunden->plz }}
             {{ $kunden->wohnort }}<br>
-            <h5><b>Finanzierungsbedarf</b></h5>
-            <table style="width:100%">
-                <tr>
-                    <td>Kaufpreis des Objekts</td>
-                    <td>{{ number_format(  $kunden->kaufpreis, 2, ',', '.') }}€</td>
-                </tr>
-                <tr>
-                    <td>Umbau/Modernisierung</td>
-                    <td>{{ number_format( $kunden->kostenumbau, 2, ',', '.') }}€</td>
-                </tr>
-                <tr>
-                    <td>Notar/Gericht</td>
-                    <td>{{ number_format( $kunden->kostennotar, 2, ',', '.') }}€</td>
-                </tr>
-                <tr>
-                    <td>Grunderwerbssteuer</td>
-                    <td>{{ number_format( $kunden->grunderwerbssteuer, 2, ',', '.') }}€</td>
-                </tr>
-
-                <tr>
-                    <td>Maklerkosten</td>
-                    <td>{{ number_format( $kunden->maklerkosten, 2, ',', '.') }}€</td>
-                </tr>
-                <tr>
-                    <td>Gesamtkosten</td>
-                    <td>{{ number_format( $kunden->gesamtkosten, 2, ',', '.') }}€</td>
-                </tr>
-                <tr>
-                    <td>Eigenkapital</td>
-                    <td>{{ number_format( $kunden->eigenkapital, 2, ',', '.') }}€</td>
-                </tr>
-                <tr>
-                    <td>Finanzierungsbedarf</td>
-                    <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }}€</td>
-                </tr>
-            </table>
-            <hr>
-            <br>
-
-
-        <div id="button_edit" style="position: fixed; right: 0px; margin-top: -270px; z-index: 111111; ">
-
-<li class="nav-item"><a href="{{route('kunden.edit',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden bearbeiten</a></li>
-
-</div>
-            <h5><b>Tilgungsplan </b></h5>
-            <div style="max-height: 300px; overflow-y: scroll">
-                <table style="width:100%; max-height: 500px !important;">
-                    <thead>
-                        <tr>
-                            <th>Rückzahlungsdatum</th>
-                            <th>Rate</th>
-                            <th>Sonder-tilgung</th>
-                            <th>Zinsen</th>
-                            <th>Tilgung</th>
-                            <th>Darlehensrest</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($repayments as $repayment)
-                        <tr>
-                            <td>{{$repayment->repayment_date}}</td>
-                            <td>{{$repayment->rate}}</td>
-                            <td>{{$repayment->sonder_tilgung}}</td>
-                            <td>{{$repayment->zinsen}}</td>
-                            <td>{{$repayment->tilgung}}</td>
-                            <td>{{$repayment->darlehensrest}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div id="button_edit" style="position: fixed; right: 0px; margin-top: -270px; z-index: 111111; ">
+                <li class="nav-item"><a href="{{route('kunden.edit',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden bearbeiten</a></li>
             </div>
+
+            <div class="modules">
+                @for ($i=0; $i < count($calc_results); $i++)
+                <h3 style="margin-top: 20px;">Finanzbaustein {{$i+1}}</h3>
+                <h5><b>Finanzierungsbedarf</b></h5>
+                <table style="width:100%">
+                    <tr>
+                        <td>Kaufpreis des Objekts</td>
+                        <td>{{ number_format(  $kunden->kaufpreis, 2, ',', '.') }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Umbau/Modernisierung</td>
+                        <td>{{ number_format( $kunden->kostenumbau, 2, ',', '.') }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Notar/Gericht</td>
+                        <td>{{ number_format( $kunden->kostennotar, 2, ',', '.') }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Grunderwerbssteuer</td>
+                        <td>{{ number_format( $kunden->grunderwerbssteuer, 2, ',', '.') }}€</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maklerkosten</td>
+                        <td>{{ number_format( $kunden->maklerkosten, 2, ',', '.') }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Gesamtkosten</td>
+                        <td>{{ number_format( $kunden->gesamtkosten, 2, ',', '.') }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Eigenkapital</td>
+                        <td>{{ number_format( $kunden->eigenkapital, 2, ',', '.') }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Finanzierungsbedarf</td>
+                        <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }}€</td>
+                    </tr>
+                </table>
+                <br>
+                <h5><b>Tilgungsplan </b></h5>
+                <div style="max-height: 300px; overflow-y: scroll">
+                    <table style="width:100%; max-height: 500px !important;">
+                        <thead>
+                            <tr>
+                                <th>Rückzahlungsdatum</th>
+                                <th>Rate</th>
+                                <th>Sonder-tilgung</th>
+                                <th>Zinsen</th>
+                                <th>Tilgung</th>
+                                <th>Darlehensrest</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($repayments as $repayment)
+                            <tr>
+                                <td>{{$repayment->repayment_date}}</td>
+                                <td>{{$repayment->rate}}</td>
+                                <td>{{$repayment->sonder_tilgung}}</td>
+                                <td>{{$repayment->zinsen}}</td>
+                                <td>{{$repayment->tilgung}}</td>
+                                <td>{{$repayment->darlehensrest}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                @endfor
+            </div>
+            <!-- end Module -->
             <br>
             <a  class="btn btn-danger" style="color: #fff" href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}"> Angebot erstellen </a>
             <hr/>
