@@ -11,6 +11,8 @@
 |
 */
 
+use MVS\Http\Controllers\KundenController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,6 +29,7 @@ Route::get('/admin/kunden/{id}/delete_repayment', 'KundenController@deleteRepaym
 Route::get('/admin/kunden/{id}/delete_timeline', 'KundenController@deleteTimeline');
 Route::post('/admin/kunden/{id}/save_timeline', 'KundenController@saveTimeline');
 Route::post('/admin/kunden/{id}/save_calculation', 'KundenController@saveCalculation');
+Route::post('/admin/kunden/{id}/add_calculation', 'KundenController@addCalculation');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dynamic_pdf', 'DynamicPDFController@index');
@@ -49,7 +52,7 @@ Route::get('/deleteuser/{id}', 'UserController@destroy');
 Route::get('/edituser/{id}', 'UserController@edit');
 Route::get('/setgroupleader', 'GroupController@update');
 
-Route::middleware(['auth', 'status'])->prefix('headmin')->group(function () {    
+Route::middleware(['auth', 'status'])->prefix('headmin')->group(function () {
     Route::get('/checklist', 'ChecklistController@index')->name('checklist');
     Route::post('/checklist', 'ChecklistController@store')->name('checklist');
     Route::post('/checklistCategory', 'ChecklistController@checklistCategory')->name('checklistCategory');

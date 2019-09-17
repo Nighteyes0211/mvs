@@ -175,9 +175,10 @@ class KundenController extends Controller
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
             $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
         }
-        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->first();
+        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->get();
         $checklists = Checklist::latest()->get();
-        return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
+        $cal = $Calculations[0];
+        return view('admin.kunden.edit', compact('kunden','users','cal','checklists','CalData','Calculations'));
     }
 
     /**
@@ -623,11 +624,45 @@ class KundenController extends Controller
     function stringReplace($string, $from = '.', $to=',')
     {
         $newString = '';
-        for ($i=0; $i < strlen($string); $i++) { 
+        for ($i=0; $i < strlen($string); $i++) {
             if($string[$i] >= '0' && $string[$i] <= '9') $newString .= $string[$i];
             if($string[$i] == $from) $newString .= $to;
         }
         return $newString;
+    }
+
+    function addCalculation($id, Request $request)
+    {
+        $insertData = [
+            'kunden_id' => $id,
+            'loan_period' => $request->loan_period,
+            'payment_month' => $request->payment_month,
+            'payment_year' => $request->payment_year,
+            'payment_discount' => $request->payment_discount,
+            'borrowing_rate' => $request->borrowing_rate,
+            'montly_deposit_val' => $request->montly_deposit_val,
+            'annual_unsheduled_month' => $request->annual_unsheduled_month,
+            'annual_unsheduled_year' => $request->annual_unsheduled_year,
+            'annual_unsheduled_val' => 0,//$request->annual_unsheduled_val,
+            'annual_to_month' => $request->annual_to_month,
+            'annual_to_year' => $request->annual_to_year,
+            'onetime_unsheduled_month' => $request->onetime_unsheduled_month,
+            'onetime_unsheduled_year' => $request->onetime_unsheduled_year,
+            'onetime_unsheduled_val' => $request->onetime_unsheduled_val,
+            'new_borrowing_rate' => $request->new_borrowing_rate,
+            'new_repayment_rate_inp' => $request->new_repayment_rate_inp
+        ];
+        // $cid = DB::table('calc_result')
+        // ->insert(
+        //     ['kunden_id' => $id],
+        //     $request->except('_token')
+        // );
+        // $request->request->add(['kunden_id' => $id]);
+         $cid = DB::table('calc_result')->insert($insertData);
+
+        echo $cid;
+
+        echo 'Saved successfully!';
     }
 }
 

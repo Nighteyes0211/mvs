@@ -91,22 +91,22 @@
 
     <script>
         $(document).ready(function () {
-            $('#loan_period').val('{{$CalData->loan_period}}');
-            $('#payment_month').val('{{$CalData->payment_month}}');
-            $('#payment_year').val('{{$CalData->payment_year}}');
-            $('#payment_discount').val('{{$CalData->payment_discount}}');
-            $('#borrowing_rate').val('{{$CalData->borrowing_rate}}');
-            $('#montly_deposit_val').val('{{$CalData->montly_deposit_val}}');
-            $('#annual_unsheduled_month').val('{{$CalData->annual_unsheduled_month}}');
-            $('#annual_unsheduled_year').val('{{$CalData->annual_unsheduled_year}}');
-            $('#annual_unsheduled_val').val('{{$CalData->annual_unsheduled_val}}');
-            $('#annual_to_month').val('{{$CalData->annual_to_month}}');
-            $('#annual_to_year').val('{{$CalData->annual_to_year}}');
-            $('#onetime_unsheduled_month').val('{{$CalData->onetime_unsheduled_month}}');
-            $('#onetime_unsheduled_year').val('{{$CalData->onetime_unsheduled_year}}');
-            {{--$('#onetime_unsheduled_val').val('{{$CalData->onetime_unsheduled_val}}');--}}
-            $('#new_borrowing_rate').val('{{$CalData->new_borrowing_rate}}');
-            $('#new_repayment_rate_inp').val('{{$CalData->new_repayment_rate_inp}}');
+            $('#loan_period').val('{{$CalData[0]->loan_period}}');
+            $('#payment_month').val('{{$CalData[0]->payment_month}}');
+            $('#payment_year').val('{{$CalData[0]->payment_year}}');
+            $('#payment_discount').val('{{$CalData[0]->payment_discount}}');
+            $('#borrowing_rate').val('{{$CalData[0]->borrowing_rate}}');
+            $('#montly_deposit_val').val('{{$CalData[0]->montly_deposit_val}}');
+            $('#annual_unsheduled_month').val('{{$CalData[0]->annual_unsheduled_month}}');
+            $('#annual_unsheduled_year').val('{{$CalData[0]->annual_unsheduled_year}}');
+            $('#annual_unsheduled_val').val('{{$CalData[0]->annual_unsheduled_val}}');
+            $('#annual_to_month').val('{{$CalData[0]->annual_to_month}}');
+            $('#annual_to_year').val('{{$CalData[0]->annual_to_year}}');
+            $('#onetime_unsheduled_month').val('{{$CalData[0]->onetime_unsheduled_month}}');
+            $('#onetime_unsheduled_year').val('{{$CalData[0]->onetime_unsheduled_year}}');
+            {{--$('#onetime_unsheduled_val').val('{{$CalData[0]->onetime_unsheduled_val}}');--}}
+            $('#new_borrowing_rate').val('{{$CalData[0]->new_borrowing_rate}}');
+            $('#new_repayment_rate_inp').val('{{$CalData[0]->new_repayment_rate_inp}}');
             $('#annual_unsheduled_year').change(function () {
                 $('#annual_to_year').html('');
                 var html = '';
@@ -631,632 +631,667 @@
             var Calc = `<div class="card card-` + cardNo +`" style="margin-top: 20px;">
                                 <div class="card-header" id="heading-` + cardNo +`">
                                     <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse"
-            data-target="#collapse-` + cardNo +`">
-            Finanzbaustein #` + (cardNo+1) +`
-            </button>
-            <span class="removeCard float-right"><i class="fa fa-times"
-            onclick="removeCard(` + cardNo +`)"></i></span>
-            </h2>
-            </div>
-            <div id="collapse-` + cardNo +`" data-parent="#Calculation">
-            <div class="card-body">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                            data-target="#collapse-` + cardNo +`">
+                            Finanzbaustein #` + (cardNo+1) +`
+                            </button>
+                            <span class="removeCard float-right"><i class="fa fa-times"
+                            onclick="removeCard(` + cardNo +`)"></i></span>
+                            </h2>
+                            </div>
+                            <div id="collapse-` + cardNo +`" data-parent="#Calculation">
+                            <div class="card-body">
 
-            <div class="row">
-
-
-
-            <table class="table table-striped table-bordered">
-
-            <tr>
-            <td colspan="4"><h5>Darlehensrechner</h5></td>
-
-            </tr>
-
-            <tr>
-            <td>Kreditsumme ( € ) <span class="text-danger"
-            id="message_loan_amount"></span></td>
-            <td colspan="4"><input class="form-control text-right"
-            value=""
-            id="loan_amount_` + cardNo +`" type=""
-            disabled></td>
-            </tr>
-            <tr>
-            <td>Zinsbindung <span class="text-danger"
-            id="message_loan_period_` + cardNo +`"></span>
-            </td>
-            <td colspan="4">
-            <select id="loan_period_` + cardNo +`" class="form-control">
-
-            </select>
-
-            </td>
-            </tr>
-
-            <tr>
-            <td>Auszahlungstermin</td>
-            <td colspan="2">
-            <select id="payment_month_` + cardNo +`" class="form-control">
-            <option selected value='1'>Januar</option>
-            <option value='2'>Februar</option>
-            <option value='3'>Marz</option>
-            <option value='4'>April</option>
-            <option value='5'>Mai</option>
-            <option value='6'>Juni</option>
-            <option value='7'>Juli</option>
-            <option value='8'>August</option>
-            <option value='9'>September</option>
-            <option value='10'>Oktober</option>
-            <option value='11'>November</option>
-            <option value='12'>Dezember</option>
-            </select>
-            </td>
-            <td colspan="4">
-
-            <select id="payment_year_` + cardNo +`" class="form-control">
-
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-
-            </select>
-            </td>
-            </tr>
-            <tr>
-            <td>Grundbuchkosten ( € )</td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="registery_fees_` + cardNo +`"
-            class="form-control text-right"
-            disabled>
-
-            <div class="input-group-append">
-            <span class="input-group-text">€</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Disagio (Prozent)</td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="payment_discount_` + cardNo +`" value=0.00
-            class="form-control text-right" disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">%</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Auszahlungsbetrag ( € )</td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="payment_amount_` + cardNo +`"
-            class="form-control text-right"
-            value=""
-            disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">€</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Sollzinssatz (Prozent) <span class="text-danger"
-            id="message_borrowing_rate"></span>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="borrowing_rate_` + cardNo +`"
-            class="form-control text-right"
-            value="1,50">
-            <div class="input-group-append">
-            <span class="input-group-text">%</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>
-            <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input"
-            id="repayment_date_` + cardNo +`" name="repayment">
-            <label class="custom-control-label" for="repayment_date">Tilgungssatz
-            (Prozent)</label>
-            </div>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="repayment_date_inp_` + cardNo +`"
-            class="form-control text-right" disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">%</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>
-            <div class="custom-control custom-radio">
-            {{--                                                            radio button input Monatsrate--}}
-            <input type="radio" class="custom-control-input"
-            id="montly_deposit_` + cardNo +`" name="repayment"
-            checked>
-            <label class="custom-control-label" for="montly_deposit">Monatsrate
-            ( € ) <span class="text-danger"
-            id="message_montly_deposit"></span></label>
-            </div>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            {{--                                                        input field Monatsrate--}}
-            <input id="montly_deposit_val_` + cardNo +`"
-            class="form-control text-right" value="1.500,00">
-            <div class="input-group-append">
-            <span class="input-group-text">€</span>
-            </div>
-            </div>
-            </td>
-
-            </tr>
-            <tr>
-            <td>
-            <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input"
-            id="payment_opt_rad_` + cardNo +`" name="repayment">
-            <label class="custom-control-label" for="payment_opt_rad">Volltilgerdarlehen</label>
-            </div>
-            </td>
-            <td colspan="4">
-            <div class="form-control">
-            {{-- Alert message for Volltilgerdarlehen --}}
-            <span id="message_payment_opt" class="text-danger"></span>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Jährliche Sondertilgungen ab</td>
-            <td>
-            <select id="annual_unsheduled_month_` + cardNo +`"
-            class="form-control">
-            <option selected value='1'>Januar</option>
-            <option value='2'>Februar</option>
-            <option value='3'>Marz</option>
-            <option value='4'>April</option>
-            <option value='5'>Mai</option>
-            <option value='6'>Juni</option>
-            <option value='7'>Juli</option>
-            <option value='8'>August</option>
-            <option value='9'>September</option>
-            <option value='10'>Oktober</option>
-            <option value='11'>November</option>
-            <option value='12'>Dezember</option>
-            </select>
-            </td>
-            <td>
-            <select id="annual_unsheduled_year_` + cardNo +`"
-            class="form-control">
-
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            </select>
-            </td>
-
-            <td colspan="4"><input id="annual_unsheduled_val" value=2400
-            class="form-control text-right"></td>
-            </tr>
-
-            <tr>
-            <td>bis</td>
-            <td>
-            <select id="annual_to_month_` + cardNo +`" class="form-control">
-            <option value='1'>Januar</option>
-            <option value='2'>Februar</option>
-            <option value='3'>Marz</option>
-            <option value='4'>April</option>
-            <option value='5'>Mai</option>
-            <option value='6'>Juni</option>
-            <option value='7'>Juli</option>
-            <option value='8'>August</option>
-            <option value='9'>September</option>
-            <option value='10'>Oktober</option>
-            <option value='11'>November</option>
-            <option value='12'>Dezember</option>
-            </select>
-            </td>
-            <td colspan="4">
-            <select id="annual_to_year_` + cardNo +`" class="form-control">
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2025">2026</option>
-            <option value="2025">2027</option>
-            <option value="2025">2028</option>
-            <option value="2025">2029</option>
-            <option value="2025">2030</option>
-            </select>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Einmalige Sondertilgung</td>
-            <td>
-            <select id="onetime_unsheduled_month_` + cardNo +`"
-            class="form-control">
-            <option selected value='1'>Januar</option>
-            <option value='2'>Februar</option>
-            <option value='3'>Marz</option>
-            <option value='4'>April</option>
-            <option value='5'>Mai</option>
-            <option value='6'>Juni</option>
-            <option value='7'>Juli</option>
-            <option value='8'>August</option>
-            <option value='9'>September</option>
-            <option value='10'>Oktober</option>
-            <option value='11'>November</option>
-            <option value='12'>Dezember</option>
-            </select>
-            </td>
-            <td>
-            <select id="onetime_unsheduled_year_` + cardNo +`"
-            class="form-control">
-
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-            <option value="2028">2028</option>
-            <option value="2029">2029</option>
-            <option value="2030">2030</option>
-            <option value="2031">2031</option>
-            <option value="2032">2032</option>
-            <option value="2033">2033</option>
-            <option value="2032">2034</option>
-            <option value="2033">2035</option>
-            </select>
-            </td>
-
-            <td colspan="4">
-            <input id="onetime_unsheduled_val_` + cardNo +`" value="0"
-            class="form-control text-right"
-            value="50000">
-            </td>
-
-            </tr>
-
-            <tr>
-            <td>Restschuld ( € ) <span class="text-danger"
-            id="message_Outstanding_balance"></span>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="Outstanding_balance_` + cardNo +`"
-            class="form-control text-right" disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">€</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Effektivzins (Prozent)</td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="effective_interest_` + cardNo +`"
-            class="form-control text-right" disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">%</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Anschlusskredit</td>
-            <td colspan="4">
-            <input id="connection_credit_` + cardNo +`"
-            class="form-control text-right" disabled>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Neuer Sollzinssatz (Prozent) <span
-            id="message_new_borrowing_rate_` + cardNo +`"
-            class="text-danger"></span>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="new_borrowing_rate_` + cardNo +`"
-            class="form-control text-right" value="4,00">
-            <div class="input-group-append">
-            <span class="input-group-text">%</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-            <tr>
-            <td>
-            <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input"
-            id="new_repayment_rate_` + cardNo +`" name="rates"
-            checked>
-            <label class="custom-control-label"
-            for="new_repayment_rate">Neuer Tilgungssatz (Proz.)
-            <span id="message_new_repayment_rate"
-            class="text-danger"></span></label>
-            </div>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="new_repayment_rate_inp_` + cardNo +`"
-            class="form-control text-right" value="1,00"
-            data-toggle="tooltip" data-placement="right"
-            title="Redemption rate as a percentage of the initial loan smount">
-            <div class="input-group-append">
-            <span class="input-group-text">%</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-            <tr>
-            <td>
-            <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input"
-            id="new_rate_` + cardNo +`" name="rates">
-            <label class="custom-control-label" for="new_rate">Neuer
-            Rate (Euro)</label>
-            </div>
-            </td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="new_rate_inp_` + cardNo +`"
-            class="form-control text-right"
-            disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">€</span>
-            </div>
-            </div>
-            </td>
-            </tr>
-
-            <tr>
-            <td>Gesamtlaufzeit (Jahre/Monate)</td>
-            <td colspan="4">
-            <div class="input-group">
-            <input id="total_maturity_` + cardNo +`"
-            class="form-control text-right"
-            disabled>
-            <div class="input-group-append">
-            <span class="input-group-text">J/M</span>
-            </div>
-            </div>
-            </td>
-
-            </tr>
-            </table>
-
-            <div class="col-sm-12">
-            <div class="form-group">
-            <input type="hidden" name="Cal[` + cardNo +`}][id]"
-            value="">
-            <input type="hidden" class="isTM-` + cardNo +`"
-            name="Cal[` + cardNo +`][istm]" value="0">
-
-            <a onclick="openTimeLine(` + cardNo +`)" href="Javacript:void(0)"
-            class="btn btn-primary addTimeLiner-` + cardNo +`">Baufi
-            Zeitstrahl hinzufügen</a>
+                            <div class="row">
 
 
 
-            <a onclick="openCtTimeLine(` + cardNo + `)"
-            href="Javacript:void(0)"
-            class="btn btn-primary addCtTimeLiner-` + cardNo +`">Angepasster
-            Zeitstrahl hinzufügen</a>
+                            <table class="table table-striped table-bordered">
 
-            </div>
-            </div>
-            </div>
+                            <tr>
+                            <td colspan="4"><h5>Darlehensrechner</h5></td>
 
-            <div class="thisTimeline-` + cardNo +`">
+                            </tr>
 
-            <input type="hidden" name="Cal[` + cardNo +`][timeline][id]"
-            value="">
-            <div class="row ten_fields-` + cardNo +` mt-35">
-            <div class="col-sm-12">
-            <h5>Zeitstrahl Phase 1</h5>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Finanzierungsbedarf</label>
-            <input type="text" id="finanzierungsbedarf_phase_eins"
-            name="Cal[` + cardNo +`][timeline][finanzierungsbedarf_phase_eins]"
-            class="form-control" placeholder="0€"
-            value=""
-            required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Zins p.a.</label>
-            <input type="text" id="jahreszins_phase_eins"
-            name="Cal[` + cardNo +`][timeline][jahreszins_phase_eins]"
-            class="form-control" placeholder="%"
-            value=""
-            required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Laufzeit</label>
-            <input type="text" id="laufzeit_phase_eins"
-            name="Cal[` + cardNo +`][timeline][laufzeit_phase_eins]"
-            class="form-control" placeholder="Jahre"
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">monatliche Rate</label>
-            <input type="text" id="rate_monatlich_phase_eins"
-            name="Cal[` + cardNo +`][timeline][rate_monatlich_phase_eins]"
-            class="form-control" placeholder="0€"
-            value=""
-            required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Restschuld Phase 1</label>
-            <input type="text" id="restschuld_phase_eins"
-            name="Cal[` + cardNo +`][timeline][restschuld_phase_eins]"
-            class="form-control" placeholder=""
-            value=""
-            required>
-            </div>
-            </div>
-            <div class="row ten_fields-` + cardNo +`">
-            <div class="col-sm-12">
-            <h5>Zeitstrahl Phase 2</h5>
-            </div>
+                            <tr>
+                            <td>Kreditsumme ( € ) <span class="text-danger"
+                            id="message_loan_amount"></span></td>
+                            <td colspan="4"><input class="form-control text-right"
+                            value=""
+                            id="loan_amount_` + cardNo +`" type=""
+                            disabled></td>
+                            </tr>
+                            <tr>
+                            <td>Zinsbindung <span class="text-danger"
+                            id="message_loan_period_` + cardNo +`"></span>
+                            </td>
+                            <td colspan="4">
+                            <select id="loan_period_` + cardNo +`" class="form-control">
 
-            <div class="col-sm-3 form-group">
-            <label for="bank">Finanzierungsbedarf</label>
-            <input type="text" id="finanzierungsbedarf_phase_zwei"
-            name="Cal[` + cardNo +`][timeline][finanzierungsbedarf_phase_zwei]"
-            class="form-control" placeholder="0€"
-            value=""
-            required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Zins p.a.</label>
-            <input type="text" id="jahreszins_phase_zwei"
-            name="Cal[` + cardNo +`][timeline][jahreszins_phase_zwei]"
-            class="form-control" placeholder="%"
-            value=""
-            required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Laufzeit</label>
-            <input type="text" id="laufzeit_phase_zwei"
-            name="Cal[` + cardNo +`][timeline][laufzeit_phase_zwei]"
-            class="form-control" placeholder="Jahre"
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">monatliche Rate</label>
-            <input type="text" id="rate_monatlich_phase_zwei"
-            name="Cal[` + cardNo +`][timeline][rate_monatlich_phase_zwei]"
-            class="form-control" placeholder="0€"
-            value=""
-            required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label for="bank">Restschuld</label>
-            <input type="text" id="restschuld_ende"
-            name="Cal[`+ cardNo +`][timeline][restschuld_ende]"
-            class="form-control" placeholder="Jahre"
-            value="" required>
-            </div>
-            </div>
+                            </select>
 
-            </div>
+                            </td>
+                            </tr>
 
-            <div class="thisCtTimeline-`+ cardNo +`">
-            <input type="hidden" name="Cal[`+ cardNo +`][customerTimeline][id]"
-            value="">
-            <div class="row ct_fields-`+ cardNo +` mt-35">
-            <div class="col-sm-12">
-            <h5>Zeitstrahl Phase 1 (Angepasster)</h5>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label>Darlehen</label>
-            <input type="text"
-            name="Cal[` + cardNo +`][customerTimeline][darlehen]"
-            class="form-control" placeholder=""
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label>Zinsstaz</label>
-            <input type="text"
-            name="Cal[` + cardNo +`][customerTimeline][zinsstaz]"
-            class="form-control" placeholder=""
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label>Tilgung</label>
-            <input type="text"
-            name="Cal[` + cardNo +`][customerTimeline][tilgung]"
-            class="form-control" placeholder=""
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label>Laufzeit</label>
-            <input type="text"
-            name="Cal[` + cardNo +`][customerTimeline][laufzeit]"
-            class="form-control" placeholder=""
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label>Rate monatl</label>
-            <input type="text"
-            name="Cal[` + cardNo +`][customerTimeline][rate_monatl]"
-            class="form-control" placeholder=""
-            value="" required>
-            </div>
-            <div class="col-sm-3 form-group">
-            <label>Restschuld</label>
-            <input type="text"
-            name="Cal[` + cardNo +`][customerTimeline][restschuld]"
-            class="form-control" placeholder=""
-            value="" required>
-            </div>
-            </div>
-            </div>
+                            <tr>
+                            <td>Auszahlungstermin</td>
+                            <td colspan="2">
+                            <select id="payment_month_` + cardNo +`" class="form-control">
+                            <option selected value='1'>Januar</option>
+                            <option value='2'>Februar</option>
+                            <option value='3'>Marz</option>
+                            <option value='4'>April</option>
+                            <option value='5'>Mai</option>
+                            <option value='6'>Juni</option>
+                            <option value='7'>Juli</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>Oktober</option>
+                            <option value='11'>November</option>
+                            <option value='12'>Dezember</option>
+                            </select>
+                            </td>
+                            <td colspan="4">
 
-            </div>
-            </div>
-            </div>
-            <div class="row mt-15">
-            <div class="col-sm-12 ">
-            <div class="row">
-            <div class="col-sm-6">
-            <h5>Angebotsdatum</h5>
-            <input type="date" name="angebotdate" id="angebotdate_` + cardNo +`" value=""
-            placeholder="Angebotsdatum" class="form-control">
+                            <select id="payment_year_` + cardNo +`" class="form-control">
 
-            </div>
-            <div class="col-sm-6">
-            <button type="button" value="calculation" name="calculation"
-            class="btn btn-primary float-right"
-            onclick="save_calculation(` + cardNo +` )">
-            Berechnung
-            speichern
-            </button>
-            </div>
-            </div>
-            </div>
-            </div>`;
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+
+                            </select>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>Grundbuchkosten ( € )</td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="registery_fees_` + cardNo +`"
+                            class="form-control text-right"
+                            disabled>
+
+                            <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Disagio (Prozent)</td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="payment_discount_` + cardNo +`" value=0.00
+                            class="form-control text-right" disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Auszahlungsbetrag ( € )</td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="payment_amount_` + cardNo +`"
+                            class="form-control text-right"
+                            value=""
+                            disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Sollzinssatz (Prozent) <span class="text-danger"
+                            id="message_borrowing_rate"></span>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="borrowing_rate_` + cardNo +`"
+                            class="form-control text-right"
+                            value="1.50">
+                            <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>
+                            <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input"
+                            id="repayment_date_` + cardNo +`" name="repayment">
+                            <label class="custom-control-label" for="repayment_date">Tilgungssatz
+                            (Prozent)</label>
+                            </div>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="repayment_date_inp_` + cardNo +`"
+                            class="form-control text-right" disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>
+                            <div class="custom-control custom-radio">
+                            {{--                                                            radio button input Monatsrate--}}
+                            <input type="radio" class="custom-control-input"
+                            id="montly_deposit_` + cardNo +`" name="repayment"
+                            checked>
+                            <label class="custom-control-label" for="montly_deposit">Monatsrate
+                            ( € ) <span class="text-danger"
+                            id="message_montly_deposit"></span></label>
+                            </div>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            {{--                                                        input field Monatsrate--}}
+                            <input id="montly_deposit_val_` + cardNo +`"
+                            class="form-control text-right" value="1.500.00">
+                            <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                            </div>
+                            </div>
+                            </td>
+
+                            </tr>
+                            <tr>
+                            <td>
+                            <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input"
+                            id="payment_opt_rad_` + cardNo +`" name="repayment">
+                            <label class="custom-control-label" for="payment_opt_rad">Volltilgerdarlehen</label>
+                            </div>
+                            </td>
+                            <td colspan="4">
+                            <div class="form-control">
+                            {{-- Alert message for Volltilgerdarlehen --}}
+                            <span id="message_payment_opt" class="text-danger"></span>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Jährliche Sondertilgungen ab</td>
+                            <td>
+                            <select id="annual_unsheduled_month_` + cardNo +`"
+                            class="form-control">
+                            <option selected value='1'>Januar</option>
+                            <option value='2'>Februar</option>
+                            <option value='3'>Marz</option>
+                            <option value='4'>April</option>
+                            <option value='5'>Mai</option>
+                            <option value='6'>Juni</option>
+                            <option value='7'>Juli</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>Oktober</option>
+                            <option value='11'>November</option>
+                            <option value='12'>Dezember</option>
+                            </select>
+                            </td>
+                            <td>
+                            <select id="annual_unsheduled_year_` + cardNo +`"
+                            class="form-control">
+
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            </select>
+                            </td>
+
+                            <td colspan="4"><input id="annual_unsheduled_val" value=2400
+                            class="form-control text-right"></td>
+                            </tr>
+
+                            <tr>
+                            <td>bis</td>
+                            <td>
+                            <select id="annual_to_month_` + cardNo +`" class="form-control">
+                            <option value='1'>Januar</option>
+                            <option value='2'>Februar</option>
+                            <option value='3'>Marz</option>
+                            <option value='4'>April</option>
+                            <option value='5'>Mai</option>
+                            <option value='6'>Juni</option>
+                            <option value='7'>Juli</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>Oktober</option>
+                            <option value='11'>November</option>
+                            <option value='12'>Dezember</option>
+                            </select>
+                            </td>
+                            <td colspan="4">
+                            <select id="annual_to_year_` + cardNo +`" class="form-control">
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2025">2026</option>
+                            <option value="2025">2027</option>
+                            <option value="2025">2028</option>
+                            <option value="2025">2029</option>
+                            <option value="2025">2030</option>
+                            </select>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Einmalige Sondertilgung</td>
+                            <td>
+                            <select id="onetime_unsheduled_month_` + cardNo +`"
+                            class="form-control">
+                            <option selected value='1'>Januar</option>
+                            <option value='2'>Februar</option>
+                            <option value='3'>Marz</option>
+                            <option value='4'>April</option>
+                            <option value='5'>Mai</option>
+                            <option value='6'>Juni</option>
+                            <option value='7'>Juli</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>Oktober</option>
+                            <option value='11'>November</option>
+                            <option value='12'>Dezember</option>
+                            </select>
+                            </td>
+                            <td>
+                            <select id="onetime_unsheduled_year_` + cardNo +`"
+                            class="form-control">
+
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+                            <option value="2032">2032</option>
+                            <option value="2033">2033</option>
+                            <option value="2032">2034</option>
+                            <option value="2033">2035</option>
+                            </select>
+                            </td>
+
+                            <td colspan="4">
+                            <input id="onetime_unsheduled_val_` + cardNo +`" value="0"
+                            class="form-control text-right"
+                            value="50000">
+                            </td>
+
+                            </tr>
+
+                            <tr>
+                            <td>Restschuld ( € ) <span class="text-danger"
+                            id="message_Outstanding_balance"></span>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="Outstanding_balance_` + cardNo +`"
+                            class="form-control text-right" disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Effektivzins (Prozent)</td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="effective_interest_` + cardNo +`"
+                            class="form-control text-right" disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Anschlusskredit</td>
+                            <td colspan="4">
+                            <input id="connection_credit_` + cardNo +`"
+                            class="form-control text-right" disabled>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Neuer Sollzinssatz (Prozent) <span
+                            id="message_new_borrowing_rate_` + cardNo +`"
+                            class="text-danger"></span>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="new_borrowing_rate_` + cardNo +`"
+                            class="form-control text-right" value="4.00">
+                            <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input"
+                            id="new_repayment_rate_` + cardNo +`" name="rates"
+                            checked>
+                            <label class="custom-control-label"
+                            for="new_repayment_rate">Neuer Tilgungssatz (Proz.)
+                            <span id="message_new_repayment_rate"
+                            class="text-danger"></span></label>
+                            </div>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="new_repayment_rate_inp_` + cardNo +`"
+                            class="form-control text-right" value="1.00"
+                            data-toggle="tooltip" data-placement="right"
+                            title="Redemption rate as a percentage of the initial loan smount">
+                            <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input"
+                            id="new_rate_` + cardNo +`" name="rates">
+                            <label class="custom-control-label" for="new_rate">Neuer
+                            Rate (Euro)</label>
+                            </div>
+                            </td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="new_rate_inp_` + cardNo +`"
+                            class="form-control text-right"
+                            disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                            </div>
+                            </div>
+                            </td>
+                            </tr>
+
+                            <tr>
+                            <td>Gesamtlaufzeit (Jahre/Monate)</td>
+                            <td colspan="4">
+                            <div class="input-group">
+                            <input id="total_maturity_` + cardNo +`"
+                            class="form-control text-right"
+                            disabled>
+                            <div class="input-group-append">
+                            <span class="input-group-text">J/M</span>
+                            </div>
+                            </div>
+                            </td>
+
+                            </tr>
+                            </table>
+
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                            <input type="hidden" name="Cal[` + cardNo +`}][id]"
+                            value="">
+                            <input type="hidden" class="isTM-` + cardNo +`"
+                            name="Cal[` + cardNo +`][istm]" value="0">
+
+                            <a onclick="openTimeLine(` + cardNo +`)" href="Javacript:void(0)"
+                            class="btn btn-primary addTimeLiner-` + cardNo +`">Baufi
+                            Zeitstrahl hinzufügen</a>
+
+
+
+                            <a onclick="openCtTimeLine(` + cardNo + `)"
+                            href="Javacript:void(0)"
+                            class="btn btn-primary addCtTimeLiner-` + cardNo +`">Angepasster
+                            Zeitstrahl hinzufügen</a>
+
+                            </div>
+                            </div>
+                            </div>
+
+                            <div class="thisTimeline-` + cardNo +`">
+
+                            <input type="hidden" name="Cal[` + cardNo +`][timeline][id]"
+                            value="">
+                            <div class="row ten_fields-` + cardNo +` mt-35">
+                            <div class="col-sm-12">
+                            <h5>Zeitstrahl Phase 1</h5>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Finanzierungsbedarf</label>
+                            <input type="text" id="finanzierungsbedarf_phase_eins"
+                            name="Cal[` + cardNo +`][timeline][finanzierungsbedarf_phase_eins]"
+                            class="form-control" placeholder="0€"
+                            value=""
+                            required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Zins p.a.</label>
+                            <input type="text" id="jahreszins_phase_eins"
+                            name="Cal[` + cardNo +`][timeline][jahreszins_phase_eins]"
+                            class="form-control" placeholder="%"
+                            value=""
+                            required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Laufzeit</label>
+                            <input type="text" id="laufzeit_phase_eins"
+                            name="Cal[` + cardNo +`][timeline][laufzeit_phase_eins]"
+                            class="form-control" placeholder="Jahre"
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">monatliche Rate</label>
+                            <input type="text" id="rate_monatlich_phase_eins"
+                            name="Cal[` + cardNo +`][timeline][rate_monatlich_phase_eins]"
+                            class="form-control" placeholder="0€"
+                            value=""
+                            required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Restschuld Phase 1</label>
+                            <input type="text" id="restschuld_phase_eins"
+                            name="Cal[` + cardNo +`][timeline][restschuld_phase_eins]"
+                            class="form-control" placeholder=""
+                            value=""
+                            required>
+                            </div>
+                            </div>
+                            <div class="row ten_fields-` + cardNo +`">
+                            <div class="col-sm-12">
+                            <h5>Zeitstrahl Phase 2</h5>
+                            </div>
+
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Finanzierungsbedarf</label>
+                            <input type="text" id="finanzierungsbedarf_phase_zwei"
+                            name="Cal[` + cardNo +`][timeline][finanzierungsbedarf_phase_zwei]"
+                            class="form-control" placeholder="0€"
+                            value=""
+                            required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Zins p.a.</label>
+                            <input type="text" id="jahreszins_phase_zwei"
+                            name="Cal[` + cardNo +`][timeline][jahreszins_phase_zwei]"
+                            class="form-control" placeholder="%"
+                            value=""
+                            required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Laufzeit</label>
+                            <input type="text" id="laufzeit_phase_zwei"
+                            name="Cal[` + cardNo +`][timeline][laufzeit_phase_zwei]"
+                            class="form-control" placeholder="Jahre"
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">monatliche Rate</label>
+                            <input type="text" id="rate_monatlich_phase_zwei"
+                            name="Cal[` + cardNo +`][timeline][rate_monatlich_phase_zwei]"
+                            class="form-control" placeholder="0€"
+                            value=""
+                            required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label for="bank">Restschuld</label>
+                            <input type="text" id="restschuld_ende"
+                            name="Cal[`+ cardNo +`][timeline][restschuld_ende]"
+                            class="form-control" placeholder="Jahre"
+                            value="" required>
+                            </div>
+                            </div>
+
+                            </div>
+
+                            <div class="thisCtTimeline-`+ cardNo +`">
+                            <input type="hidden" name="Cal[`+ cardNo +`][customerTimeline][id]"
+                            value="">
+                            <div class="row ct_fields-`+ cardNo +` mt-35">
+                            <div class="col-sm-12">
+                            <h5>Zeitstrahl Phase 1 (Angepasster)</h5>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label>Darlehen</label>
+                            <input type="text"
+                            name="Cal[` + cardNo +`][customerTimeline][darlehen]"
+                            class="form-control" placeholder=""
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label>Zinsstaz</label>
+                            <input type="text"
+                            name="Cal[` + cardNo +`][customerTimeline][zinsstaz]"
+                            class="form-control" placeholder=""
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label>Tilgung</label>
+                            <input type="text"
+                            name="Cal[` + cardNo +`][customerTimeline][tilgung]"
+                            class="form-control" placeholder=""
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label>Laufzeit</label>
+                            <input type="text"
+                            name="Cal[` + cardNo +`][customerTimeline][laufzeit]"
+                            class="form-control" placeholder=""
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label>Rate monatl</label>
+                            <input type="text"
+                            name="Cal[` + cardNo +`][customerTimeline][rate_monatl]"
+                            class="form-control" placeholder=""
+                            value="" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            <label>Restschuld</label>
+                            <input type="text"
+                            name="Cal[` + cardNo +`][customerTimeline][restschuld]"
+                            class="form-control" placeholder=""
+                            value="" required>
+                            </div>
+                            </div>
+                            </div>
+
+                            </div>
+                            </div>
+                            </div>
+                            <div class="row mt-15">
+                            <div class="col-sm-12 ">
+                            <div class="row">
+                            <div class="col-sm-6">
+                            <h5>Angebotsdatum</h5>
+                            <input type="date" name="angebotdate" id="angebotdate_` + cardNo +`" value=""
+                            placeholder="Angebotsdatum" class="form-control">
+
+                            </div>
+                            <div class="col-sm-6">
+                            <button type="button" value="calculation" name="calculation"
+                            class="btn btn-primary float-right"
+                            onclick="save_calculation(` + cardNo +` )">
+                            Berechnung
+                            speichern
+                            </button>
+                            </div>
+                            </div>
+                            </div>
+                            </div>`;
             target.append(Calc);
+                            console.log($('#loan_period_'+ cardNo).val());
+            $.ajax({
+                url: 'add_calculation',
+                type: 'post',
+                data: {
+                    _token: $('[name="_token"]').val(),
+                    // New 11 fields
+                    loan_period: 1,//$('#loan_period_'+ cardNo).val(),
+                    payment_month: $('#payment_month_' + cardNo).val(),
+                    payment_year: $('#payment_year_' + cardNo).val(),
+                    payment_discount: $('#payment_discount_' + cardNo).val(),
+                    borrowing_rate: $('#borrowing_rate_' + cardNo).val(),
+                    montly_deposit_val: $('#montly_deposit_val_' + cardNo).val(),
+                    annual_unsheduled_month: $('#annual_unsheduled_month_' + cardNo).val(),
+                    annual_unsheduled_year: $('#annual_unsheduled_year_' + cardNo).val(),
+                    annual_unsheduled_val: $('#annual_unsheduled_val' + cardNo).val(),
+                    annual_to_month: $('#annual_to_month_' + cardNo).val(),
+                    annual_to_year: $('#annual_to_year_' + cardNo).val(),
+                    onetime_unsheduled_month: $('#onetime_unsheduled_month_' + cardNo).val(),
+                    onetime_unsheduled_year: $('#onetime_unsheduled_year_' + cardNo).val(),
+                    onetime_unsheduled_val: $('#onetime_unsheduled_val_' + cardNo).val(),
+                    new_borrowing_rate: $('#new_borrowing_rate_' + cardNo).val(),
+                    new_repayment_rate_inp: $('#new_repayment_rate_inp_' + cardNo).val()
+                },
+                success: function (res) {
+                    toastr.success(res);
+                },
+                error: function (error) {
+                    var error = JSON.parse(error.responseText);
+                    error = error.errors;
+                    $.each(error, function (k, v) {
+                        toastr.error(k + ': ' + v[0]);
+                    })
+                }
+            });
         }
 
 </script>
@@ -1545,11 +1580,12 @@
 
                     <div class="accordion mt-35" id="Calculation">
                         <?php $cIndex = 0 ?>
-                        @foreach($Calculations as $cal)
+
+                        @foreach($CalData as $data)
                             <div class="card card-{{$cIndex}}">
                                 <div class="card-header" id="heading-{{$cIndex}}">
                                     <h2 class="mb-0">
-                                    <!-- <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]"> -->
+
                                         <button class="btn btn-link" type="button" data-toggle="collapse"
                                                 data-target="#collapse-{{$cIndex}}">
                                             Finanzbaustein #{{$cIndex+1}}
@@ -1560,18 +1596,11 @@
                                 </div>
                                 <div id="collapse-{{$cIndex}}" data-parent="#Calculation">
                                     <div class="card-body">
-
                                         <div class="row">
-
-
-
                                             <table class="table table-striped table-bordered">
-
                                                 <tr>
                                                     <td colspan="4"><h5>Darlehensrechner</h5></td>
-
                                                 </tr>
-
                                                 <tr>
                                                     <td>Kreditsumme ( € ) <span class="text-danger"
                                                                                 id="message_loan_amount"></span></td>
@@ -1691,7 +1720,7 @@
                                                         <div class="input-group">
                                                             <input id="borrowing_rate_{{$cIndex}}"
                                                                    class="form-control text-right"
-                                                                   value="1,50">
+                                                                   value="1.50">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -1951,7 +1980,7 @@
                                                     <td colspan="4">
                                                         <div class="input-group">
                                                             <input id="new_repayment_rate_inp_{{$cIndex}}"
-                                                                   class="form-control text-right" value="1,00"
+                                                                   class="form-control text-right" value="1.00"
                                                                    data-toggle="tooltip" data-placement="right"
                                                                    title="Redemption rate as a percentage of the initial loan smount">
                                                             <div class="input-group-append">
