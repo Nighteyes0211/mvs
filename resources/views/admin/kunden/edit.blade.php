@@ -2149,9 +2149,13 @@
                                                             loan_period: $('#loan_period').val(),
                                                             payment_month: $('#payment_month').val(),
                                                             payment_year: $('#payment_year').val(),
+                                                            registery_fees: $('#registery_fees').val(),
                                                             payment_discount: $('#payment_discount').val(),
+                                                            payment_amount: $('#payment_amount').val(),
                                                             borrowing_rate: $('#borrowing_rate').val(),
+                                                            repayment_date_inp: $('#repayment_date_inp').val(),
                                                             montly_deposit_val: $('#montly_deposit_val').val(),
+                                                            message_payment_opt: $('#message_payment_opt').val(),
                                                             annual_unsheduled_month: $('#annual_unsheduled_month').val(),
                                                             annual_unsheduled_year: $('#annual_unsheduled_year').val(),
                                                             annual_unsheduled_val: $('#annual_unsheduled_val').val(),
@@ -2160,8 +2164,13 @@
                                                             onetime_unsheduled_month: $('#onetime_unsheduled_month').val(),
                                                             onetime_unsheduled_year: $('#onetime_unsheduled_year').val(),
                                                             onetime_unsheduled_val: $('#onetime_unsheduled_val').val(),
+                                                            outstanding_balance: $('#Outstanding_balance').val(),
+                                                            effective_interest: $('#effective_interest').val(),
+                                                            connection_credit: $('#connection_credit').val(),
                                                             new_borrowing_rate: $('#new_borrowing_rate').val(),
                                                             new_repayment_rate_inp: $('#new_repayment_rate_inp').val(),
+                                                            new_rate_inp: $('#new_rate_inp').val(),
+                                                            total_maturity: $('#total_maturity').val(),
                                                         },
                                                         success: function(res) {
                                                             toastr.success(res);
@@ -2393,9 +2402,9 @@
                                                         </div>
                                                     </td>
                                                     <td colspan="4">
-                                                        <div class="form-control">
+                                                        <div class="input-group">
                                                             {{-- Alert message for Volltilgerdarlehen --}}
-                                                            <span id="message_payment_opt" class="text-danger"></span>
+                                                            <input id="message_payment_opt" class="form-control text-right text-danger">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2739,7 +2748,7 @@
                             </div>
                         </div>
                     </div>
-<!-- 
+<!--
                     <hr>
                     <h4>Tilgungsplan</h4>
                     <div class="row">
