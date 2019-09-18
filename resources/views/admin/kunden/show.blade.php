@@ -162,8 +162,6 @@
                     <thead>
                         <tr>
                             <th>Rückzahlungsdatum</th>
-                            <th>Rate</th>
-                            <th>Sonder-tilgung</th>
                             <th>Zinsen</th>
                             <th>Tilgung</th>
                             <th>Darlehensrest</th>
@@ -173,8 +171,6 @@
                         @foreach($repayments as $repayment)
                         <tr>
                             <td>{{$repayment->repayment_date}}</td>
-                            <td>{{$repayment->rate}}</td>
-                            <td>{{$repayment->sonder_tilgung}}</td>
                             <td>{{$repayment->zinsen}}</td>
                             <td>{{$repayment->tilgung}}</td>
                             <td>{{$repayment->darlehensrest}}</td>

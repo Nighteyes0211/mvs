@@ -2187,22 +2187,16 @@
                                                         for (var m = 4; m <= parseInt($('#loan_period').val()) * 12 + 4 ; m++) {
                                                             {
                                                                 if(m==4){
-                                                                    D[m] = "__";
-                                                                    I[m] = "__";
                                                                     K[m] = "__";
                                                                     L[m] = "__";
                                                                 }
                                                                 else{
-                                                                    D[m]=D[m].toFixed(2);
-                                                                    I[m]=I[m].toFixed(2);
                                                                     K[m]=K[m].toFixed(2);
                                                                     L[m]=L[m].toFixed(2);
                                                                     M[m]=M[m].toFixed(2);
                                                                 }
                                                                 var temp = {
                                                                     'repayment_date': C[m],
-                                                                    'rate': D[m],
-                                                                    'sonder_tilgung': I[m],
                                                                     'zinsen': K[m],
                                                                     'tilgung': L[m],
                                                                     'darlehensrest': M[m]

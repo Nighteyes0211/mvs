@@ -435,8 +435,6 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <tr style="background: #a2a5aa;font-weight: bold;">
                     <th style="padding: 5px 0;">Rückzahlungsdatum</th>
                     <th>Zinsen</th>
-                    <th>Rate</th>
-                    <th>Sonder-tilgung</th>
                     <th>Tilgung</th>
                     <th>Darlehensrest</th>
                 </tr>
@@ -447,8 +445,6 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
 
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->repayment_date}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->rate}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->sonder_tilgung}}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->zinsen}}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->tilgung}}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->darlehensrest}}</td>
