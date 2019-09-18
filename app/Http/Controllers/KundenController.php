@@ -155,8 +155,9 @@ class KundenController extends Controller
     {
         $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->orderBy('id','desc')->get();
         $repayments = Repayment::where('kundens_id', $kunden->id)->get();
+        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->get();
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
-        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline]);
+        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline, 'CalData' => $CalData]);
     }
 
     /**
@@ -623,7 +624,7 @@ class KundenController extends Controller
     function stringReplace($string, $from = '.', $to=',')
     {
         $newString = '';
-        for ($i=0; $i < strlen($string); $i++) { 
+        for ($i=0; $i < strlen($string); $i++) {
             if($string[$i] >= '0' && $string[$i] <= '9') $newString .= $string[$i];
             if($string[$i] == $from) $newString .= $to;
         }
