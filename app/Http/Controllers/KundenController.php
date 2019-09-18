@@ -154,10 +154,9 @@ class KundenController extends Controller
     public function show(Kunden $kunden)
     {
         $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->orderBy('id','desc')->get();
-        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->get();
         $repayments = Repayment::where('kundens_id', $kunden->id)->get();
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
-        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline, 'CalData' => $CalData]);
+        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline]);
     }
 
     /**
@@ -176,10 +175,9 @@ class KundenController extends Controller
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
             $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
         }
-        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->get();
+        $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->first();
         $checklists = Checklist::latest()->get();
-        $cal = $Calculations[0];
-        return view('admin.kunden.edit', compact('kunden','users','cal','checklists','CalData','Calculations'));
+        return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
     }
 
     /**
@@ -464,7 +462,7 @@ class KundenController extends Controller
 
         $angebote = Angebote::where('pdf_name', $pdf_name)->first();
 
-        // return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
+//        return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
 
@@ -486,7 +484,7 @@ class KundenController extends Controller
     public function saveRepayment($id, Request $request) {
 
         $data = $request->data;
-        //Repayment::where('kundens_id', $id)->delete();
+        Repayment::where('kundens_id', $id)->delete();
         foreach ($data as $item) {
             $repayItem = new Repayment;
             $repayItem->kundens_id = $id;
@@ -506,7 +504,15 @@ class KundenController extends Controller
         Repayment::where('kundens_id', $id)->delete();
         return 'success';
     }
-
+    public function saveCalculation($id, Request $request){
+        $request->request->add(['kunden_id' => $id]);
+        DB::table('calc_result')
+            ->updateOrInsert(
+                ['kunden_id' => $id],
+                $request->except('_token')
+            );
+        echo 'Saved successfully!';
+    }
     public function saveTimeline($id, Request $request) {
 
         dd(($request->fullForm));
@@ -617,70 +623,11 @@ class KundenController extends Controller
     function stringReplace($string, $from = '.', $to=',')
     {
         $newString = '';
-        for ($i=0; $i < strlen($string); $i++) {
+        for ($i=0; $i < strlen($string); $i++) { 
             if($string[$i] >= '0' && $string[$i] <= '9') $newString .= $string[$i];
             if($string[$i] == $from) $newString .= $to;
         }
         return $newString;
-    }
-
-    public function addCalculation($id, Request $request)
-    {
-        $insertData = [
-            'kunden_id' => $id,
-            'loan_period' => $request->loan_period,
-            'payment_month' => $request->payment_month,
-            'payment_year' => $request->payment_year,
-            'payment_discount' => $request->payment_discount,
-            'borrowing_rate' => $request->borrowing_rate,
-            'montly_deposit_val' => $request->montly_deposit_val,
-            'annual_unsheduled_month' => $request->annual_unsheduled_month,
-            'annual_unsheduled_year' => $request->annual_unsheduled_year,
-            'annual_unsheduled_val' => $request->annual_unsheduled_val,
-            'annual_to_month' => $request->annual_to_month,
-            'annual_to_year' => $request->annual_to_year,
-            'onetime_unsheduled_month' => $request->onetime_unsheduled_month,
-            'onetime_unsheduled_year' => $request->onetime_unsheduled_year,
-            'onetime_unsheduled_val' => $request->onetime_unsheduled_val,
-            'new_borrowing_rate' => $request->new_borrowing_rate,
-            'new_repayment_rate_inp' => $request->new_repayment_rate_inp
-        ];
-
-        $cid = DB::table('calc_result')->insertGetId($insertData);
-        echo $cid;
-        //echo 'Successful add';
-    }
-
-    public function saveCalculation($id, Request $request){
-        $insertData = [
-            'kunden_id' => $id,
-            'loan_period' => $request->loan_period,
-            'payment_month' => $request->payment_month,
-            'payment_year' => $request->payment_year,
-            'payment_discount' => $request->payment_discount,
-            'borrowing_rate' => $request->borrowing_rate,
-            'montly_deposit_val' => $request->montly_deposit_val,
-            'annual_unsheduled_month' => $request->annual_unsheduled_month,
-            'annual_unsheduled_year' => $request->annual_unsheduled_year,
-            'annual_unsheduled_val' => $request->annual_unsheduled_val,
-            'annual_to_month' => $request->annual_to_month,
-            'annual_to_year' => $request->annual_to_year,
-            'onetime_unsheduled_month' => $request->onetime_unsheduled_month,
-            'onetime_unsheduled_year' => $request->onetime_unsheduled_year,
-            'onetime_unsheduled_val' => $request->onetime_unsheduled_val,
-            'new_borrowing_rate' => $request->new_borrowing_rate,
-            'new_repayment_rate_inp' => $request->new_repayment_rate_inp
-        ];
-        DB::table('calc_result')->where('id',$request->calid)->update(
-                $insertData
-            );
-        echo 'Saved successfully!';
-    }
-
-    public function deleteCalculation($id, Request $request)
-    {
-         DB::table('calc_result')->where(array('id'=>$request->id,'kunden_id' => $id))->delete();
-         echo 'removed';
     }
 }
 

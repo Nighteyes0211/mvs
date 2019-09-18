@@ -156,66 +156,33 @@
 <li class="nav-item"><a href="{{route('kunden.edit',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden bearbeiten</a></li>
 
 </div>
-
-@foreach ($CalData as $key=> $cal)
-<h3 class="mt-15">Finance Module# {{ $key+1 }}</h3>
-<h5><b>Calculation </b></h5>
-<div style="max-height: 300px; overflow-y: scroll">
-        <table style="width:100%; max-height: 500px !important;">
-            <thead>
-                <tr>
-                    <th>Fixed Interested Rate</th>
-                    <th>Payment date</th>
-                    <th>Discount (percent)</th>
-                    <th>Borrowing rate (percent)</th>
-                    <th>Annual special repayments</th>
-                    <th>to</th>
-                    <th>One-off special repayment</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ $cal->loan_period }}</td>
-                    <td>{{ $cal->payment_month }} / {{ $cal->payment_year}}</td>
-                    <td>{{$cal->payment_discount}}</td>
-                    <td>{{ $cal->borrowing_rate }}</td>
-                    <td>{{ $cal->annual_unsheduled_month }} / {{ $cal->annual_unsheduled_year }}</td>
-                    <td>{{ $cal->annual_to_month }}/ {{ $cal->annual_to_year }}</td>
-                    <td>{{ $cal->onetime_unsheduled_month }} / {{ $cal->onetime_unsheduled_year}}</td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
-<h5><b>Tilgungsplan </b></h5>
-<div style="max-height: 300px; overflow-y: scroll">
-    <table style="width:100%; max-height: 500px !important;">
-        <thead>
-            <tr>
-                <th>Rückzahlungsdatum</th>
-                <th>Rate</th>
-                <th>Sonder-tilgung</th>
-                <th>Zinsen</th>
-                <th>Tilgung</th>
-                <th>Darlehensrest</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($repayments as $repayment)
-            <tr>
-                <td>{{$repayment->repayment_date}}</td>
-                <td>{{$repayment->rate}}</td>
-                <td>{{$repayment->sonder_tilgung}}</td>
-                <td>{{$repayment->zinsen}}</td>
-                <td>{{$repayment->tilgung}}</td>
-                <td>{{$repayment->darlehensrest}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endforeach
-
+            <h5><b>Tilgungsplan </b></h5>
+            <div style="max-height: 300px; overflow-y: scroll">
+                <table style="width:100%; max-height: 500px !important;">
+                    <thead>
+                        <tr>
+                            <th>Rückzahlungsdatum</th>
+                            <th>Rate</th>
+                            <th>Sonder-tilgung</th>
+                            <th>Zinsen</th>
+                            <th>Tilgung</th>
+                            <th>Darlehensrest</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($repayments as $repayment)
+                        <tr>
+                            <td>{{$repayment->repayment_date}}</td>
+                            <td>{{$repayment->rate}}</td>
+                            <td>{{$repayment->sonder_tilgung}}</td>
+                            <td>{{$repayment->zinsen}}</td>
+                            <td>{{$repayment->tilgung}}</td>
+                            <td>{{$repayment->darlehensrest}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <br>
             <a  class="btn btn-danger" style="color: #fff" href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}"> Angebot erstellen </a>
             <hr/>
