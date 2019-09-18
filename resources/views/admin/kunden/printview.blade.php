@@ -271,46 +271,22 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <thead>
                 <tr style="background: #a2a5aa;font-weight: bold;">
                     <th></th>
-                    {{-- <th>Annuities</th>
-                    <th>To Interest</th>
-                    <th>Effectiveness</th>
-                    <th>Fixed Interest Rates</th>
-                    <th>Monthly Loan</th>
-                    <th>Residual Debt Interest Rate</th>
-                    <th>Calculated Luaf Time</th>
-                    <th>Net Loan Amount</th>
-                    <th>Initial Interest</th>
-                    <th>Optional Sound Recovery</th> --}}
                 </tr>
                 </thead>
                 <tbody>
                     @php $i = 1; @endphp
                     @foreach( $Calculations as $calculation )
-                        {{-- <tr>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->bank}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->annuities}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->to_interest}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->effectiveness}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->fixed_interest_rates}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->monthly_loan}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->residual_debt_interest_rate}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->calculated_luaf_time}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->net_loan_amount}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->initial_interest}}</td>
-                            <td style="text-align: left; border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$calculation->optional_sound_recovery}}</td>
-                        </tr> --}}
-                        <tr><td><div><b>{{ 'Finanzierungsbaustein ' . $i }}</b></div><span style="float:left; width: 200px">Bank</span><span style="text-align: right">{{$calculation->bank}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Tilgungssatz</span><span style="text-align: right">{{$calculation->annuities}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Sollzins</span><span style="text-align: right">{{$calculation->to_interest}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Effektivzins</span><span style="text-align: right">{{$calculation->effectiveness}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Zinsbindung</span><span style="text-align: right">{{$calculation->fixed_interest_rates}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{$calculation->monthly_loan}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Restschuld Ende Zinsbindung</span><span style="text-align: right">{{$calculation->residual_debt_interest_rate}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Kalkulierte Laufzeit (ca)</span><span style="text-align: right">{{$calculation->calculated_luaf_time}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Netto Darlehensbetrag</span><span style="text-align: right">{{$calculation->net_loan_amount}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Bereitstellungszins</span><span style="text-align: right">{{$calculation->initial_interest}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Optionale Sondertilgung</span><span style="text-align: right">{{$calculation->optional_sound_recovery}}</span></td></tr>
-                        @if ( $calculation->timeline != null )
+                        <tr><td><div><b>{{ 'Finance Module# ' . $i }}</b></div><span style="float:left; width: 200px">Loan amount</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Fixed Interested Rate</span><span style="text-align: right">{{$calculation->loan_period}} Jahre</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Payment Amount</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Borrowing rate</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Monthly rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Payment date</span><span style="text-align: right">{{ $calculation->payment_month }} / {{ $calculation->payment_year}}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Annual special repayments</span><span style="text-align: right">{{$calculation->annual_unsheduled_month}} / {{ $calculation->annual_unsheduled_year }}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">to</span><span style="text-align: right">{{ $calculation->annual_to_month }}/ {{ $calculation->annual_to_year }}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">One-off special repayment</span><span style="text-align: right">{{ $calculation->onetime_unsheduled_month }} / {{ $calculation->onetime_unsheduled_year}}</span></td></tr>
+                        <!-- @if ( $calculation->timeline != null )
                             <tr>
                                 <td>
                                     <div class="uper_box">
@@ -368,12 +344,8 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             <tr><td></td></tr>
                             <tr><td></td></tr>
                             <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                        @endif
-                        @if ( $calculation->customerTimeline != null )
+                        @endif -->
+                        <!-- @if ( $calculation->customerTimeline != null )
                             <tr>
                                 <td>
                                     <div class="uper_box">
@@ -417,11 +389,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             <tr><td></td></tr>
                             <tr><td></td></tr>
                             <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                        @endif
+                        @endif -->
                         @php($i++)
                     @endforeach
                 </tbody>
@@ -472,7 +440,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
         @if(count($kunden->checklists)>0)
         <div>
             <h3 id="" style="color:#28367b; font-size: 1,2em; margin-top: 50px">Folgende Unterlagen werden benötigt</h3>
-            
+
                     @php($i=1)
                     <ul>
                     @foreach($kunden->checklists as $checklist)

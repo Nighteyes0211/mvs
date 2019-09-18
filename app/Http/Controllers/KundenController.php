@@ -435,7 +435,11 @@ class KundenController extends Controller
 
         $angebotedate = DB::table('calculation')->where('kunden_id', $id)->first();
 
-        $Calculations = DB::table('calculation')->where('kunden_id', $id)->get();
+        $Calculations = DB::table('calc_result')->join('calculation', 'calc_result.kunden_id', '=', 'calculation.kunden_id')
+            ->select('calc_result.*', 'calculation.*')->where('calc_result.kunden_id', $id)->get();
+
+        $kunden['offer'] = Angebote::where('customer_id', $id)->orderBy('id','desc')->get();
+
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $id)->where('calculation_id', $Calculation->id)->get()->first();
             $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $id)->where('calculation_id', $Calculation->id)->get()->first();
@@ -463,9 +467,9 @@ class KundenController extends Controller
 
         $angebote = Angebote::where('pdf_name', $pdf_name)->first();
 
-//        return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
+        // return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-        $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
+        $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations', 'kunden'));
 
         // return view('admin.kunden.printview', compact('kunden', 'angebote', 'repayments', 'timeline'));
 
