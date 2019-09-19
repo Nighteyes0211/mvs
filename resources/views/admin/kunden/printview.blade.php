@@ -277,7 +277,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @php $i = 1; @endphp
                     @foreach( $Calculations as $calculation )
                         <tr><td><div><b>{{ 'Finance Module# ' . $i }}</b></div><span style="float:left; width: 200px">Loan amount</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Fixed Interested Rate</span><span style="text-align: right">{{$calculation->loan_period}} Jahre</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Fixed Interested Rate</span><span style="text-align: right">{{$calculation->loan_period}} </span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Payment date</span><span style="text-align: right">{{ $calculation->payment_month }} / {{ $calculation->payment_year}}</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Land Registry Costs</span><span style="text-align: right">{{ $calculation->registery_fees }} &euro;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}} &#37;</span></td></tr>
