@@ -163,24 +163,62 @@
         <table style="width:100%; max-height: 500px !important;">
             <thead>
                 <tr>
-                    <th>Fixed Interested Rate</th>
-                    <th>Payment date</th>
-                    <th>Discount (percent)</th>
-                    <th>Borrowing rate (percent)</th>
-                    <th>Annual special repayments</th>
-                    <th>to</th>
-                    <th>One-off special repayment</th>
+                    <th scope="col">Loan amount</th>
+                    <th scope="col">Fixed Interested Rate</th>
+                    <th scope="col">Payment date</th>
+                    <th scope="col">Land Registry Costs</th>
+                    <th scope="col">Discount (percent)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->loan_period }}</td>
                     <td>{{ $cal->payment_month }} / {{ $cal->payment_year}}</td>
-                    <td>{{$cal->payment_discount}}</td>
-                    <td>{{ $cal->borrowing_rate }}</td>
+                    <td>{{ $cal->registery_fees }} &euro;</td>
+                    <td>{{ $cal->payment_discount }} &#37;</td>
+                </tr>
+                <tr>
+                    <th scope="col">Payment Amount</th>
+                    <th scope="col">Borrowing rate</th>
+                    <th scope="col">Redemption rate (percent)</th>
+                    <th scope="col">Monthly rate</th>
+                    <th scope="col">Annual special repayments</th>
+                </tr>
+                <tr>
+                    <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
+                    <td>{{ $cal->borrowing_rate }} &#37;</td>
+                    <td>{{ $cal->repayment_date_inp}} &#37;</td>
+                    <td>{{ $cal->montly_deposit_val }} &euro;</td>
                     <td>{{ $cal->annual_unsheduled_month }} / {{ $cal->annual_unsheduled_year }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">to</th>
+                    <th scope="col">One-off special repayment</th>
+                    <th scope="col">Residual debt</th>
+                    <th scope="col">Effective interest rate (percent)</th>
+                    <th scope="col">connection credit</th>
+                </tr>
+                <tr>
                     <td>{{ $cal->annual_to_month }}/ {{ $cal->annual_to_year }}</td>
                     <td>{{ $cal->onetime_unsheduled_month }} / {{ $cal->onetime_unsheduled_year}}</td>
+                    <td>{{ $cal->outstanding_balance }} &euro;</td>
+                    <td>{{ $cal->effective_interest }} &#37;</td>
+                    <td>{{ $cal->connection_credit }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">New borrowing rate (percent)</th>
+                    <th scope="col">New repayment rate (Perc.)</th>
+                    <th scope="col">New rate (Euro)</th>
+                    <th scope="col">Total duration (years / months)</th>
+                    <th scope="col"></th>
+                </tr>
+                <tr>
+                    <td>{{ $cal->new_borrowing_rate }} &#37;</td>
+                    <td>{{ $cal->new_repayment_rate_inp }} &#37;</td>
+                    <td>{{ $cal->new_rate_inp }} &euro;</td>
+                    <td>{{ $cal->total_maturity }} J / M</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
