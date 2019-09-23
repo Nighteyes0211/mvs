@@ -2937,19 +2937,6 @@
                 data: {
                     _token: $('[name="_token"]').val(),
                     // New 11 fields
-                    bank: $('#bank').val(),
-                    annuities: $('#annuities').val(),
-                    to_interest: $('#to_interest').val(),
-                    effectiveness: $('#effectiveness').val(),
-                    fixed_interest_rates: $('#fixed_interest_rates').val(),
-                    monthly_loan: $('#monthly_loan').val(),
-                    residual_debt_interest_rate: $('#residual_debt_interest_rate').val(),
-                    calculated_luaf_time: $('#calculated_luaf_time').val(),
-                    net_loan_amount: $('#net_loan_amount').val(),
-                    initial_interest: $('#initial_interest').val(),
-                    optional_sound_recovery: $('#optional_sound_recovery').val(),
-                    prepared_by: $('#prepared_by').val(),
-                    // New 10 fields flag
                     ten_fields_flag: tenFieldFlag,
                     jahreszins_phase_eins: $('#jahreszins_phase_eins').val(),
                     laufzeit_phase_eins: $('#laufzeit_phase_eins').val(),
