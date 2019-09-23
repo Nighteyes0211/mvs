@@ -276,26 +276,26 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <tbody>
                     @php $i = 1; @endphp
                     @foreach( $Calculations as $calculation )
-                        <tr><td><div><b>{{ 'Finance Module# ' . $i }}</b></div><span style="float:left; width: 200px">Loan amount</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Fixed Interested Rate</span><span style="text-align: right">{{$calculation->loan_period}} </span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Payment date</span><span style="text-align: right">{{ $calculation->payment_month }} / {{ $calculation->payment_year}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Land Registry Costs</span><span style="text-align: right">{{ $calculation->registery_fees }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Payment Amount</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Borrowing rate</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Redemption rate (percent)</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Monthly rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Annual special repayments</span><span style="text-align: right">{{$calculation->annual_unsheduled_month}} / {{ $calculation->annual_unsheduled_year }}</span></td></tr>
+                        <tr><td><div><b>{{ 'Finance Module# ' . $i }}</b></div><span style="float:left; width: 200px">Kreditsumme</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Zinsbindung</span><span style="text-align: right">{{$calculation->loan_period}} </span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Auszahlungstermin</span><span style="text-align: right">{{ $calculation->payment_month }} / {{ $calculation->payment_year}}</span></td></tr>
+                        <!-- <tr><td><span style="float:left; width: 200px">Land Registry Costs</span><span style="text-align: right">{{ $calculation->registery_fees }} &euro;</span></td></tr> -->
+                        <!-- <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}} &#37;</span></td></tr> -->
+                        <tr><td><span style="float:left; width: 200px">Auszahlungsbetrag</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Sollzinssatz</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Tilgungssatz (Prozent)</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Jährliche Sondertilgung</span><span style="text-align: right">{{$calculation->annual_unsheduled_month}} / {{ $calculation->annual_unsheduled_year }}</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">to</span><span style="text-align: right">{{ $calculation->annual_to_month }}/ {{ $calculation->annual_to_year }}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">One-off special repayment</span><span style="text-align: right">{{ $calculation->onetime_unsheduled_month }} / {{ $calculation->onetime_unsheduled_year}}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Residual debt</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Effective interest rate (percent)</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">connection credit</span><span style="text-align: right">{{ $calculation->connection_credit }}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">New borrowing rate (percent)</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">New repayment rate (Perc.)</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">New rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Total duration (years / months)</span><span style="text-align: right">{{ $calculation->total_maturity }} J / M</span></td></tr>
-                        <!-- @if ( $calculation->timeline != null )
+                        <tr><td><span style="float:left; width: 200px">Einmalige Sondertilgung</span><span style="text-align: right">{{ $calculation->onetime_unsheduled_month }} / {{ $calculation->onetime_unsheduled_year}}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Restschuld</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Effektivzins (Prozent)</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Anschlusskredit</span><span style="text-align: right">{{ $calculation->connection_credit }}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz (Prozent)</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz (Proz.)</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Neue Rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Gesamtlaufzeit (Jahre/Monate)</span><span style="text-align: right">{{ $calculation->total_maturity }} J / M</span></td></tr>
+                         @if ( $calculation->timeline != null )
                             <tr>
                                 <td>
                                     <div class="uper_box">
@@ -354,7 +354,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             <tr><td></td></tr>
                             <tr><td></td></tr>
                         @endif -->
-                        <!-- @if ( $calculation->customerTimeline != null )
+                         @if ( $calculation->customerTimeline != null )
                             <tr>
                                 <td>
                                     <div class="uper_box">
