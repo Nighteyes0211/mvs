@@ -2132,11 +2132,12 @@
                                                 });
                                                 function save_calculation() {
                                                     //if ( confirm('Are you sure you want to submit?') ) {
-                                                    // var tenFieldFlag = $('#new_form_controller').val();
-                                                    //var serializeForm = $('#kunden_edit_form').serializeArray();
-                                                    //  setTimeout(function(){
-                                                    //     $("#kunden_edit_form").submit();
-                                                    // }, 600);
+                                                    var tenFieldFlag = $('#new_form_controller').val();
+                                                    var serializeForm = $('#kunden_edit_form').serializeArray();
+                                                     setTimeout(function(){
+                                                        $("#kunden_edit_form").submit();
+                                                        save_timeline();
+                                                    }, 600);
                                                     setTimeout(function(){
                                                         repayment_save();
                                                     }, 300);
@@ -2927,11 +2928,11 @@
             // alert('1');
             //if ( confirm('Are you sure you want to submit?') ) {
             var tenFieldFlag = $('#new_form_controller').val();
-            //var serializeForm = $('#kunden_edit_form').serializeArray();
-            /* setTimeout(function(){
+            var serializeForm = $('#kunden_edit_form').serializeArray();
+            setTimeout(function(){
                 $("#kunden_edit_form").submit();
-            }, 500); */
-            /* $.ajax({
+            }, 500);
+            $.ajax({
                 url: 'save_timeline',
                 type: 'post',
                 data: {
@@ -2960,7 +2961,7 @@
                         toastr.error(k+': '+v[0]);
                     })
                 }
-            }); */
+            });
         }
 
         function deleteCalc() {

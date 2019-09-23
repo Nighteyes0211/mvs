@@ -524,21 +524,21 @@ class KundenController extends Controller
         dd(json_decode($request->fullForm), true);
 
 
-        $this->validate($request,
-            [
-                'bank' => 'required',
-                'annuities' => 'required',
-                'to_interest' => 'required',
-                'effectiveness' => 'required',
-                'fixed_interest_rates' => 'required',
-                'monthly_loan' => 'required',
-                'residual_debt_interest_rate' => 'required',
-                'calculated_luaf_time' => 'required',
-                'net_loan_amount' => 'required',
-                'initial_interest' => 'required',
-                'optional_sound_recovery' => 'required'
-            ]
-        );
+        // $this->validate($request,
+        //     [
+        //         'bank' => 'required',
+        //         'annuities' => 'required',
+        //         'to_interest' => 'required',
+        //         'effectiveness' => 'required',
+        //         'fixed_interest_rates' => 'required',
+        //         'monthly_loan' => 'required',
+        //         'residual_debt_interest_rate' => 'required',
+        //         'calculated_luaf_time' => 'required',
+        //         'net_loan_amount' => 'required',
+        //         'initial_interest' => 'required',
+        //         'optional_sound_recovery' => 'required'
+        //     ]
+        // );
 
         $cid = 0;
         if ( $request->ten_fields_flag == 1 ) {
@@ -558,24 +558,25 @@ class KundenController extends Controller
             );
 
             // 11 fields
-            $insertData = [
-                'bank' => $request->bank,
-                'annuities' => $request->annuities,
-                'to_interest' => $request->to_interest,
-                'effectiveness' => $request->effectiveness,
-                'fixed_interest_rates' => $request->fixed_interest_rates,
-                'monthly_loan' => $request->monthly_loan,
-                'residual_debt_interest_rate' => $request->residual_debt_interest_rate,
-                'calculated_luaf_time' => $request->calculated_luaf_time,
-                'net_loan_amount' => $request->net_loan_amount,
-                'initial_interest' => $request->initial_interest,
-                'optional_sound_recovery' => $request->optional_sound_recovery,
-                'prepared_by' => $request->prepared_by,
-            ];
+            // $insertData = [
+            //     'bank' => $request->bank,
+            //     'annuities' => $request->annuities,
+            //     'to_interest' => $request->to_interest,
+            //     'effectiveness' => $request->effectiveness,
+            //     'fixed_interest_rates' => $request->fixed_interest_rates,
+            //     'monthly_loan' => $request->monthly_loan,
+            //     'residual_debt_interest_rate' => $request->residual_debt_interest_rate,
+            //     'calculated_luaf_time' => $request->calculated_luaf_time,
+            //     'net_loan_amount' => $request->net_loan_amount,
+            //     'initial_interest' => $request->initial_interest,
+            //     'optional_sound_recovery' => $request->optional_sound_recovery,
+            //     'prepared_by' => $request->prepared_by,
+            // ];
 
-            $cid = DB::table('calculation')->insert($insertData);
+            // $cid = DB::table('calculation')->insert($insertData);
 
-            $name = $request->timeline_name;
+            // $name = $request->timeline_name;
+            $name = 'timeline';
             $timeline = new timeline;
             $timeline->calculation_id = $cid;
             $timeline->finanzierungsbedarf_phase_eins = $request->finanzierungsbedarf_phase_eins;
@@ -594,22 +595,22 @@ class KundenController extends Controller
         }
         else {
             // 11 fields
-            $insertData = [
-                'bank' => $request->bank,
-                'annuities' => $request->annuities,
-                'to_interest' => $request->to_interest,
-                'effectiveness' => $request->effectiveness,
-                'fixed_interest_rates' => $request->fixed_interest_rates,
-                'monthly_loan' => $request->monthly_loan,
-                'residual_debt_interest_rate' => $request->residual_debt_interest_rate,
-                'calculated_luaf_time' => $request->calculated_luaf_time,
-                'net_loan_amount' => $request->net_loan_amount,
-                'initial_interest' => $request->initial_interest,
-                'optional_sound_recovery' => $request->optional_sound_recovery,
-                'prepared_by' => $request->prepared_by,
-            ];
+            // $insertData = [
+            //     'bank' => $request->bank,
+            //     'annuities' => $request->annuities,
+            //     'to_interest' => $request->to_interest,
+            //     'effectiveness' => $request->effectiveness,
+            //     'fixed_interest_rates' => $request->fixed_interest_rates,
+            //     'monthly_loan' => $request->monthly_loan,
+            //     'residual_debt_interest_rate' => $request->residual_debt_interest_rate,
+            //     'calculated_luaf_time' => $request->calculated_luaf_time,
+            //     'net_loan_amount' => $request->net_loan_amount,
+            //     'initial_interest' => $request->initial_interest,
+            //     'optional_sound_recovery' => $request->optional_sound_recovery,
+            //     'prepared_by' => $request->prepared_by,
+            // ];
 
-            $cid = DB::table('calculation')->insert($insertData);
+            // $cid = DB::table('calculation')->insert($insertData);
         }
 
         return 'success';
