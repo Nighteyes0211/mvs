@@ -163,11 +163,11 @@
         <table style="width:100%; max-height: 500px !important;">
             <thead>
                 <tr>
-                    <th scope="col">Loan amount</th>
-                    <th scope="col">Fixed Interested Rate</th>
-                    <th scope="col">Payment date</th>
-                    <th scope="col">Land Registry Costs</th>
-                    <th scope="col">Discount (percent)</th>
+                    <th scope="col">Kreditsumme </th>
+                    <th scope="col">Zinsbindung</th>
+                    <th scope="col">Auszahlungstermin</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -175,15 +175,13 @@
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->loan_period }}</td>
                     <td>{{ $cal->payment_month }} / {{ $cal->payment_year}}</td>
-                    <td>{{ $cal->registery_fees }} &euro;</td>
-                    <td>{{ $cal->payment_discount }} &#37;</td>
                 </tr>
                 <tr>
-                    <th scope="col">Payment Amount</th>
-                    <th scope="col">Borrowing rate</th>
-                    <th scope="col">Redemption rate (percent)</th>
-                    <th scope="col">Monthly rate</th>
-                    <th scope="col">Annual special repayments</th>
+                    <th scope="col">Auszahlungsbetrag</th>
+                    <th scope="col">Sollzinssatz (Prozent)</th>
+                    <th scope="col">Tilgungssatz (Prozent)</th>
+                    <th scope="col">Monatsrate</th>
+                    <th scope="col">Jährliche Sondertilgungen ab</th>
                 </tr>
                 <tr>
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
@@ -193,11 +191,11 @@
                     <td>{{ $cal->annual_unsheduled_month }} / {{ $cal->annual_unsheduled_year }}</td>
                 </tr>
                 <tr>
-                    <th scope="col">to</th>
-                    <th scope="col">One-off special repayment</th>
-                    <th scope="col">Residual debt</th>
-                    <th scope="col">Effective interest rate (percent)</th>
-                    <th scope="col">connection credit</th>
+                    <th scope="col">bis</th>
+                    <th scope="col">Einmalige Sondertilgung </th>
+                    <th scope="col">Restschuld</th>
+                    <th scope="col">Effektivzins (Prozent)  </th>
+                    <th scope="col">Anschlusskredit</th>
                 </tr>
                 <tr>
                     <td>{{ $cal->annual_to_month }}/ {{ $cal->annual_to_year }}</td>
@@ -207,10 +205,10 @@
                     <td>{{ $cal->connection_credit }}</td>
                 </tr>
                 <tr>
-                    <th scope="col">New borrowing rate (percent)</th>
-                    <th scope="col">New repayment rate (Perc.)</th>
-                    <th scope="col">New rate (Euro)</th>
-                    <th scope="col">Total duration (years / months)</th>
+                    <th scope="col">Neuer Sollzinssatz (Prozent)</th>
+                    <th scope="col">Neuer Tilgungssatz (Proz.)</th>
+                    <th scope="col">Neue Rate (Euro)</th>
+                    <th scope="col">Gesamtlaufzeit (Jahre/Monate)</th>
                     <th scope="col"></th>
                 </tr>
                 <tr>
@@ -230,7 +228,7 @@
             <tr>
                 <th>Rückzahlungsdatum</th>
                 <th>Rate</th>
-                <th>Sonder-tilgung</th>
+                <th>Sondertilgung</th>
                 <th>Zinsen</th>
                 <th>Tilgung</th>
                 <th>Darlehensrest</th>
