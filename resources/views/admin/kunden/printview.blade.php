@@ -277,22 +277,22 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @php $i = 1; @endphp
                     @foreach( $Calculations as $calculation )
                         <tr><td><div><b>{{ 'Finance Module# ' . $i }}</b></div><span style="float:left; width: 200px">Kreditsumme</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Zinsbindung</span><span style="text-align: right">{{$calculation->loan_period}} </span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Zinsbindung</span><span style="text-align: right">{{$calculation->loan_period}} Jahre </span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Auszahlungstermin</span><span style="text-align: right">{{ $calculation->payment_month }} / {{ $calculation->payment_year}}</span></td></tr>
                         <!-- <tr><td><span style="float:left; width: 200px">Land Registry Costs</span><span style="text-align: right">{{ $calculation->registery_fees }} &euro;</span></td></tr> -->
                         <!-- <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}} &#37;</span></td></tr> -->
                         <tr><td><span style="float:left; width: 200px">Auszahlungsbetrag</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Sollzinssatz</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Tilgungssatz (Prozent)</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Tilgungssatz</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Jährliche Sondertilgung</span><span style="text-align: right">{{$calculation->annual_unsheduled_month}} / {{ $calculation->annual_unsheduled_year }}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">to</span><span style="text-align: right">{{ $calculation->annual_to_month }}/ {{ $calculation->annual_to_year }}</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">bis</span><span style="text-align: right">{{ $calculation->annual_to_month }}/ {{ $calculation->annual_to_year }}</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Einmalige Sondertilgung</span><span style="text-align: right">{{ $calculation->onetime_unsheduled_month }} / {{ $calculation->onetime_unsheduled_year}}</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Restschuld</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Effektivzins (Prozent)</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Anschlusskredit</span><span style="text-align: right">{{ $calculation->connection_credit }}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz (Prozent)</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz (Proz.)</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Effektivzins</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Anschlusskredit</span><span style="text-align: right">{{ $calculation->connection_credit }} &euro;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
+                        <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Neue Rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Gesamtlaufzeit (Jahre/Monate)</span><span style="text-align: right">{{ $calculation->total_maturity }} J / M</span></td></tr>
                          @if ( $calculation->timeline != null )
