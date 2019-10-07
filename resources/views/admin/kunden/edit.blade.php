@@ -199,7 +199,7 @@
                     val = val.split(',').join('.');
                     val = parseFloat(val);
                     if(val<0.01) val = '0,01';
-                    else if(val>30) val = '30';
+                    else if(val>30) val = '3,0';
                     else val = val.toString();
                     $(_this).val(formatNumbers(onlyNumbers(val)));
                     recalculate();
@@ -677,7 +677,7 @@
                         <label for="kostennotar">Notar/Gericht ( <span name="kostennotar" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="kostennotar" id="kostennotar"
-                                   placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ $kunden->kostennotar }}">
+                                   placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ stringReplace(number_format($kunden->kostennotar, 1, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -688,7 +688,7 @@
                         <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
-                                   placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ $kunden->grunderwerbssteuer }}">
+                                   placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ stringReplace(number_format($kunden->grunderwerbssteuer, 1, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -700,7 +700,7 @@
                         <label for="maklerkosten">Maklerkosten ( <span name="maklerkosten" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="maklerkosten" id="maklerkosten"
-                                   placeholder="0.00" value="{{ stringReplace($kunden->maklerkosten, '.', ',') }}">
+                                   placeholder="0.00" value="{{ stringReplace(number_format($kunden->maklerkosten, 1, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -1380,8 +1380,10 @@
                                                     };
                                                     $('#effective_interest').click(function () {
                                                         var e73_val = e73Calculate();
-                                                        var e75_val = e75Calculate();
-                                                        var e74_val = e74Calculation();
+                                                        // var e75_val = e75Calculate();
+                                                        // var e74_val = e74Calculation();
+                                                        var e75_val = 0.01;
+                                                        var e74_val = 0.01;
                                                         if(e73_val==0 || e73_val==null)
                                                         {
                                                             $('#effective_interest').val(formatNumbers(e75_val.toString().replace(".",",")));
@@ -2309,7 +2311,7 @@
                                                     {{--<td colspan="4"><input id="end_of_fixed_year" class="form-control text-right"  disabled></td>--}}
                                                 {{--</tr>--}}
 
-                                                <tr>
+                                                <tr hidden>
                                                     <td>Grundbuchkosten ( € )</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
@@ -2322,7 +2324,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr>
+                                                <tr hidden>
                                                     <td>Disagio (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
@@ -2543,7 +2545,7 @@
                                                     <td>Effektivzins (Prozent)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="effective_interest" class="form-control text-right" disabled>
+                                                            <input id="effective_interest" class="form-control text-right" value="0,01" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
