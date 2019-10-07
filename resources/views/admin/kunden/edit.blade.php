@@ -833,12 +833,12 @@
                         <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
                     @else
                         @php($spouseDivShown = 'none')
-                        <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">Ehepartner hinzufügen</a>
+                        <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">2. Darlehensnehmer hinzufügen</a>
                     @endif
                     <div id="spouseDiv"  style="display: {{$spouseDivShown}}">
                         <input type="hidden" name="ehepartner_enabled" value="{{$kunden->ehepartner_enabled}}">
                         <hr>
-                        <h4>Ehepartner</h4>
+                        <h4>2. Darlehensnehmer</h4>
                         <div class="form-group">
                             <label class="col-form-label" for="vorname">Vorname</label>
                             <input type="text" class="form-control" name="ehepartner_vorname" id="ehepartner_vorname"
@@ -865,7 +865,7 @@
                                    placeholder="{{ $kunden->ehepartner_geburtsdatum }}" value="{{ $kunden->ehepartner_geburtsdatum }}">
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Ehepartner aktualisieren</button>
+                            <button type="submit" class="btn btn-primary">Darlehensnehmer aktualisieren</button>
                         </div>
                         <hr>
                     </div>
