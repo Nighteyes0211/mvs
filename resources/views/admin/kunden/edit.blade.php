@@ -199,9 +199,10 @@
                     val = val.split(',').join('.');
                     val = parseFloat(val);
                     if(val<0.01) val = '0,01';
-                    else if(val>30) val = '3,0';
+                    // else if(val>30) val = '3,0';
                     else val = val.toString();
-                    $(_this).val(formatNumbers(onlyNumbers(val)));
+                    console.log(val);
+                    $(_this).val(onlyNumbers(val).replace('.', ','));
                     recalculate();
                 }, 200);
             });
