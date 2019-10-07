@@ -415,7 +415,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <th>Rate</th>
                     <th>Sonder-tilgung</th>
                     <th>Tilgung</th>
-                    <th>Darlehensrest</th>
+                    <th>Restschuld</th>
                 </tr>
                 </thead>
                 <tbody>
