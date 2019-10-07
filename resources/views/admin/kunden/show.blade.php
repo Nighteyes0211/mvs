@@ -83,7 +83,15 @@
 
 @section('content')
 
-
+<?php
+    function stringReplace($string, $from = '.', $to=',')
+    {
+        for ($i=0; $i < strlen($string); $i++) {
+            if($string[$i] == $from) $string[$i] = $to;
+        }
+        return $string;
+    }
+?>
 
 <div class="container" style="background-color: #fff; padding-top: 10px;">
 
@@ -175,34 +183,21 @@
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->loan_period }}</td>
                     <td>{{ $cal->payment_month }} / {{ $cal->payment_year}}</td>
+                    <td colspan="2"></td>
                 </tr>
                 <tr>
                     <th scope="col">Auszahlungsbetrag</th>
                     <th scope="col">Sollzinssatz (Prozent)</th>
                     <th scope="col">Tilgungssatz (Prozent)</th>
                     <th scope="col">Monatsrate</th>
-                    <th scope="col">Jährliche Sondertilgungen ab</th>
+                    <th scope="col">Restschuld</th>
                 </tr>
                 <tr>
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->borrowing_rate }} &#37;</td>
                     <td>{{ $cal->repayment_date_inp}} &#37;</td>
                     <td>{{ $cal->montly_deposit_val }} &euro;</td>
-                    <td>{{ $cal->annual_unsheduled_month }} / {{ $cal->annual_unsheduled_year }}</td>
-                </tr>
-                <tr>
-                    <th scope="col">bis</th>
-                    <th scope="col">Einmalige Sondertilgung </th>
-                    <th scope="col">Restschuld</th>
-                    <th scope="col">Effektivzins (Prozent)  </th>
-                    <th scope="col">Anschlusskredit</th>
-                </tr>
-                <tr>
-                    <td>{{ $cal->annual_to_month }}/ {{ $cal->annual_to_year }}</td>
-                    <td>{{ $cal->onetime_unsheduled_month }} / {{ $cal->onetime_unsheduled_year}}</td>
                     <td>{{ $cal->outstanding_balance }} &euro;</td>
-                    <td>{{ $cal->effective_interest }} &#37;</td>
-                    <td>{{ $cal->connection_credit }}</td>
                 </tr>
                 <tr>
                     <th scope="col">Neuer Sollzinssatz (Prozent)</th>
@@ -217,6 +212,28 @@
                     <td>{{ $cal->new_rate_inp }} &euro;</td>
                     <td>{{ $cal->total_maturity }} J / M</td>
                     <td></td>
+                </tr>
+                <tr>
+                    <th scope="col">Effektivzins (Prozent)  </th>
+                    <th scope="col">Anschlusskredit</th>
+                    @if ( $cal->annual_unsheduled_val != 0 || $cal->onetime_unsheduled_val != 0 )
+                        <th scope="col">Jährliche Sondertilgungen ab</th>
+                        <th scope="col">bis</th>
+                        <th scope="col">Einmalige Sondertilgung </th>
+                    @else
+                        <th scope="col" colspan="3"></th>
+                    @endif -->
+                </tr>
+                <tr>
+                    <td>{{ $cal->effective_interest }} &#37;</td>
+                    <td>{{ $cal->connection_credit }}</td>
+                    @if ( $cal->annual_unsheduled_val != 0 || $cal->onetime_unsheduled_val != 0 )
+                        <td>{{ $cal->annual_unsheduled_val }} / {{ $cal->annual_unsheduled_month }} / {{ $cal->annual_unsheduled_year }}</td>
+                        <td>{{ $cal->annual_to_month }}/ {{ $cal->annual_to_year }}</td>
+                        <td>{{ $cal->onetime_unsheduled_val }} / {{ $cal->onetime_unsheduled_month }} / {{ $cal->onetime_unsheduled_year}}</td>
+                    @else
+                        <td colspan="3"></td>
+                    @endif -->
                 </tr>
             </tbody>
         </table>
@@ -237,12 +254,12 @@
         <tbody>
             @foreach($repayments as $repayment)
             <tr>
-                <td>{{$repayment->repayment_date}}</td>
-                <td>{{$repayment->rate}}</td>
-                <td>{{$repayment->sonder_tilgung}}</td>
-                <td>{{$repayment->zinsen}}</td>
-                <td>{{$repayment->tilgung}}</td>
-                <td>{{$repayment->darlehensrest}}</td>
+                <td>{{ stringReplace(number_format((float)$repayment->repayment_date, 2, ',', '.'), '.', ',') }}</td>
+                <td>{{ stringReplace(number_format((float)$repayment->rate, 2, ',', '.'), '.', ',') }}</td>
+                <td>{{ stringReplace(number_format((float)$repayment->sonder_tilgung, 2, ',', '.'), '.', ',')}}</td>
+                <td>{{ stringReplace(number_format((float)$repayment->zinsen, 2, ',', '.'), '.', ',') }}</td>
+                <td>{{ stringReplace(number_format((float)$repayment->tilgung, 2, ',', '.'), '.', ',') }}</td>
+                <td>{{ stringReplace(number_format((float)$repayment->darlehensrest, 2, ',', '.'), '.', ',') }}</td>
             </tr>
             @endforeach
         </tbody>

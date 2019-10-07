@@ -2188,14 +2188,8 @@
                                                         }
                                                     });
 
-
-
-
-
-
                                                     function repayment_save()
                                                     {
-
                                                         var resarr = [];
                                                         for (var m = 4; m <= parseInt($('#loan_period').val()) * 12 + 4 ; m++) {
                                                             {

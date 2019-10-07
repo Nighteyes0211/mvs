@@ -69,10 +69,15 @@
 </head>
 <body>
 
-
-
-
-
+<?php
+    function stringReplace($string, $from = '.', $to=',')
+    {
+        for ($i=0; $i < strlen($string); $i++) {
+            if($string[$i] == $from) $string[$i] = $to;
+        }
+        return $string;
+    }
+?>
 
 </span>
 
@@ -285,9 +290,11 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         <tr><td><span style="float:left; width: 200px">Sollzinssatz</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Tilgungssatz</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Jährliche Sondertilgung</span><span style="text-align: right">{{$calculation->annual_unsheduled_month}} / {{ $calculation->annual_unsheduled_year }}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">bis</span><span style="text-align: right">{{ $calculation->annual_to_month }}/ {{ $calculation->annual_to_year }}</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Einmalige Sondertilgung</span><span style="text-align: right">{{ $calculation->onetime_unsheduled_month }} / {{ $calculation->onetime_unsheduled_year}}</span></td></tr>
+                        @if ( $calculation->annual_unsheduled_val != 0 || $calculation->onetime_unsheduled_val != 0 )
+                            <tr><td><span style="float:left; width: 200px">Jährliche Sondertilgung</span><span style="text-align: right">{{ $calculation->annual_unsheduled_val }} / {{ $calculation->annual_unsheduled_month }} / {{ $calculation->annual_unsheduled_year }}</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">bis</span><span style="text-align: right">{{ $calculation->annual_to_month }} / {{ $calculation->annual_to_year }}</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Einmalige Sondertilgung</span><span style="text-align: right">{{ $calculation->onetime_unsheduled_val }} / {{ $calculation->onetime_unsheduled_month }} / {{ $calculation->onetime_unsheduled_year }}</span></td></tr>
+                        @endif -->
                         <tr><td><span style="float:left; width: 200px">Restschuld</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Effektivzins</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
                         <tr><td><span style="float:left; width: 200px">Anschlusskredit</span><span style="text-align: right">{{ $calculation->connection_credit }} &euro;</span></td></tr>
@@ -423,12 +430,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @foreach($repayments as $repayment)
 
                     <tr style="text-align: left;">
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->repayment_date}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->rate}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->sonder_tilgung}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->zinsen}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->tilgung}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$repayment->darlehensrest}}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace(number_format((float)$repayment->repayment_date, 2, ',', '.'), '.', ',') }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace(number_format((float)$repayment->rate, 2, ',', '.'), '.', ',') }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace(number_format((float)$repayment->sonder_tilgung, 2, ',', '.'), '.', ',')}}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace(number_format((float)$repayment->zinsen, 2, ',', '.'), '.', ',') }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace(number_format((float)$repayment->tilgung, 2, ',', '.'), '.', ',') }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace(number_format((float)$repayment->darlehensrest, 2, ',', '.'), '.', ',') }}</td>
                     </tr>
                     {{--@endif--}}
                     @endforeach

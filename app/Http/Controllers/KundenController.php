@@ -407,7 +407,7 @@ class KundenController extends Controller
 
 
         $kunden->save();
-        return redirect()->route('kunden.index');
+        return redirect()->route('kunden.edit', $kunden->id);
     }
 
     /**
