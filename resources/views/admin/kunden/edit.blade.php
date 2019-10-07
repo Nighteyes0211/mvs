@@ -2824,7 +2824,7 @@
                         </div>
                         @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
                         <div class="col-6" id="ehepartnerChecklist" style="display: {{$checklistEnable}}">
-                            <h4>Checkliste (Ehepartner)</h4>
+                            <h4>Checkliste (2. Darlehensnehmer)</h4>
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
 
