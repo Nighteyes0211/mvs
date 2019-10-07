@@ -182,7 +182,7 @@
                 <tr>
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->loan_period }}</td>
-                    <td>{{ $cal->payment_month }} / {{ $cal->payment_year}}</td>
+                    <td>{{ $cal->payment_month }}.{{ $cal->payment_year}}</td>
                     <td colspan="2"></td>
                 </tr>
                 <tr>
@@ -228,9 +228,9 @@
                     <td>{{ $cal->effective_interest }} &#37;</td>
                     <td>{{ $cal->connection_credit }}</td>
                     @if ( $cal->annual_unsheduled_val != 0 || $cal->onetime_unsheduled_val != 0 )
-                        <td>{{ $cal->annual_unsheduled_val }} / {{ $cal->annual_unsheduled_month }} / {{ $cal->annual_unsheduled_year }}</td>
-                        <td>{{ $cal->annual_to_month }}/ {{ $cal->annual_to_year }}</td>
-                        <td>{{ $cal->onetime_unsheduled_val }} / {{ $cal->onetime_unsheduled_month }} / {{ $cal->onetime_unsheduled_year}}</td>
+                        <td>{{ $cal->annual_unsheduled_val }}.{{ $cal->annual_unsheduled_month }}.{{ $cal->annual_unsheduled_year }}</td>
+                        <td>{{ $cal->annual_to_month }}.{{ $cal->annual_to_year }}</td>
+                        <td>{{ $cal->onetime_unsheduled_val }}.{{ $cal->onetime_unsheduled_month }}.{{ $cal->onetime_unsheduled_year}}</td>
                     @else
                         <td colspan="3"></td>
                     @endif -->
@@ -254,12 +254,12 @@
         <tbody>
             @foreach($repayments as $repayment)
             <tr>
-                <td>{{ stringReplace(number_format((float)$repayment->repayment_date, 2, ',', '.'), '.', ',') }}</td>
-                <td>{{ stringReplace(number_format((float)$repayment->rate, 2, ',', '.'), '.', ',') }}</td>
-                <td>{{ stringReplace(number_format((float)$repayment->sonder_tilgung, 2, ',', '.'), '.', ',')}}</td>
-                <td>{{ stringReplace(number_format((float)$repayment->zinsen, 2, ',', '.'), '.', ',') }}</td>
-                <td>{{ stringReplace(number_format((float)$repayment->tilgung, 2, ',', '.'), '.', ',') }}</td>
-                <td>{{ stringReplace(number_format((float)$repayment->darlehensrest, 2, ',', '.'), '.', ',') }}</td>
+                <td>{{ stringReplace($repayment->repayment_date, '/', '.') }}</td>
+                <td>{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
+                <td>{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.')}}</td>
+                <td>{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
+                <td>{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
+                <td>{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
