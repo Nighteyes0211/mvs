@@ -426,10 +426,10 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <thead>
                 <tr style="background: #a2a5aa;font-weight: bold;">
                     <th style="padding: 5px 0;">Rückzahlungsdatum</th>
-                    <th>Zinsen</th>
                     <th>Rate</th>
-                    <th>Sonder-tilgung</th>
                     <th>Tilgung</th>
+                    <th>Zinsen</th>
+                    <th>Sondertilgung</th>
                     <th>Restschuld</th>
                 </tr>
                 </thead>
@@ -440,9 +440,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <tr style="text-align: left;">
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace($repayment->repayment_date) }}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.') }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.') }}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
                     </tr>
                     {{--@endif--}}
