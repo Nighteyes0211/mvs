@@ -452,9 +452,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         <tr>
                             <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $years_repayment->years }}</td>
                             <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.')}}</td>
                             <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.') }}</td>
                             <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
                         </tr>
                         @endforeach
