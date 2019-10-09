@@ -154,10 +154,32 @@ class KundenController extends Controller
     public function show(Kunden $kunden)
     {
         $kunden['offer'] = Angebote::where('customer_id', $kunden->id)->orderBy('id','desc')->get();
-        $repayments = Repayment::where('kundens_id', $kunden->id)->get();
+        $repayments = DB::select('SELECT repayment_date years, zinsen, tilgung, darlehensrest, rate, sonder_tilgung
+            FROM repayments
+            WHERE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) <=
+                (SELECT CASE WHEN COUNT(*) < 12 THEN SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) + 1
+                            ELSE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                    END
+                FROM repayments
+                GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                LIMIT 1)');
+        $years_repayments = DB::select('SELECT SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) years,
+            SUM(zinsen) zinsen, SUM(tilgung) tilgung, SUM(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
+            FROM repayments
+            WHERE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) >
+            (SELECT CASE WHEN COUNT(*) < 12 THEN SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) + 1
+                        ELSE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                END
+            FROM repayments
+            GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+            ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+            LIMIT 1)
+            GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+            ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))');
         $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->get();
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
-        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline, 'CalData' => $CalData]);
+        return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline, 'CalData' => $CalData, 'years_repayments' => $years_repayments]);
     }
 
     /**
@@ -426,10 +448,31 @@ class KundenController extends Controller
 
     public function printoffer($id)
     {
-
         $kunden = Kunden::find($id);
         $last_offer = Angebote::orderBy('id', 'desc')->first();
-        $repayments = Repayment::where('kundens_id', $id)->get();
+        $repayments = DB::select('SELECT repayment_date years, zinsen, tilgung, darlehensrest, rate, sonder_tilgung
+            FROM repayments
+            WHERE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) <=
+                (SELECT CASE WHEN COUNT(*) < 12 THEN SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) + 1
+                            ELSE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                    END
+                FROM repayments
+                GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                LIMIT 1)');
+        $years_repayments = DB::select('SELECT SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) years,
+            SUM(zinsen) zinsen, SUM(tilgung) tilgung, SUM(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
+            FROM repayments
+            WHERE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) >
+            (SELECT CASE WHEN COUNT(*) < 12 THEN SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) + 1
+                        ELSE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+                END
+            FROM repayments
+            GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+            ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+            LIMIT 1)
+            GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
+            ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))');
         $timeline = timeline::where('kundens_id', $id)->get();
         $calculation = DB::table('calculation')->where('kunden_id', $id)->get();
 
@@ -469,7 +512,7 @@ class KundenController extends Controller
 
         // return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-        $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations', 'kunden'));
+        $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations', 'kunden', 'years_repayments'));
 
         // return view('admin.kunden.printview', compact('kunden', 'angebote', 'repayments', 'timeline'));
 

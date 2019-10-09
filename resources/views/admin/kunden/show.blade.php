@@ -262,7 +262,7 @@
         <tbody>
             @foreach($repayments as $repayment)
             <tr>
-                <td>{{ stringReplace($repayment->repayment_date) }}</td>
+                <td>{{ stringReplace($repayment->years) }}</td>
                 <td>{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
                 <td>{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.')}}</td>
                 <td>{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
@@ -270,6 +270,18 @@
                 <td>{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
             </tr>
             @endforeach
+            @if ( $years_repayments != null )
+                @foreach($years_repayments as $years_repayment)
+                <tr>
+                    <td>{{ $years_repayment->years }}</td>
+                    <td>{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
+                    <td>{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}}</td>
+                    <td>{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
+                    <td>{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }}</td>
+                    <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
+                </tr>
+                @endforeach
+            @endif -->
         </tbody>
     </table>
 </div>

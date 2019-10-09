@@ -438,7 +438,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @foreach($repayments as $repayment)
 
                     <tr style="text-align: left;">
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace($repayment->repayment_date) }}</td>
+                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace($repayment->years) }}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
@@ -447,6 +447,18 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     </tr>
                     {{--@endif--}}
                     @endforeach
+                    @if ( $years_repayments != null )
+                        @foreach($years_repayments as $years_repayment)
+                        <tr>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $years_repayment->years }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
+                        </tr>
+                        @endforeach
+                    @endif -->
  {{--                   @foreach($payments as $key=>$value)
                     @if($key > date('Y'))
                     <tr style="text-align: left;">
