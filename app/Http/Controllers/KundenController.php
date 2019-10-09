@@ -165,7 +165,7 @@ class KundenController extends Controller
                 ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
                 LIMIT 1)');
         $years_repayments = DB::select('SELECT SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) years,
-            SUM(zinsen) zinsen, SUM(tilgung) tilgung, SUM(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
+            SUM(zinsen) zinsen, SUM(tilgung) tilgung, MIN(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
             FROM repayments
             WHERE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) >
             (SELECT CASE WHEN COUNT(*) < 12 THEN SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) + 1
@@ -461,7 +461,7 @@ class KundenController extends Controller
                 ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
                 LIMIT 1)');
         $years_repayments = DB::select('SELECT SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) years,
-            SUM(zinsen) zinsen, SUM(tilgung) tilgung, SUM(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
+            SUM(zinsen) zinsen, SUM(tilgung) tilgung, MIN(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
             FROM repayments
             WHERE SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) >
             (SELECT CASE WHEN COUNT(*) < 12 THEN SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) + 1
