@@ -2406,6 +2406,27 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="bausparer" name="repayment">
+                                                            <label class="custom-control-label" for="bausparer">Bausparer</label>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <div class="input-group">
+                                                            <input id="sparsumme" class="form-control text-right text-danger" placeholder="Sparsumme">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <div class="input-group">
+                                                            <input id="laufzeit" class="form-control text-right text-danger" placeholder="Laufzeit">
+                                                        </div>
+                                                    </td>
+                                                </tr>
 
                                                 <tr>
                                                     <td>Jährliche Sondertilgungen ab</td>
