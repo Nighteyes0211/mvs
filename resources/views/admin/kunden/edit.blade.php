@@ -80,6 +80,17 @@
 
     <script>
         $(document).ready(function(){
+
+            $("#bausparer").click(function () {
+                if($(this).prop('checked') == true){
+                    $("#sparsumme").prop("disabled", false);
+                    $("#laufzeit").prop("disabled", false);
+                } else {
+                    $("#sparsumme").prop("disabled", true);
+                    $("#laufzeit").prop("disabled", true);
+                }
+            });
+
             $('#loan_period').val('{{$CalData->loan_period}}');
             $('#payment_month').val('{{$CalData->payment_month}}');
             $('#payment_year').val('{{$CalData->payment_year}}');
@@ -2415,7 +2426,7 @@
                                                     </td>
                                                     <td colspan="2">
                                                         <div class="input-group">
-                                                            <input id="sparsumme" class="form-control text-right text-danger" placeholder="Sparsumme">
+                                                            <input id="sparsumme" class="form-control text-right text-danger" placeholder="Sparsumme" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -2423,7 +2434,23 @@
                                                     </td>
                                                     <td colspan="2">
                                                         <div class="input-group">
-                                                            <input id="laufzeit" class="form-control text-right text-danger" placeholder="Laufzeit">
+                                                            <select id="laufzeit" class="form-control" placeholder="Laufzeit" disabled>
+                                                                <?php
+                                                                for($i = 1; $i <= 30; $i++)
+                                                                {
+                                                                ?>
+                                                                <option value="{{$i}}">
+                                                                    {{$i}}
+                                                                    @if($i==1)
+                                                                        Jahr
+                                                                    @else
+                                                                        Jahre
+                                                                    @endif
+                                                                </option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
                                                         </div>
                                                     </td>
                                                 </tr>
