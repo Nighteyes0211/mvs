@@ -1105,10 +1105,14 @@
                                                     //     $('#montly_deposit_val').val(monthly_deposit);
                                                     // }
                                                     $('#repayment_date').click(function () {
+                                                        $("#sparsumme").prop("disabled", true);
+                                                        $("#laufzeit").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",false);
                                                         $('#montly_deposit_val').attr("disabled",true);
                                                     });
                                                     $('#montly_deposit').click(function () {
+                                                        $("#sparsumme").prop("disabled", true);
+                                                        $("#laufzeit").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",true);
                                                         $('#montly_deposit_val').attr("disabled",false);
                                                     });
@@ -1131,6 +1135,8 @@
 
                                                     //Calculation Tilgungssatz (Prozent)
                                                     $('#payment_opt_rad').click(function () {
+                                                        $("#sparsumme").prop("disabled", true);
+                                                        $("#laufzeit").prop("disabled", true);
                                                     /*    var loan_period = parseInt($('#loan_period').val());
                                                         var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         var montly_deposit_val = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
