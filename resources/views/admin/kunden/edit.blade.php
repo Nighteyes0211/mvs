@@ -80,14 +80,18 @@
 
     <script>
         $(document).ready(function(){
-
             $("#bausparer").click(function () {
                 if($(this).prop('checked') == true){
                     $("#sparsumme").prop("disabled", false);
                     $("#laufzeit").prop("disabled", false);
+                    $("#new_repayment_rate_inp").prop("disabled", true);
+                    $("#new_rate_inp").prop("disabled", true);
+                    $("#new_repayment_rate").prop("checked", false);
+                    $("#laufzeitRate").prop("disabled", false);
                 } else {
                     $("#sparsumme").prop("disabled", true);
                     $("#laufzeit").prop("disabled", true);
+                    $("#laufzeitRate").prop("disabled", true);
                 }
             });
 
@@ -193,7 +197,23 @@
                     recalculate_1();
                 }, 200);
             });
+            $("#laufzeitRate").on('change', function(){
+                var outstanding = $('#Outstanding_balance').val().replace(".", "");
+                var zins = $('#new_borrowing_rate').val().replace(",",".");
+                var rech =((outstanding / $("#laufzeitRate").val())*zins) / 12;
+                $('#monatsRate').html(rech + ' Euro');
 
+            });
+            $('#laufzeit').on('change', function(){
+                var Month = ((parseInt($('#sparsumme').val())*0.4 / parseInt($('#laufzeit').val())) / 12).toFixed(2);
+                $('.rate').html(Month);
+                $('#Outstanding_balance').val('123');
+                return;
+                console.log($('#Outstanding_balance').val());
+                $('#Outstanding_balance').click();
+
+            });
+        
             $('[data-parent="#Calculation"] select').on('change', function(){
                 let _this = this;
                 // $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
@@ -288,6 +308,7 @@
             $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
             $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
             $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
+            $('#sparsumme').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
         }
         function recalculate_1() {
             var loan_amount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
@@ -1759,9 +1780,16 @@
                                                                 || L[a]==lookup_value || M[a]==lookup_value)
                                                             {
                                                                 if(M[a]>=0){
-                                                                    ret_value = M[a].toFixed(2);
+                                                                    // HIER GUCKEN
+                                                                    if($('#bausparer').prop('checked') == true){
+                                                                        ret_value = parseInt($('#sparsumme').val())-(parseInt($('#sparsumme').val())*0.4);
+                                                                    }else{
+                                                                        ret_value = M[a].toFixed(2);
+
+                                                                    }
                                                                     $('#Outstanding_balance').val(formatNumbers(ret_value.toString().replace(".",",")));
                                                                     $('#connection_credit').val(formatNumbers(ret_value.toString().replace(".",",")));
+
                                                                 }
                                                                 else{
 
@@ -1776,7 +1804,12 @@
                                                                 $('#connection_credit').val('0,00');
                                                             }
                                                         }
-                                                        return M[a].toFixed(2);
+
+                                                        if($('#bausparer').prop('checked') == true){
+                                                            return ((parseInt($('#sparsumme').val())*0.4 / parseInt($('#laufzeit').val())) / 12).toFixed(2);
+                                                        }else{ 
+                                                            return M[a].toFixed(2);
+                                                        }
                                                     }
                                                     function M4() {
                                                         var loan_amount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
@@ -2432,7 +2465,7 @@
                                                     </td>
                                                     <td colspan="2">
                                                         <div class="input-group">
-                                                            <input id="sparsumme" class="form-control text-right text-danger" placeholder="Sparsumme" disabled>
+                                                            <input id="sparsumme" class="form-control text-right " value="{{ stringReplace($kunden->finanzierungsbedarf,'.',',') }}" placeholder="Sparsumme" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
@@ -2457,6 +2490,9 @@
                                                                 }
                                                                 ?>
                                                             </select>
+                                                        </div> <br/>
+                                                        <div class="input-group">
+                                                            <div class="rate"></div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2589,7 +2625,31 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-
+                                                <tr>
+                                                <td>Lorem Ipsum ( € ) <span class="text-danger" id="message_Outstanding_balance"></span></td>
+                                                <td colspan="4">
+                                                        <div class="input-group">
+                                                            <select id="laufzeitRate" class="form-control" placeholder="LaufzeitRate" disabled>
+                                                                <?php
+                                                                for($i = 1; $i <= 30; $i++)
+                                                                {
+                                                                ?>
+                                                                <option value="{{$i}}">
+                                                                    {{$i}}
+                                                                    @if($i==1)
+                                                                        Jahr
+                                                                    @else
+                                                                        Jahre
+                                                                    @endif
+                                                                </option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div> <br /><div id="monatsRate"></div><br/>
+                                                    </td>
+           
+                                                </tr>
                                                 <tr>
                                                     <td>Effektivzins (Prozent)</td>
                                                     <td colspan="4">
