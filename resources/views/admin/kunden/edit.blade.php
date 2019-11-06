@@ -208,9 +208,10 @@
                 var Month = ((parseInt($('#sparsumme').val())*0.4 / parseInt($('#laufzeit').val())) / 12).toFixed(2);
                 $('.rate').html(Month);
                 $('#Outstanding_balance').val('123');
-                return;
                 console.log($('#Outstanding_balance').val());
                 $('#Outstanding_balance').click();
+                $('#total_maturity').click();
+
 
             });
         
@@ -2625,7 +2626,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                 <td>Lorem Ipsum ( € ) <span class="text-danger" id="message_Outstanding_balance"></span></td>
                                                 <td colspan="4">
                                                         <div class="input-group">
@@ -2649,7 +2650,7 @@
                                                         </div> <br /><div id="monatsRate"></div><br/>
                                                     </td>
            
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Effektivzins (Prozent)</td>
                                                     <td colspan="4">
