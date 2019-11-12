@@ -88,10 +88,32 @@
                     $("#new_rate_inp").prop("disabled", true);
                     $("#new_repayment_rate").prop("checked", false);
                     $("#laufzeitRate").prop("disabled", false);
+                    $('.new_payment_rate_tr').hide();
+                    $('.new_rate_tr').hide();
+                    $('.total_maturity_tr').hide();
+                    $('.options').show();
                 } else {
                     $("#sparsumme").prop("disabled", true);
                     $("#laufzeit").prop("disabled", true);
                     $("#laufzeitRate").prop("disabled", true);
+                    $('.new_payment_rate_tr').show();
+                    $('.new_rate_tr').show();
+                    $('.total_maturity_tr').show();
+                    $('.options').hide();
+                }
+            });
+            $('#optionA').click(function(){
+                if($(this).prop('checked') == true){
+                    $('.optionAShow').show();
+                }else{
+                    $('.optionAShow').hide();
+                }
+            });
+            $('#optionB').click(function(){
+                if($(this).prop('checked') == true){
+                    $('.optionBShow').show();
+                }else{
+                    $('.optionBShow').hide();
                 }
             });
 
@@ -1040,6 +1062,7 @@
                                                     setTimeout(function(){
                                                         recalculate_1();
                                                     }, 200);
+                                                    $('.options').hide();
                                                     $('#end_of_fixed_year').val( parseInt($('#loan_period').val())+ parseInt($('#payment_year').val()));
                                                     $('#end_of_fixed_year').val($('#payment_month').val()+','+ $('#end_of_fixed_year').val());
                                                     $('#loan_period').change(function () {
@@ -1131,12 +1154,39 @@
                                                         $("#laufzeit").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",false);
                                                         $('#montly_deposit_val').attr("disabled",true);
+                                                        $('.new_payment_rate_tr').show();
+                                                        $('.new_rate_tr').show();
+                                                        $('.total_maturity_tr').show();
+                                                        $('.options').hide();
+
                                                     });
                                                     $('#montly_deposit').click(function () {
                                                         $("#sparsumme").prop("disabled", true);
                                                         $("#laufzeit").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",true);
                                                         $('#montly_deposit_val').attr("disabled",false);
+                                                        $('.new_payment_rate_tr').show();
+                                                        $('.new_rate_tr').show();
+                                                        $('.total_maturity_tr').show();
+                                                        $('.options').hide();
+
+
+                                                    });
+                                                    $('#rateSumme').on('change', function(){
+                                                        var wert = parseFloat($('#rateSumme').val());
+                                                        var anspar = parseFloat($('#Outstanding_balance').val().replace(".", ""));
+                                                        var rechnung = (anspar / wert)  / 12;
+                                                        $('.rateJAhre').html(rechnung.toFixed(2));
+
+                                                    });
+                                                    $('#laufzeitRatee').on('change', function(){
+                                                        var outstanding = $('#Outstanding_balance').val().replace(".", "");
+                                                        var zins = $('#new_borrowing_rate').val().replace(",",".");
+                                                        var rech =((outstanding / $("#laufzeitRatee").val())*zins) / 12;
+
+                                                        var rate = (outstanding/$("#laufzeitRatee").val())/12;
+
+                                                        $('#monatsRateNew').html(rech+rate + ' Euro');
                                                     });
                                                     $('#new_rate').click(function () {
 
@@ -1157,6 +1207,10 @@
 
                                                     //Calculation Tilgungssatz (Prozent)
                                                     $('#payment_opt_rad').click(function () {
+                                                        $('.new_payment_rate_tr').show();
+                                                        $('.new_rate_tr').show();
+                                                        $('.options').hide();
+                                                        $('.total_maturity_tr').show();
                                                         $("#sparsumme").prop("disabled", true);
                                                         $("#laufzeit").prop("disabled", true);
                                                     /*    var loan_period = parseInt($('#loan_period').val());
@@ -2679,7 +2733,61 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr class="options"> 
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="optionA" name="option">
+                                                            <label class="custom-control-label" for="optionA">Option A</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="optionB" name="option">
+                                                            <label class="custom-control-label" for="optionB">Option B</label>
+                                                        </div>
+                                                    </td>
+                                                   
+                                                </tr>
+                                                <tr class="optionAShow" style="display:none;">
+                                                    <td>
+                                                        Wie lang soll die Laufzeit sein
+                                                    </td>
+                                                    <td colspan="4">
+                                                    <div class="input-group">
+                                                            <select id="laufzeitRatee" class="form-control" placeholder="LaufzeitRate" >
+                                                                <?php
+                                                                for($i = 1; $i <= 30; $i++)
+                                                                {
+                                                                ?>
+                                                                <option value="{{$i}}">
+                                                                    {{$i}}
+                                                                    @if($i==1)
+                                                                        Jahr
+                                                                    @else
+                                                                        Jahre
+                                                                    @endif
+                                                                </option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div> <br /><div id="monatsRateNew"></div><br/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="optionBShow" style="display:none;">
+                                                    <td>
+                                                        Wie hoch soll die Rate sein?
+                                                    </td>
+                                                    <td colspan='4'>
+                                                    <div class="input-group">
+                                                            <input id="rateSumme" class="form-control text-right "  placeholder="Sparsumme" >
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                            <div class="rateJAhre" ></div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                                <tr class="new_payment_rate_tr">
                                                     <td>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" class="custom-control-input" id="new_repayment_rate" name="rates" checked>
@@ -2695,7 +2803,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr class="new_rate_tr">
                                                     <td>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" class="custom-control-input" id="new_rate" name="rates">
@@ -2712,7 +2820,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr>
+                                                <tr class="total_maturity_tr">
                                                     <td>Gesamtlaufzeit (Jahre/Monate)</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
