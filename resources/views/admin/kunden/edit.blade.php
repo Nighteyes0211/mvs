@@ -92,6 +92,7 @@
                     $('.new_rate_tr').hide();
                     $('.total_maturity_tr').hide();
                     $('.options').show();
+                    $('.ratenForm').show();
                 } else {
                     $("#sparsumme").prop("disabled", true);
                     $("#laufzeit").prop("disabled", true);
@@ -100,11 +101,14 @@
                     $('.new_rate_tr').show();
                     $('.total_maturity_tr').show();
                     $('.options').hide();
+                    $('.ratenForm').hide();
                 }
             });
             $('#optionA').click(function(){
                 if($(this).prop('checked') == true){
                     $('.optionAShow').show();
+                    $('.optionBShow').hide();
+
                 }else{
                     $('.optionAShow').hide();
                 }
@@ -112,6 +116,7 @@
             $('#optionB').click(function(){
                 if($(this).prop('checked') == true){
                     $('.optionBShow').show();
+                    $('.optionAShow').hide();
                 }else{
                     $('.optionBShow').hide();
                 }
@@ -227,8 +232,13 @@
 
             });
             $('#laufzeit').on('change', function(){
-                var Month = ((parseInt($('#sparsumme').val())*0.4 / parseInt($('#laufzeit').val())) / 12).toFixed(2);
+                var Month = ((parseFloat($('#sparsumme').val())*0.4 / parseInt($('#laufzeit').val())) / 12).toFixed(2);
+                var zins = $('#new_borrowing_rate').val().replace(",",".");
+                var Zinsen = (parseInt($('#sparsumme').val()) * (zins/100)) / 12;
+                var all = parseFloat(Month) + parseFloat(Zinsen);
                 $('.rate').html(Month);
+                $('.Ratezinsen').html(Zinsen);
+                $('.zinsenraten').html(all.toFixed(2))
                 $('#Outstanding_balance').val('123');
                 console.log($('#Outstanding_balance').val());
                 $('#Outstanding_balance').click();
@@ -2546,8 +2556,15 @@
                                                                 ?>
                                                             </select>
                                                         </div> <br/>
+                                                        <div class="ratenForm" style="display:none;">
                                                         <div class="input-group">
-                                                            <div class="rate"></div>
+                                                            Sparrate : <div class="rate"></div>&euro; &nbsp; Zinsen : <div class="Ratezinsen"></div>&euro;
+                                                            
+                                                        </div>
+                                                        <div class="input-group">
+                                                        Monatliche Rate : <div class="zinsenraten"></div>&euro;
+
+                                                        </div>
                                                         </div>
                                                     </td>
                                                 </tr>
