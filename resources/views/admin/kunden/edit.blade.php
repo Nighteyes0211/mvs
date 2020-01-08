@@ -1346,6 +1346,114 @@ function stringReplace($string, $from = '.', $to = ',')
                                                                 fv = (pmt * (1 + rate * type) * (1 - pow) / rate) - pv * pow;
                                                             } else {
                                                                 fv = -1 * (pv + pmt * nper);
+                                                    });
+                                                    //Payment Amount calculation Auszahlungsbetrag (Euro)
+                                                    $('#payment_amount').click(function () {
+                                                        var loan_ammount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                        var discount = parseFloat($('#payment_discount').val());
+                                                        var payout = loan_ammount*(100-discount)/100;
+                                                        $('#payment_amount').val($('#loan_amount').val());
+                                                    });
+                                                    //Tilgungssatz (Prozent) Calculation
+                                                    // function repaymentDate() {
+                                                    //     var montly_deposit = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                    //     var loan_amount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                    //     var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                                                    //     if (isNaN(montly_deposit)) {
+                                                    //         $('#message_montly_deposit').html('* Pflichtfeld');
+                                                    //     } else {
+                                                    //         var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                                                    //         repayment_rate = formatNumbers((repayment_rate.toFixed(2).toString().replace(".",",")));
+                                                    //         if (isNaN(repayment_rate)) {
+                                                    //             $('#repayment_date_inp').val('some values are missing');
+                                                    //         } else {
+                                                    //             $('#repayment_date_inp').val(repayment_rate);
+                                                    //         }
+                                                    //     }
+                                                    //     if (isNaN(loan_amount)) {
+                                                    //         $('#message_loan_amount').html('* Pflichtfeld');
+                                                    //     } else {
+                                                    //         var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                                                    //         repayment_rate = formatNumbers((repayment_rate.toFixed(2).toString().replace(".",",")));
+                                                    //         if (isNaN(repayment_rate)) {
+                                                    //             $('#repayment_date_inp').val('some values are missing');
+                                                    //         } else {
+                                                    //             $('#repayment_date_inp').val(repayment_rate);
+                                                    //         }
+                                                    //     }
+                                                    //     if (isNaN(borrowing_rate)) {
+                                                    //         $('#message_borrowing_rate').html('* Pflichtfeld');
+                                                    //     } else {
+                                                    //         var repayment_rate = montly_deposit * 100 * 12 / loan_amount - borrowing_rate;
+                                                    //         repayment_rate = formatNumbers((repayment_rate.toFixed(2).toString().replace(".",",")));
+                                                    //        $('#repayment_date_inp').val(repayment_rate);
+                                                    //     }
+                                                    // }
+                                                    // function monthlyDeposit(){
+                                                    //     var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                    //     var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
+                                                    //     var repayment_date = parseFloat($('#repayment_date_inp').val().replace(/\./g,"").replace(",","."));
+                                                    //     var monthly_deposit = loan_amount*(borrowing_rate+repayment_date)/1200;
+                                                    //     $('#montly_deposit_val').val(monthly_deposit);
+                                                    // }
+                                                    $('#repayment_date').click(function () {
+                                                        $('#repayment_date_inp').attr("disabled",false);
+                                                        $('#montly_deposit_val').attr("disabled",true);
+                                                    });
+                                                    $('#montly_deposit').click(function () {
+                                                        $('#repayment_date_inp').attr("disabled",true);
+                                                        $('#montly_deposit_val').attr("disabled",false);
+                                                    });
+                                                    $('#new_rate').click(function () {
+
+                                                        $('#new_rate_inp').attr("disabled",false);
+                                                        $('#new_repayment_rate_inp').attr("disabled",true);
+                                                    });
+                                                    $('#new_repayment_rate').click(function () {
+
+                                                        $('#new_rate_inp').attr("disabled",true);
+                                                        $('#new_repayment_rate_inp').attr("disabled",false);
+                                                    });
+
+
+
+
+
+
+
+                                                    //Calculation Tilgungssatz (Prozent)
+                                                    $('#payment_opt_rad').click(function () {
+                                                    /*    var loan_period = parseInt($('#loan_period').val());
+                                                        var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
+                                                        var montly_deposit_val = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
+                                                        var loan_amount = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                                                        // Input fields Checks
+                                                        if(loan_amount && loan_period && borrowing_rate && montly_deposit_val)
+                                                        {
+                                                            var finalvalue = fv(borrowing_rate/100/12,loan_period*12,montly_deposit_val,-loan_amount,0);
+                                                            if(loan_period>50)
+                                                            {
+                                                                $('#message_payment_opt').html('Zinsbindung zu lang!');
+                                                            }
+                                                            else if(finalvalue<-1 || isNaN(finalvalue)){
+                                                                $('#message_payment_opt').html('Darlehen vor Ende Zinsbindung getilgt!');
+                                                                //alert('Loan before end fixed interest rate!');
+                                                            }
+                                                            else{
+                                                                $('#message_payment_opt').html('');
+                                                                monthlyDeposit();
+                                                                //repaymentDate();
+                                                            }
+                                                            function finalvalueCal(rate, nper, pmt, pv, type) {
+                                                                if (!type) type = 0;
+                                                                var pow = Math.pow(1 + rate, nper);
+                                                                var fv = 0;
+                                                                if (rate) {
+                                                                    fv = (pmt * (1 + rate * type) * (1 - pow) / rate) - pv * pow;
+                                                                } else {
+                                                                    fv = -1 * (pv + pmt * nper);
+                                                                }
+                                                                return fv;
                                                             }
                                                             return fv;
                                                         }
