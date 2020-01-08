@@ -1,8 +1,0 @@
-/vendor
-.env
-.env.dev
-/.idea
-/vendor
-/vendor/*
-/storage/framework/*
-/storage/logs/*
