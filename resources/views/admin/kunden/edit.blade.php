@@ -79,16 +79,46 @@
 
 
     <script>
+
+        function monthly_total_price_remaining_debt(){
+            var total_price = parseInt($('#sparsumme').val().replace(/\./g,"").replace(",","."));
+            var real_estate_transfer_tax = parseInt($('#grunderwerbssteuer').val().replace(/\./g,"").replace(",",""));
+            var runningTime =  parseInt(document.getElementById('laufzeit').value);
+            var remaining_debt = total_price * real_estate_transfer_tax / 100;
+            var monthly_saving = total_price * (100 - real_estate_transfer_tax) / 100 / 12 / runningTime;
+            var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
+            var monthly_deposit = total_price * borrowing_rate / 100 / 12;
+            // var monthly_deposit = total_price * borrowing_rate / 100 / 12 / runningTime;
+            var monthly_total_pay = monthly_saving + monthly_deposit;
+            $('#monthly_interest').val(monthly_deposit.toFixed(2).toString().replace(".", ","));
+            $('#monthly_saving').val(monthly_saving.toFixed(2).toString().replace(".", ","));
+            $('#monthly_payment').val(monthly_total_pay.toFixed(2).toString().replace(".", ","));
+            $('#Outstanding_balance').val(remaining_debt.toFixed(2).toString().replace(".", ","));
+        }
+
         $(document).ready(function(){
 
             $("#bausparer").click(function () {
                 if($(this).prop('checked') == true){
                     $("#sparsumme").prop("disabled", false);
                     $("#laufzeit").prop("disabled", false);
+                    var total_price = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
+                    $('#sparsumme').val(total_price.toFixed(2).toString().replace(".", ","));
+                    monthly_total_price_remaining_debt();
                 } else {
                     $("#sparsumme").prop("disabled", true);
                     $("#laufzeit").prop("disabled", true);
                 }
+            });
+
+            // running time value change
+            $('#laufzeit').change(function() {
+                monthly_total_price_remaining_debt();
+            });
+
+            // Sparsumme value change
+            $('#sparsumme').change(function() {
+                monthly_total_price_remaining_debt();
             });
 
             $('#loan_period').val('{{$CalData->loan_period}}');
@@ -107,6 +137,12 @@
             {{--$('#onetime_unsheduled_val').val('{{$CalData->onetime_unsheduled_val}}');--}}
             $('#new_borrowing_rate').val('{{$CalData->new_borrowing_rate}}');
             $('#new_repayment_rate_inp').val('{{$CalData->new_repayment_rate_inp}}');
+            $('#sparsumme').val('{{$CalData->sparsumme}}');
+            $('#monthly_interest').val('{{$CalData->monthly_interest}}');
+            $('#monthly_saving').val('{{$CalData->monthly_saving}}');
+            $('#monthly_payment').val('{{$CalData->monthly_payment}}');
+            $('#laufzeit').val('{{$CalData->laufzeit}}');
+            
             $('#annual_unsheduled_year').change(function () {
                 $('#annual_to_year').html('');
                 var html = '';
@@ -1117,22 +1153,13 @@
                                                         $('#montly_deposit_val').attr("disabled",false);
                                                     });
                                                     $('#new_rate').click(function () {
-
                                                         $('#new_rate_inp').attr("disabled",false);
                                                         $('#new_repayment_rate_inp').attr("disabled",true);
                                                     });
                                                     $('#new_repayment_rate').click(function () {
-
                                                         $('#new_rate_inp').attr("disabled",true);
                                                         $('#new_repayment_rate_inp').attr("disabled",false);
                                                     });
-
-
-
-
-
-
-
                                                     //Calculation Tilgungssatz (Prozent)
                                                     $('#payment_opt_rad').click(function () {
                                                         $("#sparsumme").prop("disabled", true);
@@ -1186,6 +1213,7 @@
                                                         }*/
                                                         $('#montly_deposit_val').val(((Math.ceil(goal(0)*100)/100).toString().replace(".",",")));
                                                         setTimeout(function () {
+                                                            // jiangc modify
                                                             $('#Outstanding_balance').val('0,00');
                                                             $('#connection_credit').val('0,00');
                                                         },500);
@@ -1760,11 +1788,16 @@
                                                             {
                                                                 if(M[a]>=0){
                                                                     ret_value = M[a].toFixed(2);
-                                                                    $('#Outstanding_balance').val(formatNumbers(ret_value.toString().replace(".",",")));
+                                                                    if ($("#bausparer")[0].checked) {
+                                                                        monthly_total_price_remaining_debt();
+                                                                    } else {
+                                                                        // jiangc modify
+                                                                        $('#Outstanding_balance').val(formatNumbers(ret_value.toString().replace(".",",")));
+                                                                    }
                                                                     $('#connection_credit').val(formatNumbers(ret_value.toString().replace(".",",")));
                                                                 }
                                                                 else{
-
+                                                                    // jiangc modify
                                                                     $('#Outstanding_balance').val("0,00");
                                                                     $('#connection_credit').val("0,00");
                                                                 }
@@ -1772,6 +1805,7 @@
                                                                 break;
                                                             }
                                                             else{
+                                                                // jiangc modify
                                                                 $('#Outstanding_balance').val('0,00');
                                                                 $('#connection_credit').val('0,00');
                                                             }
@@ -2192,6 +2226,11 @@
                                                             new_repayment_rate_inp: $('#new_repayment_rate_inp').val(),
                                                             new_rate_inp: $('#new_rate_inp').val(),
                                                             total_maturity: $('#total_maturity').val(),
+                                                            sparsumme: $('#sparsumme').val(),
+                                                            monthly_interest: $('#monthly_interest').val(),
+                                                            monthly_saving: $('#monthly_saving').val(),
+                                                            monthly_payment: $('#monthly_payment').val(),
+                                                            laufzeit: $('#laufzeit').val(),
                                                         },
                                                         success: function(res) {
                                                             toastr.success(res);
@@ -2432,13 +2471,31 @@
                                                     </td>
                                                     <td colspan="2">
                                                         <div class="input-group">
-                                                            <input id="sparsumme" class="form-control text-right text-danger" placeholder="Sparsumme" disabled>
+                                                            <input id="sparsumme" placeholder="Sparsumme" class="form-control text-right" disabled>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <input id="monthly_interest" placeholder="Interest" class="form-control text-right" disabled>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <input id="monthly_saving" placeholder="Saving" class="form-control text-right" disabled>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">€</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <input id="monthly_payment" placeholder="Monthly payment" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td colspan="2">
+                                                    <td>
                                                         <div class="input-group">
                                                             <select id="laufzeit" class="form-control" placeholder="Laufzeit" disabled>
                                                                 <?php
@@ -2458,6 +2515,9 @@
                                                                 ?>
                                                             </select>
                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        Laufzeit
                                                     </td>
                                                 </tr>
 
@@ -2582,7 +2642,7 @@
                                                     <td>Restschuld ( € ) <span class="text-danger" id="message_Outstanding_balance"></span></td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="Outstanding_balance" class="form-control text-right" disabled>
+                                                            <input id="Outstanding_balance" value="0,00" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>

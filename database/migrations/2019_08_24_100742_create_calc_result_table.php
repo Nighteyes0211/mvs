@@ -41,6 +41,11 @@ class CreateCalcResultTable extends Migration
             $table->string('new_repayment_rate_inp');
             $table->string('new_rate_inp');
             $table->string('total_maturity');
+            $table->string('sparsumme')->default('0,00');
+            $table->string('monthly_interest')->default('0,00');
+            $table->string('monthly_saving')->default('0,00');
+            $table->string('monthly_payment')->default('0,00');
+            $table->string('laufzeit')->default('1');
             $table->timestamps();
         });
     }
