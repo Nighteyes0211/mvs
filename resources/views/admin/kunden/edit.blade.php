@@ -2231,6 +2231,7 @@
                                                             monthly_saving: $('#monthly_saving').val(),
                                                             monthly_payment: $('#monthly_payment').val(),
                                                             laufzeit: $('#laufzeit').val(),
+                                                            bausparer_flag: document.getElementById('bausparer').checked,
                                                         },
                                                         success: function(res) {
                                                             toastr.success(res);

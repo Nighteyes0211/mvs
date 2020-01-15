@@ -46,6 +46,7 @@ class CreateCalcResultTable extends Migration
             $table->string('monthly_saving')->default('0,00');
             $table->string('monthly_payment')->default('0,00');
             $table->string('laufzeit')->default('1');
+            $table->string('bausparer_flag')->default('false');
             $table->timestamps();
         });
     }

@@ -204,7 +204,11 @@
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->borrowing_rate }} &#37;</td>
                     <td>{{ $cal->repayment_date_inp}} &#37;</td>
-                    <td>{{ $cal->montly_deposit_val }} &euro;</td>
+                    @if ($cal->bausparer_flag == 'false')
+                        <td>{{ $cal->montly_deposit_val }} &euro;</td>
+                    @else
+                        <td>{{ $cal->monthly_payment }} &euro;</td>
+                    @endif
                     <td>{{ $cal->outstanding_balance }} &euro;</td>
                 </tr>
                 <tr>
