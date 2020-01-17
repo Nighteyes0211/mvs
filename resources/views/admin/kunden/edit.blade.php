@@ -873,8 +873,8 @@
                         <li class="nav-item"><a href="{{route('kunden.show',$kunden->id)}}" class=" btn btn-mkhyp" style="border-radius: 0px;">Kunden ansehen</a></li>
                     </div>
 
-
-                    <a onclick="addNewCalc()" href="Javascript:void(0)" class="btn btn-primary">Kalkulation hinzufügen</a>
+                        <!-- Kalkulation hinzufügen button -->
+                    <!-- <a onclick="addNewCalc()" href="Javascript:void(0)" class="btn btn-primary">Kalkulation hinzufügen</a> -->
 
                     @if($kunden->ehepartner_enabled)
                         @php($spouseDivShown = 'block')
@@ -3217,14 +3217,14 @@
                 $('#spouseDiv').fadeOut();
                 $('#ehepartnerChecklist').fadeOut();
                 $(th).data('status', 0);
-                $(th).html('Ehepartner hinzufügen');
+                $(th).html('2. Darlehensnehmer hinzufügen');
                 $(th).removeClass('btn-danger').addClass('btn-primary');
             } else {
                 $('input[name="ehepartner_enabled"]').val(1);
                 $('#spouseDiv').fadeIn();
                 $('#ehepartnerChecklist').fadeIn();
                 $(th).data('status', 1);
-                $(th).html('Ehepartner entfernen');
+                $(th).html('2. Darlehensnehmer entfernen');
                 $(th).removeClass('btn-primary').addClass('btn-danger');
             }
         }

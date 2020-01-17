@@ -173,8 +173,9 @@
 
 </div>
 @foreach ($CalData as $key=> $cal)
-<h3 class="mt-15">Finance Module# {{ $key+1 }}</h3>
-<h5><b>Calculation </b></h5>
+<h3 class="mt-15">Finanzierung<!--  {{ $key+1 }} --></h3>
+<h5><b>Daten </b></h5>
+
 <div style="max-height: 300px; overflow-y: scroll">
         <table style="width:100%; max-height: 500px !important;">
             <thead>
@@ -234,7 +235,7 @@
                         <th scope="col">Einmalige Sondertilgung </th>
                     @else
                         <th scope="col" colspan="3"></th>
-                    @endif -->
+                    @endif 
                 </tr>
                 <tr>
                     <td>{{ $cal->effective_interest }} &#37;</td>
@@ -245,13 +246,13 @@
                         <td>{{ monthReplace($cal->onetime_unsheduled_val) }}. {{ monthReplace($cal->onetime_unsheduled_month) }}. {{ $cal->onetime_unsheduled_year}}</td>
                     @else
                         <td colspan="3"></td>
-                    @endif -->
+                    @endif 
                 </tr>
             </tbody>
         </table>
     </div>
-<h5><b>Tilgungsplan </b></h5>
-<div style="max-height: 300px; overflow-y: scroll">
+<h5 style="margin-top: 20px;"><b>Tilgungsplan </b></h5>
+<div style="max-height: 300px; overflow-y: scroll;">
     <table style="width:100%; max-height: 500px !important;">
         <thead>
             <tr>
@@ -285,7 +286,7 @@
                     <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
                 </tr>
                 @endforeach
-            @endif -->
+            @endif 
         </tbody>
     </table>
 </div>
@@ -296,13 +297,13 @@
 
             @if(count($kunden->checklists)>0)
             <br>
-            <h5><b>Checkliste </b></h5>
+            <h5><b>Checkliste 1. Darlehensnehmer</b></h5>
             <div style="max-height: 300px; overflow-y: scroll">
                 <table style="width:100%; max-height: 500px !important;">
                     <thead>
                         <tr>
-                            <th>S/L</th>
-                            <th>List item</th>
+                            <th></th>
+                            <th>Unterlagen</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -319,13 +320,13 @@
             @endif
             @if(count($kunden->ehepartnerChecklists)>0)
             <br>
-            <h5><b>Checkliste (Ehepartner) </b></h5>
+            <h5><b>Checkliste 2. Darlehensnehmer </b></h5>
             <div style="max-height: 300px; overflow-y: scroll">
                 <table style="width:100%; max-height: 500px !important;">
                     <thead>
                         <tr>
-                            <th>S/L</th>
-                            <th>List item</th>
+                            <th></th>
+                            <th>Unterlagen</th>
                         </tr>
                     </thead>
                     <tbody>
