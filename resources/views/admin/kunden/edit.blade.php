@@ -2471,25 +2471,29 @@
                                                         </div>
                                                     </td>
                                                     <td colspan="2">
-                                                        <div class="input-group">
+                                                        <span>Bausparsumme</span>
+                                                        <div class="input-group" style="padding-bottom: 15px; padding-top:5px !important;">
                                                             <input id="sparsumme" placeholder="Sparsumme" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group">
+                                                        <span>Zinsen (monatlich)</span>
+                                                        <div class="input-group" style="padding-bottom: 15px; padding-top:5px !important;">
                                                             <input id="monthly_interest" placeholder="Interest" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group">
+                                                        <span>Sparbeitrag (monatlich)</span>
+                                                        <div class="input-group" style="padding-bottom: 15px; padding-top:5px !important;">
                                                             <input id="monthly_saving" placeholder="Saving" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>
                                                         </div>
-                                                        <div class="input-group">
+                                                        <span>Monatliche Rate</span>
+                                                        <div class="input-group" style="padding-bottom: 15px; padding-top:5px !important;">
                                                             <input id="monthly_payment" placeholder="Monthly payment" class="form-control text-right" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
@@ -2497,8 +2501,9 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="input-group">
-                                                            <select id="laufzeit" class="form-control" placeholder="Laufzeit" disabled>
+                                                        Laufzeit
+                                                        <div class="input-group" style="padding-bottom: 15px; padding-top:5px !important;">
+                                                           <select id="laufzeit" class="form-control" placeholder="Laufzeit" disabled>
                                                                 <?php
                                                                 for($i = 1; $i <= 30; $i++)
                                                                 {
@@ -2516,9 +2521,6 @@
                                                                 ?>
                                                             </select>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        Laufzeit
                                                     </td>
                                                 </tr>
 
