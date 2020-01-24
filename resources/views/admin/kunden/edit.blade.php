@@ -142,7 +142,7 @@
             $('#monthly_saving').val('{{$CalData->monthly_saving}}');
             $('#monthly_payment').val('{{$CalData->monthly_payment}}');
             $('#laufzeit').val('{{$CalData->laufzeit}}');
-            
+
             $('#annual_unsheduled_year').change(function () {
                 $('#annual_to_year').html('');
                 var html = '';
@@ -2234,7 +2234,8 @@
                                                             bausparer_flag: document.getElementById('bausparer').checked,
                                                         },
                                                         success: function(res) {
-                                                            toastr.success(res);
+                                                            toastr.success('saving success!');
+                                                            console.log(res);
                                                         },
                                                         error: function(error) {
                                                             var error = JSON.parse(error.responseText);
@@ -2520,6 +2521,21 @@
                                                                 }
                                                                 ?>
                                                             </select>
+                                                        </div>
+                                                        <span>Abschlussgebühr</span>
+                                                        <div class="input-group" style="padding-bottom: 15px; padding-top:5px !important;">
+                                                            <input id="statements_due" placeholder="Statements Due" class="form-control text-right" disabled>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="custom-control custom-radio" style="padding-bottom: 15px; padding-top:32px !important;">
+                                                            <input type="radio" class="custom-control-input" id="onetime" name="payment_type">
+                                                            <label class="custom-control-label" for="onetime">Onetime Payment</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio" style="padding-bottom: 15px; padding-top:43px !important;">
+                                                            <input type="radio" class="custom-control-input" id="monthly_rate" name="payment_type" checked>
+                                                            <label class="custom-control-label" for="monthly_rate">Monthly Rate</label>
                                                         </div>
                                                     </td>
                                                 </tr>

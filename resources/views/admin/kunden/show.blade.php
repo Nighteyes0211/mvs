@@ -177,6 +177,7 @@
 <h5><b>Daten </b></h5>
 
 <div style="max-height: 300px; overflow-y: scroll">
+    @if ($cal->bausparer_flag == 'false')
         <table style="width:100%; max-height: 500px !important;">
             <thead>
                 <tr>
@@ -205,11 +206,7 @@
                     <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->borrowing_rate }} &#37;</td>
                     <td>{{ $cal->repayment_date_inp}} &#37;</td>
-                    @if ($cal->bausparer_flag == 'false')
-                        <td>{{ $cal->montly_deposit_val }} &euro;</td>
-                    @else
-                        <td>{{ $cal->monthly_payment }} &euro;</td>
-                    @endif
+                    <td>{{ $cal->montly_deposit_val }} &euro;</td>
                     <td>{{ $cal->outstanding_balance }} &euro;</td>
                 </tr>
                 <tr>
@@ -235,7 +232,7 @@
                         <th scope="col">Einmalige Sondertilgung </th>
                     @else
                         <th scope="col" colspan="3"></th>
-                    @endif 
+                    @endif
                 </tr>
                 <tr>
                     <td>{{ $cal->effective_interest }} &#37;</td>
@@ -246,10 +243,89 @@
                         <td>{{ monthReplace($cal->onetime_unsheduled_val) }}. {{ monthReplace($cal->onetime_unsheduled_month) }}. {{ $cal->onetime_unsheduled_year}}</td>
                     @else
                         <td colspan="3"></td>
-                    @endif 
+                    @endif
                 </tr>
             </tbody>
         </table>
+    @else
+        <table style="width:100%; max-height: 500px !important;">
+            <thead>
+                <tr>
+                    <td><strong>Bausparer Modell</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col">Kreditsumme</th>
+                    <th scope="col">Laufzeit</th>
+                    <th scope="col">Auszahlungstermin</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                <tr>
+                    <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
+                    <td>{{ $cal->loan_period }}</td>
+                    <td>{{ monthReplace($cal->payment_month) }}. {{ $cal->payment_year}}</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <th scope="col">Auszahlungsbetrag</th>
+                    <th scope="col">Sollzinssatz (Prozent)</th>
+                    <th scope="col">Zinsen monatlich</th>
+                    <th scope="col">Sparsumme</th>
+                    <th scope="col">Monatliche Rate</th>
+                </tr>
+                <tr style="border: 1px solid black; border-top: none;">
+                    <td>{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
+                    <td>{{ $cal->borrowing_rate }} &#37;</td>
+                    <td>{{ $cal->monthly_interest }} &#37;</td>
+                    <td>{{ $cal->monthly_saving }} &euro;</td>
+                    <td>{{ $cal->monthly_payment }} &euro;</td>
+                </tr>
+                <tr>
+                    <td><strong>Anschlussdarlehen</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="col">Restschuld nach Sparphase</th>
+                    <th scope="col" colspan="4"></th>
+                </tr>
+                <tr>
+                    <td>{{ $cal->outstanding_balance }} &euro;</td>
+                    <td colspan="4"></td>
+                </tr>
+                <tr>
+                    <th scope="col">Neuer Sollzinssatz (Prozent)</th>
+                    <th scope="col">Neuer Tilgungssatz (Proz.)</th>
+                    <th scope="col">Neue Rate (Euro)</th>
+                    <th scope="col">Gesamtlaufzeit (Jahre/Monate)</th>
+                    <th scope="col"></th>
+                </tr>
+                <tr>
+                    <td>{{ $cal->new_borrowing_rate }} &#37;</td>
+                    <td>{{ $cal->new_repayment_rate_inp }} &#37;</td>
+                    <td>{{ $cal->new_rate_inp }} &euro;</td>
+                    <td>{{ $cal->total_maturity }} J / M</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="col">Effektivzins (Prozent)  </th>
+                    <th scope="col" colspan="4"></th>
+                </tr>
+                <tr>
+                    <td>{{ $cal->effective_interest }} &#37;</td>
+                    <td colspan="4"></td>
+                </tr>
+            </tbody>
+        </table>
+    @endif
     </div>
 <h5 style="margin-top: 20px;"><b>Tilgungsplan </b></h5>
 <div style="max-height: 300px; overflow-y: scroll;">
@@ -286,7 +362,7 @@
                     <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
                 </tr>
                 @endforeach
-            @endif 
+            @endif
         </tbody>
     </table>
 </div>
