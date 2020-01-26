@@ -99,15 +99,21 @@
         $(document).ready(function(){
 
             $("#bausparer").click(function () {
-                if($(this).prop('checked') == true){
+                if ($(this).prop('checked') == true) {
                     $("#sparsumme").prop("disabled", false);
                     $("#laufzeit").prop("disabled", false);
+                    $("#statements_due").prop("disabled", false);
+                    $("#onetime_pay").prop("disabled", false);
+                    $("#monthly_rate_pay").prop("disabled", false);
                     var total_price = parseInt($('#loan_amount').val().replace(/\./g,"").replace(",","."));
                     $('#sparsumme').val(total_price.toFixed(2).toString().replace(".", ","));
                     monthly_total_price_remaining_debt();
                 } else {
                     $("#sparsumme").prop("disabled", true);
                     $("#laufzeit").prop("disabled", true);
+                    $("#statements_due").prop("disabled", true);
+                    $("#onetime_pay").prop("disabled", true);
+                    $("#monthly_rate_pay").prop("disabled", true);
                 }
             });
 
@@ -142,6 +148,20 @@
             $('#monthly_saving').val('{{$CalData->monthly_saving}}');
             $('#monthly_payment').val('{{$CalData->monthly_payment}}');
             $('#laufzeit').val('{{$CalData->laufzeit}}');
+            if ('{{$CalData->bausparer_flag}}' == 'true') {
+                $('#bausparer').prop('checked', true);
+                $("#sparsumme").prop("disabled", false);
+                $("#laufzeit").prop("disabled", false);
+                $("#statements_due").prop("disabled", false);
+                $("#onetime_pay").prop("disabled", false);
+                $("#monthly_rate_pay").prop("disabled", false);
+            }
+            $('#statements_due').val('{{$CalData->acquisition_fee}}');
+            if ('{{$CalData->bausparer_pay_type}}' == 'one') {
+                $('#onetime_pay').prop('checked', true);
+            } else if ('{{$CalData->bausparer_pay_type}}' == 'month') {
+                $('#monthly_rate_pay').prop('checked', true);
+            }
 
             $('#annual_unsheduled_year').change(function () {
                 $('#annual_to_year').html('');
@@ -1143,11 +1163,17 @@
                                                     $('#repayment_date').click(function () {
                                                         $("#sparsumme").prop("disabled", true);
                                                         $("#laufzeit").prop("disabled", true);
+                                                        $("#statements_due").prop("disabled", true);
+                                                        $("#onetime_pay").prop("disabled", true);
+                                                        $("#monthly_rate_pay").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",false);
                                                         $('#montly_deposit_val').attr("disabled",true);
                                                     });
                                                     $('#montly_deposit').click(function () {
                                                         $("#sparsumme").prop("disabled", true);
+                                                        $("#statements_due").prop("disabled", true);
+                                                        $("#onetime_pay").prop("disabled", true);
+                                                        $("#monthly_rate_pay").prop("disabled", true);
                                                         $("#laufzeit").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",true);
                                                         $('#montly_deposit_val').attr("disabled",false);
@@ -1164,6 +1190,9 @@
                                                     $('#payment_opt_rad').click(function () {
                                                         $("#sparsumme").prop("disabled", true);
                                                         $("#laufzeit").prop("disabled", true);
+                                                        $("#statements_due").prop("disabled", true);
+                                                        $("#onetime_pay").prop("disabled", true);
+                                                        $("#monthly_rate_pay").prop("disabled", true);
                                                     /*    var loan_period = parseInt($('#loan_period').val());
                                                         var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         var montly_deposit_val = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
@@ -2232,6 +2261,8 @@
                                                             monthly_payment: $('#monthly_payment').val(),
                                                             laufzeit: $('#laufzeit').val(),
                                                             bausparer_flag: document.getElementById('bausparer').checked,
+                                                            acquisition_fee: $('#statements_due').val(),
+                                                            bausparer_pay_type: document.getElementById('onetime_pay').checked == 'true' ? 'one' : 'month',
                                                         },
                                                         success: function(res) {
                                                             toastr.success('saving success!');
@@ -2530,12 +2561,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="custom-control custom-radio" style="padding-bottom: 15px; padding-top:32px !important;">
-                                                            <input type="radio" class="custom-control-input" id="onetime" name="payment_type">
-                                                            <label class="custom-control-label" for="onetime">Onetime Payment</label>
+                                                            <input type="radio" class="custom-control-input" id="onetime_pay" name="payment_type" checked disabled>
+                                                            <label class="custom-control-label" for="onetime_pay">Onetime Payment</label>
                                                         </div>
                                                         <div class="custom-control custom-radio" style="padding-bottom: 15px; padding-top:43px !important;">
-                                                            <input type="radio" class="custom-control-input" id="monthly_rate" name="payment_type" checked>
-                                                            <label class="custom-control-label" for="monthly_rate">Monthly Rate</label>
+                                                            <input type="radio" class="custom-control-input" id="monthly_rate_pay" name="payment_type" disabled>
+                                                            <label class="custom-control-label" for="monthly_rate_pay">Monthly Rate</label>
                                                         </div>
                                                     </td>
                                                 </tr>
