@@ -2262,7 +2262,7 @@
                                                             laufzeit: $('#laufzeit').val(),
                                                             bausparer_flag: document.getElementById('bausparer').checked,
                                                             acquisition_fee: $('#statements_due').val(),
-                                                            bausparer_pay_type: document.getElementById('onetime_pay').checked == 'true' ? 'one' : 'month',
+                                                            bausparer_pay_type: document.getElementById('onetime_pay').checked == true ? 'one' : 'month',
                                                         },
                                                         success: function(res) {
                                                             toastr.success('saving success!');
