@@ -472,15 +472,6 @@
                 </thead>
                 <tbody>
                     @php($restschuld = $restAmount)
-                    @php($tempDate = makeYearMonth($tempDate))
-                    <tr>
-                        <td>{{ $tempDate }}</td>
-                        <td>0,00</td>
-                        <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                        <td>0,00</td>
-                        <td>0,00</td>
-                        <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
-                    </tr>
                     @foreach($period as $dt)
                         @php($tempDate = makeYearMonth($tempDate))
                         @php($zinsen = ($restschuld / $new_borrowing_rate / 100 / 12))
