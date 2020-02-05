@@ -120,6 +120,7 @@
     $bausparsumme = floatval(formatStringToNumber($kunden->finanzierungsbedarf));
     $contractFeeString = '';
     $newRateInpString = '';
+    $new_borrowing_rate_Str = '';
     $restAmount;
     $monthlySaving;
 
@@ -128,13 +129,23 @@
         $newRateInpString = $val->new_rate_inp;
         $restAmount = $val->outstanding_balance;
         $monthlySaving = $val->monthly_saving;
+        $new_borrowing_rate_Str = $val->new_borrowing_rate;
     }
+
+    $sonder_tilgung = 0;
+
+    foreach ($new_repayments as $key => $val) {
+        $sonder_tilgung = $val->sonder_tilgung;
+    }
+
 
     $restAmount = floatval(formatStringToNumber($restAmount));
     $monthlySaving = floatval(formatStringToNumber($monthlySaving));
     $abschlussgebühr = floatval(formatStringToNumber($contractFeeString));
-    $temp = str_replace('.', '', $newRateInpString);
-    $new_rate_inp = floatval(formatStringToNumber($temp));
+    $newRateInpString = str_replace('.', '', $newRateInpString);
+    $new_borrowing_rate_Str = str_replace(',', '', $new_borrowing_rate_Str);
+    $new_rate_inp = floatval(formatStringToNumber($newRateInpString));
+    $new_borrowing_rate = floatval(formatStringToNumber($new_borrowing_rate_Str));
 
     function calcuMonthList ($startDate) {
         $start    = (new DateTime($startDate))->modify('first day of this month');
@@ -461,20 +472,41 @@
                 </thead>
                 <tbody>
                     @php($restschuld = $restAmount)
-                    @foreach($new_repayments as $new_repayment)
+                    @php($tempDate = makeYearMonth($tempDate))
+                    <tr>
+                        <td>{{ $tempDate }}</td>
+                        <td>0,00</td>
+                        <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                        <td>0,00</td>
+                        <td>0,00</td>
+                        <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
+                    </tr>
+                    @foreach($period as $dt)
                         @php($tempDate = makeYearMonth($tempDate))
-                        @php($restschuld -= ($new_repayment->tilgung == '__' ? 0 : $new_repayment->tilgung))
+                        @php($zinsen = ($restschuld / $new_borrowing_rate / 100 / 12))
+                        @php($tilgung = $new_rate_inp - $zinsen)
+                        @php($restschuld -= $tilgung)
                         @if ($restschuld >= 0)
                             <tr>
                                 <td>{{ $tempDate }}</td>
-                                <td>{{ number_format((float)$new_repayment->rate, 2, ',', '.') }}</td>
-                                <td>{{ number_format((float)$new_repayment->sonder_tilgung, 2, ',', '.')}}</td>
-                                <td>{{ number_format((float)$new_repayment->zinsen, 2, ',', '.') }}</td>
-                                <td>{{ number_format((float)$new_repayment->tilgung, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
                                 <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
                             </tr>
+                        @else
+                            @break
                         @endif
                     @endforeach
+                    <tr>
+                        <td>{{ $tempDate }}</td>
+                        <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
+                        <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                        <td>{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
+                        <td>{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }}</td>
+                        <td>0, 00</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
