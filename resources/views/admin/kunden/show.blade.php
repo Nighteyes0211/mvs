@@ -382,6 +382,7 @@
         </table>
     @endif
     </div>
+    @php($period = calcuMonthList($tempDate))
     @if ($cal->bausparer_flag == 'true' && $cal->bausparer_pay_type == 'month')
         <h5 style="margin-top: 30px;"><b>Bausparer Tilgungsplan</b></h5>
         <div style="max-height: 300px; overflow-y: scroll;">
@@ -398,7 +399,6 @@
                     @php($i=0)
                     @php($cnt = (ceil(($bausparsumme - $restAmount + ($bausparsumme / 100 * $abschlussgebühr)) / $monthlySaving)))
                     @php($feeVal = $bausparsumme / (-100) * $abschlussgebühr)
-                    @php($period = calcuMonthList($tempDate))
                     @foreach($period as $dt)
                         @if ($i <= $cnt)
                             @php($tempDate = $dt->format("m.Y"))
@@ -471,9 +471,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if ($cal->bausparer_pay_type == 'one')
+                        @php($tempDate = date('m.Y'))
+                    @endif
                     @php($restschuld = $restAmount)
                     @foreach($period as $dt)
-                        @php($tempDate = makeYearMonth($tempDate))
+                        @if ($cal->bausparer_pay_type == 'month')
+                            @php($tempDate = makeYearMonth($tempDate))
+                        @endif
                         @php($zinsen = ($restschuld / $new_borrowing_rate / 100 / 12))
                         @php($tilgung = $new_rate_inp - $zinsen)
                         @php($restschuld -= $tilgung)
@@ -486,6 +491,9 @@
                                 <td>{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
                                 <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
                             </tr>
+                            @if ($cal->bausparer_pay_type == 'one')
+                                @php($tempDate = makeYearMonth($tempDate))
+                            @endif
                         @else
                             @break
                         @endif

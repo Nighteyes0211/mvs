@@ -81,9 +81,71 @@
         return $string;
     }
 
+    function makeYearMonth($str) {
+        $mon_tmp = '';
+        $mon_str = substr($str, 0, 2);
+        $year_str = substr($str, 3, 7);
+        $year = (int) $year_str;
+        if ((int) $mon_str > 11) {
+            $mon_tmp = '01';
+            $year = (int) $year_str + 1;
+        } else {
+            $tmVal = (int)$mon_str + 1;
+            $mon_tmp = monthReplace($tmVal);
+        }
+        return $mon_tmp.'.'.(strval($year));
+    }
+
     function monthReplace($string)
     {
         return (int) $string < 10 ? '0'.$string : $string;
+    }
+
+    function formatStringToNumber($string) {
+        return  str_replace(',', '.', $string);
+    }
+
+    $bausparsumme = floatval(formatStringToNumber($kunden->finanzierungsbedarf));
+    $contractFeeString = '';
+    $newRateInpString = '';
+    $new_borrowing_rate_Str = '';
+    $bausparer_flag;
+    $bausparer_pay_type;
+    $restAmount;
+    $monthlySaving;
+    $monthly_interest;
+
+    foreach ($Calculations as $key => $val) {
+        $contractFeeString = $val->acquisition_fee;
+        $newRateInpString = $val->new_rate_inp;
+        $restAmount = $val->outstanding_balance;
+        $monthlySaving = $val->monthly_saving;
+        $new_borrowing_rate_Str = $val->new_borrowing_rate;
+        $bausparer_flag = $val->bausparer_flag;
+        $bausparer_pay_type = $val->bausparer_pay_type;
+        $monthly_interest = $val->monthly_interest;
+    }
+
+    $restAmount = floatval(formatStringToNumber($restAmount));
+    $monthlySaving = floatval(formatStringToNumber($monthlySaving));
+    $abschlussgebühr = floatval(formatStringToNumber($contractFeeString));
+    $newRateInpString = str_replace('.', '', $newRateInpString);
+    $new_borrowing_rate_Str = str_replace(',', '', $new_borrowing_rate_Str);
+    $new_rate_inp = floatval(formatStringToNumber($newRateInpString));
+    $new_borrowing_rate = floatval(formatStringToNumber($new_borrowing_rate_Str));
+
+    function calcuMonthList ($startDate) {
+        $start    = (new DateTime($startDate))->modify('first day of this month');
+        $end      = (new DateTime('2100-12-12'))->modify('first day of next month');
+        $interval = DateInterval::createFromDateString('1 month');
+        return new DatePeriod($start, $interval, $end);
+    }
+    $tempDate = '';
+
+    $sonder_tilgung = 0;
+
+    foreach ($repayments as $key => $val) {
+        $sonder_tilgung = $val->sonder_tilgung;
     }
 ?>
 
@@ -287,190 +349,287 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 </tr>
                 </thead>
                 <tbody>
-                    @php $i = 1; @endphp
-                    @foreach( $Calculations as $calculation )
-                        <tr><td><div><b>{{ 'Finanzbaustein# ' . $i }}</b></div><span style="float:left; width: 200px">Kreditsumme</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Zinsbindung</span><span style="text-align: right">{{$calculation->loan_period}} Jahre </span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Auszahlungstermin</span><span style="text-align: right">{{ monthReplace($calculation->payment_month) }}. {{ $calculation->payment_year}}</span></td></tr>
-                        <!-- <tr><td><span style="float:left; width: 200px">Land Registry Costs</span><span style="text-align: right">{{ $calculation->registery_fees }} &euro;</span></td></tr> -->
-                        <!-- <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}} &#37;</span></td></tr> -->
-                        <tr><td><span style="float:left; width: 200px">Auszahlungsbetrag</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Sollzinssatz</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Tilgungssatz</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
-                        @if ( $calculation->annual_unsheduled_val != 0 || $calculation->onetime_unsheduled_val != 0 )
-                            <tr><td><span style="float:left; width: 200px">Jährliche Sondertilgung</span><span style="text-align: right">{{ monthReplace($calculation->annual_unsheduled_val) }}. {{ monthReplace($calculation->annual_unsheduled_month) }}. {{ $calculation->annual_unsheduled_year }}</span></td></tr>
-                            <tr><td><span style="float:left; width: 200px">bis</span><span style="text-align: right">{{ monthReplace($calculation->annual_to_month) }}. {{ $calculation->annual_to_year }}</span></td></tr>
-                            <tr><td><span style="float:left; width: 200px">Einmalige Sondertilgung</span><span style="text-align: right">{{ monthReplace($calculation->onetime_unsheduled_val) }}. {{ monthReplace($calculation->onetime_unsheduled_month) }}. {{ $calculation->onetime_unsheduled_year }}</span></td></tr>
-                        @endif -->
-                        <tr><td><span style="float:left; width: 200px">Restschuld</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Effektivzins</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Anschlusskredit</span><span style="text-align: right">{{ $calculation->connection_credit }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Neue Rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
-                        <tr><td><span style="float:left; width: 200px">Gesamtlaufzeit (Jahre/Monate)</span><span style="text-align: right">{{ $calculation->total_maturity }} J / M</span></td></tr>
-                         @if ( $calculation->timeline != null )
-                            <tr>
-                                <td>
-                                    <div class="uper_box">
-                                        <div class="container">
-                                            <table style="width: 100%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="font-size:10px">{{ $calculation->timeline->finanzierungsbedarf_phase_eins }}&euro;</td>
-                                                    <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
-                                                        <table style="width: 100%; border-spacing: 0">
-                                                            <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->laufzeit_phase_eins }} Jahre</p>
-                                                                </td>
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 13%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->jahreszins_phase_eins }}%</p>
-                                                                </td>
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
-                                                                    <p style="margin-top:0;margin-bottom:20px;font-size:10px">dann</p>
-                                                                </td>
-                                                                {{-- <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 0%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px"></p>
-                                                                </td> --}}
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->laufzeit_phase_zwei }} Jahre</p>
-                                                                </td>
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 12%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->jahreszins_phase_zwei }}%</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="border: 4px solid #f1ac38; width: 100%; height: 70px;">
-                                                                <td style="text-align: center;width: 33.334%;font-size:10px" colspan="2">{{ $calculation->timeline->rate_monatlich_phase_eins }}&euro;</td>
-                                                                <td width="33%" align="center" style="position: relative;">
-                                                                    <div style="height:26px;padding-top: 10px;font-size:10px"> -> <br>Restschuld <br>{{ $calculation->timeline->restschuld_phase_eins }}&euro;</div>
-                                                                    <span style="display: inline-block; width: 5px; height: 27px; border-right:4px solid #f1ac38; position: absolute;  z-index:99;top: -18px;left: 47%;"></span>
-                                                                </td>
-                                                                <td style="text-align: center; width: 33.334%;font-size:10px">{{ $calculation->timeline->rate_monatlich_phase_zwei }}&euro;</td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                    <td style="text-align: center;font-size:10px">30 jahre</td>
-                                                    <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->timeline->restschuld_ende }}&euro;</span></td>
-                                                </tr>
-                                            </table>
+                    @if ($bausparer_flag == 'false')
+                        @php $i = 1; @endphp
+                        @foreach( $Calculations as $calculation )
+                            <tr><td><div><b>{{ 'Finanzbaustein# ' . $i }}</b></div><span style="float:left; width: 200px">Kreditsumme</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Zinsbindung</span><span style="text-align: right">{{$calculation->loan_period}} Jahre </span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Auszahlungstermin</span><span style="text-align: right">{{ monthReplace($calculation->payment_month) }}. {{ $calculation->payment_year}}</span></td></tr>
+                            <!-- <tr><td><span style="float:left; width: 200px">Land Registry Costs</span><span style="text-align: right">{{ $calculation->registery_fees }} &euro;</span></td></tr> -->
+                            <!-- <tr><td><span style="float:left; width: 200px">Discount (percent)</span><span style="text-align: right">{{$calculation->payment_discount}} &#37;</span></td></tr> -->
+                            <tr><td><span style="float:left; width: 200px">Auszahlungsbetrag</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Sollzinssatz</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Tilgungssatz</span><span style="text-align: right">{{$calculation->repayment_date_inp}} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{ $calculation->montly_deposit_val }} &euro;</span></td></tr>
+                            @if ( $calculation->annual_unsheduled_val != 0 || $calculation->onetime_unsheduled_val != 0 )
+                                <tr><td><span style="float:left; width: 200px">Jährliche Sondertilgung</span><span style="text-align: right">{{ monthReplace($calculation->annual_unsheduled_val) }}. {{ monthReplace($calculation->annual_unsheduled_month) }}. {{ $calculation->annual_unsheduled_year }}</span></td></tr>
+                                <tr><td><span style="float:left; width: 200px">bis</span><span style="text-align: right">{{ monthReplace($calculation->annual_to_month) }}. {{ $calculation->annual_to_year }}</span></td></tr>
+                                <tr><td><span style="float:left; width: 200px">Einmalige Sondertilgung</span><span style="text-align: right">{{ monthReplace($calculation->onetime_unsheduled_val) }}. {{ monthReplace($calculation->onetime_unsheduled_month) }}. {{ $calculation->onetime_unsheduled_year }}</span></td></tr>
+                            @endif -->
+                            <tr><td><span style="float:left; width: 200px">Restschuld</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Effektivzins</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Anschlusskredit</span><span style="text-align: right">{{ $calculation->connection_credit }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Neue Rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Gesamtlaufzeit (Jahre/Monate)</span><span style="text-align: right">{{ $calculation->total_maturity }} J / M</span></td></tr>
+                            @if ( $calculation->timeline != null )
+                                <tr>
+                                    <td>
+                                        <div class="uper_box">
+                                            <div class="container">
+                                                <table style="width: 100%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td style="font-size:10px">{{ $calculation->timeline->finanzierungsbedarf_phase_eins }}&euro;</td>
+                                                        <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
+                                                            <table style="width: 100%; border-spacing: 0">
+                                                                <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->laufzeit_phase_eins }} Jahre</p>
+                                                                    </td>
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 13%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->jahreszins_phase_eins }}%</p>
+                                                                    </td>
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                        <p style="margin-top:0;margin-bottom:20px;font-size:10px">dann</p>
+                                                                    </td>
+                                                                    {{-- <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 0%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px"></p>
+                                                                    </td> --}}
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->laufzeit_phase_zwei }} Jahre</p>
+                                                                    </td>
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 12%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->timeline->jahreszins_phase_zwei }}%</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border: 4px solid #f1ac38; width: 100%; height: 70px;">
+                                                                    <td style="text-align: center;width: 33.334%;font-size:10px" colspan="2">{{ $calculation->timeline->rate_monatlich_phase_eins }}&euro;</td>
+                                                                    <td width="33%" align="center" style="position: relative;">
+                                                                        <div style="height:26px;padding-top: 10px;font-size:10px"> -> <br>Restschuld <br>{{ $calculation->timeline->restschuld_phase_eins }}&euro;</div>
+                                                                        <span style="display: inline-block; width: 5px; height: 27px; border-right:4px solid #f1ac38; position: absolute;  z-index:99;top: -18px;left: 47%;"></span>
+                                                                    </td>
+                                                                    <td style="text-align: center; width: 33.334%;font-size:10px">{{ $calculation->timeline->rate_monatlich_phase_zwei }}&euro;</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td style="text-align: center;font-size:10px">30 jahre</td>
+                                                        <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->timeline->restschuld_ende }}&euro;</span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <br><br>
-                                </td>
-                            </tr>
-                        @else
-                            <tr><td><strong></strong></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                        @endif -->
-                         @if ( $calculation->customerTimeline != null )
-                            <tr>
-                                <td>
-                                    <div class="uper_box">
-                                        <div class="container">
-                                            <table style="width: 100%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="font-size:10px; text-align: right; padding: 0 50px; ">{{ $calculation->customerTimeline->darlehen }}&euro;</td>
-                                                    <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
-                                                        <table style="width: 100%; border-spacing: 0">
-                                                            <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->laufzeit }} Jahre</p>
-                                                                </td>
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 13%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->zinsstaz }}%</p>
-                                                                </td>
-                                                                <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
-                                                                    <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->tilgung }} Jahre</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="border: 4px solid #f1ac38; width: 100%; height: 70px;">
-                                                                <td style="text-align: center;width: 33.334%;font-size:10px" colspan="3">{{ $calculation->customerTimeline->rate_monatl }}&euro;</td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                    <td style="text-align: center;font-size:10px; width: 50px;"> </td>
-                                                    <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->customerTimeline->restschuld }}&euro;</span></td>
-                                                </tr>
-                                            </table>
+                                        <br><br>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr><td><strong></strong></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                            @endif -->
+                            @if ( $calculation->customerTimeline != null )
+                                <tr>
+                                    <td>
+                                        <div class="uper_box">
+                                            <div class="container">
+                                                <table style="width: 100%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td style="font-size:10px; text-align: right; padding: 0 50px; ">{{ $calculation->customerTimeline->darlehen }}&euro;</td>
+                                                        <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
+                                                            <table style="width: 100%; border-spacing: 0">
+                                                                <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->laufzeit }} Jahre</p>
+                                                                    </td>
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 13%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->zinsstaz }}%</p>
+                                                                    </td>
+                                                                    <td style="text-align: center;border-bottom: 4px solid #f1ac38; width: 25%;">
+                                                                        <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $calculation->customerTimeline->tilgung }} Jahre</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border: 4px solid #f1ac38; width: 100%; height: 70px;">
+                                                                    <td style="text-align: center;width: 33.334%;font-size:10px" colspan="3">{{ $calculation->customerTimeline->rate_monatl }}&euro;</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td style="text-align: center;font-size:10px; width: 50px;"> </td>
+                                                        <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->customerTimeline->restschuld }}&euro;</span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <br><br>
-                                </td>
-                            </tr>
-                        @else
-                            <tr><td><strong></strong></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                            <tr><td></td></tr>
-                        @endif -->
-                        @php($i++)
-                    @endforeach
+                                        <br><br>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr><td><strong></strong></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                            @endif -->
+                            @php($i++)
+                        @endforeach
+                    @else
+                        @foreach( $Calculations as $calculation )
+                        <tr><td><div><b>Bausparer Modell</b></div><span style="float:left; width: 200px">Kreditsumme</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Laufzeit</span><span style="text-align: right">{{$calculation->loan_period}} Jahre </span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Auszahlungstermin</span><span style="text-align: right">{{ monthReplace($calculation->payment_month) }}. {{ $calculation->payment_year}}</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Auszahlungsbetrag</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Sollzinssatz (Prozent)</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Zinsen monatlich</span><span style="text-align: right">{{$calculation->monthly_interest}} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Sparsumme</span><span style="text-align: right">{{$calculation->monthly_saving}} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{$calculation->monthly_payment}} &euro;</span></td></tr>
+                            <tr><td><div><b>Anschlussdarlehen</b></div><span style="float:left; width: 200px">Restschuld nach Sparphase</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz (Prozent)</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz (Proz.)</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Neue Rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Gesamtlaufzeit (Jahre/Monate)</span><span style="text-align: right">{{ $calculation->total_maturity }} J / M</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Effektivzins (Prozent)</span><span style="text-align: right">{{ $calculation->effective_interest }} &#37;</span></td></tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
-<br><br><br>
+        <br><br><br>
+        @php($period = calcuMonthList($tempDate))
+        @if ($bausparer_flag == 'true')
+            @if ($bausparer_pay_type == 'month')
+                <div>
+                    <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparer Tilgungsplan</h3>
+                    <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
+                        <thead>
+                            <tr style="background: #a2a5aa;font-weight: bold;">
+                                <th style="padding: 5px 0;">Rückzahlungsdatum</th>
+                                <th>Zinsen</th>
+                                <th>Sparbeitrag</th>
+                                <th>Sparguthaben</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php($i=0)
+                            @php($cnt = (ceil(($bausparsumme - $restAmount + ($bausparsumme / 100 * $abschlussgebühr)) / $monthlySaving)))
+                            @php($feeVal = $bausparsumme / (-100) * $abschlussgebühr)
+                            @foreach($period as $dt)
+                                @if ($i <= $cnt)
+                                    @php($tempDate = $dt->format("m.Y"))
+                                    <tr style="text-align: left;">
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }}</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $monthly_interest }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                                    </tr>
+                                @endif
+                                @php($feeVal += $monthlySaving)
+                                @php($i ++)
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        @endif
+        <br><br><br>
 
         <div>
-            <h3 id="tilgungsplan" style="color:#28367b; font-size: 1.2em; margin-top: 50px">Tilgungsplan</h3>
-            <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
-                <thead>
-                <tr style="background: #a2a5aa;font-weight: bold;">
-                    <th style="padding: 5px 0;">Rückzahlungsdatum</th>
-                    <th>Rate</th>
-                    <th>Tilgung</th>
-                    <th>Zinsen</th>
-                    <th>Sondertilgung</th>
-                    <th>Restschuld</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @php($payments = [])
-                    @foreach($repayments as $repayment)
-
-                    <tr style="text-align: left;">
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace($repayment->years) }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.') }}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
-                    </tr>
-                    {{--@endif--}}
-                    @endforeach
-                    @if ( $years_repayments != null )
-                        @foreach($years_repayments as $years_repayment)
-                        <tr>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $years_repayment->years }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.')}}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
+            @if ($bausparer_flag == 'false')
+                <h3 id="tilgungsplan" style="color:#28367b; font-size: 1.2em; margin-top: 50px">Tilgungsplan</h3>
+                <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
+                    <thead>
+                        <tr style="background: #a2a5aa;font-weight: bold;">
+                            <th style="padding: 5px 0;">Rückzahlungsdatum</th>
+                            <th>Rate</th>
+                            <th>Tilgung</th>
+                            <th>Zinsen</th>
+                            <th>Sondertilgung</th>
+                            <th>Restschuld</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php($payments = [])
+                        @foreach($repayments as $repayment)
+                        <tr style="text-align: left;">
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace($repayment->years) }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
                         </tr>
                         @endforeach
-                    @endif -->
- {{--                   @foreach($payments as $key=>$value)
-                    @if($key > date('Y'))
-                    <tr style="text-align: left;">
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$key}}</td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['zinsen']}} </td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['tilgung']}} </td>
-                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{$payments[$key]['darlehensrest']}}</td>
-                    </tr>
-                    @endif
-                    @endforeach--}}
-                </tbody>
-            </table>
+                        @if ( $years_repayments != null )
+                            @foreach($years_repayments as $years_repayment)
+                            <tr>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $years_repayment->years }}</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.')}}</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.') }}</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
+                            </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            @else
+                <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">New Repayment Plan</h3>
+                <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
+                    <thead>
+                        <tr style="background: #a2a5aa;font-weight: bold;">
+                            <th style="padding: 5px 0;">Rückzahlungsdatum</th>
+                            <th>Rate</th>
+                            <th>Tilgung</th>
+                            <th>Zinsen</th>
+                            <th>Sondertilgung</th>
+                            <th>Restschuld</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($bausparer_pay_type == 'one')
+                            @php($tempDate = date('m.Y'))
+                        @endif
+                        @php($restschuld = $restAmount)
+                        @foreach($period as $dt)
+                            @if ($bausparer_pay_type == 'month')
+                                @php($tempDate = makeYearMonth($tempDate))
+                            @endif
+                            @php($zinsen = ($restschuld / $new_borrowing_rate / 100 / 12))
+                            @php($tilgung = $new_rate_inp - $zinsen)
+                            @php($restschuld -= $tilgung)
+                            @if ($restschuld >= 0)
+                                <tr>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $tempDate }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
+                                </tr>
+                                @if ($bausparer_pay_type == 'one')
+                                    @php($tempDate = makeYearMonth($tempDate))
+                                @endif
+                            @else
+                                @break
+                            @endif
+                        @endforeach
+                        <tr>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $tempDate }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">0, 00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            @endif
             <br>
         </div>
         @if(count($kunden->checklists)>0)
