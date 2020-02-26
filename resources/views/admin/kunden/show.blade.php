@@ -481,7 +481,7 @@
                         @if ($cal->bausparer_pay_type == 'month')
                             @php($tempDate = makeYearMonth($tempDate))
                         @endif
-                        @php($zinsen = ($restschuld / $new_borrowing_rate / 100 / 12))
+                        @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 /12)))
                         @php($tilgung = $new_rate_inp - $zinsen)
                         @php($restschuld -= $tilgung)
                         @if ($restschuld >= 0)
