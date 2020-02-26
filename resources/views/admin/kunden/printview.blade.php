@@ -506,7 +506,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
         @if ($bausparer_flag == 'true')
             @if ($bausparer_pay_type == 'month')
                 <div>
-                    <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparer Tilgungsplan</h3>
+                    <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan</h3>
                     <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                         <thead>
                             <tr style="background: #a2a5aa;font-weight: bold;">
@@ -583,7 +583,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     </tbody>
                 </table>
             @else
-                <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">New Repayment Plan</h3>
+                <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Tilgungsplan Anschlussfínanzierung</h3>
                 <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                     <thead>
                         <tr style="background: #a2a5aa;font-weight: bold;">
