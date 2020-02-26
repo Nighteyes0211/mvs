@@ -392,6 +392,7 @@
                         <th>Rückzahlungsdatum</th>
                         <th>Zinsen</th>
                         <th>Sparbeitrag</th>
+                        <th>Monatliche Rate</th>
                         <th>Sparguthaben</th>
                     </tr>
                 </thead>
@@ -406,6 +407,7 @@
                                 <td>{{ $dt->format("m.Y") }}</td>
                                 <td>{{ $cal->monthly_interest }} </td>
                                 <td>{{ $cal->monthly_saving }} </td>
+                                <td>{{ $cal->monthly_payment }} </td>
                                 <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
                             </tr>
                         @endif

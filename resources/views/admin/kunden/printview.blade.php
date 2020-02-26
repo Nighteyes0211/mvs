@@ -114,6 +114,7 @@
     $restAmount;
     $monthlySaving;
     $monthly_interest;
+    $monthly_payment;
 
     foreach ($Calculations as $key => $val) {
         $contractFeeString = $val->acquisition_fee;
@@ -124,6 +125,7 @@
         $bausparer_flag = $val->bausparer_flag;
         $bausparer_pay_type = $val->bausparer_pay_type;
         $monthly_interest = $val->monthly_interest;
+        $monthly_payment = $val->monthly_payment;
     }
 
     $restAmount = floatval(formatStringToNumber($restAmount));
@@ -511,6 +513,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                 <th style="padding: 5px 0;">Rückzahlungsdatum</th>
                                 <th>Zinsen</th>
                                 <th>Sparbeitrag</th>
+                                <th>Monatliche Rate</th>
                                 <th>Sparguthaben</th>
                             </tr>
                         </thead>
@@ -525,6 +528,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }}</td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $monthly_interest }} </td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $monthly_payment }} </td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
                                     </tr>
                                 @endif
