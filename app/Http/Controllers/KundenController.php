@@ -142,6 +142,60 @@ class KundenController extends Controller
         $kunden->telefon = request('telefon');
         $kunden->geburtsdatum = request('geburtsdatum');
         $kunden->save();
+
+        // calcu_result table data saving
+        $calcu_result_insert_data = [
+            'kunden_id' => $kunden->id,
+            'loan_period' => '10',
+            'payment_month' => date('m'),
+            'payment_year' => date('Y'),
+            'registery_fees' => '0,00',
+            'payment_amount' => '0,00',
+            'borrowing_rate' => '0',
+            'montly_deposit_val' => '0',
+            'message_payment_opt' => '',
+            'annual_unsheduled_month' => date('m'),
+            'annual_unsheduled_year' => date('Y'),
+            'annual_unsheduled_val' => '0',
+            'annual_to_month' => date('m'),
+            'annual_to_year' => date('Y'),
+            'onetime_unsheduled_month' => date('m'),
+            'onetime_unsheduled_year' => date('Y'),
+            'onetime_unsheduled_val' => '0',
+            'outstanding_balance' => '0,00',
+            'effective_interest' => '0,00',
+            'connection_credit' => '0,00',
+            'new_borrowing_rate' => '0',
+            'new_repayment_rate_inp' => '0',
+            'new_rate_inp' => '0,00',
+            'total_maturity' => '0/0',
+            'bausparer_flag' => 'false',
+            'acquisition_fee'=> '0,00',
+            'bausparer_pay_type'=> 'one'
+        ];
+        DB::table('calc_result')->insert($calcu_result_insert_data);
+
+        // calculation table data saving
+        $calculation_insert_data = [
+            'angebotdate' => date('Y-m-d'),
+            'kunden_id' => $kunden->id,
+            'enabled' => 1,
+            'prepared_by' => 5,
+            'bank' => 'Deutsche Bank',
+            'annuities' => 'ausgesetzt',
+            'to_interest' => '0%',
+            'effectiveness' => '0',
+            'fixed_interest_rates' => '1 Jahre',
+            'monthly_loan' => '0,00',
+            'residual_debt_interest_rate' => '0,00',
+            'calculated_luaf_time' => '1 Jahre, 1 Monate',
+            'net_loan_amount' => '0,00',
+            'initial_interest' => '0%',
+            'optional_sound_recovery' => '0%'
+        ];
+
+        DB::table('calculation')->insert($calculation_insert_data);
+
         return redirect()->route('kunden.index');
     }
 
@@ -163,7 +217,7 @@ class KundenController extends Controller
                 FROM repayments
                 GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
                 ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
-                LIMIT 1)');
+                LIMIT 1) AND kundens_id = '.$kunden->id);
         $years_repayments = DB::select('SELECT SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) years,
             SUM(zinsen) zinsen, SUM(tilgung) tilgung, MIN(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
             FROM repayments
@@ -174,7 +228,7 @@ class KundenController extends Controller
             FROM repayments
             GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
             ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
-            LIMIT 1)
+            LIMIT 1) AND kundens_id = '.$kunden->id.'
             GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
             ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))');
         $new_repayments = DB::select('SELECT repayment_date years, zinsen, tilgung, darlehensrest, rate, sonder_tilgung FROM repayments');
@@ -416,18 +470,23 @@ class KundenController extends Controller
 
         // dd($kaufpreis);
 
+        $kaufpreis = request('kaufpreis') == '' ? '0' : request('kaufpreis');
+        $kostenumbau = request('kostenumbau') == '' ? '0' : request('kostenumbau');
+        $kostennotar = request('kostennotar') == '' ? '0,0' : request('kostennotar');
+        $grunderwerbssteuer = request('grunderwerbssteuer') == '' ? '0,0' : request('grunderwerbssteuer');
+        $maklerkosten = request('maklerkosten') == '' ? '0,0' : request('maklerkosten');
+        $gesamtkosten = request('gesamtkosten') == '' ? '0,00' : request('gesamtkosten');
+        $eigenkapital = request('eigenkapital') == '' ? '0' : request('eigenkapital');
+        $finanzierungsbedarf = request('finanzierungsbedarf') == '' ? '0,00' : request('finanzierungsbedarf');
 
-        $kunden->kaufpreis = $this->stringReplace(request('kaufpreis'), ",",".");
-        $kunden->kostenumbau = $this->stringReplace(request('kostenumbau'), ",",".");
-        $kunden->kostennotar = $this->stringReplace(request('kostennotar'), ",",".");
-        $kunden->grunderwerbssteuer = $this->stringReplace(request('grunderwerbssteuer'), ",",".");
-        $kunden->maklerkosten = $this->stringReplace(request('maklerkosten'), ",",".");
-        $kunden->gesamtkosten = $this->stringReplace(request('gesamtkosten'), ",",".");
-        $kunden->eigenkapital = $this->stringReplace(request('eigenkapital'), ",",".");
-        $kunden->finanzierungsbedarf = $this->stringReplace(request('finanzierungsbedarf'), ",",".");
-
-
-
+        $kunden->kaufpreis = $this->stringReplace($kaufpreis, ",",".");
+        $kunden->kostenumbau = $this->stringReplace($kostenumbau, ",",".");
+        $kunden->kostennotar = $this->stringReplace($kostennotar, ",",".");
+        $kunden->grunderwerbssteuer = $this->stringReplace($grunderwerbssteuer, ",",".");
+        $kunden->maklerkosten = $this->stringReplace($maklerkosten, ",",".");
+        $kunden->gesamtkosten = $this->stringReplace($gesamtkosten, ",",".");
+        $kunden->eigenkapital = $this->stringReplace($eigenkapital, ",",".");
+        $kunden->finanzierungsbedarf = $this->stringReplace($finanzierungsbedarf, ",",".");
 
         $kunden->save();
         return redirect()->route('kunden.edit', $kunden->id);
