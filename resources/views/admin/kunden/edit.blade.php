@@ -860,7 +860,7 @@
                         >
                     </div>
                     <div class="form-group">
-                        <label>Select User</label>
+                        <label>Berater auswählen</label>
                         <select class="form-control" name="kunden_user">
                             @forelse($users as $user)
                                 @if(isset($kunden->myuser))
@@ -882,7 +882,7 @@
                     <br>
 
                     <input type="hidden" id="timelineChecker" name="timelineChecker" value="0" />
-                    <button type="submit" class="btn btn-primary">Kunden aktualisieren</button>
+                    <button type="submit" class="btn btn-primary">Kunden aktualieren</button>
 
 
                     <hr>
@@ -2562,11 +2562,11 @@
                                                         </div>
                                                         <div class="custom-control custom-radio" style="padding-bottom: 15px; padding-top:32px !important;">
                                                             <input type="radio" class="custom-control-input" id="onetime_pay" name="payment_type" checked disabled>
-                                                            <label class="custom-control-label" for="onetime_pay">Onetime Payment</label>
+                                                            <label class="custom-control-label" for="onetime_pay">Einmal Zahlung</label>
                                                         </div>
                                                         <div class="custom-control custom-radio" style="padding-bottom: 15px; padding-top:43px !important;">
                                                             <input type="radio" class="custom-control-input" id="monthly_rate_pay" name="payment_type" disabled>
-                                                            <label class="custom-control-label" for="monthly_rate_pay">Monthly Rate</label>
+                                                            <label class="custom-control-label" for="monthly_rate_pay">Monatliche Zahlung</label>
                                                         </div>
                                                     </td>
                                                 </tr>
