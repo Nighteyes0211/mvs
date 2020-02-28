@@ -147,6 +147,7 @@
             $('#monthly_interest').val('{{$CalData->monthly_interest}}');
             $('#monthly_saving').val('{{$CalData->monthly_saving}}');
             $('#monthly_payment').val('{{$CalData->monthly_payment}}');
+            $('#total_maturity').val('{{$CalData->total_maturity}}');
             $('#laufzeit').val('{{$CalData->laufzeit}}');
             if ('{{$CalData->bausparer_flag}}' == 'true') {
                 $('#bausparer').prop('checked', true);
