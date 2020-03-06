@@ -436,7 +436,8 @@
                     @php($cnt = (ceil(($bausparsumme - $restAmount + ($bausparsumme / 100 * $abschlussgebühr)) / $monthlySaving)))
                     @php($feeVal = 0)
                     @foreach($period as $dt)
-                        @if ($i <= $cnt)
+                        @if ($i < $cnt)
+                            @php($feeVal += $monthlySaving)
                             @php($tempDate = $dt->format("m.Y"))
                             <tr>
                                 <td>{{ $dt->format("m.Y") }}</td>
@@ -446,7 +447,6 @@
                                 <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
                             </tr>
                         @endif
-                        @php($feeVal += $monthlySaving)
                         @php($i ++)
                     @endforeach
                 </tbody>
