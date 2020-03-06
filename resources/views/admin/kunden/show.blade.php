@@ -508,14 +508,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($cal->bausparer_pay_type == 'one')
-                        @php($tempDate = date('m.Y'))
-                    @endif
                     @php($restschuld = $restAmount)
                     @foreach($period as $dt)
-                        @if ($cal->bausparer_pay_type == 'month')
-                            @php($tempDate = makeYearMonth($tempDate))
-                        @endif
+                        @php($tempDate = makeYearMonth($tempDate))
                         @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 /12)))
                         @php($tilgung = $new_rate_inp - $zinsen)
                         @php($restschuld -= $tilgung)
@@ -528,9 +523,6 @@
                                 <td>{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
                                 <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
                             </tr>
-                            @if ($cal->bausparer_pay_type == 'one')
-                                @php($tempDate = makeYearMonth($tempDate))
-                            @endif
                         @else
                             @break
                         @endif
