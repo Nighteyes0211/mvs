@@ -143,7 +143,7 @@
     $monthlySaving = floatval(formatStringToNumber($monthlySaving));
     $abschlussgebühr = floatval(formatStringToNumber($contractFeeString));
     $newRateInpString = str_replace('.', '', $newRateInpString);
-    $new_borrowing_rate_Str = str_replace(',', '', $new_borrowing_rate_Str);
+    $new_borrowing_rate_Str = str_replace(',', '.', $new_borrowing_rate_Str);
     $new_rate_inp = floatval(formatStringToNumber($newRateInpString));
     $new_borrowing_rate = floatval(formatStringToNumber($new_borrowing_rate_Str));
 
