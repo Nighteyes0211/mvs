@@ -418,6 +418,41 @@
             </table>
         </div>
     @endif
+    @if ($cal->bausparer_flag == 'true' && $cal->bausparer_pay_type == 'one')
+        <h5 style="margin-top: 30px;"><b>Bausparer Tilgungsplan</b></h5>
+        <div style="max-height: 300px; overflow-y: scroll;">
+            <table style="width:100%; max-height: 500px !important;">
+                <thead>
+                    <tr>
+                        <th>Rückzahlungsdatum</th>
+                        <th>Zinsen</th>
+                        <th>Sparbeitrag</th>
+                        <th>Monatliche Rate</th>
+                        <th>Sparguthaben</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php($i=0)
+                    @php($cnt = (ceil(($bausparsumme - $restAmount + ($bausparsumme / 100 * $abschlussgebühr)) / $monthlySaving)))
+                    @php($feeVal = 0)
+                    @foreach($period as $dt)
+                        @if ($i <= $cnt)
+                            @php($tempDate = $dt->format("m.Y"))
+                            <tr>
+                                <td>{{ $dt->format("m.Y") }}</td>
+                                <td>{{ $cal->monthly_interest }} </td>
+                                <td>{{ $cal->monthly_saving }} </td>
+                                <td>{{ $cal->monthly_payment }} </td>
+                                <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                            </tr>
+                        @endif
+                        @php($feeVal += $monthlySaving)
+                        @php($i ++)
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
     @if ($cal->bausparer_flag == 'false')
         <h5 style="margin-top: 30px;"><b>Tilgungsplan </b></h5>
         <div style="max-height: 300px; overflow-y: scroll;">
