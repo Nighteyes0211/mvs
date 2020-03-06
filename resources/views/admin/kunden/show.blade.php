@@ -459,7 +459,7 @@
             </table>
         </div>
     @else
-        <h5 style="margin-top: 30px;"><b>New Repayment Plan</b></h5>
+        <h5 style="margin-top: 30px;"><b>Tilgungsplan</b></h5>
         <div style="max-height: 300px; overflow-y: scroll;">
             <table style="width:100%; max-height: 500px !important;">
                 <thead>
