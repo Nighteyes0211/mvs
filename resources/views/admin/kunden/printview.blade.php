@@ -639,12 +639,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             @php($restschuld -= $tilgung)
                             @if ($restschuld >= 0)
                                 <tr>
-                                    <td>{{ $tempDate }}</td>
-                                    <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
-                                    <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                                    <td>{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
-                                    <td>{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
-                                    <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $tempDate }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
                                 </tr>
                             @else
                                 @break
