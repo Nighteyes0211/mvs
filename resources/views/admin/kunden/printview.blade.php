@@ -488,10 +488,10 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             <tr><td><span style="float:left; width: 200px">Auszahlungstermin</span><span style="text-align: right">{{ monthReplace($calculation->payment_month) }}. {{ $calculation->payment_year}}</span></td></tr>
                             <tr><td><span style="float:left; width: 200px">Auszahlungsbetrag</span><span style="text-align: right">{{ number_format( $kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</span></td></tr>
                             <tr><td><span style="float:left; width: 200px">Sollzinssatz (Prozent)</span><span style="text-align: right">{{ $calculation->borrowing_rate }} &#37;</span></td></tr>
-                            <tr><td><span style="float:left; width: 200px">Zinsen monatlich</span><span style="text-align: right">{{$calculation->monthly_interest}} &euro;</span></td></tr>
-                            <tr><td><span style="float:left; width: 200px">Sparsumme</span><span style="text-align: right">{{$calculation->monthly_saving}} &euro;</span></td></tr>
-                            <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{$calculation->monthly_payment}} &euro;</span></td></tr>
-                            <tr><td><div><b>Anschlussdarlehen</b></div><span style="float:left; width: 200px">Restschuld nach Sparphase</span><span style="text-align: right">{{ $calculation->outstanding_balance }} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Zinsen monatlich</span><span style="text-align: right">{{number_format((float)formatStringToNumber($calculation->monthly_interest), 2, ',', '.')}} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Sparsumme</span><span style="text-align: right">{{number_format((float)formatStringToNumber($calculation->monthly_saving), 2, ',', '.')}} &euro;</span></td></tr>
+                            <tr><td><span style="float:left; width: 200px">Monatliche Rate</span><span style="text-align: right">{{number_format((float)formatStringToNumber($calculation->monthly_payment), 2, ',', '.')}} &euro;</span></td></tr>
+                            <tr><td><div><b>Anschlussdarlehen</b></div><span style="float:left; width: 200px">Restschuld nach Sparphase</span><span style="text-align: right">{{number_format((float)formatStringToNumber($calculation->outstanding_balance), 2, ',', '.')}} &euro;</span></td></tr>
                             <tr><td><span style="float:left; width: 200px">Neuer Sollzinssatz (Prozent)</span><span style="text-align: right">{{ $calculation->new_borrowing_rate }} &#37;</span></td></tr>
                             <tr><td><span style="float:left; width: 200px">Neuer Tilgungssatz (Proz.)</span><span style="text-align: right">{{ $calculation->new_repayment_rate_inp }} &#37;</span></td></tr>
                             <tr><td><span style="float:left; width: 200px">Neue Rate (Euro)</span><span style="text-align: right">{{ $calculation->new_rate_inp }} &euro;</span></td></tr>
@@ -506,7 +506,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
         @if ($bausparer_flag == 'true')
             @if ($bausparer_pay_type == 'month')
                 <div>
-                    <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan</h3>
+                    <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan Tilgungsplan</h3>
                     <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                         <thead>
                             <tr style="background: #a2a5aa;font-weight: bold;">
@@ -526,9 +526,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     @php($tempDate = $dt->format("m.Y"))
                                     <tr style="text-align: left;">
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }}</td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $monthly_interest }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_interest), 2, ',', '.') }} </td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $monthly_payment }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} </td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
                                     </tr>
                                 @endif
@@ -604,7 +604,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             @if ($bausparer_pay_type == 'month')
                                 @php($tempDate = makeYearMonth($tempDate))
                             @endif
-                            @php($zinsen = ($restschuld / $new_borrowing_rate / 100 / 12))
+                            @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 /12)))
                             @php($tilgung = $new_rate_inp - $zinsen)
                             @php($restschuld -= $tilgung)
                             @if ($restschuld >= 0)

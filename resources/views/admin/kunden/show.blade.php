@@ -337,9 +337,9 @@
                 <tr style="border: 1px solid black; border-top: none;">
                     <td>{{ number_format($kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->borrowing_rate }} &#37;</td>
-                    <td>{{ $cal->monthly_interest }} &euro;</td>
-                    <td>{{ $cal->monthly_saving }} &euro;</td>
-                    <td>{{ $cal->monthly_payment }} &euro;</td>
+                    <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} &euro;</td>
                 </tr>
                 <tr>
                     <td><strong>Anschlussdarlehen</strong></td>
@@ -353,7 +353,7 @@
                     <th scope="col" colspan="4"></th>
                 </tr>
                 <tr>
-                    <td>{{ $cal->outstanding_balance }} &euro;</td>
+                    <td>{{ number_format((float)formatStringToNumber($cal->outstanding_balance), 2, ',', '.') }} &euro;</td>
                     <td colspan="4"></td>
                 </tr>
                 <tr>
@@ -405,9 +405,9 @@
                             @php($tempDate = $dt->format("m.Y"))
                             <tr>
                                 <td>{{ $dt->format("m.Y") }}</td>
-                                <td>{{ $cal->monthly_interest }} </td>
-                                <td>{{ $cal->monthly_saving }} </td>
-                                <td>{{ $cal->monthly_payment }} </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} </td>
                                 <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
                             </tr>
                         @endif
@@ -511,7 +511,7 @@
                     @php($restschuld = $restAmount)
                     @foreach($period as $dt)
                         @php($tempDate = makeYearMonth($tempDate))
-                        @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 /12)))
+                        @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 / 12)))
                         @php($tilgung = $new_rate_inp - $zinsen)
                         @php($restschuld -= $tilgung)
                         @if ($restschuld >= 0)
