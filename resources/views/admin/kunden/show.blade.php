@@ -149,7 +149,7 @@
 
     function calcuMonthList ($startDate) {
         $start    = (new DateTime($startDate))->modify('first day of this month');
-        $end      = (new DateTime('2100-12-12'))->modify('first day of next month');
+        $end      = (new DateTime('2500-12-12'))->modify('first day of next month');
         $interval = DateInterval::createFromDateString('1 month');
         return new DatePeriod($start, $interval, $end);
     }
@@ -441,9 +441,9 @@
                             @php($tempDate = $dt->format("m.Y"))
                             <tr>
                                 <td>{{ $dt->format("m.Y") }}</td>
-                                <td>{{ $cal->monthly_interest }} </td>
-                                <td>{{ $cal->monthly_saving }} </td>
-                                <td>{{ $cal->monthly_payment }} </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} </td>
                                 <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
                             </tr>
                         @endif

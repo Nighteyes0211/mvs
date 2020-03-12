@@ -138,7 +138,7 @@
 
     function calcuMonthList ($startDate) {
         $start    = (new DateTime($startDate))->modify('first day of this month');
-        $end      = (new DateTime('2100-12-12'))->modify('first day of next month');
+        $end      = (new DateTime('2500-12-12'))->modify('first day of next month');
         $interval = DateInterval::createFromDateString('1 month');
         return new DatePeriod($start, $interval, $end);
     }
@@ -539,6 +539,41 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     </table>
                 </div>
             @endif
+            @if ($bausparer_pay_type == 'one')
+                <div>
+                    <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan Tilgungsplan</h3>
+                    <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
+                        <thead>
+                            <tr style="background: #a2a5aa;font-weight: bold;">
+                                <th style="padding: 5px 0;">Rückzahlungsdatum</th>
+                                <th>Zinsen</th>
+                                <th>Sparbeitrag</th>
+                                <th>Monatliche Rate</th>
+                                <th>Sparguthaben</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php($i=0)
+                            @php($cnt = (ceil(($bausparsumme - $restAmount + ($bausparsumme / 100 * $abschlussgebühr)) / $monthlySaving)))
+                            @php($feeVal = 0)
+                            @foreach($period as $dt)
+                                @if ($i < $cnt)
+                                    @php($feeVal += $monthlySaving)
+                                    @php($tempDate = $dt->format("m.Y"))
+                                    <tr style="text-align: left;">
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }}</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_interest), 2, ',', '.') }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                                    </tr>
+                                @endif
+                                @php($i ++)
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         @endif
         <br><br><br>
 
@@ -596,29 +631,21 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($bausparer_pay_type == 'one')
-                            @php($tempDate = date('m.Y'))
-                        @endif
                         @php($restschuld = $restAmount)
                         @foreach($period as $dt)
-                            @if ($bausparer_pay_type == 'month')
-                                @php($tempDate = makeYearMonth($tempDate))
-                            @endif
-                            @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 /12)))
+                            @php($tempDate = makeYearMonth($tempDate))
+                            @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 / 12)))
                             @php($tilgung = $new_rate_inp - $zinsen)
                             @php($restschuld -= $tilgung)
                             @if ($restschuld >= 0)
                                 <tr>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $tempDate }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
+                                    <td>{{ $tempDate }}</td>
+                                    <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
+                                    <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
+                                    <td>{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
+                                    <td>{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
+                                    <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
                                 </tr>
-                                @if ($bausparer_pay_type == 'one')
-                                    @php($tempDate = makeYearMonth($tempDate))
-                                @endif
                             @else
                                 @break
                             @endif
