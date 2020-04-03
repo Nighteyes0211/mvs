@@ -258,6 +258,18 @@ class KundenController extends Controller
         return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
     }
 
+    public function update_finance_heading(Request $request, Kunden $kunden)
+    {
+        
+        DB::table('calculation')
+            ->where('id', $request->id)
+            ->update(['name' => $request->heading]);
+        // echo $request->segment(3);
+        return redirect("/admin/kunden/".$request->segment(3)."/edit");
+    }
+
+     
+
     /**
      * Update the specified resource in storage.
      *
@@ -467,6 +479,13 @@ class KundenController extends Controller
             return redirect()->route('kunden.index');
         }*/
         $kunden->user_id = request('kunden_user');
+        $kunden->ehepartner_enabled = request('ehepartner_enabled');
+        $kunden->ehepartner_vorname = request('ehepartner_vorname');
+        $kunden->ehepartner_nachname = request('ehepartner_nachname');
+        $kunden->ehepartner_mail = request('ehepartner_mail');
+        $kunden->ehepartner_telefon = request('ehepartner_telefon');
+        $kunden->ehepartner_geburtsdatum = request('ehepartner_geburtsdatum');
+        $kunden->save();
 
         // dd($kaufpreis);
 
@@ -504,6 +523,18 @@ class KundenController extends Controller
         $blog->delete();
 
         return redirect()->route('kunden.index');
+    }
+
+    public function disable_borrower(Request $request, Kunden $kunden)
+    {
+        // dd($request);
+        $kunden_id = $request->segment(3);
+
+        DB::table('kundens')
+            ->where('id', $kunden_id)
+            ->update(['ehepartner_enabled' => 0]);
+
+        return redirect()->route('kunden.edit', $kunden_id);
     }
 
     public function printoffer($id)
@@ -580,6 +611,13 @@ class KundenController extends Controller
         $result = Storage::disk('local')->put('/'.$subfolder.'/' . $pdf_name, $pdf->output());
         $path = "app/".$subfolder."/".$pdf_name;
         return response()->download(storage_path($path));
+    }
+
+    public function delete_offer(Request $request, Kunden $kunden)
+    {
+        // dd($request->id);
+        $angebote = Angebote::where('id', $request->id)->delete();
+        return redirect("/admin/kunden/".$request->segment(3));
     }
 
     public function download_pdf($id) {

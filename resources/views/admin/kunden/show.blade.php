@@ -567,7 +567,7 @@
                 </table>
             </div>
             @endif
-            @if(count($kunden->ehepartnerChecklists)>0)
+            @if($kunden->ehepartner_enabled &&count($kunden->ehepartnerChecklists)>0)
             <br>
             <h5><b>Checkliste 2. Darlehensnehmer </b></h5>
             <div style="max-height: 300px; overflow-y: scroll">
@@ -598,7 +598,7 @@
                     <h5><b>Angebote </b></h5>
                     <ul style="width: 100%">
                         @foreach($kunden['offer'] as $offer)
-                        <li style="padding: 10px; float: left"><i class="fa fa-file-pdf" style="font-size:25px;color:red; vertical-align: middle; padding-right: 5px;"></i>Auftragsnummer: <a href="{{asset('admin/download_pdf')}}{{ '/'.$offer->id }}" download="">{{$offer->id}}</a></li>
+                        <li style="padding: 10px; float: left; border: 1px dashed; "><i class="fa fa-file-pdf" style="font-size:25px;color:red; vertical-align: middle; padding-right: 5px;"></i>Auftragsnummer: <a href="{{asset('admin/download_pdf')}}{{ '/'.$offer->id }}" download="">{{$offer->id}}</a><br><span style="font-size:11px; font-weight:bold ">Date: </span><span style="font-size:11px"> {{$offer->created_at}}</span> <span style="float:right; color:red ; margin-top: 5px; cursor: pointer !important;" onclick="delete_offer(<?= $offer->id ?>)"><i class="fa fa-times" aria-hidden="true"></i></span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -606,4 +606,14 @@
         </div>
     </div>
 </div>
+<script>
+    function delete_offer(id) {
+        var temp = confirm("Are you sure");
+        if (temp) {
+            console.log("id=>", id);
+            window.location.href = window.location.href+'/delete_offer?id='+id;
+        }
+        
+    }
+</script>
 @endsection

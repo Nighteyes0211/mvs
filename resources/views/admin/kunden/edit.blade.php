@@ -71,6 +71,16 @@
         transition: all 0.2s linear;
         transition-delay: 0.15s;
     }
+    span.edit_heading i {
+    font-size: 22px;
+    color: #333;
+    cursor: pointer;
+    }
+
+    .removeCard i {
+        font-size: 26px;
+        margin-left: 10px;
+    }
 </style>
 
 @section('js')
@@ -899,7 +909,7 @@
 
                     @if($kunden->ehepartner_enabled)
                         @php($spouseDivShown = 'block')
-                        <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
+                        <a onclick="kundenSpouse(this)" href="disable_borrower" class="btn btn-danger" data-status="1" style="margin-left: 10px">Ehepartner entfernen</a>
                     @else
                         @php($spouseDivShown = 'none')
                         <a onclick="kundenSpouse(this)" href="Javacript:void(0)" class="btn btn-primary" data-status="0"style="margin-left: 10px">2. Darlehensnehmer hinzufügen</a>
@@ -934,7 +944,7 @@
                                    placeholder="{{ $kunden->ehepartner_geburtsdatum }}" value="{{ $kunden->ehepartner_geburtsdatum }}">
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Darlehensnehmer aktualisieren</button>
+                            <button type="submit" class="btn btn-primary" >Darlehensnehmer aktualisieren</button>
                         </div>
                         <hr>
                     </div>
@@ -947,9 +957,12 @@
                                     <h2 class="mb-0">
                                     <!-- <input type="checkbox" {{$cal->enabled ? 'checked':''}} onclick="enabled(this);" data-calculation_id="{{$cal->id}}" name="Cal[{{$cIndex}}][enabled]"> -->
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{$cIndex}}">
-                                            Finanzbaustein #{{$cIndex+1}}
+                                            <!-- Finanzbaustein #{{$cIndex+1}} -->
+                                            {{$cal->name}}
                                         </button>
+                                        
                                         <span class="removeCard float-right"><i class="fa fa-times" onclick="removeCard({{$cIndex}})"></i></span>
+                                        <span class="edit_heading float-right"><i class="fa fa-edit" data-toggle="modal" data-target="#myModal-{{$cIndex}}"></i></span>
                                     </h2>
                                 </div>
                                 <div id="collapse-{{$cIndex}}" data-parent="#Calculation">
@@ -2330,7 +2343,7 @@
 
                                                 <tr>
                                                     <td>Kreditsumme ( € ) <span class="text-danger" id="message_loan_amount"></span></td>
-                                                    <td colspan="4"><input class="form-control text-right" value="{{ stringReplace($kunden->finanzierungsbedarf,'.',',') }}" id="loan_amount" type="" disabled></td>
+                                                    <td colspan="4"><input class="form-control text-right" value="{{ stringReplace($kunden->finanzierungsbedarf,'.',',') }}" id="loan_amount" type=""></td>
                                                 </tr>
                                                 <tr>
                                                     <td >Zinsbindung <span class="text-danger" id="message_loan_period"></span></td>
@@ -2776,7 +2789,7 @@
                                                 </tr>
                                             </table>
 
-                                            <div class="col-sm-12">
+                                            <!-- <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <input type="hidden" name="Cal[{{$cIndex}}][id]" value="{{$cal->id}}">
                                                     <input type="hidden" class="isTM-{{$cIndex}}"  name="Cal[{{$cIndex}}][istm]" value="0">
@@ -2792,7 +2805,7 @@
                                                         <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
                                                     @endif
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="thisTimeline-{{$cIndex}}">
@@ -2895,7 +2908,7 @@
                         @endforeach
                     </div>
 
-
+                    
 
                     <div class="row mt-15">
                         <div class="col-sm-12 @if(count($Calculations) == 0) new_form @endif">
@@ -3057,6 +3070,37 @@
             </div>
         </div>
     </div>
+
+    <?php $cIndex = 0 ?>
+    @foreach($Calculations as $cal)
+        <!-- Modal -->
+        <div id="myModal-{{$cIndex}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                <form action="updatefinanceheading" method ="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="hidden" name="id" value="{{$cal->id}}">
+                        <input type="text" class="form-control" name="heading" id="heading" value="{{$cal->name}}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    <?php $cIndex++; ?>
+    @endforeach
 
 
 
