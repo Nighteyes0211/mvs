@@ -27,6 +27,10 @@ Route::get('/admin/kunden/{id}/delete_repayment', 'KundenController@deleteRepaym
 Route::get('/admin/kunden/{id}/delete_timeline', 'KundenController@deleteTimeline');
 Route::post('/admin/kunden/{id}/save_timeline', 'KundenController@saveTimeline');
 Route::post('/admin/kunden/{id}/save_calculation', 'KundenController@saveCalculation');
+Route::post('/admin/kunden/{id}/updatefinanceheading', 'KundenController@update_finance_heading');
+Route::get('/admin/kunden/{id}/delete_offer', 'KundenController@delete_offer');
+Route::get('/admin/kunden/{id}/disable_borrower', 'KundenController@disable_borrower');
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dynamic_pdf', 'DynamicPDFController@index');
