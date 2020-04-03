@@ -779,7 +779,7 @@
                         <label for="maklerkosten">Maklerkosten ( <span name="maklerkosten" class="text-danger">0</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="maklerkosten" id="maklerkosten"
-                                   placeholder="0.00" value="{{ stringReplace(number_format($kunden->maklerkosten, 1, '.', ','), '.', ',') }}">
+                                   placeholder="0.00" value="{{ stringReplace(number_format($kunden->maklerkosten, 2, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
