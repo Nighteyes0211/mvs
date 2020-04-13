@@ -600,6 +600,9 @@ class KundenController extends Controller
         ]);
 
         $angebote = Angebote::where('pdf_name', $pdf_name)->first();
+        // echo '<pre>';
+        // print_r($Calculations);
+        // die();
 
         // return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);

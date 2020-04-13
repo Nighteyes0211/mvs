@@ -65,6 +65,10 @@
             outline-color: #e7be86;
         }
 
+
+        
+
+
     </style>
 </head>
 <body>
@@ -417,6 +421,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                                         </td>
                                                         <td style="text-align: center;font-size:10px">30 jahre</td>
                                                         <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>{{ $calculation->timeline->restschuld_ende }}&euro;</span></td>
+                                                        <?php $restschuld_ende = $calculation->timeline->restschuld_ende ?>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -575,7 +580,130 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 </div>
             @endif
         @endif
-        <br><br><br>
+        <!-- <br><br><br> -->
+        <!-- <pre><?php //print_r($Calculations[0]); ?></pre> -->
+
+        <div class="main-box" style="padding: 20px 0px;">
+     
+
+
+
+        <div class="bg-content" style="position:relative;">
+            <div class="y-bg" style="width: 400px;height:230px;background-size: cover;margin: 0px auto;position: relative;">
+    <img src="img/bg.png" style="width:100%">            	
+    <div class="bg-box">
+
+            		<div class="one" style="position: absolute; left: -80px; top: 50%;">
+                    {{$Calculations[0]->sparsumme}}  &euro;
+            		</div>
+
+
+            		<div class="two" style="text-align: center; position: absolute; left: 0; top: 0; width: 100%;">
+            			<p>{{$Calculations[0]->loan_period}} Jahre</p>
+            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->borrowing_rate }} &#37;</span>
+            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->new_borrowing_rate }} &#37;</span>
+            		</div>
+
+
+
+            		<div class="three" style="text-align: center; position: absolute; left: 0; top: 150px; width: 100%;">            			
+            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->montly_deposit_val }} &euro;</span>
+            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->new_rate_inp }} &euro;</span>
+            			<p>{{$Calculations[0]->outstanding_balance}} &euro;</p>
+                        
+            		</div>
+
+
+            		<div class="four" style="position: absolute; left: 390px; top: 50%;">
+            			<span style="position: relative; margin-top: -90px; margin-left: -50px; display: block; min-width:120px">{{ $calculation->total_maturity }} Jahre</span>
+            			<p style="margin: 0; margin-top: 100px; display: block; min-width: 100px;">{{ $calculation->total_maturity }} Jahre</p>
+            		</div>
+
+
+
+            	</div>
+
+            </div>
+        </div>
+<!-- 
+<div class="my-container" style="width:500px;float:left;height:200px">
+
+
+	<div class="box-one"  style="width:100px;float:left">
+
+		<span style="padding-top: 55px;
+            display: block;"> {{$bausparsumme}}  &euro;</span>
+
+	</div>
+
+	<div class="box-two" style="width:280px;
+            border-right: 7px solid yellow;
+            border-left: 7px solid yellow;
+            position: relative;
+            float: left;">
+
+		<p style="width: 100%;
+            margin: 0;
+            padding-bottom: 15px;">{{$calculation->loan_period}} Jahre</p>
+
+		<div class="j-items-box" style="display: block;
+            width: 270px;
+            position: relative;">
+
+			<div class="j-items" style="width: 130px;
+            float: left;text-align:center">
+
+				<p style="margin: 0;
+            border-bottom: 7px solid yellow;
+            padding-bottom: 10px">{{ $calculation->borrowing_rate }} &#37;</p>
+
+				<span style="display: block;
+            padding-top: 10px;">{{ $calculation->montly_deposit_val }} &euro;</span>
+				
+			</div>
+
+
+			<div class="j-items"  style="width: 130px;
+            float: left;text-align:center">
+
+				<p style="margin: 0;
+            border-bottom: 7px solid yellow;
+            padding-bottom: 10px">{{ $calculation->new_borrowing_rate }} &#37;</p>
+
+				<span style="display: block;
+            padding-top: 10px;">{{ $calculation->new_rate_inp }} &euro;</span>
+				
+			</div>
+			
+		</div>
+
+		<p style="padding-top: 15px;
+            padding-bottom: 0;
+            clear: both;">213.600,00 &euro;</p>
+
+	</div>
+
+	<div class="box-three" style="width:100px;float:left">
+
+		<p style="margin: 0;
+            position: absolute;
+            margin-top: -30px;
+            margin-left: -30px;">20 Jahre</p>
+
+		<span style=" padding-top: 55px;
+            display: block;">0 &euro;</span>
+
+	</div>
+
+
+
+
+
+</div> -->
+
+
+
+</div>
 
         <div>
             @if ($bausparer_flag == 'false')
