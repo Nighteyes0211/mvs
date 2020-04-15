@@ -664,8 +664,8 @@ class KundenController extends Controller
     }
     public function saveTimeline($id, Request $request) {
 
-        dd(($request->fullForm));
-        dd(json_decode($request->fullForm), true);
+        // dd(($request->fullForm));
+        // dd(json_decode($request->fullForm), true);
 
 
         // $this->validate($request,

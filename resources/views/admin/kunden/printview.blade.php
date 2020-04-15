@@ -616,7 +616,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
 
             		<div class="four" style="position: absolute; left: 390px; top: 50%;">
             			<span style="position: relative; margin-top: -90px; margin-left: -50px; display: block; min-width:120px">{{ $calculation->total_maturity }} Jahre</span>
-            			<p style="margin: 0; margin-top: 100px; display: block; min-width: 100px;">{{ $calculation->total_maturity }} Jahre</p>
+            			<p style="margin: 0; margin-top: 100px; display: block; min-width: 100px;">0 &euro;</p>
             		</div>
 
 
