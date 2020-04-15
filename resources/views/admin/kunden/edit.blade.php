@@ -253,6 +253,27 @@
                     recalculate_1();
                 }, 200);
             });
+
+            setTimeout(function(){
+                    $("#kaufpreis").val(formatNumbers(onlyNumbers($("#kaufpreis").val())));
+                }, 200);
+            
+            setTimeout(function(){
+                $("#gesamtkosten").val(formatNumbers(onlyNumbers($("#gesamtkosten").val())));
+            }, 200);
+
+            setTimeout(function(){
+                $("#loan_amount").val(formatNumbers(onlyNumbers($("#loan_amount").val())));
+            }, 200);
+
+            $('#loan_amount').on('keypress change', function(e){
+                let _this = this;
+                // setTimeout(function(){
+                    $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
+                    $('input[name="finanzierungsbedarf"]').val(formatNumbers(onlyNumbers($(_this).val())));
+                // }, 200);
+            });
+
             $('[data-parent="#Calculation"] input').on('keypress change', function(){
                 let _this = this;
                 // $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
