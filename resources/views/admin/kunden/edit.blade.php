@@ -2749,10 +2749,11 @@
                                                 </tr>
 
                                                 <tr>
+                                                   
                                                     <td>Effektivzins (Prozent) </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="effective_interest" class="form-control text-right" value="" >
+                                                            <input id="effective_interest" class="form-control text-right" class="text-danger" value="   {{ old('$calculation->effective_interest') }} " >
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
@@ -2823,81 +2824,7 @@
                                                 </tr>
                                             </table>
 
-                                            <!-- <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <input type="hidden" name="Cal[{{$cIndex}}][id]" value="{{$cal->id}}">
-                                                    <input type="hidden" class="isTM-{{$cIndex}}"  name="Cal[{{$cIndex}}][istm]" value="0">
-                                                    @if(isset($cal->timeline->id))
-                                                        <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl entfernen</a>
-                                                    @else
-                                                        <a onclick="openTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addTimeLiner-{{$cIndex}}">Baufi Zeitstrahl hinzufügen</a>
-                                                    @endif
-
-                                                    @if(isset($cal->customerTimeline->id))
-                                                        <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-danger addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl entfernen</a>
-                                                    @else
-                                                        <a onclick="openCtTimeLine({{$cIndex}})" href="Javacript:void(0)" class="btn btn-primary addCtTimeLiner-{{$cIndex}}">Angepasster Zeitstrahl hinzufügen</a>
-                                                    @endif
-                                                </div>
-                                            </div> -->
-                                        </div>
-
-                                        <div class="thisTimeline-{{$cIndex}}">
-                                            @if(isset($cal->timeline->id))
-                                                <input type="hidden" name="Cal[{{$cIndex}}][timeline][id]" value="{{$cal->timeline->id}}">
-                                                <div class="row ten_fields-{{$cIndex}} mt-35">
-                                                    <div class="col-sm-12">
-                                                        <h5>Zeitstrahl Phase 1</h5>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Finanzierungsbedarf</label>
-                                                        <input type="text" id="finanzierungsbedarf_phase_eins" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_eins]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_eins}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Zins p.a.</label>
-                                                        <input type="text" id="jahreszins_phase_eins" name="Cal[{{$cIndex}}][timeline][jahreszins_phase_eins]" class="form-control" placeholder="%" value="{{$cal->timeline->jahreszins_phase_eins}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Laufzeit</label>
-                                                        <input type="text" id="laufzeit_phase_eins" name="Cal[{{$cIndex}}][timeline][laufzeit_phase_eins]" class="form-control" placeholder="Jahre" value="{{$cal->timeline->laufzeit_phase_eins}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">monatliche Rate</label>
-                                                        <input type="text" id="rate_monatlich_phase_eins" name="Cal[{{$cIndex}}][timeline][rate_monatlich_phase_eins]" class="form-control" placeholder="0€" value="{{$cal->timeline->rate_monatlich_phase_eins}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Restschuld Phase 1</label>
-                                                        <input type="text" id="restschuld_phase_eins" name="Cal[{{$cIndex}}][timeline][restschuld_phase_eins]" class="form-control" placeholder="" value="{{$cal->timeline->restschuld_phase_eins}}" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row ten_fields-{{$cIndex}}">
-                                                    <div class="col-sm-12">
-                                                        <h5>Zeitstrahl Phase 2</h5>
-                                                    </div>
-
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Finanzierungsbedarf</label>
-                                                        <input type="text" id="finanzierungsbedarf_phase_zwei" name="Cal[{{$cIndex}}][timeline][finanzierungsbedarf_phase_zwei]" class="form-control" placeholder="0€" value="{{$cal->timeline->finanzierungsbedarf_phase_zwei}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Zins p.a.</label>
-                                                        <input type="text" id="jahreszins_phase_zwei" name="Cal[{{$cIndex}}][timeline][jahreszins_phase_zwei]" class="form-control" placeholder="%" value="{{$cal->timeline->jahreszins_phase_zwei}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Laufzeit</label>
-                                                        <input type="text" id="laufzeit_phase_zwei" name="Cal[{{$cIndex}}][timeline][laufzeit_phase_zwei]" class="form-control" placeholder="Jahre" value="{{$cal->timeline->laufzeit_phase_zwei}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">monatliche Rate</label>
-                                                        <input type="text" id="rate_monatlich_phase_zwei" name="Cal[{{$cIndex}}][timeline][rate_monatlich_phase_zwei]" class="form-control" placeholder="0€" value="{{$cal->timeline->rate_monatlich_phase_zwei}}" required>
-                                                    </div>
-                                                    <div class="col-sm-3 form-group">
-                                                        <label for="bank">Restschuld</label>
-                                                        <input type="text" id="restschuld_ende" name="Cal[{{$cIndex}}][timeline][restschuld_ende]" class="form-control" placeholder="Jahre" value="{{$cal->timeline->restschuld_ende}}" required>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
+                                            
 
                                         <div class="thisCtTimeline-{{$cIndex}}">
                                             @if(isset($cal->customerTimeline->id))
@@ -2958,55 +2885,7 @@
                             </div>
                         </div>
                     </div>
-<!--
-                    <hr>
-                    <h4>Tilgungsplan</h4>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Bank</label>
-                            <input type="text" id="bank" class="form-control"  value="Deutsche Bank">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Darlehen</label>
-                            <input type="number" class="form-control" id="loan" placeholder="150.000,00€">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Nominalzins(%)</label>
-                            <input type="number" class="form-control" name="interest" id="interest" placeholder=2.19%>
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Tilgung (%)</label>
-                            <input type="number" class="form-control" name="repayment" id="repayment" placeholder=2.00%>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Tilgungsbeginn</label>
-                            <input type="date"  class="form-control" name="repaymentStart" id="repaymentStart" value="2018-04-01">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="fixed_interest_rate">Zinsfestschreibung</label>
-                            <input type="date" class="form-control"  name="fixedInterestRate" id="fixedInterestRate" value="2028-04-30">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="payout">Auszahlung</label>
-                            <input type="date" class="form-control" name="payout" id="payout" value="2018-04-01">
-                        </div>
-                        <div class="col-sm-3 form-group">
-                            <label for="bank">Rate</label>
-                            <input type="number" class="form-control"  name="rate" id="rate" value=523.75>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#repayment_modal" type="button"  onclick="calculate()">Kalkulieren</button>
-                            <button class="btn btn-danger" type="button"  data-toggle="modal" data-target="#confirm_modal">Tilgungsplan löschen</button>
-                        </div>
-                    </div>
-                    <label for="result" id="result"></label>
-                    <hr />
 
-                -->
                     <br>
                     <div class="row">
                         <div class="col-6">
