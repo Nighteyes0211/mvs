@@ -1501,7 +1501,7 @@
                                                         }
                                                         return rate;
                                                     };
-                                                    $('#effective_interest').click(function () {
+                                                   /* $('#effective_interest').click(function () {
                                                         var e73_val = e73Calculate();
                                                         // var e75_val = e75Calculate();
                                                         // var e74_val = e74Calculation();
@@ -1587,7 +1587,7 @@
                                                             var e74_val = Math.pow((1+rate(e72_val,monthly_deposit,-payment_amount+registery_fess)),12-1)*100;
                                                             return e74_val;
                                                         }
-                                                    });
+                                                    }); */
                                                     //Anschlusskredit Calculation
                                                     $('#connection_credit').click(function (){
                                                         var outstanding_balance = parseFloat($('#Outstanding_balance').val().replace(".", "").replace(",", "."));
@@ -2749,10 +2749,10 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td>Effektivzins (Prozent)</td>
+                                                    <td>Effektivzins (Prozent) </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="effective_interest" class="form-control text-right" value="0,01" disabled>
+                                                            <input id="effective_interest" class="form-control text-right" value="" >
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
