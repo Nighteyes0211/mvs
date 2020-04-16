@@ -216,7 +216,7 @@
                 </tr>
                 <tr>
                     <td>Finanzierungsbedarf</td>
-                    <td>{{ number_format($kunden->finanzierungsbedarf, 2, ',', '.') }}€</td>
+                    <td>{{ number_format($kunden->loan_amount, 2, ',', '.') }}€</td>
                 </tr>
             </table>
             <hr>
@@ -245,7 +245,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ number_format($kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format($kunden->loan_amount, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->loan_period }}</td>
                     <td>{{ monthReplace($cal->payment_month) }}. {{ $cal->payment_year}}</td>
                     <td colspan="2"></td>
@@ -258,7 +258,7 @@
                     <th scope="col">Restschuld</th>
                 </tr>
                 <tr>
-                    <td>{{ number_format($kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format($kunden->loan_amount, 2, ',', '.') }} &euro;</td>
                     <td>{{ $cal->borrowing_rate }} &#37;</td>
                     <td>{{ $cal->repayment_date_inp}} &#37;</td>
                     <td>{{ $cal->montly_deposit_val }} &euro;</td>
