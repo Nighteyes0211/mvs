@@ -256,6 +256,7 @@
 
             setTimeout(function(){
                     $("#kaufpreis").val(formatNumbers(onlyNumbers($("#kaufpreis").val())));
+                    $("#kostenumbau").val(formatNumbers(onlyNumbers($("#kostenumbau").val())));
                 }, 200);
             
             setTimeout(function(){
@@ -264,13 +265,23 @@
 
             setTimeout(function(){
                 $("#loan_amount").val(formatNumbers(onlyNumbers($("#loan_amount").val())));
+                $("#payment_amount").val(formatNumbers(onlyNumbers($("#payment_amount").val())));
+                $("#montly_deposit_val").val(formatNumbers(onlyNumbers($("#montly_deposit_val").val())));sparsumme
+                $("#sparsumme").val(formatNumbers(onlyNumbers($("#sparsumme").val())));
+                $("#monthly_interest").val(formatNumbers(onlyNumbers($("#monthly_interest").val())));
+                $("#monthly_saving").val(formatNumbers(onlyNumbers($("#monthly_saving").val())));
+                $("#monthly_payment").val(formatNumbers(onlyNumbers($("#monthly_payment").val())));
+            }, 200);
+
+            setTimeout(function(){
+                $("input[name=finanzierungsbedarf]").val(formatNumbers(onlyNumbers($("input[name=finanzierungsbedarf]").val())));
             }, 200);
 
             $('#loan_amount').on('keypress change', function(e){
                 let _this = this;
                 // setTimeout(function(){
                     $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
-                    $('input[name="finanzierungsbedarf"]').val(formatNumbers(onlyNumbers($(_this).val())));
+                    $('input[name="loan_amount_hidden"]').val(formatNumbers(onlyNumbers($(_this).val())));
                 // }, 200);
             });
 
@@ -376,6 +387,7 @@
             $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
             $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
             $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
+            $('input[name=loan_amount_hidden]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
         }
         function recalculate_1() {
             var loan_amount = parseFloat($('#loan_amount').val().replace(/\./g,"").replace(",","."));
@@ -834,6 +846,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="finanzierungsbedarf"
                                    placeholder="0.00" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" readonly="">
+                            <input type="hidden" name="loan_amount_hidden" value="{{ stringReplace($kunden->loan_amount, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -2364,7 +2377,7 @@
 
                                                 <tr>
                                                     <td>Kreditsumme ( € ) <span class="text-danger" id="message_loan_amount"></span></td>
-                                                    <td colspan="4"><input class="form-control text-right" value="{{ stringReplace($kunden->finanzierungsbedarf,'.',',') }}" id="loan_amount" type=""></td>
+                                                    <td colspan="4"><input class="form-control text-right" value="{{ stringReplace($kunden->loan_amount,'.',',') }}" id="loan_amount" type=""></td>
                                                 </tr>
                                                 <tr>
                                                     <td >Zinsbindung <span class="text-danger" id="message_loan_period"></span></td>
@@ -2459,7 +2472,7 @@
                                                     <td>Auszahlungsbetrag ( € )</td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="payment_amount" class="form-control text-right" value="{{ stringReplace($kunden->finanzierungsbedarf, '.', ',') }}" disabled>
+                                                            <input id="payment_amount" class="form-control text-right" value="{{ stringReplace($kunden->loan_amount, '.', ',') }}" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">€</span>
                                                             </div>

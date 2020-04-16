@@ -478,6 +478,8 @@ class KundenController extends Controller
             $kunden->save();
             return redirect()->route('kunden.index');
         }*/
+        // dd($request);
+        // die();
         $kunden->user_id = request('kunden_user');
         $kunden->ehepartner_enabled = request('ehepartner_enabled');
         $kunden->ehepartner_vorname = request('ehepartner_vorname');
@@ -497,6 +499,7 @@ class KundenController extends Controller
         $gesamtkosten = request('gesamtkosten') == '' ? '0,00' : request('gesamtkosten');
         $eigenkapital = request('eigenkapital') == '' ? '0' : request('eigenkapital');
         $finanzierungsbedarf = request('finanzierungsbedarf') == '' ? '0,00' : request('finanzierungsbedarf');
+        $loan_amount = request('loan_amount_hidden') == '' ? '0,00' : request('loan_amount_hidden');
 
         $kunden->kaufpreis = $this->stringReplace($kaufpreis, ",",".");
         $kunden->kostenumbau = $this->stringReplace($kostenumbau, ",",".");
@@ -506,6 +509,7 @@ class KundenController extends Controller
         $kunden->gesamtkosten = $this->stringReplace($gesamtkosten, ",",".");
         $kunden->eigenkapital = $this->stringReplace($eigenkapital, ",",".");
         $kunden->finanzierungsbedarf = $this->stringReplace($finanzierungsbedarf, ",",".");
+        $kunden->loan_amount = $this->stringReplace($loan_amount, ",",".");
 
         $kunden->save();
         return redirect()->route('kunden.edit', $kunden->id);
