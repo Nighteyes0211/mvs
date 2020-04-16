@@ -277,12 +277,17 @@
                 $("input[name=finanzierungsbedarf]").val(formatNumbers(onlyNumbers($("input[name=finanzierungsbedarf]").val())));
             }, 200);
 
-            $('#loan_amount').on('keypress change', function(e){
+            $('#loan_amount').on('change', function(e){
                 let _this = this;
                 // setTimeout(function(){
                     $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
                     $('input[name="loan_amount_hidden"]').val(formatNumbers(onlyNumbers($(_this).val())));
                 // }, 200);
+            }); 
+
+            $('#sparsumme').on('change', function(e){
+                let _this = this;
+                    $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
             });
 
             $('[data-parent="#Calculation"] input').on('keypress change', function(){
@@ -354,7 +359,12 @@
                     number+='.';
                 }
             }
-            return number.split('').reverse().join('');
+            number = number.split('').reverse().join('');
+            var temp = number.includes(',');
+            if (!temp) {
+                number = number+',00';
+            }
+            return number;
         }
         function recalculate() {
             let kaufpreis = parseFloat($('input[name=kaufpreis]').val().replace(".", "").replace(",", "."));
