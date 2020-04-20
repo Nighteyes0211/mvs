@@ -31,7 +31,7 @@ class ProfileController extends Controller
         $user->surname = $data['surname'];
         $user->email = $data['email'];
         $user->phone = $data['phone'];
-        $user->mail_address = $data['mail_address'];
+        // $user->mail_address = $data['mail_address'];
         if($data['password'] != "") $user->password = Hash::make($data['password']);
 
         $user->save();

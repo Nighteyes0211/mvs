@@ -506,9 +506,59 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @endif
                 </tbody>
             </table>
-        <br><br><br>
+        <!-- <br><br><br> -->
         @php($period = calcuMonthList($tempDate))
         @if ($bausparer_flag == 'true')
+                            
+            <div class="uper_box">
+                <div class="container">
+                    <?php 
+                        $outstanding_balance_timeline = str_replace(',','.',$Calculations[0]->outstanding_balance);
+                        $sparsumme_timeline = str_replace(',','.',$Calculations[0]->sparsumme);
+                    ?>
+                    <table style="width: 75%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="font-size:10px; text-align: right; padding: 0 50px; width: 5%; " >{{number_format($sparsumme_timeline, 2, ',', '.')}}&euro;</td>
+                            <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
+                                <table style="width: 100%; border-spacing: 0">
+                                    <tr style=" width: 100%;">
+                                        <td style="text-align: center; width: 100%;"   colspan="2">
+                                            <p style="margin-bottom:10px;margin-bottom:10px;font-size:10px">{{$Calculations[0]->loan_period}} Jahre</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
+                                        <td style="text-align: center;border-bottom: 2px solid #f1ac38; border-right: 2px solid #f1ac38; width: 50%;">
+                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->borrowing_rate }}&#37;</p>
+                                        </td>
+                                        <td style="text-align: center;border-bottom: 2px solid #f1ac38; border-left: 2px solid #f1ac38; width: 50%;">
+                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->new_borrowing_rate }} &#37;</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
+                                        <td style="text-align: center;border-top: 2px solid #f1ac38; border-right: 2px solid #f1ac38; width: 50%;">
+                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->montly_deposit_val }} &euro;</p>
+                                        </td>
+                                        <td style="text-align: center;border-top: 2px solid #f1ac38; border-left: 2px solid #f1ac38; width: 50%;">
+                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->new_rate_inp }} &euro;</p>
+                                        </td>
+                                    </tr>
+                                    <tr style=" width: 100%;">
+                                        <td style="text-align: center; width: 100%;"   colspan="2">
+                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{number_format($outstanding_balance_timeline, 2, ',', '.')}} &euro;</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="text-align: center;font-size:10px; width: 50px;">0 &euro;</td>
+                            <!-- <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>0&euro;</span></td> -->
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <br><br>
+                                    
+
             @if ($bausparer_pay_type == 'month')
                 <div>
                     <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan Tilgungsplan</h3>
@@ -580,126 +630,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 </div>
             @endif
         @endif
-        <!-- <br><br><br> -->
-        <!-- <pre><?php //print_r($Calculations[0]); ?></pre> -->
-
-        <div class="main-box" style="padding: 20px 0px;">
-     
-
-
-
-        <div class="bg-content" style="position:relative;">
-            <div class="y-bg" style="width: 400px;height:230px;background-size: cover;margin: 0px auto;position: relative;">
-    <img src="img/bg.png" style="width:100%">            	
-    <div class="bg-box">
-
-            		<div class="one" style="position: absolute; left: -80px; top: 50%;">
-                    {{$Calculations[0]->sparsumme}}  &euro;
-            		</div>
-
-
-            		<div class="two" style="text-align: center; position: absolute; left: 0; top: 0; width: 100%;">
-            			<p>{{$Calculations[0]->loan_period}} Jahre</p>
-            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->borrowing_rate }} &#37;</span>
-            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->new_borrowing_rate }} &#37;</span>
-            		</div>
-
-
-
-            		<div class="three" style="text-align: center; position: absolute; left: 0; top: 150px; width: 100%;">            			
-            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->montly_deposit_val }} &euro;</span>
-            			<span style="position: relative; margin: 50px;">{{ $Calculations[0]->new_rate_inp }} &euro;</span>
-            			<p>{{$Calculations[0]->outstanding_balance}} &euro;</p>
-                        
-            		</div>
-
-
-            		<div class="four" style="position: absolute; left: 390px; top: 50%;">
-            			<span style="position: relative; margin-top: -90px; margin-left: -50px; display: block; min-width:120px">{{ $calculation->total_maturity }} Jahre</span>
-            			<p style="margin: 0; margin-top: 100px; display: block; min-width: 100px;">0 &euro;</p>
-            		</div>
-
-
-
-            	</div>
-
-            </div>
-        </div>
-<!-- 
-<div class="my-container" style="width:500px;float:left;height:200px">
-
-
-	<div class="box-one"  style="width:100px;float:left">
-
-		<span style="padding-top: 55px;
-            display: block;"> {{$bausparsumme}}  &euro;</span>
-
-	</div>
-
-	<div class="box-two" style="width:280px;
-            border-right: 7px solid yellow;
-            border-left: 7px solid yellow;
-            position: relative;
-            float: left;">
-
-		<p style="width: 100%;
-            margin: 0;
-            padding-bottom: 15px;">{{$calculation->loan_period}} Jahre</p>
-
-		<div class="j-items-box" style="display: block;
-            width: 270px;
-            position: relative;">
-
-			<div class="j-items" style="width: 130px;
-            float: left;text-align:center">
-
-				<p style="margin: 0;
-            border-bottom: 7px solid yellow;
-            padding-bottom: 10px">{{ $calculation->borrowing_rate }} &#37;</p>
-
-				<span style="display: block;
-            padding-top: 10px;">{{ $calculation->montly_deposit_val }} &euro;</span>
-				
-			</div>
-
-
-			<div class="j-items"  style="width: 130px;
-            float: left;text-align:center">
-
-				<p style="margin: 0;
-            border-bottom: 7px solid yellow;
-            padding-bottom: 10px">{{ $calculation->new_borrowing_rate }} &#37;</p>
-
-				<span style="display: block;
-            padding-top: 10px;">{{ $calculation->new_rate_inp }} &euro;</span>
-				
-			</div>
-			
-		</div>
-
-		<p style="padding-top: 15px;
-            padding-bottom: 0;
-            clear: both;">213.600,00 &euro;</p>
-
-	</div>
-
-	<div class="box-three" style="width:100px;float:left">
-
-		<p style="margin: 0;
-            position: absolute;
-            margin-top: -30px;
-            margin-left: -30px;">20 Jahre</p>
-
-		<span style=" padding-top: 55px;
-            display: block;">0 &euro;</span>
-
-	</div>
-
-
-
-
-
-</div> -->
+        <br><br><br>
 
 
 

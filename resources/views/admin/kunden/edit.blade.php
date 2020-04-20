@@ -2763,7 +2763,7 @@
                                                     <td>Effektivzins (Prozent) </td>
                                                     <td colspan="4">
                                                         <div class="input-group">
-                                                            <input id="effective_interest" class="form-control text-right" class="text-danger" value="   {{ old('$calculation->effective_interest') }} " >
+                                                            <input id="effective_interest" class="form-control text-right" class="text-danger" value="  {{$CalData->effective_interest}} " >
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">%</span>
                                                             </div>
