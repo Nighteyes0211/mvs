@@ -245,7 +245,7 @@
             $('#angebotdate').change(function(){
                 $('.angebotdate').val($(this).val());
             });
-            $('#finanzierungsbedarf input').on('keypress change', function(e){
+            $('#finanzierungsbedarf input').on('change', function(e){
                 let _this = this;
                 setTimeout(function(){
                     $(_this).val(formatNumbers(onlyNumbers($(_this).val())));
@@ -361,7 +361,7 @@
             }
             number = number.split('').reverse().join('');
             var temp = number.includes(',');
-            if (!temp) {
+            if (number !== '' &&!temp) {
                 number = number+',00';
             }
             return number;
