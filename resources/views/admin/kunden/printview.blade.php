@@ -519,26 +519,40 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <table style="width: 75%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td style="font-size:10px; text-align: right; padding: 0 50px; width: 5%; " >{{number_format($sparsumme_timeline, 2, ',', '.')}}&euro;</td>
-                            <td style="border-left: 4px solid #f1ac38; border-right: 4px solid #f1ac38;">
+                            <td style="">
                                 <table style="width: 100%; border-spacing: 0">
                                     <tr style=" width: 100%;">
                                         <td style="text-align: center; width: 100%;"   colspan="2">
                                             <p style="margin-bottom:10px;margin-bottom:10px;font-size:10px">{{$Calculations[0]->loan_period}} Jahre</p>
                                         </td>
                                     </tr>
-                                    <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
-                                        <td style="text-align: center;border-bottom: 2px solid #f1ac38; border-right: 2px solid #f1ac38; width: 50%;">
+                                    <tr style=" height: 50px; width: 100%;">
+                                        <td style="text-align: center;border-left: 4px solid #f1ac38;   width: 50%;">
                                             <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->borrowing_rate }}&#37;</p>
                                         </td>
-                                        <td style="text-align: center;border-bottom: 2px solid #f1ac38; border-left: 2px solid #f1ac38; width: 50%;">
+                                        <td style="text-align: center; border-right: 4px solid #f1ac38;   width: 50%;">
                                             <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->new_borrowing_rate }} &#37;</p>
                                         </td>
                                     </tr>
-                                    <tr style="border: 1px solid #f1ac38; height: 50px; width: 100%;">
-                                        <td style="text-align: center;border-top: 2px solid #f1ac38; border-right: 2px solid #f1ac38; width: 50%;">
+                                    <tr style=" height: 50px; width: 100%;">
+                                        <td style="border-right: 2px solid #f1ac38; padding:5px; border-left: 4px solid #f1ac38; border-bottom: 2px solid #f1ac38; width: 50%;">
+                                        </td>
+                                        <td style="border-left: 2px solid #f1ac38; padding:5px; border-right: 4px solid #f1ac38; border-bottom: 2px solid #f1ac38; width: 50%;">
+                                        </td>
+
+                                    </tr>
+                                    <tr style=" height: 50px; width: 100%;">
+                                        <td style="border-right: 2px solid #f1ac38; padding:5px; border-left: 4px solid #f1ac38; border-top: 2px solid #f1ac38; width: 50%;">
+                                        </td>
+                                        <td style="border-left: 2px solid #f1ac38; padding:5px; border-right: 4px solid #f1ac38; border-top: 2px solid #f1ac38; width: 50%;">
+                                        </td>
+
+                                    </tr>
+                                    <tr style=" height: 50px; width: 100%;">
+                                        <td style="text-align: center; border-left: 4px solid #f1ac38;  width: 50%;">
                                             <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->montly_deposit_val }} &euro;</p>
                                         </td>
-                                        <td style="text-align: center;border-top: 2px solid #f1ac38; border-left: 2px solid #f1ac38; width: 50%;">
+                                        <td style="text-align: center; border-right: 4px solid #f1ac38;  width: 50%;">
                                             <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{ $Calculations[0]->new_rate_inp }} &euro;</p>
                                         </td>
                                     </tr>
