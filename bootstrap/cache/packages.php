@@ -1,15 +1,4 @@
 <?php return array (
-  'auth0/login' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Auth0\\Login\\LoginServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Auth0' => 'Auth0\\Login\\Facade\\Auth0',
-    ),
-  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
