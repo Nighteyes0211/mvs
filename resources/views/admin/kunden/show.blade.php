@@ -405,10 +405,10 @@
                             @php($tempDate = $dt->format("m.Y"))
                             <tr>
                                 <td>{{ $dt->format("m.Y") }}</td>
-                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} </td>
-                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} </td>
-                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} </td>
-                                <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
                             </tr>
                         @endif
                         @php($feeVal += $monthlySaving)
@@ -441,10 +441,10 @@
                             @php($tempDate = $dt->format("m.Y"))
                             <tr>
                                 <td>{{ $dt->format("m.Y") }}</td>
-                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} </td>
-                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} </td>
-                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} </td>
-                                <td>{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_interest), 2, ',', '.') }} &euro; </td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
                             </tr>
                         @endif
                         @php($i ++)
@@ -471,22 +471,22 @@
                     @foreach($repayments as $repayment)
                     <tr>
                         <td>{{ stringReplace($repayment->years) }}</td>
-                        <td>{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
-                        <td>{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.')}}</td>
-                        <td>{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
-                        <td>{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
-                        <td>{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
+                        <td>{{ number_format((float)$repayment->rate, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.')}} &euro;</td>
+                        <td>{{ number_format((float)$repayment->zinsen, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$repayment->tilgung, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
                     </tr>
                     @endforeach
                     @if ( $years_repayments != null )
                         @foreach($years_repayments as $years_repayment)
                         <tr>
                             <td>{{ $years_repayment->years }}</td>
-                            <td>{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
-                            <td>{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}}</td>
-                            <td>{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
-                            <td>{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }}</td>
-                            <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
+                            <td>{{ number_format((float)$years_repayment->rate, 2, ',', '.') }} &euro;</td>
+                            <td>{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}} &euro;</td>
+                            <td>{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }} &euro;</td>
+                            <td>{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }} &euro;</td>
+                            <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
                         </tr>
                         @endforeach
                     @endif
@@ -517,11 +517,11 @@
                         @if ($restschuld >= 0)
                             <tr>
                                 <td>{{ $tempDate }}</td>
-                                <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
-                                <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                                <td>{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
-                                <td>{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
-                                <td>{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
+                                <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$tilgung, 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$restschuld, 2, ',', '.') }} &euro;</td>
                             </tr>
                         @else
                             @break
@@ -529,10 +529,10 @@
                     @endforeach
                     <tr>
                         <td>{{ $tempDate }}</td>
-                        <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
-                        <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                        <td>{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
-                        <td>{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }}</td>
+                        <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }} &euro;</td>
                         <td>0, 00</td>
                     </tr>
                 </tbody>
