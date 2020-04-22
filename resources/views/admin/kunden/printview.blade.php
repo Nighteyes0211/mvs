@@ -595,10 +595,10 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     @php($tempDate = $dt->format("m.Y"))
                                     <tr style="text-align: left;">
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }}</td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_interest), 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_interest), 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
                                     </tr>
                                 @endif
                                 @php($feeVal += $monthlySaving)
@@ -630,11 +630,11 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     @php($feeVal += $monthlySaving)
                                     @php($tempDate = $dt->format("m.Y"))
                                     <tr style="text-align: left;">
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }}</td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_interest), 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} </td>
-                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }}</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $dt->format("m.Y") }} </td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_interest), 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
                                     </tr>
                                 @endif
                                 @php($i ++)
@@ -669,22 +669,22 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         @foreach($repayments as $repayment)
                         <tr style="text-align: left;">
                             <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ stringReplace($repayment->years) }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->rate, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->tilgung, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }}</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->rate, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->tilgung, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->zinsen, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
                         </tr>
                         @endforeach
                         @if ( $years_repayments != null )
                             @foreach($years_repayments as $years_repayment)
                             <tr>
                                 <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $years_repayment->years }}</td>
-                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->rate, 2, ',', '.') }}</td>
-                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.')}}</td>
-                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }}</td>
-                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.') }}</td>
-                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }}</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->rate, 2, ',', '.') }} &euro;</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->tilgung, 2, ',', '.')}} &euro;</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }} &euro;</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                                <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
                             </tr>
                             @endforeach
                         @endif
@@ -697,9 +697,9 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         <tr style="background: #a2a5aa;font-weight: bold;">
                             <th style="padding: 5px 0;">Rückzahlungsdatum</th>
                             <th>Rate</th>
-                            <th>Tilgung</th>
-                            <th>Zinsen</th>
                             <th>Sondertilgung</th>
+                            <th>Zinsen</th>
+                            <th>Tilgung</th>
                             <th>Restschuld</th>
                         </tr>
                     </thead>
@@ -713,11 +713,11 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             @if ($restschuld >= 0)
                                 <tr>
                                     <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $tempDate }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$tilgung, 2, ',', '.') }}</td>
-                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$restschuld, 2, ',', '.') }}</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$tilgung, 2, ',', '.') }} &euro;</td>
+                                    <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$restschuld, 2, ',', '.') }} &euro;</td>
                                 </tr>
                             @else
                                 @break
@@ -725,11 +725,11 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                         @endforeach
                         <tr>
                             <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ $tempDate }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }}</td>
-                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">0, 00</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }} &euro;</td>
+                            <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">0, 00 &euro;</td>
                         </tr>
                     </tbody>
                 </table>
