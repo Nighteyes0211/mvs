@@ -558,7 +558,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     </tr>
                                     <tr style=" width: 100%;">
                                         <td style="text-align: center; width: 100%;"   colspan="2">
-                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">{{number_format($outstanding_balance_timeline, 2, ',', '.')}} &euro;</p>
+                                            <p style="margin-top:0;margin-bottom:10px;font-size:10px">  Lfz. {{ $calculation->total_maturity }} / Restschuld {{number_format($outstanding_balance_timeline, 2, ',', '.')}} &euro;</p>
                                         </td>
                                     </tr>
                                 </table>
