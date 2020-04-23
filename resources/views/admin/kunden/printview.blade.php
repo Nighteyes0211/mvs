@@ -584,6 +584,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                 <th style="text-align: left;">Sparbeitrag</th>
                                 <th style="text-align: left;">Monatliche Rate</th>
                                 <th style="text-align: left;">Sparguthaben</th>
+                                <th style="text-align: left;">Restschuld</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -599,6 +600,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} &euro;</td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} &euro;</td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                                     </tr>
                                 @endif
                                 @php($feeVal += $monthlySaving)
@@ -619,6 +621,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                 <th style="text-align: left;" >Sparbeitrag</th>
                                 <th style="text-align: left;" >Monatliche Rate</th>
                                 <th style="text-align: left;" >Sparguthaben</th>
+                                <th style="text-align: left;">Restschuld</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -635,6 +638,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$monthlySaving, 2, ',', '.') }} &euro;</td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)formatStringToNumber($monthly_payment), 2, ',', '.') }} &euro;</td>
                                         <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
+                                        <td style="border-bottom: 1px solid #a2a5aa;padding: 3px 0">{{ number_format((float)$kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                                     </tr>
                                 @endif
                                 @php($i ++)
