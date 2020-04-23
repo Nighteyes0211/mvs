@@ -198,7 +198,7 @@
             <tr>
         </table>
     </div> --}}
-
+    <br><br>
     <div id="app">
 
 
@@ -345,7 +345,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Finanzierungsbedarf</td>
                     <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format($kunden->finanzierungsbedarf, 2, ',', '.') }}</td>
                 </tr>
-            </table>
+            </table><br><br>
         <div>
             <h3 style="color:#28367b; font-size: 1,2em; margin-top: 20px">Ihre Finanzierungsbausteine</h3>
             <table style="width:100%; max-height: 500px !important; border-collapse: collapse; font-size: 12px;">
@@ -578,12 +578,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan Tilgungsplan</h3>
                     <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                         <thead>
-                            <tr style="background: #a2a5aa;font-weight: bold;">
-                                <th style="padding: 5px 0;">Rückzahlungsdatum</th>
-                                <th>Zinsen</th>
-                                <th>Sparbeitrag</th>
-                                <th>Monatliche Rate</th>
-                                <th>Sparguthaben</th>
+                            <tr style="background: #a2a5aa;font-weight: bold; text-align: left;">
+                                <th style="padding: 5px 0; text-align: left;">Rückzahlungsdatum</th>
+                                <th style="text-align: left;">Zinsen</th>
+                                <th style="text-align: left;">Sparbeitrag</th>
+                                <th style="text-align: left;">Monatliche Rate</th>
+                                <th style="text-align: left;">Sparguthaben</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -613,12 +613,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan Tilgungsplan</h3>
                     <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                         <thead>
-                            <tr style="background: #a2a5aa;font-weight: bold;">
-                                <th style="padding: 5px 0;">Rückzahlungsdatum</th>
-                                <th>Zinsen</th>
-                                <th>Sparbeitrag</th>
-                                <th>Monatliche Rate</th>
-                                <th>Sparguthaben</th>
+                            <tr style="background: #a2a5aa;font-weight: bold; text-align: left;">
+                                <th style="padding: 5px 0; text-align: left;">Rückzahlungsdatum</th>
+                                <th style="text-align: left;" >Zinsen</th>
+                                <th style="text-align: left;" >Sparbeitrag</th>
+                                <th style="text-align: left;" >Monatliche Rate</th>
+                                <th style="text-align: left;" >Sparguthaben</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -655,13 +655,13 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <h3 id="tilgungsplan" style="color:#28367b; font-size: 1.2em; margin-top: 50px">Tilgungsplan</h3>
                 <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                     <thead>
-                        <tr style="background: #a2a5aa;font-weight: bold;">
-                            <th style="padding: 5px 0;">Rückzahlungsdatum</th>
-                            <th>Rate</th>
-                            <th>Tilgung</th>
-                            <th>Zinsen</th>
-                            <th>Sondertilgung</th>
-                            <th>Restschuld</th>
+                        <tr style="background: #a2a5aa;font-weight: bold; text-align: left;">
+                            <th style="padding: 5px 0; text-align: left;">Rückzahlungsdatum</th>
+                            <th style="text-align: left;" >Rate</th>
+                            <th style="text-align: left;" >Tilgung</th>
+                            <th style="text-align: left;" >Zinsen</th>
+                            <th style="text-align: left;" >Sondertilgung</th>
+                            <th style="text-align: left;" >Restschuld</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -694,13 +694,13 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Tilgungsplan Anschlussfínanzierung</h3>
                 <table style="width:100%; max-height: 500px !important;border-collapse: collapse; font-size: 12px;">
                     <thead>
-                        <tr style="background: #a2a5aa;font-weight: bold;">
-                            <th style="padding: 5px 0;">Rückzahlungsdatum</th>
-                            <th>Rate</th>
-                            <th>Sondertilgung</th>
-                            <th>Zinsen</th>
-                            <th>Tilgung</th>
-                            <th>Restschuld</th>
+                        <tr style="background: #a2a5aa;font-weight: bold; text-align: left;">
+                            <th style="padding: 5px 0; text-align: left;">Rückzahlungsdatum</th>
+                            <th style="text-align: left;" >Rate</th>
+                            <th style="text-align: left;" >Sondertilgung</th>
+                            <th style="text-align: left;" >Zinsen</th>
+                            <th style="text-align: left;" >Tilgung</th>
+                            <th style="text-align: left;" >Restschuld</th>
                         </tr>
                     </thead>
                     <tbody>
