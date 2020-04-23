@@ -563,7 +563,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     </tr>
                                 </table>
                             </td>
-                            <td style="text-align: center;font-size:10px; width: 50px;">0 &euro;</td>
+                            <td style="text-align: center;font-size:10px; width: 100px;">{{ $calculation->total_maturity }} J / M<</td>
                             <!-- <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>0&euro;</span></td> -->
                         </tr>
                     </table>
