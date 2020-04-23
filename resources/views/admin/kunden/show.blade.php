@@ -394,6 +394,7 @@
                         <th>Sparbeitrag</th>
                         <th>Monatliche Rate</th>
                         <th>Sparguthaben</th>
+                        <th>Restschuld</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -409,6 +410,7 @@
                                 <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} &euro;</td>
                                 <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} &euro;</td>
                                 <td>{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                             </tr>
                         @endif
                         @php($feeVal += $monthlySaving)
@@ -429,6 +431,7 @@
                         <th>Sparbeitrag</th>
                         <th>Monatliche Rate</th>
                         <th>Sparguthaben</th>
+                        <th>Restschuld</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -445,6 +448,7 @@
                                 <td>{{ number_format((float)formatStringToNumber($cal->monthly_saving), 2, ',', '.') }} &euro;</td>
                                 <td>{{ number_format((float)formatStringToNumber($cal->monthly_payment), 2, ',', '.') }} &euro;</td>
                                 <td>{{ number_format((float)$feeVal, 2, ',', '.') }} &euro;</td>
+                                <td>{{ number_format((float)$kunden->finanzierungsbedarf, 2, ',', '.') }} &euro;</td>
                             </tr>
                         @endif
                         @php($i ++)
