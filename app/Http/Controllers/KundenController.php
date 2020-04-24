@@ -512,9 +512,9 @@ class KundenController extends Controller
         $kunden->grunderwerbssteuer = $this->stringReplace($grunderwerbssteuer, ",",".");
         $kunden->maklerkosten = $this->stringReplace($maklerkosten, ",",".");
 
-        $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",",".");
-        $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",",".");
-        $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",",".");
+        $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",","");
+        $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",","");
+        $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",","");
         
         $kunden->gesamtkosten = $this->stringReplace($gesamtkosten, ",",".");
         $kunden->eigenkapital = $this->stringReplace($eigenkapital, ",",".");
@@ -578,6 +578,10 @@ class KundenController extends Controller
             LIMIT 1)
             GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
             ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))');
+
+            // dd($repayments);
+            // dd($years_repayments);
+            // die();
         $timeline = timeline::where('kundens_id', $id)->get();
         $calculation = DB::table('calculation')->where('kunden_id', $id)->get();
 
