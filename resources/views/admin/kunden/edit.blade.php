@@ -392,8 +392,11 @@
             calculatedGesamtkosten = calculatedGesamtkosten.toFixed(2).toString().replace(".", ",");
             calculatedFinanzierungsbedarf = calculatedFinanzierungsbedarf.toFixed(2).toString().replace(".", ",");
             $('span[name=kostennotar]').html(formatNumbers(kostennotar));
+            $('input[name=kostennotar_value]').val(formatNumbers(kostennotar));
             $('span[name=grunderwerbssteuer]').html(formatNumbers(grunderwerbssteuer));
+            $('input[name=grunderwerbssteuer_value]').val(formatNumbers(grunderwerbssteuer));
             $('span[name=maklerkosten]').html(formatNumbers(maklerkosten));
+            $('input[name=maklerkosten_value]').val(formatNumbers(maklerkosten));
             $('input[name=gesamtkosten]').val(formatNumbers(calculatedGesamtkosten));
             $('input[name=finanzierungsbedarf]').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
             $('#loan_amount').val(plusMinus+formatNumbers(calculatedFinanzierungsbedarf));
@@ -796,10 +799,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="kostennotar">Notar/Gericht ( <span name="kostennotar" class="text-danger">0</span>€ )</label>
+                        <label for="kostennotar">Notar/Gericht ( <span name="kostennotar" class="text-danger">{{ stringReplace(number_format($kunden->kostennotar_value, 1, '.', ','), '.', ',') }}</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="kostennotar" id="kostennotar"
                                    placeholder="{{ stringReplace($kunden->kostennotar, '.', ',') }}" value="{{ stringReplace(number_format($kunden->kostennotar, 1, '.', ','), '.', ',') }}">
+                                   <input type="hidden" name="kostennotar_value" value="{{ stringReplace(number_format($kunden->kostennotar_value, 1, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -807,10 +811,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">0</span>€ )</label>
+                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">{{ stringReplace(number_format($kunden->grunderwerbssteuer_value, 1, '.', ','), '.', ',') }}</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
                                    placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ stringReplace(number_format($kunden->grunderwerbssteuer, 1, '.', ','), '.', ',') }}">
+                            <input type="hidden" name="grunderwerbssteuer_value" value="{{ stringReplace(number_format($kunden->grunderwerbssteuer_value, 1, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
@@ -819,10 +824,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="maklerkosten">Maklerkosten ( <span name="maklerkosten" class="text-danger">0</span>€ )</label>
+                        <label for="maklerkosten">Maklerkosten ( <span name="maklerkosten" class="text-danger">{{ stringReplace(number_format($kunden->maklerkosten_value, 1, '.', ','), '.', ',') }}</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="maklerkosten" id="maklerkosten"
                                    placeholder="0.00" value="{{ stringReplace(number_format($kunden->maklerkosten, 2, '.', ','), '.', ',') }}">
+                                   <input type="hidden" name="maklerkosten_value" value="{{ stringReplace(number_format($kunden->maklerkosten_value, 1, '.', ','), '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>

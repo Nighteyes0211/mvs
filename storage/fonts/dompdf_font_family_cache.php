@@ -78,21 +78,22 @@
     'normal' => $rootDir . '\lib\fonts\DejaVuSerif',
   ),
   'montserrat' => array(
-    'normal' => $fontDir . '\f86fa52db42b72e62cfa645e44b5208e',
+    'normal' => $fontDir . '/montserrat-normal_99765fdb334a0a22a804b94acf422542',
   ),
   'nunito' => array(
-    'normal' => $fontDir . '\474f10b76136d401d855594aedc55e83',
+    'normal' => $fontDir . '/nunito-normal_176125b1b6dc4704cbf0390040859779',
   ),
   'font awesome 5 brands' => array(
-    'normal' => $fontDir . '\dfcb9ba23583e34b125fae552c2804e3',
+    'normal' => $fontDir . '/font-awesome-5-brands-normal_dfcb9ba23583e34b125fae552c2804e3',
   ),
   'font awesome 5 free' => array(
-    'normal' => $fontDir . '\385e64ef553863582b94fcf281eed938',
+    'normal' => $fontDir . '/font-awesome-5-free-normal_385e64ef553863582b94fcf281eed938',
+    '900' => $fontDir . '/font-awesome-5-free-900_dfa5f2513bf283184870a6a0f2c97528',
   ),
   'roboto' => array(
-    'normal' => $fontDir . '\720228ebe98581cf3dcb9c52d14cb500',
+    'normal' => $fontDir . '/roboto-normal_cf99a9d56c411ce3fa8a2fc49c520e74',
   ),
   'open sans' => array(
-    'normal' => $fontDir . '\ba3ddd16d67db9a4b4c434eab239dbef',
+    'normal' => $fontDir . '/open-sans-normal_a5a5970acc26f679ed9ad7632d8572df',
   ),
 ) ?>

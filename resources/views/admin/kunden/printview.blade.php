@@ -321,17 +321,17 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 </tr>
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Notar/Gericht</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->kostennotar, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->kostennotar_value, 2, ',', '.')  }}&euro;</td>
                 </tr>
 
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Grunderwerbssteuer</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->grunderwerbssteuer, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->grunderwerbssteuer_value, 2, ',', '.')  }}&euro;</td>
                 </tr>
 
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Maklerkosten</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->maklerkosten, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->maklerkosten_value, 2, ',', '.')  }}&euro;</td>
                 </tr>
                 <tr style="background: #a2a5aa;font-weight: bold;">
                     <td style="padding: 4px;">Gesamtkosten</td>
@@ -563,7 +563,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                                     </tr>
                                 </table>
                             </td>
-                            <td style="text-align: center;font-size:10px; width: 100px;">{{ $calculation->total_maturity }} J / M<</td>
+                            <td style="text-align: center;font-size:10px; width: 100px;">Lfz.: {{ $calculation->total_maturity }} J / M - Restschuld: 0€<</td>
                             <!-- <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>0&euro;</span></td> -->
                         </tr>
                     </table>
