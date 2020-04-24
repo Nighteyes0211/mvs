@@ -195,16 +195,16 @@
                 </tr>
                 <tr>
                     <td>Notar/Gericht</td>
-                    <td>{{ number_format($kunden->kostennotar, 2, ',', '.') }}€</td>
+                    <td>{{ number_format($kunden->kostennotar_value, 2, ',', '.') }}€</td>
                 </tr>
                 <tr>
                     <td>Grunderwerbssteuer</td>
-                    <td>{{ number_format($kunden->grunderwerbssteuer, 2, ',', '.') }}€</td>
+                    <td>{{ number_format($kunden->grunderwerbssteuer_value, 2, ',', '.') }}€</td>
                 </tr>
 
                 <tr>
                     <td>Maklerkosten</td>
-                    <td>{{ number_format($kunden->maklerkosten, 2, ',', '.') }}€</td>
+                    <td>{{ number_format($kunden->maklerkosten_value, 2, ',', '.') }}€</td>
                 </tr>
                 <tr>
                     <td>Gesamtkosten</td>

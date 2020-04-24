@@ -496,6 +496,11 @@ class KundenController extends Controller
         $kostennotar = request('kostennotar') == '' ? '0,0' : request('kostennotar');
         $grunderwerbssteuer = request('grunderwerbssteuer') == '' ? '0,0' : request('grunderwerbssteuer');
         $maklerkosten = request('maklerkosten') == '' ? '0,0' : request('maklerkosten');
+
+        $kostennotar_value = request('kostennotar_value') == '' ? '0,0' : request('kostennotar_value');
+        $grunderwerbssteuer_value = request('grunderwerbssteuer_value') == '' ? '0,0' : request('grunderwerbssteuer_value');
+        $maklerkosten_value = request('maklerkosten_value') == '' ? '0,0' : request('maklerkosten_value');
+
         $gesamtkosten = request('gesamtkosten') == '' ? '0,00' : request('gesamtkosten');
         $eigenkapital = request('eigenkapital') == '' ? '0' : request('eigenkapital');
         $finanzierungsbedarf = request('finanzierungsbedarf') == '' ? '0,00' : request('finanzierungsbedarf');
@@ -506,6 +511,11 @@ class KundenController extends Controller
         $kunden->kostennotar = $this->stringReplace($kostennotar, ",",".");
         $kunden->grunderwerbssteuer = $this->stringReplace($grunderwerbssteuer, ",",".");
         $kunden->maklerkosten = $this->stringReplace($maklerkosten, ",",".");
+
+        $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",",".");
+        $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",",".");
+        $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",",".");
+        
         $kunden->gesamtkosten = $this->stringReplace($gesamtkosten, ",",".");
         $kunden->eigenkapital = $this->stringReplace($eigenkapital, ",",".");
         $kunden->finanzierungsbedarf = $this->stringReplace($finanzierungsbedarf, ",",".");
