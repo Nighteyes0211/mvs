@@ -512,9 +512,9 @@ class KundenController extends Controller
         $kunden->grunderwerbssteuer = $this->stringReplace($grunderwerbssteuer, ",",".");
         $kunden->maklerkosten = $this->stringReplace($maklerkosten, ",",".");
 
-        $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",","");
-        $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",","");
-        $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",","");
+        $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",",".");
+        $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",",".");
+        $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",",".");
         
         $kunden->gesamtkosten = $this->stringReplace($gesamtkosten, ",",".");
         $kunden->eigenkapital = $this->stringReplace($eigenkapital, ",",".");
