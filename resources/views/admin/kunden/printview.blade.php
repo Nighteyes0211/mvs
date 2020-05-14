@@ -314,29 +314,58 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
             <table style="width:100%;border: 2px solid #a2a5aa;border-collapse: collapse; font-size: 12px; clear: both;">
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Kaufpreis des Objekts</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->kaufpreis, 2, ',', '.')  }}&euro;</td>
+                    @php
+                        $kaufpreis = str_replace(",",".",$kunden->kaufpreis);
+                        $kaufpreis = str_replace(".","",$kaufpreis);
+                    @endphp
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;"> {{ number_format($kaufpreis, 2, ',', '.')  }}&euro;</td>
                 </tr>
+               
+                @php
+                    $kostenumbau = str_replace(",",".",$kunden->kostenumbau);
+                    $kostenumbau = str_replace(".","",$kostenumbau);
+                @endphp
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Umbau/Modernisierung</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->kostenumbau, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format($kostenumbau, 2, ',', '.')  }}&euro;</td>
                 </tr>
+               
+                @php
+                    $kostennotar_value = str_replace(",",".",$kunden->kostennotar_value);
+                    $kostennotar_value = str_replace(".","",$kostennotar_value);
+                @endphp
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Notar/Gericht</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->kostennotar_value, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format($kostennotar_value, 2, ',', '.')  }}&euro;</td>
                 </tr>
 
+                @php
+                    $grunderwerbssteuer_value = str_replace(",",".",$kunden->grunderwerbssteuer_value);
+                    $grunderwerbssteuer_value = str_replace(".","",$grunderwerbssteuer_value);
+                @endphp
+                
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Grunderwerbssteuer</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->grunderwerbssteuer_value, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format($grunderwerbssteuer_value, 2, ',', '.')  }}&euro;</td>
                 </tr>
 
+                @php
+                    $maklerkosten_value = str_replace(",",".",$kunden->maklerkosten_value);
+                    $maklerkosten_value = str_replace(".","",$maklerkosten_value);
+                @endphp
+                
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Maklerkosten</td>
-                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format ($kunden->maklerkosten_value, 2, ',', '.')  }}&euro;</td>
+                    <td style="border: 1px solid #a2a5aa;text-align: right;padding: 4px;">{{ number_format($maklerkosten_value, 2, ',', '.')  }}&euro;</td>
                 </tr>
+
+                @php
+                    $gesamtkosten = str_replace(",",".",$kunden->gesamtkosten);
+                    $gesamtkosten = str_replace(".","",$gesamtkosten);
+                @endphp
                 <tr style="background: #a2a5aa;font-weight: bold;">
                     <td style="padding: 4px;">Gesamtkosten</td>
-                    <td style="text-align: right;padding: 4px;">{{ number_format ($kunden->gesamtkosten, 2, ',', '.') }}&euro;</td>
+                    <td style="text-align: right;padding: 4px;">{{ number_format($gesamtkosten, 2, ',', '.') }}&euro;</td>
                 </tr>
                 <tr>
                     <td style="border: 1px solid #a2a5aa;padding: 4px;">Eigenkapital</td>
@@ -769,12 +798,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
             <h3 id="" style="color:#28367b; font-size: 1,2em;">Checkliste (Ehepartner)</h3>
                 <ul>
                     @php($i=1)
-                        @foreach($kunden->ehepartnerChecklists as $checklist)
-                            <li>
-                                <!-- {{$i++}} -->
-                                {{$checklist->body}}
-                            </li>
-                        @endforeach
+                    @foreach($kunden->ehepartnerChecklists as $checklist)
+                    <li>
+                        <!-- {{$i++}} -->
+                        {{$checklist->body}}
+                    </li>
+                    @endforeach
                 </ul>
             <br>
         </div>
