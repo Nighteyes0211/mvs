@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -72,7 +73,7 @@
     </style>
 </head>
 <body>
-
+ 
 <?php
     function stringReplace($string)
     {
@@ -154,7 +155,7 @@
         $sonder_tilgung = $val->sonder_tilgung;
     }
 ?>
-
+ 
 </span>
 
     <p style="text-align: center;position:relative;height:780px:width:100%;background:white;">
@@ -270,7 +271,7 @@
             </div>
             <!-- /personal info -->
 
-
+         
 
             <!--  <h3 style="color:#c8c0b3; font-size: 1.1em; margin-top: 20px"><span style="background-color: #fff ; color: #28367b; padding: 0px;">Ihre Finanzierungsanfrage</span></h3> -->
 <p>Sehr geehrter Kunde,<br>
@@ -347,6 +348,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                 </tr>
             </table><br><br>
         <div>
+           
             <h3 style="color:#28367b; font-size: 1,2em; margin-top: 20px">Ihre Finanzierungsbausteine</h3>
             <table style="width:100%; max-height: 500px !important; border-collapse: collapse; font-size: 12px;">
                 <thead>
@@ -506,15 +508,21 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     @endif
                 </tbody>
             </table>
+
+            
         <!-- <br><br><br> -->
         @php($period = calcuMonthList($tempDate))
         @if ($bausparer_flag == 'true')
                             
             <div class="uper_box">
                 <div class="container">
-                    <?php 
-                        $outstanding_balance_timeline = str_replace(',','.',$Calculations[0]->outstanding_balance);
-                        $sparsumme_timeline = str_replace(',','.',$Calculations[0]->sparsumme);
+                    <?php
+                        
+                         $outstanding_balance_timeline = str_replace(',','',$Calculations[0]->outstanding_balance);
+                         $outstanding_balance_timeline = str_replace('.','',$outstanding_balance_timeline);
+                         $sparsumme_timeline = str_replace(',','',$Calculations[0]->sparsumme);
+                         $sparsumme_timeline = str_replace('.','',$sparsumme_timeline);
+                       
                     ?>
                     <table style="width: 75%; font-size: 18px; margin-top: 30px;" cellpadding="0" cellspacing="0">
                         <tr>
@@ -567,11 +575,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                             <!-- <td style="text-align: center;"><span style="text-align: center; padding:5px; display: block; border: 4px solid #f1ac38;font-size:10px">Restschuld <br>0&euro;</span></td> -->
                         </tr>
                     </table>
+                   
                 </div>
             </div>
 
             <br><br>
-                                    
+                          
 
             @if ($bausparer_pay_type == 'month')
                 <div>
@@ -610,6 +619,7 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
                     </table>
                 </div>
             @endif
+            
             @if ($bausparer_pay_type == 'one')
                 <div>
                     <h3 style="color:#28367b; font-size: 1.2em; margin-top: 50px">Bausparplan Tilgungsplan</h3>
