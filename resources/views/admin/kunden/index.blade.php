@@ -48,6 +48,7 @@
     <thead>
       <tr>
         <th>KundenID</th>
+        <th>Anrede</th>
         <th>Vorname</th>
         <th>Nachname</th>
         <th>Straße</th>
@@ -67,6 +68,7 @@
    @foreach($kundens as $kunden)
       <tr>
         <td><a href="/mvs/mvs/public/admin/kunden/{{ $kunden->id }}/view">{{ $kunden->id }}</a></td>
+        <td>{{ $kunden->anrede!=''?ucfirst($kunden->anrede):'-' }}</td>
         <td>{{ $kunden->vorname }}</td>
         <td>{{ $kunden->nachname }}</td>
         <td>{{ $kunden->strasse }}</td>

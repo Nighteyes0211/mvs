@@ -34,6 +34,14 @@
 
             <h4>Stammdaten</h4>
 
+                        <div class="form-group">
+                            <label>Anrede</label>
+                            <select  class="form-control" name="anrede" id="anrede" >
+                                <option value="herr" {{ old('anrede')=='herr'?'selected':'' }}>Herr</option>
+                                <option value="frau" {{ old('anrede')=='frau'?'selected':'' }}>Frau</option>
+                            </select>
+                        </div>
+                        
                             <div class="form-group">
                                 <label for="vorname">Vorname</label>
                                 <input type="text" class="form-control" name="vorname" id="vorname" placeholder="Vorname" value="{{ old('vorname') }}" required>
@@ -76,7 +84,7 @@
                             <br>
 
                             <button type="submit" class="btn btn-primary">Kunden anlegen</button>
-                            <a href="{{ URL::previous() }}"><button type="submit" class="btn btn-danger">Abbrechen</button></a>
+                            <a href="{{ URL::previous() }}"><button type="button" class="btn btn-danger">Abbrechen</button></a>
 
         </div>
     </div></div></form>

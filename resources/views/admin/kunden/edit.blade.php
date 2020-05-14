@@ -736,13 +736,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <?php
-    function stringReplace($string, $from = '.', $to=',')
-    {
-        for ($i=0; $i < strlen($string); $i++) {
-            if($string[$i] == $from) $string[$i] = $to;
+        
+        function stringReplace($string, $from = '.', $to=',')
+        {
+            for ($i=0; $i < strlen($string); $i++) {
+                if($string[$i] == $from) $string[$i] = $to;
+            }
+            return $string;
         }
-        return $string;
-    }
+
     ?>
 
 
@@ -877,6 +879,16 @@
                 </div>
                 <div class="col-md-8 col-md-offset-2">
                     <h4>Stammdaten</h4>
+
+                    <div class="form-group">
+                        <label class="col-form-label" for="anrede">Anrede</label>
+                               <select  class="form-control" name="anrede" id="anrede" >
+                                   <option value="herr" {{ $kunden->anrede=='herr'?'selected':'' }}>Herr</option>
+                                   <option value="frau" {{ $kunden->anrede=='frau'?'selected':'' }}>Frau</option>
+                               </select>
+
+                    </div>
+
                     <div class="form-group">
                         <label class="col-form-label" for="vorname">Vorname</label>
                         <input type="text" class="form-control" name="vorname" id="vorname"

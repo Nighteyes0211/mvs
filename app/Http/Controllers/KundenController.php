@@ -119,6 +119,7 @@ class KundenController extends Controller
     {
         $this->validate($request,
             [
+                'anrede' => 'required',
                 'vorname' => 'required',
                 'nachname' => 'required',
                 'strasse' => 'required',
@@ -134,6 +135,7 @@ class KundenController extends Controller
         $kunden = new kunden();
         $kunden->user_id = auth()->id();
         $kunden->vorname = request('vorname');
+        $kunden->anrede = request('anrede');
         $kunden->nachname = request('nachname');
         $kunden->strasse = request('strasse');
         $kunden->plz = request('plz');
@@ -481,6 +483,7 @@ class KundenController extends Controller
         // dd($request);
         // die();
         $kunden->user_id = request('kunden_user');
+        $kunden->anrede = request('anrede');
         $kunden->ehepartner_enabled = request('ehepartner_enabled');
         $kunden->ehepartner_vorname = request('ehepartner_vorname');
         $kunden->ehepartner_nachname = request('ehepartner_nachname');

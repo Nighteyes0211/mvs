@@ -8,7 +8,7 @@ class Kunden extends Model
 {
 
   protected $fillable = [
-      'vorname', 'nachname', 'user_id',
+      'vorname', 'nachname', 'user_id', 'anrede'
   ];
 
 
