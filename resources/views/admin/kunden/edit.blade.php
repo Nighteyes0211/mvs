@@ -811,11 +811,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">{{ number_format($kunden->grunderwerbssteuer_value, 1, ',', '.') }}</span>€ )</label>
+                            @php
+                               $grunderwerbssteuer_value =  str_replace(",","",$kunden->grunderwerbssteuer_value);
+                               $grunderwerbssteuer_value =  str_replace(".","",$grunderwerbssteuer_value);
+                            @endphp
+                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">{{ number_format($grunderwerbssteuer_value, 1, ',', '.') }}</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
                                    placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ stringReplace(number_format($kunden->grunderwerbssteuer, 1, '.', ','), '.', ',') }}">
-                            <input type="hidden" name="grunderwerbssteuer_value" value="{{ number_format($kunden->grunderwerbssteuer_value, 1, '.', ',') }}">
+                            <input type="hidden" name="grunderwerbssteuer_value" value="{{ number_format($grunderwerbssteuer_value, 1, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>

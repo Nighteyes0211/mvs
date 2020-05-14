@@ -769,12 +769,12 @@ den nachfolgenden Finanzierungsvorschlag habe ich für Sie zusammengestellt. Sch
             <h3 id="" style="color:#28367b; font-size: 1,2em;">Checkliste (Ehepartner)</h3>
                 <ul>
                     @php($i=1)
-                    @foreach($kunden->ehepartnerChecklists as $checklist)
-                    <li>
-                        <!-- {{$i++}} -->
-                        {{$checklist->body}}
-                    </li>
-                    @endforeach
+                        @foreach($kunden->ehepartnerChecklists as $checklist)
+                            <li>
+                                <!-- {{$i++}} -->
+                                {{$checklist->body}}
+                            </li>
+                        @endforeach
                 </ul>
             <br>
         </div>
