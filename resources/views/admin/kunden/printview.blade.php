@@ -188,7 +188,7 @@
     {{-- <div id="footer">
         <table style="width: 100%">
             <tr style="width: 100%">
-                <td style="width: 33%; text-align: left;">Markus Kintzelmann e. Kfm.
+                <td style="width: 33%; text-align: left;">mkhyp GmbH
     Obere Färberstraße 17a
     D-41334 Nettetal-Lobberich
 
@@ -214,15 +214,15 @@
                 <!-- <h3 style="color: #c8c0b3;  "><span style="background-color: #28367b ; padding: 10px 20px 10px 20px;">Ihre Daten&nbsp;<span></h3> -->
                 <table style="width: 100%; font-size: 12px;">
                     <tr>
-                        <td style="font-size:10px;" width="75%">mkhyp Baufinanzierung - Obere Färberstraße. 17 A - 41334 Nettetal-Lobberich</td>
+                        <td style="font-size:10px;" width="75%">mkhyp GmbH - Obere Färberstraße. 17 A - 41334 Nettetal-Lobberich</td>
                         <td><b>Ihr Ansprechpartner</b></td>
                     </tr>
                     <tr>
-                        <td>Anrede</td>
-                        <td>Markus Kintzelmann e. Kfm.n</td>
+                        <td>{{ $kunden->anrede!=''?ucfirst($kunden->anrede):'-' }}</td>
+                        <td>{{ Auth::user()->name }} {{ Auth::user()->surname }}</td>
                     </tr>
                     <tr>
-                        <td>{{ $kunden->vorname }} {{ $kunden->nachname }}</td>
+                        <td> {{ $kunden->vorname }} {{ $kunden->nachname }}</td>
                         <td>Obere Färberstraße 17a</td>
                     </tr>
                     <tr>
@@ -243,7 +243,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>mkhyp Baufinanzierung</td>
+                        <td>mkhyp GmbH</td>
                     </tr>
                     <tr>
                         <td></td>
