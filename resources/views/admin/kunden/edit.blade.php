@@ -97,7 +97,7 @@
             var remaining_debt = total_price * real_estate_transfer_tax / 100;
             var monthly_saving = total_price * (100 - real_estate_transfer_tax) / 100 / 12 / runningTime;
             var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
-            var monthly_deposit = total_price * borrowing_rate / 100 / 12;yy
+            var monthly_deposit = total_price * borrowing_rate / 100 / 12;
             // var monthly_deposit = total_price * borrowing_rate / 100 / 12 / runningTime;
             var monthly_total_pay = monthly_saving + monthly_deposit;
             $('#monthly_interest').val(monthly_deposit.toFixed(2).toString().replace(".", ","));
