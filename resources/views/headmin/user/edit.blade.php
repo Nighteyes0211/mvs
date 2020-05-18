@@ -91,6 +91,16 @@
                             {!! csrf_field() !!}
                             <input type="hidden" name="_method" value="put" />
                             <div>
+                              <div class="custom-control custom-checkbox">
+                                @if ($user[0]->admin == 1)
+                                  <input type="checkbox" class="custom-control-input" id="admin" name="admin" checked>
+                                @else
+                                  <input type="checkbox" class="custom-control-input" id="admin" name="admin" >
+                                @endif
+                                <label class="custom-control-label" for="admin">Admin</label>
+                              </div>
+                            </div>
+                            <div>
                               <label for="">Vorname:</label>
                               <input type="text" class="form-control" placeholder="User Name" name="name" value="{{ $user[0]->name }}" required>
                               @if ($errors->has('name'))
