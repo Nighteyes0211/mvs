@@ -257,7 +257,10 @@ class KundenController extends Controller
         }
         $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->first();
         $checklists = Checklist::latest()->get();
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 57bc25d... fix: input error
         return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
     }
 
@@ -516,7 +519,10 @@ class KundenController extends Controller
         $kunden->grunderwerbssteuer = $this->stringReplace($grunderwerbssteuer, ",",".");
         $kunden->maklerkosten = $this->stringReplace($maklerkosten, ",",".");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 57bc25d... fix: input error
         $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",",".");
         $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",",".");
         $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",",".");
@@ -628,6 +634,7 @@ class KundenController extends Controller
         // die();
 
         // return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
+<<<<<<< HEAD
         $kunden->kaufpreis /= 100;
         $kunden->kaufpreis *= 100;
 
@@ -648,6 +655,8 @@ class KundenController extends Controller
         
 
         
+=======
+>>>>>>> parent of 57bc25d... fix: input error
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations', 'kunden', 'years_repayments'));
 

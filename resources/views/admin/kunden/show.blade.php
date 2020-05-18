@@ -199,8 +199,11 @@
                 </tr>
                 <tr>
                     <td>Grunderwerbssteuer</td>
-                     
-                    <td>{{ number_format($kunden->grunderwerbssteuer_value, 2, ',', '.') }}€</td>
+                     @php
+                         $grunderwerbssteuer_value = str_replace(".","",$kunden->grunderwerbssteuer_value);
+                         $grunderwerbssteuer_value = str_replace(",","",$grunderwerbssteuer_value);
+                     @endphp
+                    <td>{{ number_format($grunderwerbssteuer_value, 2, ',', '.') }}€</td>
                 </tr>
 
                 <tr>
