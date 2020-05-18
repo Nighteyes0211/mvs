@@ -108,15 +108,6 @@
 
         $(document).ready(function(){
 
-            if($("#" + localStorage['radio_status'])[0] != undefined) {
-                setTimeout( function(){ 
-                    $("#repayment_date").prop("checked", false);
-                    $("#montly_deposit").prop("checked", false);
-                    $("#payment_opt_rad").prop("checked", false);
-                    $("#" + localStorage['radio_status']).prop("checked", true);
-                }  , 500 );
-            }
-
             $("#bausparer").click(function () {
                 if ($(this).prop('checked') == true) {
                     $("#sparsumme").prop("disabled", false);
@@ -1257,7 +1248,6 @@
                                                         $("#monthly_rate_pay").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",false);
                                                         $('#montly_deposit_val').attr("disabled",true);
-                                                        localStorage['radio_status'] = 'repayment_date';
                                                     });
                                                     $('#montly_deposit').click(function () {
                                                         $("#sparsumme").prop("disabled", true);
@@ -1267,7 +1257,6 @@
                                                         $("#laufzeit").prop("disabled", true);
                                                         $('#repayment_date_inp').attr("disabled",true);
                                                         $('#montly_deposit_val').attr("disabled",false);
-                                                        localStorage['radio_status'] = 'montly_deposit';
                                                     });
                                                     $('#new_rate').click(function () {
                                                         $('#new_rate_inp').attr("disabled",false);
@@ -1284,7 +1273,6 @@
                                                         $("#statements_due").prop("disabled", true);
                                                         $("#onetime_pay").prop("disabled", true);
                                                         $("#monthly_rate_pay").prop("disabled", true);
-                                                        localStorage['radio_status'] = 'payment_opt_rad';
                                                     /*    var loan_period = parseInt($('#loan_period').val());
                                                         var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(".", "").replace(",", "."));
                                                         var montly_deposit_val = parseFloat($('#montly_deposit_val').val().replace(".", "").replace(",", "."));
