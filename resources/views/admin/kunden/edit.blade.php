@@ -97,7 +97,7 @@
             var remaining_debt = total_price * real_estate_transfer_tax / 100;
             var monthly_saving = total_price * (100 - real_estate_transfer_tax) / 100 / 12 / runningTime;
             var borrowing_rate = parseFloat($('#borrowing_rate').val().replace(/\./g,"").replace(",","."));
-            var monthly_deposit = total_price * borrowing_rate / 100 / 12;yy
+            var monthly_deposit = total_price * borrowing_rate / 100 / 12;
             // var monthly_deposit = total_price * borrowing_rate / 100 / 12 / runningTime;
             var monthly_total_pay = monthly_saving + monthly_deposit;
             $('#monthly_interest').val(monthly_deposit.toFixed(2).toString().replace(".", ","));
@@ -813,15 +813,15 @@
                     </div>
 
                     <div class="form-group">
-                            <!-- @php
+                            @php
                                $grunderwerbssteuer_value =  str_replace(",","",$kunden->grunderwerbssteuer_value);
                                $grunderwerbssteuer_value =  str_replace(".","",$grunderwerbssteuer_value);
-                            @endphp -->
-                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">{{ number_format($kunden->grunderwerbssteuer_value, 1, '.', ',')  }}</span>€ )</label>
+                            @endphp
+                        <label for="grunderwerbssteuer">Grunderwerbssteuer ( <span name="grunderwerbssteuer" class="text-danger">{{ number_format($grunderwerbssteuer_value, 1, ',', '.') }}</span>€ )</label>
                         <div class="input-group">
                             <input type="text" class="form-control text-right" name="grunderwerbssteuer" id="grunderwerbssteuer"
                                    placeholder="{{ stringReplace($kunden->grunderwerbssteuer, '.', ',') }}" value="{{ stringReplace(number_format($kunden->grunderwerbssteuer, 1, '.', ','), '.', ',') }}">
-                            <input type="hidden" name="grunderwerbssteuer_value" value="{{ number_format($kunden->grunderwerbssteuer_value, 1, '.', ',') }}">
+                            <input type="hidden" name="grunderwerbssteuer_value" value="{{ number_format($grunderwerbssteuer_value, 1, '.', ',') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>

@@ -4,7 +4,6 @@ namespace MVS\Http\Controllers;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 use MVS\Angebote;
 use MVS\Kunden;
 use MVS\timeline;
@@ -258,8 +257,6 @@ class KundenController extends Controller
         }
         $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->first();
         $checklists = Checklist::latest()->get();
-
-        Log::debug("here:".$kunden->grunderwerbssteuer_value);
         return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
     }
 
@@ -518,8 +515,6 @@ class KundenController extends Controller
         $kunden->grunderwerbssteuer = $this->stringReplace($grunderwerbssteuer, ",",".");
         $kunden->maklerkosten = $this->stringReplace($maklerkosten, ",",".");
 
-        Log::debug("icarus:" . $grunderwerbssteuer_value);
-
         $kunden->kostennotar_value = $this->stringReplace($kostennotar_value, ",",".");
         $kunden->grunderwerbssteuer_value = $this->stringReplace($grunderwerbssteuer_value, ",",".");
         $kunden->maklerkosten_value = $this->stringReplace($maklerkosten_value, ",",".");
@@ -631,27 +626,6 @@ class KundenController extends Controller
         // die();
 
         // return view('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations'));
-        $kunden->kaufpreis /= 100;
-        $kunden->kaufpreis *= 100;
-
-        $kunden->kostenumbau /= 100;
-        $kunden->kostenumbau *= 100;
-
-        $kunden->kostennotar_value /= 100;
-        $kunden->kostennotar_value *= 100;
-
-        $kunden->grunderwerbssteuer_value /= 100;
-        $kunden->grunderwerbssteuer_value *= 100;
-
-        $kunden->maklerkosten_value /= 100;
-        $kunden->maklerkosten_value *= 100;
-
-        $kunden->gesamtkosten /= 100;
-        $kunden->gesamtkosten *= 100;
-        
-
-        
-        Log::debug("icarus_pdf:" . $kunden->grunderwerbssteuer_value);
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('admin.kunden.printview', compact('kunden', 'angebote', 'angebotedate', 'repayments', 'timeline', 'Calculation', 'Calculations', 'kunden', 'years_repayments'));
 
