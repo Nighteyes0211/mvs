@@ -149,9 +149,9 @@
                              <div>
                               <label for="">Passwort:</label>
                               <input type="password" class="form-control" id="" placeholder="Passwort" name="password" value="">
-                              @if ($errors->has('address'))
+                              @if ($errors->has('password'))
                                   <span class="" role="alert">
-                                      <strong>{{ $errors->first('address') }}</strong>
+                                      <strong>{{ $errors->first('password') }}</strong>
                                   </span>
                               @endif
                             </div>

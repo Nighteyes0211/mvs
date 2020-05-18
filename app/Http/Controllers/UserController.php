@@ -121,6 +121,8 @@ class UserController extends Controller
         'phone' => 'nullable|numeric',
         'group' => 'string|max:255',
         'mail_address' => 'nullable|string',
+        'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'min:6'
       ]);
 
       $user->name = $data['name'];
