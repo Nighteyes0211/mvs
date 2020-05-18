@@ -91,12 +91,6 @@
                           <form action="{{ route('user.store')}}" method="post">
                             <!-- <form action="{{ '/headmin/user'}}" method="post"> -->
                               {!! csrf_field() !!}
-                              <!-- <div>
-                                <div class="custom-control custom-checkbox">
-                                  <input type="checkbox" class="custom-control-input" id="admin" name="admin" >
-                                  <label class="custom-control-label" for="admin">Admin</label>
-                                </div>
-                              </div> -->
                               <div>
                                 <label for="">Vorname:</label>
                                 <input type="text" class="form-control" placeholder="Vorname" name="name" value="{{ old('name') }}" required>

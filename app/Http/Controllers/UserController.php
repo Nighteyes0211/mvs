@@ -72,7 +72,6 @@ class UserController extends Controller
         if(isset($data['group'])) $user->group = $data['group'];
         $user->status =0;
         $user->password =Hash::make($data['password']);
-        // $user->admin = ($request->admin == 'on') ? 1 : 0;
 
         $user->save();
 
@@ -132,8 +131,7 @@ class UserController extends Controller
         $user->mail_address = $data['mail_address'];
       $user->group = $data['group'];
       $user->status =0;
-      $user->password = Hash::make($request->password);
-      $user->admin = ($request->admin == 'on') ? 1 : 0;
+
       $user->save();
 
       return redirect()->route('user.index');
