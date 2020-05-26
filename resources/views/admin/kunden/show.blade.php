@@ -8,12 +8,9 @@
 
 
 <style type="text/css">
-
 #button_edit a {
     color: #fff !important;
 }
-
-
 .check {
   cursor: pointer;
   position: relative;
@@ -91,10 +88,8 @@
         if ($tmp[0] < 10 ) {
             echo '0';
         }
-
         return $string;
     }
-
     function makeYearMonth($str) {
         $mon_tmp = '';
         $mon_str = substr($str, 0, 2);
@@ -107,23 +102,19 @@
         }
         return $mon_tmp.'.'.$year_str;
     }
-
     function monthReplace($string)
     {
         return (int) $string < 10 ? '0'.$string : $string;
     }
-
     function formatStringToNumber($string) {
         return  str_replace(',', '.', $string);
     }
-
     $bausparsumme = floatval(formatStringToNumber($kunden->finanzierungsbedarf));
     $contractFeeString = '';
     $newRateInpString = '';
     $new_borrowing_rate_Str = '';
     $restAmount;
     $monthlySaving;
-
     foreach ($CalData as $key => $val) {
         $contractFeeString = $val->acquisition_fee;
         $newRateInpString = $val->new_rate_inp;
@@ -131,14 +122,10 @@
         $monthlySaving = $val->monthly_saving;
         $new_borrowing_rate_Str = $val->new_borrowing_rate;
     }
-
     $sonder_tilgung = 0;
-
     foreach ($new_repayments as $key => $val) {
         $sonder_tilgung = $val->sonder_tilgung;
     }
-
-
     $restAmount = floatval(formatStringToNumber($restAmount));
     $monthlySaving = floatval(formatStringToNumber($monthlySaving));
     $abschlussgebühr = floatval(formatStringToNumber($contractFeeString));
@@ -146,7 +133,6 @@
     $new_borrowing_rate_Str = str_replace(',', '.', $new_borrowing_rate_Str);
     $new_rate_inp = floatval(formatStringToNumber($newRateInpString));
     $new_borrowing_rate = floatval(formatStringToNumber($new_borrowing_rate_Str));
-
     function calcuMonthList ($startDate) {
         $start    = (new DateTime($startDate))->modify('first day of this month');
         $end      = (new DateTime('2500-12-12'))->modify('first day of next month');
@@ -154,7 +140,6 @@
         return new DatePeriod($start, $interval, $end);
     }
     $tempDate = '';
-
 ?>
 
 <div class="container" style="background-color: #fff; padding-top: 10px;">
@@ -458,92 +443,46 @@
             </table>
         </div>
     @endif
-    @if ($cal->bausparer_flag == 'false')
-        <h5 style="margin-top: 30px;"><b>Tilgungsplan </b></h5>
-        <div style="max-height: 300px; overflow-y: scroll;">
-            <table style="width:100%; max-height: 500px !important;">
-                <thead>
+    <h5 style="margin-top: 30px;"><b>Tilgungsplan </b></h5>
+    <div style="max-height: 300px; overflow-y: scroll;">
+        <table style="width:100%; max-height: 500px !important;">
+            <thead>
+                <tr>
+                    <th>Rückzahlungsdatum</th>
+                    <th>Rate</th>
+                    <th>Sondertilgung</th>
+                    <th>Zinsen</th>
+                    <th>Tilgung</th>
+                    <th>Darlehensrest</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($repayments as $repayment)
+                <tr>
+                    <td>{{ stringReplace($repayment->years) }}</td>
+                    <td>{{ number_format((float)$repayment->rate, 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.')}} &euro;</td>
+                    <td>{{ number_format((float)$repayment->zinsen, 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format((float)$repayment->tilgung, 2, ',', '.') }} &euro;</td>
+                    <td>{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
+                </tr>
+                @endforeach
+                @if ( $years_repayments != null )
+                    @foreach($years_repayments as $years_repayment)
                     <tr>
-                        <th>Rückzahlungsdatum</th>
-                        <th>Rate</th>
-                        <th>Sondertilgung</th>
-                        <th>Zinsen</th>
-                        <th>Tilgung</th>
-                        <th>Darlehensrest</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($repayments as $repayment)
-                    <tr>
-                        <td>{{ stringReplace($repayment->years) }}</td>
-                        <td>{{ number_format((float)$repayment->rate, 2, ',', '.') }} &euro;</td>
-                        <td>{{ number_format((float)$repayment->sonder_tilgung, 2, ',', '.')}} &euro;</td>
-                        <td>{{ number_format((float)$repayment->zinsen, 2, ',', '.') }} &euro;</td>
-                        <td>{{ number_format((float)$repayment->tilgung, 2, ',', '.') }} &euro;</td>
-                        <td>{{ number_format((float)$repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
+                        <td>{{ $years_repayment->years }}</td>
+                        <td>{{ number_format((float)$years_repayment->rate, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}} &euro;</td>
+                        <td>{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }} &euro;</td>
+                        <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
                     </tr>
                     @endforeach
-                    @if ( $years_repayments != null )
-                        @foreach($years_repayments as $years_repayment)
-                        <tr>
-                            <td>{{ $years_repayment->years }}</td>
-                            <td>{{ number_format((float)$years_repayment->rate, 2, ',', '.') }} &euro;</td>
-                            <td>{{ number_format((float)$years_repayment->sonder_tilgung, 2, ',', '.')}} &euro;</td>
-                            <td>{{ number_format((float)$years_repayment->zinsen, 2, ',', '.') }} &euro;</td>
-                            <td>{{ number_format((float)$years_repayment->tilgung, 2, ',', '.') }} &euro;</td>
-                            <td>{{ number_format((float)$years_repayment->darlehensrest, 2, ',', '.') }} &euro;</td>
-                        </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
-    @else
-        <h5 style="margin-top: 30px;"><b>Tilgungsplan</b></h5>
-        <div style="max-height: 300px; overflow-y: scroll;">
-            <table style="width:100%; max-height: 500px !important;">
-                <thead>
-                    <tr>
-                        <th>Rückzahlungsdatum</th>
-                        <th>Rate</th>
-                        <th>Sondertilgung</th>
-                        <th>Zinsen</th>
-                        <th>Tilgung</th>
-                        <th>Restschuld</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php($restschuld = $restAmount)
-                    @foreach($period as $dt)
-                        @php($tempDate = makeYearMonth($tempDate))
-                        @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 / 12)))
-                        @php($tilgung = $new_rate_inp - $zinsen)
-                        @php($restschuld -= $tilgung)
-                        @if ($restschuld >= 0)
-                            <tr>
-                                <td>{{ $tempDate }}</td>
-                                <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
-                                <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
-                                <td>{{ number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
-                                <td>{{ number_format((float)$tilgung, 2, ',', '.') }} &euro;</td>
-                                <td>{{ number_format((float)$restschuld, 2, ',', '.') }} &euro;</td>
-                            </tr>
-                        @else
-                            @break
-                        @endif
-                    @endforeach
-                    <tr>
-                        <td>{{ $tempDate }}</td>
-                        <td>{{ number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
-                        <td>{{ number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
-                        <td>{{ number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
-                        <td>{{ number_format((float)($tilgung + $restschuld), 2, ',', '.') }} &euro;</td>
-                        <td>0, 00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    @endif
+                @endif
+            </tbody>
+        </table>
+    </div>
+    
 @endforeach
             <br>
             <a  class="btn btn-danger" style="color: #fff" href="{{asset('admin/generate_offer')}}{{ '/'.$kunden->id }}"> Angebot erstellen </a>
