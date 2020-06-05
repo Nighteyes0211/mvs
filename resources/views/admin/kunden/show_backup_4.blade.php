@@ -525,29 +525,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                @php($i=0)
-                    @php($cnt = (ceil(($bausparsumme - $restAmount + ($bausparsumme / 100 * $abschlussgebühr)) / $monthlySaving)))
-                    @php($feeVal = 0)
                     @php($restschuld = $restAmount)
                     @foreach($period as $dt)
-                        @if ($i < $cnt && ($dt->format('Y') == date('Y') ))
-                            @php($feeVal += $monthlySaving)
-                            @php($tempDate = $dt->format("m.Y"))
-                            @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 / 12)))
+                        @php($tempDate = makeYearMonth($tempDate))
+                        @php($zinsen = ($restschuld * ($new_borrowing_rate / 100 / 12)))
                         @php($tilgung = $new_rate_inp - $zinsen)
                         @php($restschuld -= $tilgung)
+                        @if ($restschuld >= 0)
                             <tr>
-                                <td>{{ $dt->format("m.Y") }}</td>
+                                <td>{{ $tempDate }}</td>
                                 <td>{{ (float)number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
                                 <td>{{ (float)number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
                                 <td>{{ (float)number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
                                 <td>{{ (float)number_format((float)$tilgung, 2, ',', '.') }} &euro;</td>
                                 <td>{{ (float)number_format((float)$restschuld, 2, ',', '.') }} &euro;</td>
                             </tr>
+                        @else
+                            @break
                         @endif
-                        @php($i ++)
-                        @endforeach
-                        
+                    @endforeach
                     @if ( $years_repayments != null )
                         @foreach($years_repayments as $years_repayment)
                         <tr>
@@ -560,7 +556,14 @@
                         </tr>
                         @endforeach
                         @endif
-                   
+                    <tr>
+                        <td>{{ $tempDate }}</td>
+                        <td>{{ (float)number_format((float)$new_rate_inp, 2, ',', '.') }} &euro;</td>
+                        <td>{{ (float)number_format((float)$sonder_tilgung, 2, ',', '.') }} &euro;</td>
+                        <td>{{ (float)number_format((float)$zinsen, 2, ',', '.') }} &euro;</td>
+                        <td>{{ (float)number_format((float)($tilgung + $restschuld), 2, ',', '.') }} &euro;</td>
+                        <td>0, 00</td>
+                    </tr>
                    
                 </tbody>
             </table>
