@@ -46,7 +46,7 @@ class KundenController extends Controller
         // }
 
     }
-
+    
 
     /*
 
@@ -220,6 +220,7 @@ class KundenController extends Controller
                 GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
                 ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
                 LIMIT 1) AND kundens_id = '.$kunden->id);
+       
         $years_repayments = DB::select('SELECT SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date)) years,
             SUM(zinsen) zinsen, SUM(tilgung) tilgung, MIN(darlehensrest) darlehensrest, SUM(rate) rate, SUM(sonder_tilgung) sonder_tilgung
             FROM repayments
@@ -233,9 +234,13 @@ class KundenController extends Controller
             LIMIT 1) AND kundens_id = '.$kunden->id.'
             GROUP BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))
             ORDER BY SUBSTR(repayment_date, LENGTH(repayment_date)-3, LENGTH(repayment_date))');
+            
         $new_repayments = DB::select('SELECT repayment_date years, zinsen, tilgung, darlehensrest, rate, sonder_tilgung FROM repayments');
+        
         $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->get();
+        // dd($CalData);die;
         $timeline = timeline::where('kundens_id', $kunden->id)->get();
+
         return view('admin.kunden.show', ['kunden' => $kunden, 'repayments' => $repayments, 'timeline' => $timeline, 'CalData' => $CalData, 'years_repayments' => $years_repayments, 'new_repayments' => $new_repayments]);
     }
 
@@ -247,9 +252,7 @@ class KundenController extends Controller
      */
     public function edit(Kunden $kunden)
     {
-
         $users = user::all();
-
         $Calculations = DB::table('calculation')->where('kunden_id', $kunden->id)->get();
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $kunden->id)->where('calculation_id', $Calculation->id)->get()->first();
@@ -257,7 +260,6 @@ class KundenController extends Controller
         }
         $CalData = DB::table('calc_result')->where('kunden_id', $kunden->id)->first();
         $checklists = Checklist::latest()->get();
-
         return view('admin.kunden.edit', compact('kunden','users','Calculations','checklists','CalData'));
     }
 
@@ -483,6 +485,7 @@ class KundenController extends Controller
         }*/
         // dd($request);
         // die();
+        // echo "<pre>";print_r($_POST);die;
         $kunden->user_id = request('kunden_user');
         $kunden->anrede = request('anrede');
         $kunden->ehepartner_enabled = request('ehepartner_enabled');
@@ -525,7 +528,7 @@ class KundenController extends Controller
         $kunden->eigenkapital = $this->stringReplace($eigenkapital, ",",".");
         $kunden->finanzierungsbedarf = $this->stringReplace($finanzierungsbedarf, ",",".");
         $kunden->loan_amount = $this->stringReplace($loan_amount, ",",".");
-
+        // echo "<pre>";print_r($kunden);die;
         $kunden->save();
         return redirect()->route('kunden.edit', $kunden->id);
     }
@@ -596,7 +599,6 @@ class KundenController extends Controller
             ->select('calc_result.*', 'calculation.*')->where('calc_result.kunden_id', $id)->get();
 
         $kunden['offer'] = Angebote::where('customer_id', $id)->orderBy('id','desc')->get();
-
         foreach($Calculations as &$Calculation){
             $Calculation->timeline = DB::table('timeline')->where('kundens_id', $id)->where('calculation_id', $Calculation->id)->get()->first();
             $Calculation->customerTimeline = DB::table('customer_timelines')->where('kundens_id', $id)->where('calculation_id', $Calculation->id)->get()->first();
