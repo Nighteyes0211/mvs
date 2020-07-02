@@ -14,7 +14,7 @@ class DynamicPDFController extends Controller
     {
      $customer_data = $this->get_customer_data();
      return view('dynamic_pdf')->with('customer_data', $customer_data);
-    } 
+    }
 
     function get_customer_data($id)
     {

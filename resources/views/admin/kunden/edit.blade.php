@@ -2968,7 +2968,6 @@
                             <h4>Checkliste</h4>
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
-                            @if(!empty($checklistCategory))
                                 @php($i=0)
                                 @foreach($checklistCategory as $category)
                                     @if(count($category->checklists)>0)
@@ -2988,7 +2987,6 @@
                                         @endforeach
                                     @endif
                                 @endforeach
-                                @endif
                             </div>
                         </div>
                         @php($checklistEnable = $kunden->ehepartner_enabled? 'block':'none')
@@ -2996,7 +2994,7 @@
                             <h4>Checkliste (2. Darlehensnehmer)</h4>
                             <p>Folgende Unterlagen müssen eingereicht werden:</p>
                             <div class="row">
-                            @if(!empty($checklistCategory))
+
                                 @foreach($checklistCategory as $category)
                                     @if(count($category->checklists)>0)
                                         <h5 class="w-100" style="padding: 10px 30px;">{{$category->name}}</h5>
@@ -3015,7 +3013,6 @@
                                         @endforeach
                                     @endif
                                 @endforeach
-                                @endif
                             </div>
                         </div>
                     </div>
